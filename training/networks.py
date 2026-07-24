@@ -9,12 +9,14 @@ Architecture:
     ValueNetwork:  MLP(obs_dim → 256 → 256 → 1)
 """
 
+import math
+from typing import Tuple, Optional
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.distributions import Normal
 import numpy as np
-from typing import Tuple, Optional
 
 
 # ──────────────────────────────────────────────────────────────
@@ -25,12 +27,12 @@ def get_device() -> torch.device:
     """사용 가능한 최적 디바이스를 반환합니다."""
     if torch.cuda.is_available():
         return torch.device("cuda")
-    elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+    elif getattr(torch.backends, 'mps', None) is not None and torch.backends.mps.is_available():
         return torch.device("mps")
     return torch.device("cpu")
 
 
-def layer_init(layer: nn.Linear, std: float = np.sqrt(2), bias_const: float = 0.0):
+def layer_init(layer: nn.Linear, std: float = math.sqrt(2), bias_const: float = 0.0) -> nn.Linear:
     """PPO 스타일 직교 초기화."""
     nn.init.orthogonal_(layer.weight, std)
     nn.init.constant_(layer.bias, bias_const)
@@ -100,7 +102,7 @@ class PitcherPolicy(nn.Module):
         """
         mean, log_std = self.forward(obs)
         std = torch.exp(log_std.clamp(-5, 2))
-        dist = Normal(mean, std)
+        dist = Normal(loc=mean, scale=std)
 
         if deterministic:
             action = mean
@@ -132,7 +134,7 @@ class PitcherPolicy(nn.Module):
         """
         mean, log_std = self.forward(obs)
         std = torch.exp(log_std.clamp(-5, 2))
-        dist = Normal(mean, std)
+        dist = Normal(loc=mean, scale=std)
 
         log_prob = dist.log_prob(actions).sum(dim=-1)
         entropy = dist.entropy().sum(dim=-1)
@@ -245,7 +247,7 @@ class BatterPolicy(nn.Module):
         obs_seq: torch.Tensor,
         hidden: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
         deterministic: bool = False,
-    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, Tuple]:
+    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]:
         """액션 샘플링.
 
         Args:
@@ -258,7 +260,7 @@ class BatterPolicy(nn.Module):
         """
         mean, log_std, hidden = self.forward(obs_seq, hidden)
         std = torch.exp(log_std.clamp(-5, 2))
-        dist = Normal(mean, std)
+        dist = Normal(loc=mean, scale=std)
 
         if deterministic:
             action = mean
@@ -290,7 +292,7 @@ class BatterPolicy(nn.Module):
         """
         mean, log_std, _ = self.forward(obs_seq, hidden)
         std = torch.exp(log_std.clamp(-5, 2))
-        dist = Normal(mean, std)
+        dist = Normal(loc=mean, scale=std)
 
         log_prob = dist.log_prob(actions).sum(dim=-1)
         entropy = dist.entropy().sum(dim=-1)
@@ -391,7 +393,7 @@ class BatterAgent(nn.Module):
         obs: torch.Tensor,
         hidden: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
         deterministic: bool = False,
-    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, Tuple]:
+    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]:
         """액션 샘플링 + 가치 추정.
 
         Returns:
