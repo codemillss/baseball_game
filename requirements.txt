@@ -1,5 +1,7 @@
-torch>=2.0.0
-torchvision
-numpy
-matplotlib
-ipykernel
+mujoco>=3.0
+gymnasium>=0.29.0
+torch>=2.0
+numpy>=1.24
+scipy>=1.10
+dash>=2.14
+plotly>=5.18
