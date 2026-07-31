@@ -1,0 +1,296 @@
+<mujoco model="stadium_3d_baseball_pro">
+  <compiler angle="degree" coordinate="local" inertiafromgeom="true" />
+  <option gravity="0 0 -9.81" timestep="0.002" integrator="RK4">
+    <flag constraint="enable" energy="enable" />
+  </option>
+  <default>
+    <joint limited="false" damping="0.01" />
+    <geom condim="3" friction="0.5 0.1 0.1" solref="0.004 1" solimp="0.9 0.95 0.001" margin="0.001" />
+    <motor ctrlrange="-1 1" ctrllimited="true" />
+    <default class="body">
+      <geom type="capsule" condim="1" friction=".7" solimp=".9 .99 .003" solref=".015 1" material="body" group="1" />
+      <default class="thigh">
+        <geom size=".06" />
+      </default>
+      <default class="shin">
+        <geom fromto="0 0 0 0 0 -.3" size=".049" />
+      </default>
+      <default class="foot">
+        <geom size=".027" />
+        <default class="foot1">
+          <geom fromto="-.07 -.01 0 .14 -.03 0" />
+        </default>
+        <default class="foot2">
+          <geom fromto="-.07 .01 0 .14  .03 0" />
+        </default>
+      </default>
+      <default class="arm_upper">
+        <geom size=".04" />
+      </default>
+      <default class="arm_lower">
+        <geom size=".031" />
+      </default>
+      <default class="hand">
+        <geom type="sphere" size=".04" />
+      </default>
+      <joint type="hinge" damping=".2" stiffness="1" armature=".01" limited="true" solimplimit="0 .99 .01" />
+      <default class="joint_big">
+        <joint damping="5" stiffness="10" />
+        <default class="hip_x">
+          <joint range="-30 10" />
+        </default>
+        <default class="hip_z">
+          <joint range="-60 35" />
+        </default>
+        <default class="hip_y">
+          <joint axis="0 1 0" range="-150 20" />
+        </default>
+        <default class="joint_big_stiff">
+          <joint stiffness="20" />
+        </default>
+      </default>
+      <default class="knee">
+        <joint pos="0 0 .02" axis="0 -1 0" range="-160 2" />
+      </default>
+      <default class="ankle">
+        <joint range="-50 50" />
+        <default class="ankle_y">
+          <joint pos="0 0 .08" axis="0 1 0" stiffness="6" />
+        </default>
+        <default class="ankle_x">
+          <joint pos="0 0 .04" stiffness="3" />
+        </default>
+      </default>
+      <default class="shoulder">
+        <joint range="-85 60" />
+      </default>
+      <default class="elbow">
+        <joint range="-100 50" stiffness="0" />
+      </default>
+    </default>
+  </default>
+  <asset>
+    <texture name="sky" type="skybox" builtin="gradient" rgb1="0.3 0.55 0.9" rgb2="0.05 0.12 0.3" width="512" height="512" />
+    <texture name="grass_tex" type="2d" builtin="checker" rgb1="0.12 0.44 0.12" rgb2="0.09 0.36 0.09" width="256" height="256" />
+    <texture name="dirt_tex" type="2d" builtin="flat" rgb1="0.62 0.38 0.22" width="128" height="128" />
+    <texture name="wood_tex" type="2d" builtin="flat" rgb1="0.82 0.62 0.32" width="128" height="128" />
+    <material name="grass" texture="grass_tex" texrepeat="35 35" reflectance="0.05" />
+    <material name="infield_dirt_mat" texture="dirt_tex" reflectance="0.05" />
+    <material name="warning_track_mat" rgba="0.68 0.42 0.25 1" reflectance="0.05" />
+    <material name="wood" texture="wood_tex" reflectance="0.3" />
+    <material name="ball_mat" rgba="0.98 0.98 0.95 1" reflectance="0.4" />
+    <material name="plate_mat" rgba="0.95 0.95 0.95 1" />
+    <material name="foul_line_mat" rgba="1 1 1 0.9" />
+    <material name="foul_pole_mat" rgba="0.95 0.85 0.1 1" />
+    <material name="strike_zone_mat" rgba="1 0.15 0.15 0.22" />
+    <material name="fence_mat" rgba="0.1 0.25 0.14 1" />
+    <material name="batters_eye_mat" rgba="0.05 0.12 0.08 1" />
+    <material name="backstop_mat" rgba="0.15 0.15 0.18 1" />
+    <material name="ad_board_samsung" rgba="0.02 0.22 0.65 1" />
+    <material name="ad_board_lg" rgba="0.65 0.08 0.2 1" />
+    <material name="ad_board_hyundai" rgba="0.05 0.15 0.4 1" />
+    <material name="ad_board_kakao" rgba="0.95 0.82 0.05 1" />
+    <material name="scoreboard_mat" rgba="0.08 0.1 0.14 1" />
+    <material name="scoreboard_screen" rgba="0.15 0.85 0.35 1" />
+    <material name="seats_blue" rgba="0.15 0.35 0.65 1" />
+    <material name="seats_navy" rgba="0.08 0.18 0.38 1" />
+    <material name="seats_red" rgba="0.75 0.18 0.18 1" />
+    <material name="concrete_concourse" rgba="0.45 0.48 0.52 1" />
+    <material name="entry_tunnel" rgba="0.08 0.08 0.1 1" />
+    <material name="dugout_roof" rgba="0.2 0.22 0.25 1" />
+    <texture type="skybox" builtin="gradient" rgb1=".3 .5 .7" rgb2="0 0 0" width="32" height="512" />
+    <texture name="body" type="cube" builtin="flat" mark="cross" width="128" height="128" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" markrgb="1 1 1" />
+    <material name="body" texture="body" texuniform="true" rgba="0.8 0.6 .4 1" />
+  </asset>
+  <worldbody>
+    <light name="light_main" pos="0 25 35" dir="0 -0.5 -1" directional="true" diffuse="0.9 0.9 0.95" specular="0.3 0.3 0.3" />
+    <light name="light_left" pos="-35 50 30" dir="0.5 -0.5 -1" directional="true" diffuse="0.6 0.6 0.65" />
+    <light name="light_right" pos="35 50 30" dir="-0.5 -0.5 -1" directional="true" diffuse="0.6 0.6 0.65" />
+    <geom name="outfield_grass" type="plane" size="130 130 0.1" pos="0 35 0" material="grass" />
+    <geom name="pitcher_mound" type="cylinder" size="2.74 0.25" pos="0 18.44 0" material="infield_dirt_mat" />
+    <geom name="pitcher_rubber" type="box" size="0.30 0.07 0.02" pos="0 18.44 0.26" material="plate_mat" />
+    <geom name="path_home_1st" type="box" size="0.9 9.7 0.003" pos="9.7 9.7 0.003" euler="0 0 -45" material="infield_dirt_mat" />
+    <geom name="path_home_3rd" type="box" size="0.9 9.7 0.003" pos="-9.7 9.7 0.003" euler="0 0 45" material="infield_dirt_mat" />
+    <geom name="path_1st_2nd" type="box" size="0.9 9.7 0.003" pos="9.7 27.7 0.003" euler="0 0 45" material="infield_dirt_mat" />
+    <geom name="path_3rd_2nd" type="box" size="0.9 9.7 0.003" pos="-9.7 27.7 0.003" euler="0 0 -45" material="infield_dirt_mat" />
+    <geom name="infield_skin_dirt" type="cylinder" size="19.0 0.004" pos="0 18.44 0.004" material="infield_dirt_mat" />
+    <geom name="home_plate" type="box" size="0.216 0.216 0.01" pos="0 0 0.005" material="plate_mat" />
+    <geom name="left_batter_box" type="box" size="0.6 1.2 0.002" pos="-0.85 0.25 0.002" material="infield_dirt_mat" />
+    <geom name="right_batter_box" type="box" size="0.6 1.2 0.002" pos="0.85 0.25 0.002" material="infield_dirt_mat" />
+    <geom name="strike_zone_box" type="box" size="0.216 0.01 0.30" pos="0 0 0.75" material="strike_zone_mat" contype="0" conaffinity="0" />
+    <geom name="base_1st" type="box" size="0.19 0.19 0.04" pos="13.72 13.72 0.04" euler="0 0 45" material="plate_mat" />
+    <geom name="base_2nd" type="box" size="0.19 0.19 0.04" pos="0 27.43 0.04" euler="0 0 45" material="plate_mat" />
+    <geom name="base_3rd" type="box" size="0.19 0.19 0.04" pos="-13.72 13.72 0.04" euler="0 0 45" material="plate_mat" />
+    <geom name="dugout_1st_roof" type="box" size="1.2 8.0 0.6" pos="16.5 6.0 0.6" material="dugout_roof" />
+    <geom name="dugout_3rd_roof" type="box" size="1.2 8.0 0.6" pos="-16.5 6.0 0.6" material="dugout_roof" />
+    <geom name="warning_track" type="box" size="70 3.5 0.004" pos="0 72 0.004" material="warning_track_mat" />
+    <geom name="fence_left_wall" type="box" size="26 0.4 2.2" pos="-45 60 2.2" euler="0 0 25" material="fence_mat" />
+    <geom name="fence_center_wall" type="box" size="22 0.4 2.5" pos="0 75 2.5" material="fence_mat" />
+    <geom name="fence_right_wall" type="box" size="26 0.4 2.2" pos="45 60 2.2" euler="0 0 -25" material="fence_mat" />
+    <geom name="ad_samsung" type="box" size="6.0 0.05 1.0" pos="-35 55.2 2.2" euler="0 0 25" material="ad_board_samsung" />
+    <geom name="ad_lg" type="box" size="6.0 0.05 1.0" pos="-20 62.2 2.2" euler="0 0 25" material="ad_board_lg" />
+    <geom name="ad_hyundai" type="box" size="6.0 0.05 1.2" pos="0 74.5 2.5" material="ad_board_hyundai" />
+    <geom name="ad_kakao" type="box" size="6.0 0.05 1.0" pos="20 62.2 2.2" euler="0 0 -25" material="ad_board_kakao" />
+    <geom name="ad_sponsor_right" type="box" size="6.0 0.05 1.0" pos="35 55.2 2.2" euler="0 0 -25" material="ad_board_samsung" />
+    <geom name="batters_eye" type="box" size="12 0.2 6.0" pos="0 77 6.0" material="batters_eye_mat" />
+    <geom name="jumbo_scoreboard" type="box" size="16 0.5 6.0" pos="0 79 14.0" material="scoreboard_mat" />
+    <geom name="scoreboard_display" type="box" size="14 0.05 4.5" pos="0 78.7 14.0" material="scoreboard_screen" />
+    <geom name="foul_pole_left" type="cylinder" size="0.15 7.0" pos="-58 60 7.0" material="foul_pole_mat" />
+    <geom name="foul_pole_right" type="cylinder" size="0.15 7.0" pos="58 60 7.0" material="foul_pole_mat" />
+    <geom name="foul_line_left" type="box" size="0.06 43 0.003" pos="-21.5 21.5 0.003" euler="0 0 -45" material="foul_line_mat" contype="0" conaffinity="0" />
+    <geom name="foul_line_right" type="box" size="0.06 43 0.003" pos="21.5 21.5 0.003" euler="0 0 45" material="foul_line_mat" contype="0" conaffinity="0" />
+    <geom name="backstop_wall" type="box" size="12 0.5 2.5" pos="0 -4.0 2.5" material="backstop_mat" />
+    <geom name="stand_1st_lower" type="box" size="10 30 3.0" pos="32 20 3.0" euler="-12 0 -25" material="seats_navy" />
+    <geom name="stand_1st_upper" type="box" size="12 35 6.0" pos="50 18 10.0" euler="-22 0 -25" material="seats_blue" />
+    <geom name="portal_1st_1" type="box" size="1.8 1.5 2.2" pos="30 15 2.2" euler="0 0 -25" material="entry_tunnel" />
+    <geom name="portal_1st_2" type="box" size="1.8 1.5 2.2" pos="34 25 3.2" euler="0 0 -25" material="entry_tunnel" />
+    <geom name="stand_3rd_lower" type="box" size="10 30 3.0" pos="-32 20 3.0" euler="-12 0 25" material="seats_navy" />
+    <geom name="stand_3rd_upper" type="box" size="12 35 6.0" pos="-50 18 10.0" euler="-22 0 25" material="seats_red" />
+    <geom name="portal_3rd_1" type="box" size="1.8 1.5 2.2" pos="-30 15 2.2" euler="0 0 25" material="entry_tunnel" />
+    <geom name="portal_3rd_2" type="box" size="1.8 1.5 2.2" pos="-34 25 3.2" euler="0 0 25" material="entry_tunnel" />
+    <geom name="stand_home_grand" type="box" size="18 8.0 5.0" pos="0 -12 6.0" euler="-25 0 0" material="seats_navy" />
+    <geom name="portal_home_center" type="box" size="2.5 1.5 2.5" pos="0 -10 3.5" material="entry_tunnel" />
+    <body name="pitcher_placeholder" pos="0 18.44 0">
+      <geom type="capsule" size="0.2 0.8" pos="0 0 0.8" material="seats_red" />
+    </body>
+    <camera name="pitcher_cam" pos="0 20.0 2.0" euler="90 0 180" fovy="60" />
+    <camera name="catcher_cam" pos="0 -2.0 1.2" euler="90 0 0" fovy="60" />
+    <camera name="broadcaster_cam" pos="0 -10.0 8.0" euler="65 0 0" fovy="50" />
+    <camera name="top_down_cam" pos="0 9.0 25.0" euler="0 0 0" fovy="70" />
+    <body name="baseball" pos="0 18.44 1.8">
+      <freejoint name="ball_joint" />
+      <geom name="ball_geom" type="sphere" size="0.037" mass="0.145" material="ball_mat" condim="3" friction="0.3 0.05 0.05" solref="0.015 1" />
+    </body>
+    <body name="fielder_cf" pos="0 60 0.5">
+      <joint name="cf_slide_x" type="slide" axis="1 0 0" damping="50" armature="1.0" />
+      <joint name="cf_slide_y" type="slide" axis="0 1 0" damping="50" armature="1.0" />
+      <geom name="cf_base" type="cylinder" size="0.3 0.2" material="seats_blue" mass="30.0" contype="0" conaffinity="0" />
+      <geom name="cf_head" type="sphere" size="0.15" pos="0 0 1.0" material="plate_mat" mass="5.0" contype="0" conaffinity="0" />
+      <body name="cf_arm" pos="0 -0.3 0.8">
+        <joint name="cf_arm_pitch" type="hinge" axis="1 0 0" range="-45 45" damping="2.0" armature="0.1" />
+        <geom name="cf_glove" type="sphere" size="0.2" material="wood" mass="2.0" condim="3" friction="1.0 0.5 0.5" />
+      </body>
+    </body>
+    <body name="torso" pos="0.6 -0.1 1.2" childclass="body">
+      <camera name="back" pos="-3 0 1" xyaxes="0 -1 0 1 0 2" mode="trackcom" />
+      <camera name="side" pos="0 -3 1" xyaxes="1 0 0 0 1 2" mode="trackcom" />
+      <geom name="torso" fromto="0 -.07 0 0 .07 0" size=".07" />
+      <geom name="waist_upper" fromto="-.01 -.06 -.12 -.01 .06 -.12" size=".06" />
+      <body name="head" pos="0 0 .19">
+        <geom name="head" type="sphere" size=".09" />
+        <camera name="batter_cam" pos="0.1 0 0" euler="90 0 90" fovy="75" />
+      </body>
+      <body name="waist_lower" pos="-.01 0 -.26">
+        <geom name="waist_lower" fromto="0 -.06 0 0 .06 0" size=".06" />
+        <joint name="abdomen_z" pos="0 0 .065" axis="0 0 1" range="-45 45" class="joint_big_stiff" />
+        <joint name="abdomen_y" pos="0 0 .065" axis="0 1 0" range="-75 30" class="joint_big" />
+        <body name="pelvis" pos="0 0 -.165">
+          <joint name="abdomen_x" pos="0 0 .1" axis="1 0 0" range="-35 35" class="joint_big" />
+          <geom name="butt" fromto="-.02 -.07 0 -.02 .07 0" size=".09" />
+          <body name="thigh_right" pos="0 -.1 -.04">
+            <joint name="hip_x_right" axis="1 0 0" class="hip_x" />
+            <joint name="hip_z_right" axis="0 0 1" class="hip_z" />
+            <joint name="hip_y_right" class="hip_y" />
+            <geom name="thigh_right" fromto="0 0 0 0 .01 -.34" class="thigh" />
+            <body name="shin_right" pos="0 .01 -.4">
+              <joint name="knee_right" class="knee" />
+              <geom name="shin_right" class="shin" />
+              <body name="foot_right" pos="0 0 -.39">
+                <joint name="ankle_y_right" class="ankle_y" />
+                <joint name="ankle_x_right" class="ankle_x" axis="1 0 .5" />
+                <geom name="foot1_right" class="foot1" />
+                <geom name="foot2_right" class="foot2" />
+              </body>
+            </body>
+          </body>
+          <body name="thigh_left" pos="0 .1 -.04">
+            <joint name="hip_x_left" axis="-1 0 0" class="hip_x" />
+            <joint name="hip_z_left" axis="0 0 -1" class="hip_z" />
+            <joint name="hip_y_left" class="hip_y" />
+            <geom name="thigh_left" fromto="0 0 0 0 -.01 -.34" class="thigh" />
+            <body name="shin_left" pos="0 -.01 -.4">
+              <joint name="knee_left" class="knee" />
+              <geom name="shin_left" fromto="0 0 0 0 0 -.3" class="shin" />
+              <body name="foot_left" pos="0 0 -.39">
+                <joint name="ankle_y_left" class="ankle_y" />
+                <joint name="ankle_x_left" class="ankle_x" axis="-1 0 -.5" />
+                <geom name="foot1_left" class="foot1" />
+                <geom name="foot2_left" class="foot2" />
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="upper_arm_right" pos="0 -.17 .06">
+        <joint name="shoulder1_right" axis="2 1 1" class="shoulder" />
+        <joint name="shoulder2_right" axis="0 -1 1" class="shoulder" />
+        <geom name="upper_arm_right" fromto="0 0 0 .16 -.16 -.16" class="arm_upper" />
+        <body name="lower_arm_right" pos=".18 -.18 -.18">
+          <joint name="elbow_right" axis="0 -1 1" class="elbow" />
+          <geom name="lower_arm_right" fromto=".01 .01 .01 .17 .17 .17" class="arm_lower" />
+          <body name="hand_right" pos=".18 .18 .18">
+            <geom name="hand_right" zaxis="1 1 1" class="hand" />
+            <body name="bat" pos="0.1 0 0" euler="0 90 0">
+              <geom name="bat_knob" type="cylinder" size="0.025 0.015" pos="0 0.015 0" euler="90 0 0" material="wood" mass="0.05" />
+              <geom name="bat_handle" type="cylinder" size="0.014 0.2" pos="0 0.2 0" euler="90 0 0" material="wood" mass="0.25" />
+              <geom name="bat_taper" type="capsule" size="0.024 0.1" pos="0 0.45 0" euler="90 0 0" material="wood" mass="0.2" />
+              <geom name="bat_barrel" type="cylinder" size="0.034 0.25" pos="0 0.675 0" euler="90 0 0" material="wood" mass="0.5" condim="3" friction="0.6 0.1 0.1" solref="0.015 1" />
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="upper_arm_left" pos="0 .17 .06">
+        <joint name="shoulder1_left" axis="-2 1 -1" class="shoulder" />
+        <joint name="shoulder2_left" axis="0 -1 -1" class="shoulder" />
+        <geom name="upper_arm_left" fromto="0 0 0 .16 .16 -.16" class="arm_upper" />
+        <body name="lower_arm_left" pos=".18 .18 -.18">
+          <joint name="elbow_left" axis="0 -1 -1" class="elbow" />
+          <geom name="lower_arm_left" fromto=".01 -.01 .01 .17 -.17 .17" class="arm_lower" />
+          <body name="hand_left" pos=".18 -.18 .18">
+            <geom name="hand_left" zaxis="1 -1 1" class="hand" />
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <motor joint="cf_slide_x" ctrlrange="-200 200" gear="1.0" />
+    <motor joint="cf_slide_y" ctrlrange="-200 200" gear="1.0" />
+    <motor joint="cf_arm_pitch" ctrlrange="-50 50" gear="1.0" />
+    <motor name="abdomen_z" gear="40" joint="abdomen_z" />
+    <motor name="abdomen_y" gear="40" joint="abdomen_y" />
+    <motor name="abdomen_x" gear="40" joint="abdomen_x" />
+    <motor name="hip_x_right" gear="40" joint="hip_x_right" />
+    <motor name="hip_z_right" gear="40" joint="hip_z_right" />
+    <motor name="hip_y_right" gear="120" joint="hip_y_right" />
+    <motor name="knee_right" gear="80" joint="knee_right" />
+    <motor name="ankle_y_right" gear="20" joint="ankle_y_right" />
+    <motor name="ankle_x_right" gear="20" joint="ankle_x_right" />
+    <motor name="hip_x_left" gear="40" joint="hip_x_left" />
+    <motor name="hip_z_left" gear="40" joint="hip_z_left" />
+    <motor name="hip_y_left" gear="120" joint="hip_y_left" />
+    <motor name="knee_left" gear="80" joint="knee_left" />
+    <motor name="ankle_y_left" gear="20" joint="ankle_y_left" />
+    <motor name="ankle_x_left" gear="20" joint="ankle_x_left" />
+    <motor name="shoulder1_right" gear="20" joint="shoulder1_right" />
+    <motor name="shoulder2_right" gear="20" joint="shoulder2_right" />
+    <motor name="elbow_right" gear="40" joint="elbow_right" />
+    <motor name="shoulder1_left" gear="20" joint="shoulder1_left" />
+    <motor name="shoulder2_left" gear="20" joint="shoulder2_left" />
+    <motor name="elbow_left" gear="40" joint="elbow_left" />
+  </actuator>
+  <contact>
+    <exclude body1="waist_lower" body2="thigh_right" />
+    <exclude body1="waist_lower" body2="thigh_left" />
+  </contact>
+  <tendon>
+    <fixed name="hamstring_right" limited="true" range="-0.3 2">
+      <joint joint="hip_y_right" coef=".5" />
+      <joint joint="knee_right" coef="-.5" />
+    </fixed>
+    <fixed name="hamstring_left" limited="true" range="-0.3 2">
+      <joint joint="hip_y_left" coef=".5" />
+      <joint joint="knee_left" coef="-.5" />
+    </fixed>
+  </tendon>
+</mujoco>

@@ -1,0 +1,63 @@
+import mujoco
+import numpy as np
+import cv2
+
+xml_arm = """
+<mujoco>
+  <option gravity="0 0 -9.81"/>
+  <worldbody>
+    <light pos="0 0 10"/>
+    <geom type="plane" size="5 5 0.1" rgba=".9 .9 .9 1"/>
+    
+    <body name="batter_torso" pos="-0.85 -0.1 0">
+      <geom name="torso_geom" type="capsule" size="0.15 0.3" pos="0 0 1.1" rgba="0 0 1 1"/>
+      
+      <!-- Shoulder (3 DOF) -->
+      <body name="shoulder" pos="0 -0.2 1.3">
+        <joint name="shoulder_yaw" type="hinge" axis="0 0 1" range="-90 120"/>
+        <joint name="shoulder_pitch" type="hinge" axis="1 0 0" range="-90 90"/>
+        <joint name="shoulder_roll" type="hinge" axis="0 1 0" range="-90 90"/>
+        <geom name="shoulder_geom" type="sphere" size="0.1" rgba="1 0 0 1"/>
+        <geom name="upper_arm_geom" type="capsule" size="0.06" fromto="0 0 0  0 -0.1 -0.3" rgba="1 1 1 1"/>
+        
+        <!-- Elbow (1 DOF) -->
+        <body name="elbow" pos="0 -0.1 -0.3">
+          <joint name="elbow_flex" type="hinge" axis="0.53 -0.80 0.27" range="-150 150"/>
+          <geom name="elbow_geom" type="sphere" size="0.08" rgba="1 0 0 1"/>
+          <geom name="forearm_geom" type="capsule" size="0.05" fromto="0 0 0  0.3 0.3 0.3" rgba="1 1 1 1"/>
+          
+          <!-- Wrist (3 DOF) -->
+          <body name="wrist" pos="0.3 0.3 0.3">
+            <joint name="wrist_yaw" type="hinge" axis="0 0 1" range="-90 90"/>
+            <joint name="wrist_pitch" type="hinge" axis="1 0 0" range="-90 90"/>
+            <joint name="wrist_roll" type="hinge" axis="0 1 0" range="-90 90"/>
+            <geom name="wrist_geom" type="sphere" size="0.06" rgba="1 0 0 1"/>
+            
+            <!-- Bat (Points UP and BACK) -->
+            <body name="bat" pos="0 0 0" euler="-45 0 0">
+              <geom name="bat_handle" type="cylinder" size="0.014 0.2" pos="0 0 0.2" rgba="0.8 0.6 0.4 1"/>
+              <geom name="bat_barrel" type="cylinder" size="0.034 0.25" pos="0 0 0.675" rgba="0.8 0.6 0.4 1"/>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+    
+    <!-- Home Plate reference -->
+    <geom name="home_plate" type="box" size="0.2 0.2 0.01" pos="0 0 0.005" rgba="1 1 1 1"/>
+  </worldbody>
+</mujoco>
+"""
+
+with open("test_arm.xml", "w") as f:
+    f.write(xml_arm)
+
+model = mujoco.MjModel.from_xml_path('test_arm.xml')
+data = mujoco.MjData(model)
+mujoco.mj_forward(model, data)
+
+renderer = mujoco.Renderer(model, height=480, width=640)
+renderer.update_scene(data, camera=-1) # Free camera
+img = renderer.render()
+cv2.imwrite("arm_test.png", cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+print("Saved arm_test.png")

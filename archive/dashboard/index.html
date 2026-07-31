@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Baseball Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=6">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="glass-panel">
+            <div class="logo">
+                <span class="pulse"></span>
+                <h1>AI Baseball <span>Training Center</span></h1>
+            </div>
+            <div class="status-badge" id="trainingStatus">
+                Polling Data...
+            </div>
+        </header>
+
+        <!-- Main Grid -->
+        <main class="grid-layout">
+            <!-- Left Column: Video Player -->
+            <section class="video-section glass-panel">
+                <h2>Latest Episode (1st Person View)</h2>
+                <div class="video-wrapper">
+                    <video id="mainVideo" controls autoplay loop muted>
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-info">
+                    <h3 id="videoTitle">Waiting for video...</h3>
+                    <div class="video-gallery" id="videoGallery">
+                        <!-- Thumbnail buttons will be injected here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column: Charts -->
+            <section class="charts-section">
+                <!-- Top Chart: Contact Rate & Reward -->
+                <div class="chart-container glass-panel">
+                    <h2>Multi-Agent Rewards</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Bottom Chart: Losses -->
+                <div class="chart-container glass-panel mt-4">
+                    <h2>Multi-Agent WM Losses</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="lossChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js?v=6"></script>
+</body>
+</html>

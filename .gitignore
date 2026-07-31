@@ -31,3 +31,11 @@ Thumbs.db
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Logs & Media artifacts
+logs/
+MUJOCO_LOG.TXT
+humanoid_tmp.xml
+videos/*.mp4
+videos/*.gif
+
