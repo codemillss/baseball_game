@@ -1,4 +1,4 @@
-<mujoco model="h1">
+<mujoco model="h1_pitcher">
   <compiler angle="radian" meshdir="unitree_h1_assets" autolimits="true" />
   <option timestep="0.005" gravity="0 0 -9.81" />
 
@@ -54,12 +54,21 @@
     <mesh file="right_shoulder_yaw_link.stl" />
     <mesh file="right_elbow_link.stl" />
     <mesh file="logo_link.stl" />
-  <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="512" /><texture name="texplane" type="2d" builtin="checker" rgb1="0.2 0.3 0.4" rgb2="0.1 0.15 0.2" width="512" height="512" /><material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true" /><material name="home_plate_mat" rgba="0.9 0.9 0.9 1" reflectance="0.2" /><material name="ball_mat" rgba="0.98 0.98 0.95 1" reflectance="0.4" /><material name="bat_mat" rgba="0.8 0.6 0.3 1" reflectance="0.3" /></asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="512" />
+    <texture name="texplane" type="2d" builtin="checker" rgb1="0.2 0.3 0.4" rgb2="0.1 0.15 0.2" width="512" height="512" />
+    <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true" />
+    <material name="home_plate_mat" rgba="0.9 0.9 0.9 1" reflectance="0.2" />
+    <material name="ball_mat" rgba="0.98 0.98 0.95 1" reflectance="0.4" />
+    <material name="target_zone_mat" rgba="0.2 0.8 0.2 0.4" />
+  </asset>
 
   <worldbody>
-    <body name="pelvis" pos="-0.85 0 0.82" childclass="h1">
+    <!-- Pitcher robot standing on mound (y = 10.0m facing towards home plate at y = 0) -->
+    <!-- quat="0.7071068 0 0 -0.7071068" rotates +90 deg around Z to face -Y -->
+    <body name="pelvis" pos="0 10.0 0.82" quat="0.7071068 0 0 -0.7071068" childclass="h1">
       <inertial pos="-0.0002 4e-05 -0.04522" quat="0.498303 0.499454 -0.500496 0.501741" mass="5.39" diaginertia="0.0490211 0.0445821 0.00824619" />
       <geom class="visual" mesh="pelvis" />
+      
       <body name="left_hip_yaw_link" pos="0 0.0875 -0.1742">
         <inertial pos="-0.04923 0.0001 0.0072" quat="0.69699 0.219193 0.233287 0.641667" mass="2.244" diaginertia="0.00304494 0.00296885 0.00189201" />
         <joint name="left_hip_yaw" axis="0 0 1" range="-0.43 0.43" />
@@ -95,6 +104,7 @@
           </body>
         </body>
       </body>
+
       <body name="right_hip_yaw_link" pos="0 -0.0875 -0.1742">
         <inertial pos="-0.04923 -0.0001 0.0072" quat="0.641667 0.233287 0.219193 0.69699" mass="2.244" diaginertia="0.00304494 0.00296885 0.00189201" />
         <joint name="right_hip_yaw" axis="0 0 1" range="-0.43 0.43" />
@@ -130,6 +140,7 @@
           </body>
         </body>
       </body>
+
       <body name="torso_link">
         <inertial pos="0.000489 0.002797 0.20484" quat="0.999989 -0.00130808 -0.00282289 -0.00349105" mass="17.789" diaginertia="0.487315 0.409628 0.127837" />
         <joint name="torso" axis="0 0 1" range="-2.35 2.35" />
@@ -140,6 +151,7 @@
         <geom name="torso" class="collision" type="box" size="0.07 0.1 0.22" pos="0 0 0.25" />
         <geom name="hip" class="collision" type="capsule" size="0.05" fromto="0 -0.1 -0.05 0 0.1 -0.05" />
         <site name="imu" pos="-0.04452 -0.01891 0.27756" />
+
         <body name="left_shoulder_pitch_link" pos="0.0055 0.15535 0.42999" quat="0.976296 0.216438 0 0">
           <inertial pos="0.005045 0.053657 -0.015715" quat="0.814858 0.579236 -0.0201072 -0.00936488" mass="1.033" diaginertia="0.00129936 0.000987113 0.000858198" />
           <joint name="left_shoulder_pitch" axis="0 1 0" range="-2.87 2.87" />
@@ -160,10 +172,12 @@
                 <geom class="visual" mesh="left_elbow_link" />
                 <geom class="collision" type="capsule" size="0.025" fromto="0 0 0 0.28 0 -0.015" />
                 <geom class="collision" type="sphere" size="0.033" pos="0.28 0 -0.015" />
-              <site name="l_hand_grip" pos="0.3 0 0" size="0.01" /></body>
+              </body>
             </body>
           </body>
         </body>
+
+        <!-- Pitching Right Arm -->
         <body name="right_shoulder_pitch_link" pos="0.0055 -0.15535 0.42999" quat="0.976296 -0.216438 0 0">
           <inertial pos="0.005045 -0.053657 -0.015715" quat="0.579236 0.814858 0.00936488 0.0201072" mass="1.033" diaginertia="0.00129936 0.000987113 0.000858198" />
           <joint name="right_shoulder_pitch" axis="0 1 0" range="-2.87 2.87" />
@@ -184,13 +198,37 @@
                 <geom class="visual" mesh="right_elbow_link" />
                 <geom class="collision" type="capsule" size="0.025" fromto="0 0 0 0.28 0 -0.015" />
                 <geom class="collision" type="sphere" size="0.033" pos="0.28 0 -0.015" />
-              <body name="bat" pos="0.3 0 0" quat="0.707 0 0.707 0"><geom name="bat_barrel" type="cylinder" size="0.03 0.45" pos="0 0 0.45" material="bat_mat" mass="0.9" /><site name="bat_grip_left" pos="0 0 0.05" size="0.01" /></body></body>
+                <!-- Attachment site for the baseball in pitcher hand -->
+                <site name="pitcher_hand_site" pos="0.30 0 -0.015" size="0.01" />
+              </body>
             </body>
           </body>
         </body>
       </body>
     </body>
-  <light directional="true" diffuse="0.8 0.8 0.8" specular="0.2 0.2 0.2" pos="0 0 10" dir="0 0 -1" /><geom name="ground" type="plane" size="30 30 0.1" material="matplane" /><geom name="home_plate" type="box" size="0.22 0.22 0.005" pos="0 0 0.005" material="home_plate_mat" /><geom name="pitcher_mound" type="box" size="0.3 0.1 0.005" pos="0 18.44 0.005" material="home_plate_mat" /><camera name="pitcher_cam" pos="0 20.0 2.0" xyaxes="-1 0 0 0 0 1" fovy="60" /><camera name="batter_cam" pos="-0.85 -0.5 1.7" xyaxes="1 0 0 0 0 1" fovy="90" /><camera name="side_cam" pos="-2.2 -1.8 1.4" xyaxes="0.74 -0.67 0 0.15 0.16 0.97" fovy="45" /><camera name="front_cam" pos="-0.4 2.8 1.1" xyaxes="-1 0 0 0 -0.15 0.98" fovy="45" /><body name="baseball" pos="0 15 1.5"><freejoint name="ball_joint" /><geom name="ball_geom" type="sphere" size="0.037" mass="0.145" material="ball_mat" /></body></worldbody>
+
+    <!-- Field and Markers -->
+    <light directional="true" diffuse="0.8 0.8 0.8" specular="0.2 0.2 0.2" pos="0 5 10" dir="0 0 -1" />
+    <geom name="ground" type="plane" size="30 30 0.1" material="matplane" />
+    <geom name="home_plate" type="box" size="0.22 0.22 0.005" pos="0 0 0.005" material="home_plate_mat" />
+    <geom name="pitcher_mound" type="cylinder" size="1.2 0.02" pos="0 10.0 0.01" material="home_plate_mat" />
+    
+    <!-- Target Strike Zone visualizer at Home Plate (Y = 0.0m) -->
+    <site name="strike_zone_target" type="box" size="0.20 0.02 0.30" pos="0 0.0 0.815" material="target_zone_mat" />
+
+    <!-- Cameras -->
+    <camera name="side_cam" pos="-4.0 5.0 2.0" xyaxes="0.9 -0.4 0 0.2 0.4 0.9" fovy="50" />
+    <camera name="pitcher_cam" pos="1.5 12.5 2.0" xyaxes="-0.8 -0.6 0 0.3 -0.4 0.9" fovy="50" />
+    <camera name="behind_pitcher_cam" pos="0 12.5 2.0" xyaxes="1 0 0 0 -0.4 0.9" fovy="50" />
+    <camera name="catcher_cam" pos="0 -2.0 1.2" xyaxes="-1 0 0 0 0.2 0.98" fovy="50" />
+
+    <!-- Baseball with Weld Constraint to Hand -->
+    <body name="baseball" pos="0 10.0 1.2">
+      <freejoint name="ball_joint" />
+      <geom name="ball_geom" type="sphere" size="0.037" mass="0.145" material="ball_mat" />
+      <site name="ball_site" pos="0 0 0" size="0.01" />
+    </body>
+  </worldbody>
 
   <contact>
     <exclude body1="torso_link" body2="left_shoulder_roll_link" />
@@ -198,20 +236,14 @@
   </contact>
 
   <actuator>
-    <motor class="h1" name="left_hip_yaw" joint="left_hip_yaw" ctrlrange="-200 200" />
-    <motor class="h1" name="left_hip_roll" joint="left_hip_roll" ctrlrange="-200 200" />
-    <motor class="h1" name="left_hip_pitch" joint="left_hip_pitch" ctrlrange="-200 200" />
-    <motor class="h1" name="left_knee" joint="left_knee" ctrlrange="-300 300" />
-    <motor class="h1" name="left_ankle" joint="left_ankle" ctrlrange="-40 40" />
-    <motor class="h1" name="right_hip_yaw" joint="right_hip_yaw" ctrlrange="-200 200" />
-    <motor class="h1" name="right_hip_roll" joint="right_hip_roll" ctrlrange="-200 200" />
-    <motor class="h1" name="right_hip_pitch" joint="right_hip_pitch" ctrlrange="-200 200" />
-    <motor class="h1" name="right_knee" joint="right_knee" ctrlrange="-300 300" />
-    <motor class="h1" name="right_ankle" joint="right_ankle" ctrlrange="-40 40" />
     <motor class="h1" name="torso" joint="torso" ctrlrange="-200 200" />
-    <motor class="h1" name="right_shoulder_pitch" joint="right_shoulder_pitch" ctrlrange="-40 40" />
-    <motor class="h1" name="right_shoulder_roll" joint="right_shoulder_roll" ctrlrange="-40 40" />
-    <motor class="h1" name="right_shoulder_yaw" joint="right_shoulder_yaw" ctrlrange="-18 18" />
-    <motor class="h1" name="right_elbow" joint="right_elbow" ctrlrange="-18 18" />
+    <motor class="h1" name="right_shoulder_pitch" joint="right_shoulder_pitch" ctrlrange="-100 100" />
+    <motor class="h1" name="right_shoulder_roll" joint="right_shoulder_roll" ctrlrange="-100 100" />
+    <motor class="h1" name="right_shoulder_yaw" joint="right_shoulder_yaw" ctrlrange="-50 50" />
+    <motor class="h1" name="right_elbow" joint="right_elbow" ctrlrange="-50 50" />
   </actuator>
-<equality><connect name="left_hand_to_bat" site1="l_hand_grip" site2="bat_grip_left" /></equality></mujoco>
+
+  <equality>
+    <weld name="ball_weld" site1="pitcher_hand_site" site2="ball_site" />
+  </equality>
+</mujoco>

@@ -1,0 +1,282 @@
+<mujoco model="h1_baseball_match">
+  <compiler angle="radian" meshdir="unitree_h1_assets" autolimits="true" />
+  <option timestep="0.005" gravity="0 0 -9.81" />
+
+  <statistic meansize="0.05" />
+
+  <default>
+    <default class="h1">
+      <joint damping="1" armature="0.1" />
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2" material="black" />
+      </default>
+      <default class="collision">
+        <geom group="3" mass="0" density="0" />
+        <default class="foot">
+          <geom type="capsule" size=".014" />
+          <default class="foot1">
+            <geom fromto="-.035 0 -0.056 .02 0 -0.045" />
+          </default>
+          <default class="foot2">
+            <geom fromto=".02 0 -0.045 .115 0 -0.056" />
+          </default>
+          <default class="foot3">
+            <geom fromto=".14 -.03 -0.056 .14 .03 -0.056" />
+          </default>
+        </default>
+      </default>
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4" />
+    </default>
+  </default>
+
+  <asset>
+    <material name="black" rgba="0.1 0.1 0.1 1" />
+    <material name="white" rgba="1 1 1 1" />
+    <material name="pitcher_mat" rgba="0.15 0.3 0.6 1" />
+    <material name="batter_mat" rgba="0.7 0.2 0.2 1" />
+
+    <mesh file="pelvis.stl" />
+    <mesh file="left_hip_yaw_link.stl" />
+    <mesh file="left_hip_roll_link.stl" />
+    <mesh file="left_hip_pitch_link.stl" />
+    <mesh file="left_knee_link.stl" />
+    <mesh file="left_ankle_link.stl" />
+    <mesh file="right_hip_yaw_link.stl" />
+    <mesh file="right_hip_roll_link.stl" />
+    <mesh file="right_hip_pitch_link.stl" />
+    <mesh file="right_knee_link.stl" />
+    <mesh file="right_ankle_link.stl" />
+    <mesh file="torso_link.stl" />
+    <mesh file="left_shoulder_pitch_link.stl" />
+    <mesh file="left_shoulder_roll_link.stl" />
+    <mesh file="left_shoulder_yaw_link.stl" />
+    <mesh file="left_elbow_link.stl" />
+    <mesh file="right_shoulder_pitch_link.stl" />
+    <mesh file="right_shoulder_roll_link.stl" />
+    <mesh file="right_shoulder_yaw_link.stl" />
+    <mesh file="right_elbow_link.stl" />
+    <mesh file="logo_link.stl" />
+    
+    <texture type="skybox" builtin="gradient" rgb1="0.4 0.6 0.9" rgb2="0.1 0.2 0.3" width="512" height="512" />
+    
+    <texture name="grass_tex" type="2d" file="../data/textures/grass.png" />
+    <material name="grass_mat" texture="grass_tex" texrepeat="25 25" texuniform="true" reflectance="0.05" />
+    
+    <texture name="dirt_tex" type="2d" file="../data/textures/dirt.png" />
+    <material name="dirt_mat" texture="dirt_tex" texrepeat="8 8" texuniform="true" reflectance="0.02" />
+    
+    <material name="base_mat" rgba="0.95 0.95 0.95 1" reflectance="0.3" />
+    <material name="foul_line_mat" rgba="0.95 0.95 0.95 1" />
+    <material name="wall_mat" rgba="0.08 0.2 0.12 1" reflectance="0.1" />
+    
+    <material name="home_plate_mat" rgba="0.9 0.9 0.9 1" reflectance="0.2" />
+    <material name="ball_mat" rgba="0.98 0.98 0.95 1" reflectance="0.4" />
+    <material name="bat_mat" rgba="0.8 0.6 0.3 1" reflectance="0.3" />
+    <material name="target_zone_mat" rgba="0.2 0.8 0.2 0.3" />
+  </asset>
+  <worldbody>
+    <light directional="true" diffuse="0.9 0.9 0.8" specular="0.3 0.3 0.3" pos="0 -10 20" dir="0 1 -1.5" />
+    
+    <!-- Grass Outfield & Ground -->
+    <geom name="grass_field" type="plane" size="60 60 0.1" pos="0 40 0" material="grass_mat" />
+    
+    <!-- Dirt Infield (Arc) -->
+    <geom name="dirt_infield" type="cylinder" size="18 0.005" pos="0 14.0 0.005" material="dirt_mat" />
+    <geom name="dirt_infield_base" type="box" size="12.7 12.7 0.005" pos="0 12.7 0.005" quat="0.707 0 0 0.707" material="dirt_mat" />
+    
+    <!-- Bases (Diamond 27.43m / 90ft) -->
+    <!-- Home Plate is at (0,0) -->
+    <!-- 1st Base: x = 19.4m, y = 19.4m -->
+    <geom name="first_base" type="box" size="0.2 0.2 0.025" pos="19.4 19.4 0.025" quat="0.9238 0 0 0.3826" material="base_mat" />
+    <!-- 2nd Base: x = 0, y = 38.8m -->
+    <geom name="second_base" type="box" size="0.2 0.2 0.025" pos="0 38.8 0.025" quat="0.707 0 0 0.707" material="base_mat" />
+    <!-- 3rd Base: x = -19.4m, y = 19.4m -->
+    <geom name="third_base" type="box" size="0.2 0.2 0.025" pos="-19.4 19.4 0.025" quat="0.9238 0 0 -0.3826" material="base_mat" />
+    
+    <!-- Home Plate & Mound -->
+    <geom name="home_plate" type="box" size="0.22 0.22 0.006" pos="0 0 0.006" quat="0.707 0 0 0.707" material="home_plate_mat" />
+    <!-- Mound is at y=10, slightly elevated -->
+    <geom name="pitcher_mound" type="cylinder" size="1.5 0.08" pos="0 10.0 0.0" material="dirt_mat" />
+    <geom name="pitcher_plate" type="box" size="0.3 0.08 0.005" pos="0 10.0 0.085" material="home_plate_mat" />
+
+    <!-- Foul Lines -->
+    <geom name="rf_foul_line" type="box" size="0.05 40 0.008" pos="28.28 28.28 0.008" quat="0.9238 0 0 0.3826" material="foul_line_mat" />
+    <geom name="lf_foul_line" type="box" size="0.05 40 0.008" pos="-28.28 28.28 0.008" quat="0.9238 0 0 -0.3826" material="foul_line_mat" />
+
+    <!-- Outfield Walls -->
+    <!-- Left Field Wall -->
+    <geom name="lf_wall" type="box" size="25 0.5 2.5" pos="-25 60 2.5" quat="0.980 0 0 -0.195" material="wall_mat" />
+    <!-- Center Field Wall -->
+    <geom name="cf_wall" type="box" size="20 0.5 2.5" pos="0 65 2.5" material="wall_mat" />
+    <!-- Right Field Wall -->
+    <geom name="rf_wall" type="box" size="25 0.5 2.5" pos="25 60 2.5" quat="0.980 0 0 0.195" material="wall_mat" />
+
+    <site name="strike_zone_target" type="box" size="0.20 0.02 0.27" pos="0 0.0 0.815" material="target_zone_mat" />
+
+    <!-- Cameras -->
+    <camera name="broadcast_cam" pos="-5.0 5.0 3.0" xyaxes="0.89 -0.45 0 0.22 0.44 0.87" fovy="55" />
+    <camera name="batter_focus_cam" pos="-2.2 -1.8 1.4" xyaxes="0.74 -0.67 0 0.15 0.16 0.97" fovy="48" />
+    <camera name="pitcher_focus_cam" pos="1.5 12.5 2.0" xyaxes="-0.8 -0.6 0 0.3 -0.4 0.9" fovy="48" />
+    <camera name="catcher_cam" pos="0 -2.5 1.5" xyaxes="1 0 0 0 0.2 0.98" fovy="52" />
+
+    <!-- 1. PITCHER ROBOT (At Mound: y = 10.0m) -->
+    <body name="pitcher_pelvis" pos="0 10.0 0.82" quat="0.7071068 0 0 -0.7071068" childclass="h1">
+      <inertial pos="-0.0002 4e-05 -0.04522" quat="0.498303 0.499454 -0.500496 0.501741" mass="5.39" diaginertia="0.049 0.044 0.008" />
+      <geom class="visual" mesh="pelvis" material="pitcher_mat" />
+      
+      <body name="p_left_hip_yaw_link" pos="0 0.0875 -0.1742">
+        <joint name="p_left_hip_yaw" axis="0 0 1" range="-0.43 0.43" />
+        <geom class="visual" mesh="left_hip_yaw_link" material="pitcher_mat" />
+        <body name="p_left_hip_roll_link" pos="0.039468 0 0">
+          <joint name="p_left_hip_roll" axis="1 0 0" range="-0.43 0.43" />
+          <geom class="visual" mesh="left_hip_roll_link" material="pitcher_mat" />
+          <body name="p_left_hip_pitch_link" pos="0 0.11536 0">
+            <joint name="p_left_hip_pitch" axis="0 1 0" range="-1.57 1.57" />
+            <geom class="visual" mesh="left_hip_pitch_link" material="pitcher_mat" />
+            <body name="p_left_knee_link" pos="0 0 -0.4">
+              <joint name="p_left_knee" axis="0 1 0" range="-0.26 2.05" />
+              <geom class="visual" mesh="left_knee_link" material="pitcher_mat" />
+              <body name="p_left_ankle_link" pos="0 0 -0.4">
+                <joint name="p_left_ankle" axis="0 1 0" range="-0.87 0.52" />
+                <geom class="visual" mesh="left_ankle_link" material="pitcher_mat" />
+                <geom class="foot1" /><geom class="foot2" /><geom class="foot3" />
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <body name="p_right_hip_yaw_link" pos="0 -0.0875 -0.1742">
+        <joint name="p_right_hip_yaw" axis="0 0 1" range="-0.43 0.43" />
+        <geom class="visual" mesh="right_hip_yaw_link" material="pitcher_mat" />
+        <body name="p_right_hip_roll_link" pos="0.039468 0 0">
+          <joint name="p_right_hip_roll" axis="1 0 0" range="-0.43 0.43" />
+          <geom class="visual" mesh="right_hip_roll_link" material="pitcher_mat" />
+          <body name="p_right_hip_pitch_link" pos="0 -0.11536 0">
+            <joint name="p_right_hip_pitch" axis="0 1 0" range="-1.57 1.57" />
+            <geom class="visual" mesh="right_hip_pitch_link" material="pitcher_mat" />
+            <body name="p_right_knee_link" pos="0 0 -0.4">
+              <joint name="p_right_knee" axis="0 1 0" range="-0.26 2.05" />
+              <geom class="visual" mesh="right_knee_link" material="pitcher_mat" />
+              <body name="p_right_ankle_link" pos="0 0 -0.4">
+                <joint name="p_right_ankle" axis="0 1 0" range="-0.87 0.52" />
+                <geom class="visual" mesh="right_ankle_link" material="pitcher_mat" />
+                <geom class="foot1" /><geom class="foot2" /><geom class="foot3" />
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <body name="p_torso_link">
+        <joint name="p_torso" axis="0 0 1" range="-2.35 2.35" />
+        <geom class="visual" mesh="torso_link" material="pitcher_mat" />
+        <geom class="visual" material="white" mesh="logo_link" />
+        <body name="p_right_shoulder_pitch_link" pos="0.0055 -0.15535 0.42999" quat="0.976296 -0.216438 0 0">
+          <joint name="p_right_shoulder_pitch" axis="0 1 0" range="-2.87 2.87" />
+          <geom class="visual" mesh="right_shoulder_pitch_link" material="pitcher_mat" />
+          <body name="p_right_shoulder_roll_link" pos="-0.0055 -0.0565 -0.0165" quat="0.976296 0.216438 0 0">
+            <joint name="p_right_shoulder_roll" axis="1 0 0" range="-3.11 0.34" />
+            <geom class="visual" mesh="right_shoulder_roll_link" material="pitcher_mat" />
+            <body name="p_right_shoulder_yaw_link" pos="0 0 -0.1343">
+              <joint name="p_right_shoulder_yaw" axis="0 0 1" range="-4.45 1.3" />
+              <geom class="visual" mesh="right_shoulder_yaw_link" material="pitcher_mat" />
+              <body name="p_right_elbow_link" pos="0.0185 0 -0.198">
+                <joint name="p_right_elbow" axis="0 1 0" range="-1.25 2.61" />
+                <geom class="visual" mesh="right_elbow_link" material="pitcher_mat" />
+                <site name="pitcher_hand_site" pos="0.30 0 -0.015" size="0.01" />
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+
+    <!-- 2. BATTER ROBOT (At Batter Box: x = -0.70m, y = -0.45m) -->
+    <body name="batter_pelvis" pos="-0.70 -0.45 0.82" childclass="h1">
+      <inertial pos="-0.0002 4e-05 -0.04522" quat="0.498303 0.499454 -0.500496 0.501741" mass="5.39" diaginertia="0.049 0.044 0.008" />
+      <geom class="visual" mesh="pelvis" material="batter_mat" />
+      
+      <body name="b_left_hip_yaw_link" pos="0 0.0875 -0.1742">
+        <joint name="b_left_hip_yaw" axis="0 0 1" range="-0.43 0.43" />
+        <geom class="visual" mesh="left_hip_yaw_link" material="batter_mat" />
+        <body name="b_left_hip_roll_link" pos="0.039468 0 0">
+          <joint name="b_left_hip_roll" axis="1 0 0" range="-0.43 0.43" />
+          <geom class="visual" mesh="left_hip_roll_link" material="batter_mat" />
+          <body name="b_left_hip_pitch_link" pos="0 0.11536 0">
+            <joint name="b_left_hip_pitch" axis="0 1 0" range="-1.57 1.57" />
+            <geom class="visual" mesh="left_hip_pitch_link" material="batter_mat" />
+            <body name="b_left_knee_link" pos="0 0 -0.4">
+              <joint name="b_left_knee" axis="0 1 0" range="-0.26 2.05" />
+              <geom class="visual" mesh="left_knee_link" material="batter_mat" />
+              <body name="b_left_ankle_link" pos="0 0 -0.4">
+                <joint name="b_left_ankle" axis="0 1 0" range="-0.87 0.52" />
+                <geom class="visual" mesh="left_ankle_link" material="batter_mat" />
+                <geom class="foot1" /><geom class="foot2" /><geom class="foot3" />
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <body name="b_right_hip_yaw_link" pos="0 -0.0875 -0.1742">
+        <joint name="b_right_hip_yaw" axis="0 0 1" range="-0.43 0.43" />
+        <geom class="visual" mesh="right_hip_yaw_link" material="batter_mat" />
+        <body name="b_right_hip_roll_link" pos="0.039468 0 0">
+          <joint name="b_right_hip_roll" axis="1 0 0" range="-0.43 0.43" />
+          <geom class="visual" mesh="right_hip_roll_link" material="batter_mat" />
+          <body name="b_right_hip_pitch_link" pos="0 -0.11536 0">
+            <joint name="b_right_hip_pitch" axis="0 1 0" range="-1.57 1.57" />
+            <geom class="visual" mesh="right_hip_pitch_link" material="batter_mat" />
+            <body name="b_right_knee_link" pos="0 0 -0.4">
+              <joint name="b_right_knee" axis="0 1 0" range="-0.26 2.05" />
+              <geom class="visual" mesh="right_knee_link" material="batter_mat" />
+              <body name="b_right_ankle_link" pos="0 0 -0.4">
+                <joint name="b_right_ankle" axis="0 1 0" range="-0.87 0.52" />
+                <geom class="visual" mesh="right_ankle_link" material="batter_mat" />
+                <geom class="foot1" /><geom class="foot2" /><geom class="foot3" />
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <body name="b_torso_link">
+        <joint name="b_torso" axis="0 0 1" range="-2.35 2.35" />
+        <geom class="visual" mesh="torso_link" material="batter_mat" />
+        <geom class="visual" material="white" mesh="logo_link" />
+        <body name="b_right_shoulder_pitch_link" pos="0.0055 -0.15535 0.42999" quat="0.976296 -0.216438 0 0">
+          <joint name="b_right_shoulder_pitch" axis="0 1 0" range="-2.87 2.87" />
+          <geom class="visual" mesh="right_shoulder_pitch_link" material="batter_mat" />
+          <body name="b_right_shoulder_roll_link" pos="-0.0055 -0.0565 -0.0165" quat="0.976296 0.216438 0 0">
+            <joint name="b_right_shoulder_roll" axis="1 0 0" range="-3.11 0.34" />
+            <geom class="visual" mesh="right_shoulder_roll_link" material="batter_mat" />
+            <body name="b_right_shoulder_yaw_link" pos="0 0 -0.1343">
+              <joint name="b_right_shoulder_yaw" axis="0 0 1" range="-4.45 1.3" />
+              <geom class="visual" mesh="right_shoulder_yaw_link" material="batter_mat" />
+              <body name="b_right_elbow_link" pos="0.0185 0 -0.198">
+                <joint name="b_right_elbow" axis="0 1 0" range="-1.25 2.61" />
+                <geom class="visual" mesh="right_elbow_link" material="batter_mat" />
+                <!-- Bat attached to Batter's right hand -->
+                <body name="bat" pos="0.3 0 0" quat="0.707 0 0.707 0">
+                  <geom name="bat_barrel" type="cylinder" size="0.035 0.45" pos="0 0 0.45" material="bat_mat" mass="0.9" />
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+
+    <!-- 3. BASEBALL (Starts at Pitcher Hand with Weld Constraint) -->
+    <body name="baseball" pos="0 10.0 1.2">
+      <freejoint name="ball_joint" />
+      <geom name="ball_geom" type="sphere" size="0.037" mass="0.145" material="ball_mat" />
+      <site name="ball_site" pos="0 0 0" size="0.01" />
+    </body>
+  </worldbody>
+
+  <equality>
+    <weld name="pitcher_ball_weld" site1="pitcher_hand_site" site2="ball_site" />
+  </equality>
+</mujoco>
