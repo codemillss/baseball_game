@@ -1,0 +1,1105 @@
+=======================================================
+🏟️  FULL 9-INNING BASEBALL SIMULATION START
+=======================================================
+Outcome: STRIKE     | Top 1 | AWAY 0 - 0 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 1 | AWAY 0 - 0 HOME | O:0 S:2 B:0 | Bases: 000
+Outcome: STRIKE     | Top 1 | AWAY 0 - 0 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Top 1 | AWAY 0 - 0 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 1 | AWAY 0 - 0 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: HOME RUN   | Top 1 | AWAY 2 - 0 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FOUL       | Top 1 | AWAY 2 - 0 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: BALL       | Top 1 | AWAY 2 - 0 HOME | O:1 S:1 B:1 | Bases: 000
+Outcome: FAIR       | Top 1 | AWAY 2 - 0 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 1 | AWAY 2 - 0 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: BALL       | Top 1 | AWAY 2 - 0 HOME | O:1 S:1 B:1 | Bases: 100
+Outcome: HOME RUN   | Top 1 | AWAY 4 - 0 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 1 | AWAY 4 - 0 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: FOUL       | Top 1 | AWAY 4 - 0 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 1 | AWAY 4 - 0 HOME | O:1 S:2 B:0 | Bases: 000
+Outcome: STRIKE     | Top 1 | AWAY 4 - 0 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 1 | AWAY 4 - 0 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 1 | AWAY 4 - 0 HOME | O:2 S:2 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 1 | AWAY 5 - 0 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 1 | AWAY 5 - 0 HOME | O:2 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Top 1 | AWAY 5 - 0 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 1 | AWAY 5 - 0 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: FOUL       | Top 1 | AWAY 5 - 0 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: HOME RUN   | Top 1 | AWAY 7 - 0 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 1 | AWAY 7 - 0 HOME | O:2 S:0 B:1 | Bases: 000
+Outcome: BALL       | Top 1 | AWAY 7 - 0 HOME | O:2 S:0 B:2 | Bases: 000
+Outcome: FAIR       | Top 1 | AWAY 7 - 0 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 1 | AWAY 7 - 0 HOME | O:2 S:0 B:1 | Bases: 100
+Outcome: FOUL       | Top 1 | AWAY 7 - 0 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 1 | AWAY 7 - 0 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: FAIR       | Top 1 | AWAY 7 - 0 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: FAIR       | Top 1 | AWAY 7 - 0 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 1 | AWAY 7 - 0 HOME | O:2 S:0 B:1 | Bases: 111
+Outcome: HOME RUN   | Top 1 | AWAY 11 - 0 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 1 | AWAY 11 - 0 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 1 | AWAY 11 - 0 HOME | O:2 S:2 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 0 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 1 | AWAY 11 - 0 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FOUL       | Bot 1 | AWAY 11 - 0 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 0 HOME | O:0 S:2 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 1 | AWAY 11 - 2 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 1 | AWAY 11 - 3 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 1 | AWAY 11 - 3 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Bot 1 | AWAY 11 - 3 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 3 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 1 | AWAY 11 - 5 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:0 S:2 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:1 S:2 B:0 | Bases: 000
+Outcome: FAIR       | Bot 1 | AWAY 11 - 5 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 1 | AWAY 11 - 5 HOME | O:1 S:0 B:1 | Bases: 100
+Outcome: BALL       | Bot 1 | AWAY 11 - 5 HOME | O:1 S:0 B:2 | Bases: 100
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:1 S:1 B:2 | Bases: 100
+Outcome: FOUL       | Bot 1 | AWAY 11 - 5 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: BALL       | Bot 1 | AWAY 11 - 5 HOME | O:1 S:1 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:1 S:2 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 1 | AWAY 11 - 5 HOME | O:2 S:0 B:1 | Bases: 100
+Outcome: FOUL       | Bot 1 | AWAY 11 - 5 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: FAIR       | Bot 1 | AWAY 11 - 5 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: FAIR       | Bot 1 | AWAY 11 - 5 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 1 | AWAY 11 - 5 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 1 | AWAY 11 - 5 HOME | O:2 S:2 B:1 | Bases: 111
+Outcome: BALL       | Bot 1 | AWAY 11 - 5 HOME | O:2 S:2 B:2 | Bases: 111
+Outcome: STRIKE     | Top 2 | AWAY 11 - 5 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 2 | AWAY 11 - 5 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 2 | AWAY 11 - 5 HOME | O:0 S:2 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 2 | AWAY 12 - 5 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 2 | AWAY 12 - 5 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: BALL       | Top 2 | AWAY 12 - 5 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: BALL       | Top 2 | AWAY 12 - 5 HOME | O:0 S:1 B:2 | Bases: 000
+Outcome: BALL       | Top 2 | AWAY 12 - 5 HOME | O:0 S:1 B:3 | Bases: 000
+Outcome: HOME RUN   | Top 2 | AWAY 13 - 5 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:0 S:2 B:0 | Bases: 000
+Outcome: FAIR       | Top 2 | AWAY 13 - 5 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 2 | AWAY 13 - 5 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: FOUL       | Top 2 | AWAY 13 - 5 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:0 S:2 B:0 | Bases: 100
+Outcome: BALL       | Top 2 | AWAY 13 - 5 HOME | O:0 S:2 B:1 | Bases: 100
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Top 2 | AWAY 13 - 5 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: BALL       | Top 2 | AWAY 13 - 5 HOME | O:1 S:1 B:1 | Bases: 110
+Outcome: FOUL       | Top 2 | AWAY 13 - 5 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:1 S:2 B:0 | Bases: 110
+Outcome: FOUL       | Top 2 | AWAY 13 - 5 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:1 S:2 B:0 | Bases: 110
+Outcome: BALL       | Top 2 | AWAY 13 - 5 HOME | O:1 S:2 B:1 | Bases: 110
+Outcome: FAIR       | Top 2 | AWAY 13 - 5 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:1 S:2 B:0 | Bases: 111
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Top 2 | AWAY 13 - 5 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: BALL       | Top 2 | AWAY 13 - 5 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: FOUL       | Top 2 | AWAY 13 - 5 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: HOME RUN   | Top 2 | AWAY 17 - 5 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 2 | AWAY 18 - 5 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 2 | AWAY 18 - 5 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 2 | AWAY 18 - 5 HOME | O:2 S:2 B:0 | Bases: 000
+Outcome: BALL       | Top 2 | AWAY 18 - 5 HOME | O:2 S:2 B:1 | Bases: 000
+Outcome: FAIR       | Top 2 | AWAY 18 - 5 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Top 2 | AWAY 18 - 5 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: FOUL       | Top 2 | AWAY 18 - 5 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: FOUL       | Top 2 | AWAY 18 - 5 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: BALL       | Top 2 | AWAY 18 - 5 HOME | O:2 S:1 B:1 | Bases: 110
+Outcome: FOUL       | Top 2 | AWAY 18 - 5 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: BALL       | Top 2 | AWAY 18 - 5 HOME | O:2 S:1 B:1 | Bases: 110
+Outcome: STRIKE     | Top 2 | AWAY 18 - 5 HOME | O:2 S:2 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 5 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FOUL       | Bot 2 | AWAY 18 - 5 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: FOUL       | Bot 2 | AWAY 18 - 5 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Bot 2 | AWAY 18 - 5 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 2 | AWAY 18 - 7 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FOUL       | Bot 2 | AWAY 18 - 7 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 7 HOME | O:0 S:2 B:0 | Bases: 000
+Outcome: BALL       | Bot 2 | AWAY 18 - 7 HOME | O:0 S:2 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 7 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 2 | AWAY 18 - 7 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 7 HOME | O:1 S:1 B:1 | Bases: 000
+Outcome: BALL       | Bot 2 | AWAY 18 - 7 HOME | O:1 S:1 B:2 | Bases: 000
+Outcome: FAIR       | Bot 2 | AWAY 18 - 7 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 2 | AWAY 18 - 7 HOME | O:1 S:0 B:1 | Bases: 100
+Outcome: FOUL       | Bot 2 | AWAY 18 - 7 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 7 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 7 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 7 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: BALL       | Bot 2 | AWAY 18 - 7 HOME | O:2 S:1 B:1 | Bases: 100
+Outcome: FAIR       | Bot 2 | AWAY 18 - 7 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 7 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 7 HOME | O:2 S:2 B:0 | Bases: 110
+Outcome: FOUL       | Bot 2 | AWAY 18 - 7 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: FAIR       | Bot 2 | AWAY 18 - 7 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Bot 2 | AWAY 18 - 8 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 2 | AWAY 18 - 8 HOME | O:2 S:0 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 8 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 2 | AWAY 18 - 8 HOME | O:2 S:2 B:1 | Bases: 111
+Outcome: STRIKE     | Top 3 | AWAY 18 - 8 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 3 | AWAY 18 - 8 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Top 3 | AWAY 18 - 8 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: STRIKE     | Top 3 | AWAY 18 - 8 HOME | O:0 S:2 B:1 | Bases: 000
+Outcome: FOUL       | Top 3 | AWAY 18 - 8 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Top 3 | AWAY 18 - 8 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Top 3 | AWAY 18 - 8 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: BALL       | Top 3 | AWAY 18 - 8 HOME | O:0 S:0 B:1 | Bases: 110
+Outcome: BALL       | Top 3 | AWAY 18 - 8 HOME | O:0 S:0 B:2 | Bases: 110
+Outcome: BALL       | Top 3 | AWAY 18 - 8 HOME | O:0 S:0 B:3 | Bases: 110
+Outcome: FOUL       | Top 3 | AWAY 18 - 8 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: BALL       | Top 3 | AWAY 18 - 8 HOME | O:0 S:1 B:1 | Bases: 110
+Outcome: FOUL       | Top 3 | AWAY 18 - 8 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: BALL       | Top 3 | AWAY 18 - 8 HOME | O:0 S:1 B:1 | Bases: 110
+Outcome: HOME RUN   | Top 3 | AWAY 21 - 8 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Top 3 | AWAY 21 - 8 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 3 | AWAY 21 - 8 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 21 - 8 HOME | O:0 S:1 B:1 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 21 - 8 HOME | O:0 S:2 B:1 | Bases: 100
+Outcome: FAIR       | Top 3 | AWAY 21 - 8 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: FOUL       | Top 3 | AWAY 21 - 8 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: FAIR       | Top 3 | AWAY 21 - 8 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 3 | AWAY 21 - 8 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: BALL       | Top 3 | AWAY 21 - 8 HOME | O:0 S:0 B:2 | Bases: 111
+Outcome: BALL       | Top 3 | AWAY 21 - 8 HOME | O:0 S:0 B:3 | Bases: 111
+Outcome: STRIKE     | Top 3 | AWAY 21 - 8 HOME | O:0 S:1 B:3 | Bases: 111
+Outcome: FOUL       | Top 3 | AWAY 21 - 8 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: FOUL       | Top 3 | AWAY 21 - 8 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: FAIR       | Top 3 | AWAY 22 - 8 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 3 | AWAY 22 - 8 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: STRIKE     | Top 3 | AWAY 22 - 8 HOME | O:0 S:1 B:1 | Bases: 111
+Outcome: STRIKE     | Top 3 | AWAY 22 - 8 HOME | O:0 S:2 B:1 | Bases: 111
+Outcome: BALL       | Top 3 | AWAY 22 - 8 HOME | O:0 S:2 B:2 | Bases: 111
+Outcome: FAIR       | Top 3 | AWAY 23 - 8 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Top 3 | AWAY 24 - 8 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Top 3 | AWAY 25 - 8 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Top 3 | AWAY 25 - 8 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: BALL       | Top 3 | AWAY 25 - 8 HOME | O:0 S:1 B:1 | Bases: 111
+Outcome: FOUL       | Top 3 | AWAY 25 - 8 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: FOUL       | Top 3 | AWAY 25 - 8 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: BALL       | Top 3 | AWAY 25 - 8 HOME | O:0 S:1 B:1 | Bases: 111
+Outcome: FAIR       | Top 3 | AWAY 26 - 8 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Top 3 | AWAY 27 - 8 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 3 | AWAY 27 - 8 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: STRIKE     | Top 3 | AWAY 27 - 8 HOME | O:0 S:1 B:1 | Bases: 111
+Outcome: BALL       | Top 3 | AWAY 27 - 8 HOME | O:0 S:1 B:2 | Bases: 111
+Outcome: HOME RUN   | Top 3 | AWAY 31 - 8 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 3 | AWAY 31 - 8 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: BALL       | Top 3 | AWAY 31 - 8 HOME | O:0 S:0 B:2 | Bases: 000
+Outcome: STRIKE     | Top 3 | AWAY 31 - 8 HOME | O:0 S:1 B:2 | Bases: 000
+Outcome: FAIR       | Top 3 | AWAY 31 - 8 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 31 - 8 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: BALL       | Top 3 | AWAY 31 - 8 HOME | O:0 S:1 B:1 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 31 - 8 HOME | O:0 S:2 B:1 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 31 - 8 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 31 - 8 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 31 - 8 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 31 - 8 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 3 | AWAY 31 - 8 HOME | O:2 S:0 B:1 | Bases: 100
+Outcome: BALL       | Top 3 | AWAY 31 - 8 HOME | O:2 S:0 B:2 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 31 - 8 HOME | O:2 S:1 B:2 | Bases: 100
+Outcome: FAIR       | Top 3 | AWAY 31 - 8 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: FOUL       | Top 3 | AWAY 31 - 8 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: FOUL       | Top 3 | AWAY 31 - 8 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Top 3 | AWAY 34 - 8 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 3 | AWAY 34 - 8 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 3 | AWAY 34 - 8 HOME | O:2 S:2 B:0 | Bases: 000
+Outcome: FAIR       | Top 3 | AWAY 34 - 8 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 34 - 8 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 3 | AWAY 34 - 8 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 8 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 3 | AWAY 34 - 8 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 9 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 3 | AWAY 34 - 9 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 10 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 3 | AWAY 34 - 10 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Bot 3 | AWAY 34 - 10 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 13 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 3 | AWAY 34 - 13 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Bot 3 | AWAY 34 - 13 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: BALL       | Bot 3 | AWAY 34 - 13 HOME | O:0 S:0 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 13 HOME | O:0 S:1 B:1 | Bases: 110
+Outcome: BALL       | Bot 3 | AWAY 34 - 13 HOME | O:0 S:1 B:2 | Bases: 110
+Outcome: FAIR       | Bot 3 | AWAY 34 - 13 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Bot 3 | AWAY 34 - 13 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: FAIR       | Bot 3 | AWAY 34 - 14 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 3 | AWAY 34 - 14 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: FOUL       | Bot 3 | AWAY 34 - 14 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 3 | AWAY 34 - 14 HOME | O:0 S:1 B:1 | Bases: 111
+Outcome: FAIR       | Bot 3 | AWAY 34 - 15 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Bot 3 | AWAY 34 - 16 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 16 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 16 HOME | O:0 S:2 B:0 | Bases: 111
+Outcome: BALL       | Bot 3 | AWAY 34 - 16 HOME | O:0 S:2 B:1 | Bases: 111
+Outcome: BALL       | Bot 3 | AWAY 34 - 16 HOME | O:0 S:2 B:2 | Bases: 111
+Outcome: BALL       | Bot 3 | AWAY 34 - 16 HOME | O:0 S:2 B:3 | Bases: 111
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 20 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 3 | AWAY 34 - 20 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FOUL       | Bot 3 | AWAY 34 - 20 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 22 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 3 | AWAY 34 - 22 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 24 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: BALL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:2 | Bases: 000
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 24 HOME | O:0 S:2 B:2 | Bases: 000
+Outcome: BALL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:2 B:3 | Bases: 000
+Outcome: BALL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: FOUL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 24 HOME | O:0 S:2 B:0 | Bases: 100
+Outcome: FOUL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: BALL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:1 | Bases: 100
+Outcome: BALL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:2 | Bases: 100
+Outcome: BALL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:3 | Bases: 100
+Outcome: FOUL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: BALL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 24 HOME | O:0 S:2 B:1 | Bases: 100
+Outcome: FAIR       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: BALL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:0 B:1 | Bases: 110
+Outcome: FAIR       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Bot 3 | AWAY 34 - 24 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 28 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 3 | AWAY 34 - 28 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Bot 3 | AWAY 34 - 28 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Bot 3 | AWAY 34 - 28 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 31 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 3 | AWAY 34 - 31 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: BALL       | Bot 3 | AWAY 34 - 31 HOME | O:0 S:0 B:2 | Bases: 000
+Outcome: FAIR       | Bot 3 | AWAY 34 - 31 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 31 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: FAIR       | Bot 3 | AWAY 34 - 31 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 31 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: FOUL       | Bot 3 | AWAY 34 - 31 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: FOUL       | Bot 3 | AWAY 34 - 31 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 34 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 34 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 34 HOME | O:0 S:2 B:0 | Bases: 000
+Outcome: FAIR       | Bot 3 | AWAY 34 - 34 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 34 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: BALL       | Bot 3 | AWAY 34 - 34 HOME | O:0 S:1 B:1 | Bases: 100
+Outcome: FAIR       | Bot 3 | AWAY 34 - 34 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: FAIR       | Bot 3 | AWAY 34 - 34 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 34 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: FAIR       | Bot 3 | AWAY 34 - 35 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 35 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 3 | AWAY 34 - 35 HOME | O:0 S:1 B:1 | Bases: 111
+Outcome: FAIR       | Bot 3 | AWAY 34 - 36 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 36 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 3 | AWAY 34 - 36 HOME | O:0 S:1 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 36 HOME | O:0 S:2 B:1 | Bases: 111
+Outcome: BALL       | Bot 3 | AWAY 34 - 36 HOME | O:0 S:2 B:2 | Bases: 111
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 36 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 3 | AWAY 34 - 36 HOME | O:1 S:0 B:1 | Bases: 111
+Outcome: FOUL       | Bot 3 | AWAY 34 - 36 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 3 | AWAY 34 - 36 HOME | O:1 S:1 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 36 HOME | O:1 S:2 B:1 | Bases: 111
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 40 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 3 | AWAY 34 - 40 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: FOUL       | Bot 3 | AWAY 34 - 40 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 40 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 40 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 40 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: FAIR       | Bot 3 | AWAY 34 - 40 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 40 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 43 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 3 | AWAY 34 - 43 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 3 | AWAY 34 - 43 HOME | O:2 S:0 B:1 | Bases: 100
+Outcome: FOUL       | Bot 3 | AWAY 34 - 43 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 43 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: BALL       | Bot 3 | AWAY 34 - 43 HOME | O:2 S:2 B:1 | Bases: 100
+Outcome: FAIR       | Bot 3 | AWAY 34 - 43 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: BALL       | Bot 3 | AWAY 34 - 43 HOME | O:2 S:0 B:1 | Bases: 110
+Outcome: FOUL       | Bot 3 | AWAY 34 - 43 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 3 | AWAY 34 - 46 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 46 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: BALL       | Bot 3 | AWAY 34 - 46 HOME | O:2 S:1 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 46 HOME | O:2 S:2 B:1 | Bases: 000
+Outcome: FAIR       | Bot 3 | AWAY 34 - 46 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 3 | AWAY 34 - 46 HOME | O:2 S:0 B:1 | Bases: 100
+Outcome: FOUL       | Bot 3 | AWAY 34 - 46 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 3 | AWAY 34 - 46 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: STRIKE     | Top 4 | AWAY 34 - 46 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 4 | AWAY 34 - 46 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: HOME RUN   | Top 4 | AWAY 35 - 46 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 4 | AWAY 36 - 46 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 4 | AWAY 36 - 46 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: BALL       | Top 4 | AWAY 36 - 46 HOME | O:0 S:0 B:2 | Bases: 000
+Outcome: FAIR       | Top 4 | AWAY 36 - 46 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 4 | AWAY 36 - 46 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: FAIR       | Top 4 | AWAY 36 - 46 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Top 4 | AWAY 36 - 46 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Top 4 | AWAY 39 - 46 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 4 | AWAY 39 - 46 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Top 4 | AWAY 39 - 46 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: BALL       | Top 4 | AWAY 39 - 46 HOME | O:0 S:1 B:2 | Bases: 000
+Outcome: HOME RUN   | Top 4 | AWAY 40 - 46 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 4 | AWAY 40 - 46 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 4 | AWAY 40 - 46 HOME | O:0 S:2 B:0 | Bases: 000
+Outcome: FAIR       | Top 4 | AWAY 40 - 46 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Top 4 | AWAY 40 - 46 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: BALL       | Top 4 | AWAY 40 - 46 HOME | O:0 S:0 B:1 | Bases: 110
+Outcome: BALL       | Top 4 | AWAY 40 - 46 HOME | O:0 S:0 B:2 | Bases: 110
+Outcome: BALL       | Top 4 | AWAY 40 - 46 HOME | O:0 S:0 B:3 | Bases: 110
+Outcome: BALL       | Top 4 | AWAY 40 - 46 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Top 4 | AWAY 40 - 46 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Top 4 | AWAY 40 - 46 HOME | O:0 S:2 B:0 | Bases: 111
+Outcome: BALL       | Top 4 | AWAY 40 - 46 HOME | O:0 S:2 B:1 | Bases: 111
+Outcome: BALL       | Top 4 | AWAY 40 - 46 HOME | O:0 S:2 B:2 | Bases: 111
+Outcome: STRIKE     | Top 4 | AWAY 40 - 46 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Top 4 | AWAY 41 - 46 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Top 4 | AWAY 42 - 46 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 4 | AWAY 42 - 46 HOME | O:1 S:0 B:1 | Bases: 111
+Outcome: STRIKE     | Top 4 | AWAY 42 - 46 HOME | O:1 S:1 B:1 | Bases: 111
+Outcome: BALL       | Top 4 | AWAY 42 - 46 HOME | O:1 S:1 B:2 | Bases: 111
+Outcome: STRIKE     | Top 4 | AWAY 42 - 46 HOME | O:1 S:2 B:2 | Bases: 111
+Outcome: FOUL       | Top 4 | AWAY 42 - 46 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: BALL       | Top 4 | AWAY 42 - 46 HOME | O:1 S:1 B:1 | Bases: 111
+Outcome: HOME RUN   | Top 4 | AWAY 46 - 46 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 4 | AWAY 46 - 46 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: BALL       | Top 4 | AWAY 46 - 46 HOME | O:1 S:0 B:2 | Bases: 000
+Outcome: STRIKE     | Top 4 | AWAY 46 - 46 HOME | O:1 S:1 B:2 | Bases: 000
+Outcome: BALL       | Top 4 | AWAY 46 - 46 HOME | O:1 S:1 B:3 | Bases: 000
+Outcome: FAIR       | Top 4 | AWAY 46 - 46 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 4 | AWAY 46 - 46 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: BALL       | Top 4 | AWAY 46 - 46 HOME | O:1 S:1 B:1 | Bases: 100
+Outcome: BALL       | Top 4 | AWAY 46 - 46 HOME | O:1 S:1 B:2 | Bases: 100
+Outcome: STRIKE     | Top 4 | AWAY 46 - 46 HOME | O:1 S:2 B:2 | Bases: 100
+Outcome: HOME RUN   | Top 4 | AWAY 48 - 46 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Top 4 | AWAY 48 - 46 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 4 | AWAY 48 - 46 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 4 | AWAY 48 - 46 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: STRIKE     | Top 4 | AWAY 48 - 46 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 4 | AWAY 48 - 46 HOME | O:2 S:0 B:1 | Bases: 100
+Outcome: BALL       | Top 4 | AWAY 48 - 46 HOME | O:2 S:0 B:2 | Bases: 100
+Outcome: BALL       | Top 4 | AWAY 48 - 46 HOME | O:2 S:0 B:3 | Bases: 100
+Outcome: FAIR       | Top 4 | AWAY 48 - 46 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: BALL       | Top 4 | AWAY 48 - 46 HOME | O:2 S:0 B:1 | Bases: 110
+Outcome: STRIKE     | Top 4 | AWAY 48 - 46 HOME | O:2 S:1 B:1 | Bases: 110
+Outcome: STRIKE     | Top 4 | AWAY 48 - 46 HOME | O:2 S:2 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 46 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FOUL       | Bot 4 | AWAY 48 - 46 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 46 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 48 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 48 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 48 HOME | O:0 S:0 B:2 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 48 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 48 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 48 HOME | O:0 S:2 B:0 | Bases: 100
+Outcome: BALL       | Bot 4 | AWAY 48 - 48 HOME | O:0 S:2 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 48 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 48 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: FAIR       | Bot 4 | AWAY 48 - 48 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: BALL       | Bot 4 | AWAY 48 - 48 HOME | O:1 S:0 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 48 HOME | O:1 S:1 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 48 HOME | O:1 S:2 B:1 | Bases: 110
+Outcome: BALL       | Bot 4 | AWAY 48 - 48 HOME | O:1 S:2 B:2 | Bases: 110
+Outcome: FAIR       | Bot 4 | AWAY 48 - 48 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 48 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 52 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 52 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 52 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Bot 4 | AWAY 48 - 52 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 52 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: FAIR       | Bot 4 | AWAY 48 - 52 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Bot 4 | AWAY 48 - 53 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 57 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 58 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 58 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: FOUL       | Bot 4 | AWAY 48 - 58 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 58 HOME | O:1 S:1 B:1 | Bases: 000
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 59 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 59 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 59 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Bot 4 | AWAY 48 - 59 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: FOUL       | Bot 4 | AWAY 48 - 59 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 62 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 62 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 4 | AWAY 48 - 62 HOME | O:1 S:0 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 62 HOME | O:1 S:1 B:1 | Bases: 100
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 64 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 65 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 65 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 65 HOME | O:1 S:1 B:1 | Bases: 000
+Outcome: FOUL       | Bot 4 | AWAY 48 - 65 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 65 HOME | O:1 S:1 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 65 HOME | O:1 S:2 B:1 | Bases: 000
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 66 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 66 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 66 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: BALL       | Bot 4 | AWAY 48 - 66 HOME | O:1 S:1 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 66 HOME | O:1 S:2 B:1 | Bases: 100
+Outcome: FAIR       | Bot 4 | AWAY 48 - 66 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: BALL       | Bot 4 | AWAY 48 - 66 HOME | O:1 S:0 B:1 | Bases: 110
+Outcome: FOUL       | Bot 4 | AWAY 48 - 66 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 69 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 69 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 4 | AWAY 48 - 69 HOME | O:1 S:0 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 69 HOME | O:1 S:1 B:1 | Bases: 100
+Outcome: FOUL       | Bot 4 | AWAY 48 - 69 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 69 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 71 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 71 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 71 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 71 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 71 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: BALL       | Bot 4 | AWAY 48 - 71 HOME | O:1 S:2 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 71 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 4 | AWAY 48 - 71 HOME | O:2 S:0 B:1 | Bases: 100
+Outcome: BALL       | Bot 4 | AWAY 48 - 71 HOME | O:2 S:0 B:2 | Bases: 100
+Outcome: FAIR       | Bot 4 | AWAY 48 - 71 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: BALL       | Bot 4 | AWAY 48 - 71 HOME | O:2 S:0 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 71 HOME | O:2 S:1 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 71 HOME | O:2 S:2 B:1 | Bases: 110
+Outcome: BALL       | Bot 4 | AWAY 48 - 71 HOME | O:2 S:2 B:2 | Bases: 110
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 74 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 74 HOME | O:2 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 74 HOME | O:2 S:1 B:1 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 74 HOME | O:2 S:1 B:2 | Bases: 000
+Outcome: FOUL       | Bot 4 | AWAY 48 - 74 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 74 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 74 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 74 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: BALL       | Bot 4 | AWAY 48 - 74 HOME | O:2 S:2 B:1 | Bases: 100
+Outcome: FAIR       | Bot 4 | AWAY 48 - 74 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 74 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 77 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 78 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 78 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 78 HOME | O:2 S:1 B:1 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 78 HOME | O:2 S:1 B:2 | Bases: 000
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 78 HOME | O:2 S:2 B:2 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 78 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 78 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: FAIR       | Bot 4 | AWAY 48 - 78 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: BALL       | Bot 4 | AWAY 48 - 78 HOME | O:2 S:0 B:1 | Bases: 110
+Outcome: BALL       | Bot 4 | AWAY 48 - 78 HOME | O:2 S:0 B:2 | Bases: 110
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 81 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: FOUL       | Bot 4 | AWAY 48 - 81 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 81 HOME | O:2 S:2 B:0 | Bases: 000
+Outcome: FOUL       | Bot 4 | AWAY 48 - 81 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 81 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 4 | AWAY 48 - 83 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 4 | AWAY 48 - 83 HOME | O:2 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Bot 4 | AWAY 48 - 83 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 83 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: FAIR       | Bot 4 | AWAY 48 - 83 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: BALL       | Bot 4 | AWAY 48 - 83 HOME | O:2 S:0 B:1 | Bases: 110
+Outcome: FAIR       | Bot 4 | AWAY 48 - 83 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 83 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 83 HOME | O:2 S:2 B:0 | Bases: 111
+Outcome: BALL       | Bot 4 | AWAY 48 - 83 HOME | O:2 S:2 B:1 | Bases: 111
+Outcome: FAIR       | Bot 4 | AWAY 48 - 84 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 4 | AWAY 48 - 84 HOME | O:2 S:0 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 84 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: BALL       | Bot 4 | AWAY 48 - 84 HOME | O:2 S:1 B:2 | Bases: 111
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 84 HOME | O:2 S:2 B:2 | Bases: 111
+Outcome: FAIR       | Bot 4 | AWAY 48 - 85 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 4 | AWAY 48 - 85 HOME | O:2 S:0 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 85 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: BALL       | Bot 4 | AWAY 48 - 85 HOME | O:2 S:1 B:2 | Bases: 111
+Outcome: BALL       | Bot 4 | AWAY 48 - 85 HOME | O:2 S:1 B:3 | Bases: 111
+Outcome: FAIR       | Bot 4 | AWAY 48 - 86 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 86 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 4 | AWAY 48 - 86 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: FAIR       | Bot 4 | AWAY 48 - 87 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Bot 4 | AWAY 48 - 88 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 4 | AWAY 48 - 88 HOME | O:2 S:0 B:1 | Bases: 111
+Outcome: FOUL       | Bot 4 | AWAY 48 - 88 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 4 | AWAY 48 - 88 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: FOUL       | Bot 4 | AWAY 48 - 88 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 4 | AWAY 48 - 88 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: FAIR       | Bot 4 | AWAY 48 - 89 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Bot 4 | AWAY 48 - 90 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Bot 4 | AWAY 48 - 90 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 4 | AWAY 48 - 90 HOME | O:2 S:2 B:0 | Bases: 111
+Outcome: STRIKE     | Top 5 | AWAY 48 - 90 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 5 | AWAY 48 - 90 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Top 5 | AWAY 48 - 90 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: STRIKE     | Top 5 | AWAY 48 - 90 HOME | O:0 S:2 B:1 | Bases: 000
+Outcome: FOUL       | Top 5 | AWAY 48 - 90 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 5 | AWAY 48 - 90 HOME | O:0 S:2 B:0 | Bases: 000
+Outcome: STRIKE     | Top 5 | AWAY 48 - 90 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 5 | AWAY 48 - 90 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Top 5 | AWAY 48 - 90 HOME | O:1 S:1 B:1 | Bases: 000
+Outcome: STRIKE     | Top 5 | AWAY 48 - 90 HOME | O:1 S:2 B:1 | Bases: 000
+Outcome: FAIR       | Top 5 | AWAY 48 - 90 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: HOME RUN   | Top 5 | AWAY 50 - 90 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 5 | AWAY 50 - 90 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: HOME RUN   | Top 5 | AWAY 51 - 90 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 5 | AWAY 51 - 90 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Top 5 | AWAY 51 - 90 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 5 | AWAY 51 - 90 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 5 | AWAY 51 - 90 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: FAIR       | Top 5 | AWAY 51 - 90 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Top 5 | AWAY 51 - 90 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Top 5 | AWAY 51 - 90 HOME | O:1 S:2 B:0 | Bases: 110
+Outcome: STRIKE     | Top 5 | AWAY 51 - 90 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: FAIR       | Top 5 | AWAY 51 - 90 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 5 | AWAY 51 - 90 HOME | O:2 S:0 B:1 | Bases: 111
+Outcome: BALL       | Top 5 | AWAY 51 - 90 HOME | O:2 S:0 B:2 | Bases: 111
+Outcome: FAIR       | Top 5 | AWAY 52 - 90 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Top 5 | AWAY 52 - 90 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: FAIR       | Top 5 | AWAY 53 - 90 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Top 5 | AWAY 53 - 90 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: FOUL       | Top 5 | AWAY 53 - 90 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: HOME RUN   | Top 5 | AWAY 57 - 90 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 5 | AWAY 57 - 90 HOME | O:2 S:0 B:1 | Bases: 000
+Outcome: BALL       | Top 5 | AWAY 57 - 90 HOME | O:2 S:0 B:2 | Bases: 000
+Outcome: FOUL       | Top 5 | AWAY 57 - 90 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: BALL       | Top 5 | AWAY 57 - 90 HOME | O:2 S:1 B:1 | Bases: 000
+Outcome: FOUL       | Top 5 | AWAY 57 - 90 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 5 | AWAY 57 - 90 HOME | O:2 S:2 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 90 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 5 | AWAY 57 - 90 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Bot 5 | AWAY 57 - 90 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Bot 5 | AWAY 57 - 90 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: FOUL       | Bot 5 | AWAY 57 - 90 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 90 HOME | O:0 S:2 B:0 | Bases: 110
+Outcome: BALL       | Bot 5 | AWAY 57 - 90 HOME | O:0 S:2 B:1 | Bases: 110
+Outcome: FOUL       | Bot 5 | AWAY 57 - 90 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: BALL       | Bot 5 | AWAY 57 - 90 HOME | O:0 S:1 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 90 HOME | O:0 S:2 B:1 | Bases: 110
+Outcome: FOUL       | Bot 5 | AWAY 57 - 90 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 90 HOME | O:0 S:2 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 93 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 5 | AWAY 57 - 93 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 94 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FOUL       | Bot 5 | AWAY 57 - 94 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 95 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 5 | AWAY 57 - 95 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 97 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 5 | AWAY 57 - 97 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Bot 5 | AWAY 57 - 97 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 5 | AWAY 57 - 97 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: BALL       | Bot 5 | AWAY 57 - 97 HOME | O:0 S:0 B:2 | Bases: 100
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 99 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 99 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Bot 5 | AWAY 57 - 99 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FOUL       | Bot 5 | AWAY 57 - 99 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 99 HOME | O:0 S:2 B:0 | Bases: 100
+Outcome: FOUL       | Bot 5 | AWAY 57 - 99 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 99 HOME | O:0 S:2 B:0 | Bases: 100
+Outcome: FAIR       | Bot 5 | AWAY 57 - 99 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: FAIR       | Bot 5 | AWAY 57 - 99 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Bot 5 | AWAY 57 - 99 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: FAIR       | Bot 5 | AWAY 57 - 100 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 100 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 100 HOME | O:0 S:2 B:0 | Bases: 111
+Outcome: BALL       | Bot 5 | AWAY 57 - 100 HOME | O:0 S:2 B:1 | Bases: 111
+Outcome: BALL       | Bot 5 | AWAY 57 - 100 HOME | O:0 S:2 B:2 | Bases: 111
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 100 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 104 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 5 | AWAY 57 - 104 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: BALL       | Bot 5 | AWAY 57 - 104 HOME | O:1 S:0 B:2 | Bases: 000
+Outcome: FAIR       | Bot 5 | AWAY 57 - 104 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Bot 5 | AWAY 57 - 104 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 107 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 5 | AWAY 57 - 107 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: BALL       | Bot 5 | AWAY 57 - 107 HOME | O:1 S:0 B:2 | Bases: 000
+Outcome: FAIR       | Bot 5 | AWAY 57 - 107 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 5 | AWAY 57 - 107 HOME | O:1 S:0 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 107 HOME | O:1 S:1 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 107 HOME | O:1 S:2 B:1 | Bases: 100
+Outcome: FAIR       | Bot 5 | AWAY 57 - 107 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: FOUL       | Bot 5 | AWAY 57 - 107 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 107 HOME | O:1 S:2 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 107 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: BALL       | Bot 5 | AWAY 57 - 107 HOME | O:2 S:0 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 107 HOME | O:2 S:1 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 107 HOME | O:2 S:2 B:1 | Bases: 110
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 110 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 110 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: BALL       | Bot 5 | AWAY 57 - 110 HOME | O:2 S:1 B:1 | Bases: 000
+Outcome: FAIR       | Bot 5 | AWAY 57 - 110 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 110 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: FOUL       | Bot 5 | AWAY 57 - 110 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 112 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 113 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 5 | AWAY 57 - 113 HOME | O:2 S:0 B:1 | Bases: 000
+Outcome: BALL       | Bot 5 | AWAY 57 - 113 HOME | O:2 S:0 B:2 | Bases: 000
+Outcome: HOME RUN   | Bot 5 | AWAY 57 - 114 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 114 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 5 | AWAY 57 - 114 HOME | O:2 S:2 B:0 | Bases: 000
+Outcome: STRIKE     | Top 6 | AWAY 57 - 114 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Top 6 | AWAY 57 - 114 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 6 | AWAY 57 - 114 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: STRIKE     | Top 6 | AWAY 57 - 114 HOME | O:0 S:1 B:1 | Bases: 100
+Outcome: BALL       | Top 6 | AWAY 57 - 114 HOME | O:0 S:1 B:2 | Bases: 100
+Outcome: FAIR       | Top 6 | AWAY 57 - 114 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Top 6 | AWAY 57 - 114 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Top 6 | AWAY 60 - 114 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 6 | AWAY 60 - 114 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Top 6 | AWAY 60 - 114 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: FAIR       | Top 6 | AWAY 60 - 114 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Top 6 | AWAY 60 - 114 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Top 6 | AWAY 60 - 114 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: FOUL       | Top 6 | AWAY 60 - 114 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Top 6 | AWAY 60 - 114 HOME | O:0 S:2 B:0 | Bases: 110
+Outcome: STRIKE     | Top 6 | AWAY 60 - 114 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: HOME RUN   | Top 6 | AWAY 63 - 114 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 6 | AWAY 64 - 114 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 6 | AWAY 64 - 114 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 6 | AWAY 64 - 114 HOME | O:1 S:2 B:0 | Bases: 000
+Outcome: BALL       | Top 6 | AWAY 64 - 114 HOME | O:1 S:2 B:1 | Bases: 000
+Outcome: STRIKE     | Top 6 | AWAY 64 - 114 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 6 | AWAY 64 - 114 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: BALL       | Top 6 | AWAY 64 - 114 HOME | O:2 S:1 B:1 | Bases: 000
+Outcome: HOME RUN   | Top 6 | AWAY 65 - 114 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 6 | AWAY 65 - 114 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 6 | AWAY 65 - 114 HOME | O:2 S:2 B:0 | Bases: 000
+Outcome: FAIR       | Top 6 | AWAY 65 - 114 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: FOUL       | Top 6 | AWAY 65 - 114 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 6 | AWAY 65 - 114 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 6 | AWAY 65 - 114 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 6 | AWAY 65 - 114 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 6 | AWAY 65 - 114 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: FAIR       | Bot 6 | AWAY 65 - 114 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: FAIR       | Bot 6 | AWAY 65 - 114 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 6 | AWAY 65 - 114 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: FOUL       | Bot 6 | AWAY 65 - 114 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 6 | AWAY 65 - 114 HOME | O:0 S:2 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 6 | AWAY 65 - 114 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 6 | AWAY 65 - 114 HOME | O:1 S:0 B:1 | Bases: 111
+Outcome: BALL       | Bot 6 | AWAY 65 - 114 HOME | O:1 S:0 B:2 | Bases: 111
+Outcome: FAIR       | Bot 6 | AWAY 65 - 115 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Bot 6 | AWAY 65 - 115 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: FOUL       | Bot 6 | AWAY 65 - 115 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 6 | AWAY 65 - 115 HOME | O:1 S:1 B:1 | Bases: 111
+Outcome: FAIR       | Bot 6 | AWAY 65 - 116 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 6 | AWAY 65 - 116 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: FOUL       | Bot 6 | AWAY 65 - 116 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 6 | AWAY 65 - 116 HOME | O:1 S:2 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 6 | AWAY 65 - 116 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 6 | AWAY 65 - 116 HOME | O:2 S:0 B:1 | Bases: 111
+Outcome: FAIR       | Bot 6 | AWAY 65 - 117 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Bot 6 | AWAY 65 - 118 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 6 | AWAY 65 - 118 HOME | O:2 S:0 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 6 | AWAY 65 - 118 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: BALL       | Bot 6 | AWAY 65 - 118 HOME | O:2 S:1 B:2 | Bases: 111
+Outcome: BALL       | Bot 6 | AWAY 65 - 118 HOME | O:2 S:1 B:3 | Bases: 111
+Outcome: STRIKE     | Bot 6 | AWAY 65 - 118 HOME | O:2 S:2 B:3 | Bases: 111
+Outcome: BALL       | Bot 6 | AWAY 65 - 119 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 6 | AWAY 65 - 119 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: HOME RUN   | Bot 6 | AWAY 65 - 123 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 6 | AWAY 65 - 123 HOME | O:2 S:0 B:1 | Bases: 000
+Outcome: BALL       | Bot 6 | AWAY 65 - 123 HOME | O:2 S:0 B:2 | Bases: 000
+Outcome: HOME RUN   | Bot 6 | AWAY 65 - 124 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 6 | AWAY 65 - 124 HOME | O:2 S:0 B:1 | Bases: 000
+Outcome: FOUL       | Bot 6 | AWAY 65 - 124 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 6 | AWAY 65 - 124 HOME | O:2 S:2 B:0 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 65 - 124 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 65 - 124 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 65 - 124 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 65 - 124 HOME | O:0 S:1 B:2 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 65 - 124 HOME | O:0 S:1 B:3 | Bases: 000
+Outcome: FAIR       | Top 7 | AWAY 65 - 124 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 7 | AWAY 65 - 124 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: BALL       | Top 7 | AWAY 65 - 124 HOME | O:0 S:1 B:1 | Bases: 100
+Outcome: FAIR       | Top 7 | AWAY 65 - 124 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Top 7 | AWAY 65 - 124 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Top 7 | AWAY 68 - 124 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FOUL       | Top 7 | AWAY 68 - 124 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 68 - 124 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 68 - 124 HOME | O:0 S:2 B:1 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 68 - 124 HOME | O:0 S:2 B:2 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 68 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 68 - 124 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 68 - 124 HOME | O:1 S:0 B:2 | Bases: 000
+Outcome: FOUL       | Top 7 | AWAY 68 - 124 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 68 - 124 HOME | O:1 S:2 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 7 | AWAY 69 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 69 - 124 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: HOME RUN   | Top 7 | AWAY 70 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 70 - 124 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 70 - 124 HOME | O:1 S:2 B:0 | Bases: 000
+Outcome: FAIR       | Top 7 | AWAY 70 - 124 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 7 | AWAY 70 - 124 HOME | O:1 S:0 B:1 | Bases: 100
+Outcome: BALL       | Top 7 | AWAY 70 - 124 HOME | O:1 S:0 B:2 | Bases: 100
+Outcome: FAIR       | Top 7 | AWAY 70 - 124 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: BALL       | Top 7 | AWAY 70 - 124 HOME | O:1 S:0 B:1 | Bases: 110
+Outcome: FAIR       | Top 7 | AWAY 70 - 124 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 7 | AWAY 70 - 124 HOME | O:1 S:0 B:1 | Bases: 111
+Outcome: FAIR       | Top 7 | AWAY 71 - 124 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 7 | AWAY 71 - 124 HOME | O:1 S:0 B:1 | Bases: 111
+Outcome: FAIR       | Top 7 | AWAY 72 - 124 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Top 7 | AWAY 72 - 124 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: BALL       | Top 7 | AWAY 72 - 124 HOME | O:1 S:1 B:1 | Bases: 111
+Outcome: FAIR       | Top 7 | AWAY 73 - 124 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Top 7 | AWAY 74 - 124 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Top 7 | AWAY 74 - 124 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Top 7 | AWAY 74 - 124 HOME | O:1 S:2 B:0 | Bases: 111
+Outcome: FAIR       | Top 7 | AWAY 75 - 124 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Top 7 | AWAY 75 - 124 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: BALL       | Top 7 | AWAY 75 - 124 HOME | O:1 S:1 B:1 | Bases: 111
+Outcome: BALL       | Top 7 | AWAY 75 - 124 HOME | O:1 S:1 B:2 | Bases: 111
+Outcome: HOME RUN   | Top 7 | AWAY 79 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 79 - 124 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 79 - 124 HOME | O:1 S:1 B:1 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 79 - 124 HOME | O:1 S:1 B:2 | Bases: 000
+Outcome: HOME RUN   | Top 7 | AWAY 80 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FOUL       | Top 7 | AWAY 80 - 124 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Top 7 | AWAY 80 - 124 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 7 | AWAY 80 - 124 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: FAIR       | Top 7 | AWAY 80 - 124 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Top 7 | AWAY 80 - 124 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Top 7 | AWAY 83 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 7 | AWAY 84 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Top 7 | AWAY 84 - 124 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 7 | AWAY 84 - 124 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: FOUL       | Top 7 | AWAY 84 - 124 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: HOME RUN   | Top 7 | AWAY 86 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 86 - 124 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Top 7 | AWAY 86 - 124 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: HOME RUN   | Top 7 | AWAY 88 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 88 - 124 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 7 | AWAY 89 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 89 - 124 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 7 | AWAY 90 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 7 | AWAY 91 - 124 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 91 - 124 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: BALL       | Top 7 | AWAY 91 - 124 HOME | O:1 S:0 B:2 | Bases: 000
+Outcome: STRIKE     | Top 7 | AWAY 91 - 124 HOME | O:1 S:1 B:2 | Bases: 000
+Outcome: FAIR       | Top 7 | AWAY 91 - 124 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 7 | AWAY 91 - 124 HOME | O:1 S:0 B:1 | Bases: 100
+Outcome: FOUL       | Top 7 | AWAY 91 - 124 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 7 | AWAY 91 - 124 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: STRIKE     | Top 7 | AWAY 91 - 124 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 7 | AWAY 91 - 124 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 7 | AWAY 91 - 124 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: FAIR       | Top 7 | AWAY 91 - 124 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: FOUL       | Top 7 | AWAY 91 - 124 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Top 7 | AWAY 91 - 124 HOME | O:2 S:2 B:0 | Bases: 110
+Outcome: FAIR       | Top 7 | AWAY 91 - 124 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Top 7 | AWAY 91 - 124 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: BALL       | Top 7 | AWAY 91 - 124 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: HOME RUN   | Top 7 | AWAY 95 - 124 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Top 7 | AWAY 95 - 124 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 7 | AWAY 95 - 124 HOME | O:2 S:0 B:1 | Bases: 100
+Outcome: HOME RUN   | Top 7 | AWAY 97 - 124 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Top 7 | AWAY 97 - 124 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 7 | AWAY 97 - 124 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 7 | AWAY 97 - 124 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: FAIR       | Top 7 | AWAY 97 - 124 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: FAIR       | Top 7 | AWAY 97 - 124 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Top 7 | AWAY 97 - 124 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: BALL       | Top 7 | AWAY 97 - 124 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: FOUL       | Top 7 | AWAY 97 - 124 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Top 7 | AWAY 97 - 124 HOME | O:2 S:2 B:0 | Bases: 111
+Outcome: BALL       | Top 7 | AWAY 97 - 124 HOME | O:2 S:2 B:1 | Bases: 111
+Outcome: BALL       | Top 7 | AWAY 97 - 124 HOME | O:2 S:2 B:2 | Bases: 111
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 124 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 7 | AWAY 97 - 124 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Bot 7 | AWAY 97 - 124 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: FAIR       | Bot 7 | AWAY 97 - 124 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 124 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: FAIR       | Bot 7 | AWAY 97 - 125 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 125 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 125 HOME | O:0 S:0 B:2 | Bases: 111
+Outcome: FAIR       | Bot 7 | AWAY 97 - 126 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 126 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 126 HOME | O:0 S:1 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 126 HOME | O:0 S:2 B:1 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 126 HOME | O:0 S:2 B:2 | Bases: 111
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 126 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 126 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 126 HOME | O:1 S:1 B:1 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 126 HOME | O:1 S:1 B:2 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 126 HOME | O:1 S:1 B:3 | Bases: 111
+Outcome: FAIR       | Bot 7 | AWAY 97 - 127 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Bot 7 | AWAY 97 - 128 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 128 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 128 HOME | O:1 S:2 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 128 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 128 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 128 HOME | O:2 S:2 B:0 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 128 HOME | O:2 S:2 B:1 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 128 HOME | O:2 S:2 B:2 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 128 HOME | O:2 S:2 B:3 | Bases: 111
+Outcome: FOUL       | Bot 7 | AWAY 97 - 128 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: BALL       | Bot 7 | AWAY 97 - 128 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: HOME RUN   | Bot 7 | AWAY 97 - 132 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 132 HOME | O:2 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 7 | AWAY 97 - 132 HOME | O:2 S:2 B:0 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 97 - 132 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 97 - 132 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Top 8 | AWAY 97 - 132 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 8 | AWAY 97 - 132 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: BALL       | Top 8 | AWAY 97 - 132 HOME | O:0 S:0 B:2 | Bases: 100
+Outcome: STRIKE     | Top 8 | AWAY 97 - 132 HOME | O:0 S:1 B:2 | Bases: 100
+Outcome: STRIKE     | Top 8 | AWAY 97 - 132 HOME | O:0 S:2 B:2 | Bases: 100
+Outcome: BALL       | Top 8 | AWAY 97 - 132 HOME | O:0 S:2 B:3 | Bases: 100
+Outcome: HOME RUN   | Top 8 | AWAY 99 - 132 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 99 - 132 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Top 8 | AWAY 99 - 132 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 8 | AWAY 99 - 132 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: STRIKE     | Top 8 | AWAY 99 - 132 HOME | O:0 S:1 B:1 | Bases: 100
+Outcome: FAIR       | Top 8 | AWAY 99 - 132 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Top 8 | AWAY 99 - 132 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: BALL       | Top 8 | AWAY 99 - 132 HOME | O:0 S:1 B:1 | Bases: 110
+Outcome: FAIR       | Top 8 | AWAY 99 - 132 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 99 - 132 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: FOUL       | Top 8 | AWAY 99 - 132 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 99 - 132 HOME | O:0 S:1 B:1 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 99 - 132 HOME | O:0 S:2 B:1 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 99 - 132 HOME | O:0 S:2 B:2 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 99 - 132 HOME | O:0 S:2 B:3 | Bases: 111
+Outcome: FOUL       | Top 8 | AWAY 99 - 132 HOME | O:0 S:1 B:0 | Bases: 111
+Outcome: FAIR       | Top 8 | AWAY 100 - 132 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 100 - 132 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 100 - 132 HOME | O:0 S:1 B:1 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 100 - 132 HOME | O:0 S:1 B:2 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 100 - 132 HOME | O:0 S:1 B:3 | Bases: 111
+Outcome: FAIR       | Top 8 | AWAY 101 - 132 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 101 - 132 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 101 - 132 HOME | O:0 S:0 B:2 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 101 - 132 HOME | O:0 S:0 B:3 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 102 - 132 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: HOME RUN   | Top 8 | AWAY 106 - 132 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 8 | AWAY 107 - 132 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 107 - 132 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Top 8 | AWAY 107 - 132 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Top 8 | AWAY 107 - 132 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: BALL       | Top 8 | AWAY 107 - 132 HOME | O:0 S:0 B:1 | Bases: 110
+Outcome: STRIKE     | Top 8 | AWAY 107 - 132 HOME | O:0 S:1 B:1 | Bases: 110
+Outcome: STRIKE     | Top 8 | AWAY 107 - 132 HOME | O:0 S:2 B:1 | Bases: 110
+Outcome: FOUL       | Top 8 | AWAY 107 - 132 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Top 8 | AWAY 110 - 132 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 8 | AWAY 110 - 132 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 110 - 132 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: BALL       | Top 8 | AWAY 110 - 132 HOME | O:0 S:1 B:2 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 110 - 132 HOME | O:0 S:2 B:2 | Bases: 000
+Outcome: FAIR       | Top 8 | AWAY 110 - 132 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 8 | AWAY 110 - 132 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 8 | AWAY 110 - 132 HOME | O:0 S:2 B:0 | Bases: 100
+Outcome: HOME RUN   | Top 8 | AWAY 112 - 132 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 112 - 132 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 112 - 132 HOME | O:0 S:2 B:0 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 112 - 132 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 8 | AWAY 112 - 132 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: BALL       | Top 8 | AWAY 112 - 132 HOME | O:1 S:0 B:2 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 112 - 132 HOME | O:1 S:1 B:2 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 112 - 132 HOME | O:1 S:2 B:2 | Bases: 000
+Outcome: HOME RUN   | Top 8 | AWAY 113 - 132 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Top 8 | AWAY 113 - 132 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Top 8 | AWAY 113 - 132 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: BALL       | Top 8 | AWAY 113 - 132 HOME | O:1 S:0 B:1 | Bases: 110
+Outcome: STRIKE     | Top 8 | AWAY 113 - 132 HOME | O:1 S:1 B:1 | Bases: 110
+Outcome: HOME RUN   | Top 8 | AWAY 116 - 132 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 8 | AWAY 116 - 132 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: HOME RUN   | Top 8 | AWAY 117 - 132 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 8 | AWAY 117 - 132 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: BALL       | Top 8 | AWAY 117 - 132 HOME | O:1 S:0 B:2 | Bases: 000
+Outcome: FAIR       | Top 8 | AWAY 117 - 132 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Top 8 | AWAY 117 - 132 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: FAIR       | Top 8 | AWAY 117 - 132 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Top 8 | AWAY 118 - 132 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Top 8 | AWAY 119 - 132 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 119 - 132 HOME | O:1 S:0 B:1 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 119 - 132 HOME | O:1 S:0 B:2 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 119 - 132 HOME | O:1 S:0 B:3 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 119 - 132 HOME | O:1 S:1 B:3 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 120 - 132 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 120 - 132 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 120 - 132 HOME | O:1 S:2 B:0 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 120 - 132 HOME | O:1 S:2 B:1 | Bases: 111
+Outcome: FOUL       | Top 8 | AWAY 120 - 132 HOME | O:1 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 120 - 132 HOME | O:1 S:2 B:0 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 120 - 132 HOME | O:1 S:2 B:1 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 120 - 132 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 120 - 132 HOME | O:2 S:0 B:1 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 120 - 132 HOME | O:2 S:0 B:2 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 120 - 132 HOME | O:2 S:1 B:2 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 120 - 132 HOME | O:2 S:1 B:3 | Bases: 111
+Outcome: FAIR       | Top 8 | AWAY 121 - 132 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: FOUL       | Top 8 | AWAY 121 - 132 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: FOUL       | Top 8 | AWAY 121 - 132 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 121 - 132 HOME | O:2 S:1 B:1 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 121 - 132 HOME | O:2 S:2 B:1 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 121 - 132 HOME | O:2 S:2 B:2 | Bases: 111
+Outcome: FAIR       | Top 8 | AWAY 122 - 132 HOME | O:2 S:0 B:0 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 122 - 132 HOME | O:2 S:1 B:0 | Bases: 111
+Outcome: STRIKE     | Top 8 | AWAY 122 - 132 HOME | O:2 S:2 B:0 | Bases: 111
+Outcome: BALL       | Top 8 | AWAY 122 - 132 HOME | O:2 S:2 B:1 | Bases: 111
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 132 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 8 | AWAY 122 - 133 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 8 | AWAY 122 - 133 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Bot 8 | AWAY 122 - 133 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: HOME RUN   | Bot 8 | AWAY 122 - 135 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 8 | AWAY 122 - 135 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 135 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 135 HOME | O:0 S:2 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 135 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 135 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 8 | AWAY 122 - 136 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 136 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Bot 8 | AWAY 122 - 136 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Bot 8 | AWAY 122 - 136 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: FOUL       | Bot 8 | AWAY 122 - 136 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: BALL       | Bot 8 | AWAY 122 - 136 HOME | O:1 S:1 B:1 | Bases: 110
+Outcome: FOUL       | Bot 8 | AWAY 122 - 136 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: BALL       | Bot 8 | AWAY 122 - 136 HOME | O:1 S:1 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 136 HOME | O:1 S:2 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 136 HOME | O:2 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 136 HOME | O:2 S:1 B:0 | Bases: 110
+Outcome: BALL       | Bot 8 | AWAY 122 - 136 HOME | O:2 S:1 B:1 | Bases: 110
+Outcome: HOME RUN   | Bot 8 | AWAY 122 - 139 HOME | O:2 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 8 | AWAY 122 - 139 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 8 | AWAY 122 - 139 HOME | O:2 S:0 B:1 | Bases: 100
+Outcome: BALL       | Bot 8 | AWAY 122 - 139 HOME | O:2 S:0 B:2 | Bases: 100
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 139 HOME | O:2 S:1 B:2 | Bases: 100
+Outcome: BALL       | Bot 8 | AWAY 122 - 139 HOME | O:2 S:1 B:3 | Bases: 100
+Outcome: STRIKE     | Bot 8 | AWAY 122 - 139 HOME | O:2 S:2 B:3 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 122 - 139 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 9 | AWAY 122 - 139 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Top 9 | AWAY 122 - 139 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 122 - 139 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 122 - 139 HOME | O:0 S:2 B:0 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 122 - 139 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Top 9 | AWAY 122 - 139 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: FOUL       | Top 9 | AWAY 122 - 139 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Top 9 | AWAY 125 - 139 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Top 9 | AWAY 125 - 139 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: BALL       | Top 9 | AWAY 125 - 139 HOME | O:1 S:1 B:1 | Bases: 000
+Outcome: BALL       | Top 9 | AWAY 125 - 139 HOME | O:1 S:1 B:2 | Bases: 000
+Outcome: FAIR       | Top 9 | AWAY 125 - 139 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: BALL       | Top 9 | AWAY 125 - 139 HOME | O:1 S:0 B:1 | Bases: 100
+Outcome: FAIR       | Top 9 | AWAY 125 - 139 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Top 9 | AWAY 125 - 139 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: HOME RUN   | Top 9 | AWAY 128 - 139 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Top 9 | AWAY 128 - 139 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 128 - 139 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 128 - 139 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: FAIR       | Top 9 | AWAY 128 - 139 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: BALL       | Top 9 | AWAY 128 - 139 HOME | O:1 S:0 B:1 | Bases: 110
+Outcome: STRIKE     | Top 9 | AWAY 128 - 139 HOME | O:1 S:1 B:1 | Bases: 110
+Outcome: FAIR       | Top 9 | AWAY 128 - 139 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: FAIR       | Top 9 | AWAY 129 - 139 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 9 | AWAY 129 - 139 HOME | O:1 S:0 B:1 | Bases: 111
+Outcome: BALL       | Top 9 | AWAY 129 - 139 HOME | O:1 S:0 B:2 | Bases: 111
+Outcome: STRIKE     | Top 9 | AWAY 129 - 139 HOME | O:1 S:1 B:2 | Bases: 111
+Outcome: BALL       | Top 9 | AWAY 129 - 139 HOME | O:1 S:1 B:3 | Bases: 111
+Outcome: STRIKE     | Top 9 | AWAY 129 - 139 HOME | O:1 S:2 B:3 | Bases: 111
+Outcome: BALL       | Top 9 | AWAY 130 - 139 HOME | O:1 S:0 B:0 | Bases: 111
+Outcome: BALL       | Top 9 | AWAY 130 - 139 HOME | O:1 S:0 B:1 | Bases: 111
+Outcome: BALL       | Top 9 | AWAY 130 - 139 HOME | O:1 S:0 B:2 | Bases: 111
+Outcome: HOME RUN   | Top 9 | AWAY 134 - 139 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: FOUL       | Top 9 | AWAY 134 - 139 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: FOUL       | Top 9 | AWAY 134 - 139 HOME | O:1 S:1 B:0 | Bases: 000
+Outcome: FAIR       | Top 9 | AWAY 134 - 139 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: HOME RUN   | Top 9 | AWAY 136 - 139 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 9 | AWAY 136 - 139 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Top 9 | AWAY 136 - 139 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 136 - 139 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 136 - 139 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: BALL       | Top 9 | AWAY 136 - 139 HOME | O:1 S:2 B:1 | Bases: 100
+Outcome: FAIR       | Top 9 | AWAY 136 - 139 HOME | O:1 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Top 9 | AWAY 136 - 139 HOME | O:1 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Top 9 | AWAY 136 - 139 HOME | O:1 S:2 B:0 | Bases: 110
+Outcome: HOME RUN   | Top 9 | AWAY 139 - 139 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 9 | AWAY 139 - 139 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: HOME RUN   | Top 9 | AWAY 140 - 139 HOME | O:1 S:0 B:0 | Bases: 000
+Outcome: BALL       | Top 9 | AWAY 140 - 139 HOME | O:1 S:0 B:1 | Bases: 000
+Outcome: FAIR       | Top 9 | AWAY 140 - 139 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: FOUL       | Top 9 | AWAY 140 - 139 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 140 - 139 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: BALL       | Top 9 | AWAY 140 - 139 HOME | O:1 S:2 B:1 | Bases: 100
+Outcome: BALL       | Top 9 | AWAY 140 - 139 HOME | O:1 S:2 B:2 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 140 - 139 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 140 - 139 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Top 9 | AWAY 140 - 139 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 139 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 139 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 139 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 139 HOME | O:0 S:1 B:2 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 139 HOME | O:0 S:1 B:3 | Bases: 000
+Outcome: FAIR       | Bot 9 | AWAY 140 - 139 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 139 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 139 HOME | O:0 S:0 B:2 | Bases: 100
+Outcome: HOME RUN   | Bot 9 | AWAY 140 - 141 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 9 | AWAY 140 - 141 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 141 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 141 HOME | O:0 S:0 B:2 | Bases: 100
+Outcome: FAIR       | Bot 9 | AWAY 140 - 141 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 141 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: BALL       | Bot 9 | AWAY 140 - 141 HOME | O:0 S:1 B:1 | Bases: 110
+Outcome: BALL       | Bot 9 | AWAY 140 - 141 HOME | O:0 S:1 B:2 | Bases: 110
+Outcome: FOUL       | Bot 9 | AWAY 140 - 141 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: FAIR       | Bot 9 | AWAY 140 - 141 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: BALL       | Bot 9 | AWAY 140 - 141 HOME | O:0 S:0 B:1 | Bases: 111
+Outcome: FAIR       | Bot 9 | AWAY 140 - 142 HOME | O:0 S:0 B:0 | Bases: 111
+Outcome: HOME RUN   | Bot 9 | AWAY 140 - 146 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 9 | AWAY 140 - 147 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 9 | AWAY 140 - 148 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 9 | AWAY 140 - 148 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 148 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: HOME RUN   | Bot 9 | AWAY 140 - 150 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FOUL       | Bot 9 | AWAY 140 - 150 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 150 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 150 HOME | O:0 S:2 B:1 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 150 HOME | O:0 S:2 B:2 | Bases: 000
+Outcome: FAIR       | Bot 9 | AWAY 140 - 150 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: FAIR       | Bot 9 | AWAY 140 - 150 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 150 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: FOUL       | Bot 9 | AWAY 140 - 150 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: BALL       | Bot 9 | AWAY 140 - 150 HOME | O:0 S:1 B:1 | Bases: 110
+Outcome: BALL       | Bot 9 | AWAY 140 - 150 HOME | O:0 S:1 B:2 | Bases: 110
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 150 HOME | O:0 S:2 B:2 | Bases: 110
+Outcome: BALL       | Bot 9 | AWAY 140 - 150 HOME | O:0 S:2 B:3 | Bases: 110
+Outcome: HOME RUN   | Bot 9 | AWAY 140 - 153 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: FAIR       | Bot 9 | AWAY 140 - 153 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 153 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: FOUL       | Bot 9 | AWAY 140 - 153 HOME | O:0 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 153 HOME | O:0 S:2 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 153 HOME | O:0 S:2 B:1 | Bases: 100
+Outcome: FAIR       | Bot 9 | AWAY 140 - 153 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: BALL       | Bot 9 | AWAY 140 - 153 HOME | O:0 S:0 B:1 | Bases: 110
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 153 HOME | O:0 S:1 B:1 | Bases: 110
+Outcome: FOUL       | Bot 9 | AWAY 140 - 153 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: FOUL       | Bot 9 | AWAY 140 - 153 HOME | O:0 S:1 B:0 | Bases: 110
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 153 HOME | O:0 S:2 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 9 | AWAY 140 - 156 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 156 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 156 HOME | O:0 S:0 B:2 | Bases: 000
+Outcome: FAIR       | Bot 9 | AWAY 140 - 156 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 156 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 156 HOME | O:0 S:0 B:2 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 156 HOME | O:0 S:0 B:3 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 156 HOME | O:0 S:0 B:0 | Bases: 110
+Outcome: HOME RUN   | Bot 9 | AWAY 140 - 159 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 159 HOME | O:0 S:1 B:0 | Bases: 000
+Outcome: HOME RUN   | Bot 9 | AWAY 140 - 160 HOME | O:0 S:0 B:0 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:0 S:0 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:0 S:1 B:1 | Bases: 000
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:0 S:2 B:1 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:0 S:2 B:2 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:0 S:2 B:3 | Bases: 000
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:0 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:0 S:0 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:0 S:1 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:0 S:2 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:1 S:0 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:1 S:1 B:1 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:1 S:1 B:2 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:1 S:1 B:3 | Bases: 100
+Outcome: FOUL       | Bot 9 | AWAY 140 - 160 HOME | O:1 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:1 S:2 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:1 S:2 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:2 S:0 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:2 S:0 B:1 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:2 S:1 B:1 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:2 S:1 B:2 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:2 S:2 B:2 | Bases: 100
+Outcome: FOUL       | Bot 9 | AWAY 140 - 160 HOME | O:2 S:1 B:0 | Bases: 100
+Outcome: STRIKE     | Bot 9 | AWAY 140 - 160 HOME | O:2 S:2 B:0 | Bases: 100
+Outcome: BALL       | Bot 9 | AWAY 140 - 160 HOME | O:2 S:2 B:1 | Bases: 100
+Outcome: STRIKE     | Top 10 | AWAY 140 - 160 HOME | O:0 S:0 B:0 | Bases: 000
+=======================================================
+🏆 FINAL SCORE: AWAY 140 - 160 HOME
+=======================================================
