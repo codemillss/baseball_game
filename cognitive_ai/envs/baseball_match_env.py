@@ -258,10 +258,10 @@ class BaseballMatchEnv(gym.Env):
                 self.b_swing_progress += 1.0 / self.b_swing_duration
                 
             # Apply physics
-        if not self.has_hit:
-            self._apply_aerodynamics()
-            
-        mujoco.mj_step(self.model, self.data)
+            if not getattr(self, 'has_hit', False):
+                self._apply_aerodynamics()
+                
+            mujoco.mj_step(self.model, self.data)
 
             
             # Check Bat-Ball contact
