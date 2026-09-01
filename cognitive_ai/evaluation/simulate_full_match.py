@@ -1,145 +1,105 @@
-import os
 import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
 import numpy as np
-import mujoco
 import cv2
-from pathlib import Path
+import mujoco
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
+from cognitive_ai.training.train_mlb_batter import BatterMatchTrainingEnv
+from cognitive_ai.envs.baseball_rules import BaseballUmpire
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from cognitive_ai.envs.baseball_match_env import BaseballMatchEnv
-from cognitive_ai.envs.pitcher_env import PitcherEnv
-from cognitive_ai.envs.breaking_ball_env import BreakingBallEnv
+def main():
+    print("Initializing Match Environment with Umpire and Broadcast Director...")
+    pitcher_model_path = "checkpoints/mocap_pitcher_best/best_model"
+    pitcher_norm_path = "checkpoints/mocap_pitcher_vec_normalize.pkl"
+    batter_model_path = "checkpoints/mocap_batter_best/best_model"
+    batter_norm_path = "checkpoints/mocap_batter_vec_normalize.pkl"
 
-def simulate_pitcher_vs_batter_match(
-    pitcher_model_path="checkpoints/pitcher_best/best_model",
-    pitcher_norm_path="checkpoints/pitcher_vec_normalize.pkl",
-    batter_model_path="checkpoints/breaking_ball_best/best_model",
-    batter_norm_path="checkpoints/breaking_ball_vec_normalize.pkl",
-    num_at_bats=15,
-    output_filename="baseball_match_duel.mp4"
-):
-    print(f"\n=======================================================")
-    print(f"🏟️  HUMANOID BASEBALL CHAMPIONSHIP: PITCHER VS BATTER")
-    print(f"=======================================================")
-    print(f"• Pitcher Model: {pitcher_model_path}")
-    print(f"• Batter Model : {batter_model_path}")
-    print(f"• Total At-Bats: {num_at_bats}\n")
-    
-    # Setup Environments for Normalizer Loaders
-    def make_p_env(): return PitcherEnv()
-    def make_b_env(): return BreakingBallEnv()
-    
-    p_vec = DummyVecEnv([make_p_env])
-    p_norm = VecNormalize.load(pitcher_norm_path, p_vec)
-    p_norm.training = False
-    p_norm.norm_reward = False
+    def make_b_env(): return BatterMatchTrainingEnv(
+        pitcher_model_path=pitcher_model_path,
+        pitcher_norm_path=pitcher_norm_path,
+        is_eval_mode=True
+    )
     
     b_vec = DummyVecEnv([make_b_env])
-    b_norm = VecNormalize.load(batter_norm_path, b_vec)
-    b_norm.training = False
-    b_norm.norm_reward = False
-    
-    pitcher_model = PPO.load(pitcher_model_path, env=p_vec)
-    batter_model = PPO.load(batter_model_path, env=b_vec)
-    
-    match_env = BaseballMatchEnv()
-    renderer = mujoco.Renderer(match_env.model, height=480, width=640)
-    
-    video_dir = Path("data/eval_videos")
-    video_dir.mkdir(parents=True, exist_ok=True)
-    video_path = video_dir / output_filename
-    
+    b_vec = VecNormalize.load(batter_norm_path, b_vec)
+    b_vec.training = False
+    b_vec.norm_reward = False
+
+    print("Loading AI Models...")
+    b_model = PPO.load(batter_model_path)
+
+    env = b_vec.envs[0].match_env
+    umpire = BaseballUmpire()
+
+    renderer = mujoco.Renderer(env.data.model, 480, 640)
+    os.makedirs("data/eval_videos", exist_ok=True)
+    video_path = "data/eval_videos/phase_8_1_broadcast_match.mp4"
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    writer = cv2.VideoWriter(str(video_path), fourcc, 30, (640, 480))
-    
-    stats = {"HITS": 0, "HOMERUNS": 0, "STRIKEOUTS": 0, "WALKS": 0, "OUTS": 0}
-    
-    for ab in range(num_at_bats):
-        obs = match_env.reset()
+    out = cv2.VideoWriter(video_path, fourcc, 60.0, (640, 480))
+
+    attempts = 3
+    print("=======================================================")
+    print("🎬 AI BROADCAST DIRECTOR: LIVE MATCH")
+    print("=======================================================")
+
+    for i in range(attempts):
+        b_norm_obs = b_vec.reset()
+        
         done = False
-        step = 0
+        ball_trajectory = []
+        hit_detected = False
+        outcome = "PENDING"
         
-        while not done and step < 70:
-            # Normalize observations
-            p_obs_norm = p_norm.normalize_obs(obs["pitcher"])
-            b_obs_norm = b_norm.normalize_obs(obs["batter"])
+        while not done:
+            b_action, _ = b_model.predict(b_norm_obs, deterministic=True)
+            # Force swing to see hitting rules occasionally? 
+            # Or let it swing naturally.
+            b_norm_obs, reward, dones, infos = b_vec.step(b_action)
+            done = dones[0]
+            info = infos[0]
             
-            # Predict actions from both AI models
-            p_act, _ = pitcher_model.predict(p_obs_norm, deterministic=True)
-            b_act, _ = batter_model.predict(b_obs_norm, deterministic=True)
+            ball_pos = env.data.xpos[env.ball_body_id].copy()
+            ball_trajectory.append(ball_pos)
             
-            # Step the full live match environment
-            obs, done, info = match_env.step(p_act, b_act)
-            step += 1
+            if getattr(env, 'has_hit', False) or env.batted_distance > 0:
+                hit_detected = True
+                
+            # Dynamic Camera
+            if not hit_detected:
+                active_cam = "catcher_cam"
+            else:
+                active_cam = "broadcast_cam"
+                
+            renderer.update_scene(env.data, camera=active_cam)
+            frame = renderer.render()
             
-            # Dynamic camera switching: Broadcast angle for pitch flight, Batter view on swing
-            cam_name = "broadcast_cam" if step < 28 or not match_env.has_contacted else "batter_focus_cam"
-            renderer.update_scene(match_env.data, camera=cam_name)
-            rgb_frame = renderer.render()
-            bgr_frame = cv2.cvtColor(rgb_frame, cv2.COLOR_RGB2BGR)
+            cv2.putText(frame, f"AT-BAT {i+1} | CAM: {active_cam}", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
             
-            # Broadcast HUD Scoreboard
-            p_speed = match_env.pitch_speed_kmh
-            exit_vel = match_env.exit_velocity_kmh
-            
-            # Draw header banner
-            cv2.rectangle(bgr_frame, (0, 0), (640, 45), (20, 20, 20), -1)
-            cv2.putText(bgr_frame, f"AT-BAT {ab+1:2d}/{num_at_bats} | PITCH: {p_speed:.1f} km/h", (15, 30),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
-            cv2.putText(bgr_frame, f"H: {stats['HITS']} | HR: {stats['HOMERUNS']} | K: {stats['STRIKEOUTS']}", (420, 30),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 220, 255), 2)
-            
-            if match_env.has_contacted:
-                cv2.putText(bgr_frame, f"💥 CONTACT! Exit Vel: {exit_vel:.1f} km/h", (140, 100),
-                            cv2.FONT_HERSHEY_DUPLEX, 0.8, (0, 255, 0), 2)
-            elif match_env.b_swing_active:
-                cv2.putText(bgr_frame, f"SWING!", (260, 100),
-                            cv2.FONT_HERSHEY_DUPLEX, 0.8, (0, 200, 255), 2)
-                            
             if done:
-                # Show Outcome Splash
-                cv2.rectangle(bgr_frame, (100, 200), (540, 280), (0, 0, 0), -1)
-                cv2.putText(bgr_frame, f"{info['outcome']}", (120, 250),
-                            cv2.FONT_HERSHEY_DUPLEX, 0.85, (255, 255, 255), 2)
-                            
-            writer.write(bgr_frame)
+                if hit_detected:
+                    outcome = umpire.check_hit_outcome(ball_pos)
+                else:
+                    outcome = umpire.check_pitch_outcome(ball_trajectory)
+                    if info.get("swing", False) or getattr(env, 'has_swung', False):
+                        outcome = "STRIKE (Swinging)"
+                
+                color = (0, 255, 0) if "FAIR" in outcome or "HOME RUN" in outcome else (0, 0, 255)
+                cv2.putText(frame, f"UMPIRE: {outcome}", (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 1.2, color, 3)
+                
+            out.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
             
-        # Update match scoreboard
-        outcome = info["outcome"]
-        if "HOME RUN" in outcome:
-            stats["HOMERUNS"] += 1
-            stats["HITS"] += 1
-        elif "BASE HIT" in outcome:
-            stats["HITS"] += 1
-        elif "STRIKE OUT" in outcome or "CALLED STRIKE" in outcome:
-            stats["STRIKEOUTS"] += 1
-        elif "BALL" in outcome:
-            stats["WALKS"] += 1
-        else:
-            stats["OUTS"] += 1
-            
-        print(f"  At-Bat {ab+1:2d}: {outcome:26s} | Pitch: {info['pitch_speed_kmh']:.1f} km/h | ExitVel: {info['exit_velocity_kmh']:.1f} km/h | Dist: {info['batted_distance']:.1f}m")
-        
-        black = np.zeros((480, 640, 3), dtype=np.uint8)
-        for _ in range(8):
-            writer.write(black)
-            
-    writer.release()
-    p_vec.close()
-    b_vec.close()
-    
-    batting_avg = (stats['HITS'] / (num_at_bats - stats['WALKS'])) if (num_at_bats - stats['WALKS']) > 0 else 0.0
-    print(f"\n=======================================================")
-    print(f"📊 FINAL MATCH BOX SCORE & STATISTICS")
-    print(f"=======================================================")
-    print(f"• Total At-Bats   : {num_at_bats}")
-    print(f"• Hits (안타)     : {stats['HITS']} (Home Runs: {stats['HOMERUNS']})")
-    print(f"• Strikeouts (삼진): {stats['STRIKEOUTS']}")
-    print(f"• Batting Average : {batting_avg:.3f} (타율 .{(int(batting_avg*1000)):03d})")
-    print(f"🎥 Video Broadcast saved to: {video_path}")
-    return stats, str(video_path)
+            if done:
+                for _ in range(60):
+                    out.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
+                    
+        print(f"At-Bat {i+1}: {outcome}")
+
+    out.release()
+    print("=======================================================")
+    print(f"🎥 Video saved to: {video_path}")
 
 if __name__ == "__main__":
-    simulate_pitcher_vs_batter_match()
+    main()

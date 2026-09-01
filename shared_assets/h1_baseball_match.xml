@@ -77,49 +77,49 @@
   <worldbody>
     <light directional="true" diffuse="0.9 0.9 0.8" specular="0.3 0.3 0.3" pos="0 -10 20" dir="0 1 -1.5" />
     
-    <!-- Grass Outfield & Ground -->
+    
     <geom name="grass_field" type="plane" size="60 60 0.1" pos="0 40 0" material="grass_mat" />
     
-    <!-- Dirt Infield (Arc) -->
+    
     <geom name="dirt_infield" type="cylinder" size="18 0.005" pos="0 14.0 0.005" material="dirt_mat" />
     <geom name="dirt_infield_base" type="box" size="12.7 12.7 0.005" pos="0 12.7 0.005" quat="0.707 0 0 0.707" material="dirt_mat" />
     
-    <!-- Bases (Diamond 27.43m / 90ft) -->
-    <!-- Home Plate is at (0,0) -->
-    <!-- 1st Base: x = 19.4m, y = 19.4m -->
+    
+    
+    
     <geom name="first_base" type="box" size="0.2 0.2 0.025" pos="19.4 19.4 0.025" quat="0.9238 0 0 0.3826" material="base_mat" />
-    <!-- 2nd Base: x = 0, y = 38.8m -->
+    
     <geom name="second_base" type="box" size="0.2 0.2 0.025" pos="0 38.8 0.025" quat="0.707 0 0 0.707" material="base_mat" />
-    <!-- 3rd Base: x = -19.4m, y = 19.4m -->
+    
     <geom name="third_base" type="box" size="0.2 0.2 0.025" pos="-19.4 19.4 0.025" quat="0.9238 0 0 -0.3826" material="base_mat" />
     
-    <!-- Home Plate & Mound -->
+    
     <geom name="home_plate" type="box" size="0.22 0.22 0.006" pos="0 0 0.006" quat="0.707 0 0 0.707" material="home_plate_mat" />
-    <!-- Mound is at y=10, slightly elevated -->
+    
     <geom name="pitcher_mound" type="cylinder" size="1.5 0.08" pos="0 10.0 0.0" material="dirt_mat" />
     <geom name="pitcher_plate" type="box" size="0.3 0.08 0.005" pos="0 10.0 0.085" material="home_plate_mat" />
 
-    <!-- Foul Lines -->
+    
     <geom name="rf_foul_line" type="box" size="0.05 40 0.008" pos="28.28 28.28 0.008" quat="0.9238 0 0 0.3826" material="foul_line_mat" />
     <geom name="lf_foul_line" type="box" size="0.05 40 0.008" pos="-28.28 28.28 0.008" quat="0.9238 0 0 -0.3826" material="foul_line_mat" />
 
-    <!-- Outfield Walls -->
-    <!-- Left Field Wall -->
+    
+    
     <geom name="lf_wall" type="box" size="25 0.5 2.5" pos="-25 60 2.5" quat="0.980 0 0 -0.195" material="wall_mat" />
-    <!-- Center Field Wall -->
+    
     <geom name="cf_wall" type="box" size="20 0.5 2.5" pos="0 65 2.5" material="wall_mat" />
-    <!-- Right Field Wall -->
+    
     <geom name="rf_wall" type="box" size="25 0.5 2.5" pos="25 60 2.5" quat="0.980 0 0 0.195" material="wall_mat" />
 
     <site name="strike_zone_target" type="box" size="0.20 0.02 0.27" pos="0 0.0 0.815" material="target_zone_mat" />
 
-    <!-- Cameras -->
+    
     <camera name="broadcast_cam" pos="-5.0 5.0 3.0" xyaxes="0.89 -0.45 0 0.22 0.44 0.87" fovy="55" />
     <camera name="batter_focus_cam" pos="-2.2 -1.8 1.4" xyaxes="0.74 -0.67 0 0.15 0.16 0.97" fovy="48" />
     <camera name="pitcher_focus_cam" pos="1.5 12.5 2.0" xyaxes="-0.8 -0.6 0 0.3 -0.4 0.9" fovy="48" />
     <camera name="catcher_cam" pos="0 -2.5 1.5" xyaxes="1 0 0 0 0.2 0.98" fovy="52" />
 
-    <!-- 1. PITCHER ROBOT (At Mound: y = 10.0m) -->
+    
     <body name="pitcher_pelvis" pos="0 10.0 0.82" quat="0.7071068 0 0 -0.7071068" childclass="h1">
       <inertial pos="-0.0002 4e-05 -0.04522" quat="0.498303 0.499454 -0.500496 0.501741" mass="5.39" diaginertia="0.049 0.044 0.008" />
       <geom class="visual" mesh="pelvis" material="pitcher_mat" />
@@ -192,7 +192,7 @@
       </body>
     </body>
 
-    <!-- 2. BATTER ROBOT (At Batter Box: x = -0.70m, y = -0.45m) -->
+    
     <body name="batter_pelvis" pos="-0.70 -0.45 0.82" childclass="h1">
       <inertial pos="-0.0002 4e-05 -0.04522" quat="0.498303 0.499454 -0.500496 0.501741" mass="5.39" diaginertia="0.049 0.044 0.008" />
       <geom class="visual" mesh="pelvis" material="batter_mat" />
@@ -257,7 +257,7 @@
               <body name="b_right_elbow_link" pos="0.0185 0 -0.198">
                 <joint name="b_right_elbow" axis="0 1 0" range="-1.25 2.61" />
                 <geom class="visual" mesh="right_elbow_link" material="batter_mat" />
-                <!-- Bat attached to Batter's right hand -->
+                
                 <body name="bat" pos="0.3 0 0" quat="0.707 0 0.707 0">
                   <geom name="bat_barrel" type="cylinder" size="0.035 0.45" pos="0 0 0.45" material="bat_mat" mass="0.9" />
                 </body>
@@ -268,13 +268,13 @@
       </body>
     </body>
 
-    <!-- 3. BASEBALL (Starts at Pitcher Hand with Weld Constraint) -->
+    
     <body name="baseball" pos="0 10.0 1.2">
       <freejoint name="ball_joint" />
       <geom name="ball_geom" type="sphere" size="0.037" mass="0.145" material="ball_mat" />
       <site name="ball_site" pos="0 0 0" size="0.01" />
     </body>
-  </worldbody>
+  <site name="strike_zone" type="box" size="0.215 0.215 0.3" pos="0 0 0.8" rgba="0 1 0 0.2" /><geom name="foul_line_1b" type="cylinder" size="0.05 40" pos="28.28 28.28 0.01" xyaxes="-0.707 0.707 0 0 0 1" rgba="1 1 1 1" /><geom name="foul_line_3b" type="cylinder" size="0.05 40" pos="-28.28 28.28 0.01" xyaxes="0.707 0.707 0 0 0 1" rgba="1 1 1 1" /></worldbody>
 
   <equality>
     <weld name="pitcher_ball_weld" site1="pitcher_hand_site" site2="ball_site" />
