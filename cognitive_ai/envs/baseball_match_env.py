@@ -150,7 +150,29 @@ class BaseballMatchEnv(gym.Env):
         
         return self.get_observations()
 
+
+    def _apply_aerodynamics(self):
+        ball_vel = self.data.qvel[self.ball_qvel_adr:self.ball_qvel_adr+3]
+        speed = np.linalg.norm(ball_vel)
+        if speed < 1.0: return
+        
+        c_d = 0.005 
+        F_drag = -c_d * speed * ball_vel
+        
+        F_magnus = np.zeros(3)
+        if hasattr(self, 'target_pitch_type'):
+            c_l = 0.005 * speed
+            if self.target_pitch_type == 0:
+                F_magnus = np.array([0.0, 0.0, c_l])
+            elif self.target_pitch_type == 1:
+                F_magnus = np.array([-c_l, 0.0, -c_l*0.5])
+            elif self.target_pitch_type == 2:
+                F_magnus = np.array([0.0, 0.0, -c_l*1.5])
+                
+        self.data.xfrc_applied[self.ball_body_id][:3] = F_drag + F_magnus
+
     def step(self, pitcher_action, batter_action):
+
         """
         Step both Pitcher AI and Batter AI in the match.
         pitcher_action: [release_timing, z_aim, x_aim, vel_scale]
@@ -235,7 +257,12 @@ class BaseballMatchEnv(gym.Env):
                 self._update_batter_kinematics(self.b_swing_progress)
                 self.b_swing_progress += 1.0 / self.b_swing_duration
                 
-            mujoco.mj_step(self.model, self.data)
+            # Apply physics
+        if not self.has_hit:
+            self._apply_aerodynamics()
+            
+        mujoco.mj_step(self.model, self.data)
+
             
             # Check Bat-Ball contact
             if not self.has_contacted and self._check_contact():

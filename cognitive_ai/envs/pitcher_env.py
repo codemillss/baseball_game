@@ -183,31 +183,42 @@ class PitcherEnv(gym.Env):
         self.current_step += 1
         ball_pos = self.data.qpos[self.ball_qpos_adr:self.ball_qpos_adr+3]
         
+        info = {}
         if self.reached_plate or ball_pos[2] <= 0.05 or ball_pos[1] < -0.5:
             terminated = True
             
             if self.reached_plate:
                 dist = self.min_dist_to_target
                 if dist <= 0.20:
-                    # Strike! Emphasize velocity reward to force 150km/h
-                    reward += 300.0 + (0.20 - dist) * 400.0 + self.release_speed_kmh * 2.5
+                    # Strike Zone! Huge reward!
+                    reward += 1000.0 + (0.20 - dist) * 1000.0 + self.release_speed_kmh * 3.0
+                    info['outcome'] = 'STRIKE'
                 else:
-                    reward += max(0.0, 100.0 - dist * 150.0)
+                    # Missing the zone should be punished severely so it learns control
+                    reward -= dist * 300.0
+                    info['outcome'] = 'BALL'
             else:
-                reward -= 50.0 * max(0.1, ball_pos[1] - 0.20)
+                reward -= 100.0 * max(0.1, ball_pos[1] - 0.20)
+                info['outcome'] = 'WILD PITCH'
                 
         if self.current_step >= self.max_steps:
             truncated = True
             if not self.is_released:
                 reward -= 100.0
-                
-        return self._get_obs(), reward, terminated, truncated, {
+                info['outcome'] = 'NO PITCH'
+
+        info.update({
+            "is_success": self.reached_plate and getattr(self, 'min_dist_to_target', 999) <= 0.2,
+            "dist": getattr(self, 'min_dist_to_target', 999),
+            "speed": self.release_speed_kmh,
             "is_released": self.is_released,
             "reached_plate": self.reached_plate,
             "min_dist": self.min_dist_to_target,
             "release_speed_kmh": self.release_speed_kmh,
             "pitch_type": self.target_pitch_type
-        }
+        })
+        
+        return self._get_obs(), float(reward), terminated, truncated, info
 
     def _set_arm_pose(self, angles):
         for valid_i, adr in zip(self.valid_indices, self.qpos_adrs):

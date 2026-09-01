@@ -79,6 +79,7 @@ def main():
             cv2.putText(frame, f"AT-BAT {i+1} | CAM: {active_cam}", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
             
             if done:
+                min_dist_to_center = min([np.sqrt(p[0]**2 + (p[2]-0.8)**2) for p in ball_trajectory if abs(p[1]) < 0.3]) if any(abs(p[1]) < 0.3 for p in ball_trajectory) else 999.0
                 if hit_detected:
                     outcome = umpire.check_hit_outcome(ball_pos)
                 else:
@@ -87,7 +88,7 @@ def main():
                         outcome = "STRIKE (Swinging)"
                 
                 color = (0, 255, 0) if "FAIR" in outcome or "HOME RUN" in outcome else (0, 0, 255)
-                cv2.putText(frame, f"UMPIRE: {outcome}", (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 1.2, color, 3)
+                cv2.putText(frame, f"UMPIRE: {outcome} (Dist: {min_dist_to_center:.2f})", (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 1.0, color, 3)
                 
             out.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
             
@@ -95,7 +96,7 @@ def main():
                 for _ in range(60):
                     out.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
                     
-        print(f"At-Bat {i+1}: {outcome}")
+        print(f"At-Bat {i+1}: {outcome} | Min Dist to SZ Center: {min_dist_to_center:.2f}m")
 
     out.release()
     print("=======================================================")
