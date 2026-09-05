@@ -8,8 +8,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- MathJax for LaTeX Equations -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <!-- MathJax Configuration & Loader (No vulnerable polyfill.io dependency) -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]'], ['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
     :root {
@@ -588,19 +600,33 @@
         box-shadow: 0 10px 40px rgba(0,0,0,0.8);
     }
 
-    /* Print Styles for ~15 Pages */
+    @page {
+        size: A4;
+        margin: 15mm 12mm 15mm 12mm;
+    }
+
+    /* Print Styles for Publication-Grade ~15 Pages */
     @media print {
         #sidebar { display: none !important; }
-        #main-wrapper { max-width: 100% !important; padding: 0 !important; }
+        #main-wrapper { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
         .paper-card { border: none !important; box-shadow: none !important; padding: 0 !important; }
-        body { background: #ffffff !important; color: #000000 !important; font-size: 11pt !important; line-height: 1.5 !important; }
-        h2.sec-heading { page-break-before: always; margin-top: 24pt !important; }
-        h2.sec-heading:first-of-type { page-break-before: avoid; }
-        figure.report-figure, .table-container, pre.code-block, .callout { page-break-inside: avoid; }
-        .image-grid-3 { grid-template-columns: repeat(3, 1fr) !important; }
+        body { background: #ffffff !important; color: #111111 !important; font-size: 10pt !important; line-height: 1.55 !important; }
+        h2.sec-heading { page-break-before: always !important; break-before: page !important; margin-top: 22pt !important; }
+        h2.sec-heading:first-of-type { page-break-before: avoid !important; break-before: avoid !important; }
+        figure.report-figure, .table-container, pre.code-block, .callout, .formula-card, .image-item { 
+            page-break-inside: avoid !important; 
+            break-inside: avoid !important; 
+        }
+        .image-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 6px !important; background: #ffffff !important; }
+        .image-grid-3 { grid-template-columns: repeat(3, 1fr) !important; gap: 6px !important; background: #ffffff !important; }
+        .image-grid-2 { grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; background: #ffffff !important; }
+        .image-item { border: 1px solid #ddd !important; }
         .image-item img { filter: contrast(105%); }
-        .theme-toggle, .print-btn { display: none; }
-        a { text-decoration: none !important; color: #000000 !important; }
+        .theme-toggle, .print-btn, #lightbox { display: none !important; }
+        a { text-decoration: none !important; color: #1a365d !important; }
+        .data-table th { background: #f0f4f8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .abstract-box { background: #f7fafc !important; border-left: 4px solid #2b6cb0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .callout { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
 
     @media (max-width: 960px) {
@@ -1431,7 +1457,7 @@
                     투구가 진행되는 동안 공의 중심 좌표 궤적 \(\{\vec{p}_{\text{ball}}(t)\}\)가 위 볼륨 내부를 단 1밀리초라도 교차 통과하면 <code>STRIKE</code>로 판정하며, 완전 외곽으로 통과하면 <code>BALL</code>로 자동 선언된다.
                 </p>
 
-                <h3 class="subsec-heading">7.2 페어/파울 및 홈런 기하학적 벡터 판정 ($y \ge |x|$)</h3>
+                <h3 class="subsec-heading">7.2 페어/파울 및 홈런 기하학적 벡터 판정 (\(y \ge |x|\))</h3>
                 <p>
                     타격된 공이 페어 지역(Fair Territory)으로 날아갔는지 여부는 홈플레이트 원점(\([0, 0]\))에서 1루 베이스(\([27.4, 27.4]\)) 및 3루 베이스(\([-27.4, 27.4]\))로 뻗어나가는 \(45^\circ\) 파울 라인 벡터 방정식으로 완벽 판정된다:
                 </p>
@@ -1658,56 +1684,88 @@
                     각 단계별 비디오에서 추출된 45개의 고해상도 시뮬레이션 프레임을 통해 실제 로봇의 자세, 물리 궤적, 인터페이스 작동을 시각적으로 증명한다:
                 </p>
 
-                <!-- Full Gallery Grid -->
+                <!-- Full Gallery Grid (All 15 Videos x 3 Keyframes = 45 Frames) -->
                 <div class="image-grid" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
-                    <div class="image-item"><img src="report_assets/frames/phase_1_1_soft_toss_initial_f1.jpg" alt="1-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">1-1 Soft Toss 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_1_1_soft_toss_initial_f2.jpg" alt="1-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">1-1 Soft Toss 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_1_1_soft_toss_initial_f3.jpg" alt="1-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">1-1 Soft Toss 3</div></div>
+                    <!-- Phase 1-1: Soft Toss Initial (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_1_1_soft_toss_initial_f1.jpg" alt="1-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">1-1 Soft Toss: Setup</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_1_1_soft_toss_initial_f2.jpg" alt="1-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">1-1 Soft Toss: Tracking</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_1_1_soft_toss_initial_f3.jpg" alt="1-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">1-1 Soft Toss: Contact</div></div>
                     
-                    <div class="image-item"><img src="report_assets/frames/phase_1_2_soft_toss_normalized_f1.jpg" alt="1-2 f1" onclick="openLightbox(this.src)"><div class="image-tag">1-2 Normalized 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_1_2_soft_toss_normalized_f2.jpg" alt="1-2 f2" onclick="openLightbox(this.src)"><div class="image-tag">1-2 Normalized 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_1_2_soft_toss_normalized_f3.jpg" alt="1-2 f3" onclick="openLightbox(this.src)"><div class="image-tag">1-2 Normalized 3</div></div>
+                    <!-- Phase 1-2: Soft Toss Normalized (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_1_2_soft_toss_normalized_f1.jpg" alt="1-2 f1" onclick="openLightbox(this.src)"><div class="image-tag">1-2 Normalized: Inflow</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_1_2_soft_toss_normalized_f2.jpg" alt="1-2 f2" onclick="openLightbox(this.src)"><div class="image-tag">1-2 Normalized: Swing</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_1_2_soft_toss_normalized_f3.jpg" alt="1-2 f3" onclick="openLightbox(this.src)"><div class="image-tag">1-2 Normalized: 70% Hit</div></div>
 
-                    <div class="image-item"><img src="report_assets/frames/phase_1_4_breaking_ball_f1.jpg" alt="1-4 f1" onclick="openLightbox(this.src)"><div class="image-tag">1-4 Breaking Ball 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_1_4_breaking_ball_f2.jpg" alt="1-4 f2" onclick="openLightbox(this.src)"><div class="image-tag">1-4 Breaking Ball 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_1_4_breaking_ball_f3.jpg" alt="1-4 f3" onclick="openLightbox(this.src)"><div class="image-tag">1-4 Breaking Ball 3</div></div>
+                    <!-- Phase 1-3: Soft Toss Advanced (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_1_3_soft_toss_advanced_f1.jpg" alt="1-3 f1" onclick="openLightbox(this.src)"><div class="image-tag">1-3 Advanced: Stance</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_1_3_soft_toss_advanced_f2.jpg" alt="1-3 f2" onclick="openLightbox(this.src)"><div class="image-tag">1-3 Advanced: Power Drive</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_1_3_soft_toss_advanced_f3.jpg" alt="1-3 f3" onclick="openLightbox(this.src)"><div class="image-tag">1-3 Advanced: High Exit Vel</div></div>
 
-                    <div class="image-item"><img src="report_assets/frames/phase_2_3_pitcher_final_f1.jpg" alt="2-3 f1" onclick="openLightbox(this.src)"><div class="image-tag">2-3 Pitcher 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_2_3_pitcher_final_f2.jpg" alt="2-3 f2" onclick="openLightbox(this.src)"><div class="image-tag">2-3 Pitcher 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_2_3_pitcher_final_f3.jpg" alt="2-3 f3" onclick="openLightbox(this.src)"><div class="image-tag">2-3 Pitcher 3</div></div>
+                    <!-- Phase 1-4: Breaking Ball (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_1_4_breaking_ball_f1.jpg" alt="1-4 f1" onclick="openLightbox(this.src)"><div class="image-tag">1-4 Breaking Ball: Break</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_1_4_breaking_ball_f2.jpg" alt="1-4 f2" onclick="openLightbox(this.src)"><div class="image-tag">1-4 Breaking Ball: Yaw Turn</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_1_4_breaking_ball_f3.jpg" alt="1-4 f3" onclick="openLightbox(this.src)"><div class="image-tag">1-4 Breaking Ball: Contact</div></div>
 
-                    <div class="image-item"><img src="report_assets/frames/phase_3_1_match_duel_f1.jpg" alt="3-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">3-1 Match Duel 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_3_1_match_duel_f2.jpg" alt="3-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">3-1 Match Duel 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_3_1_match_duel_f3.jpg" alt="3-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">3-1 Match Duel 3</div></div>
+                    <!-- Phase 2-1: Pitching 50km/h (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_2_1_pitching_50kmh_f1.jpg" alt="2-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">2-1 50km/h: Windup</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_2_1_pitching_50kmh_f2.jpg" alt="2-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">2-1 50km/h: Stride Release</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_2_1_pitching_50kmh_f3.jpg" alt="2-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">2-1 50km/h: Follow-Through</div></div>
 
-                    <div class="image-item"><img src="report_assets/frames/phase_4_1_mlb_match_f1.jpg" alt="4-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">4-1 MLB Match 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_4_1_mlb_match_f2.jpg" alt="4-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">4-1 MLB Match 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_4_1_mlb_match_f3.jpg" alt="4-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">4-1 MLB Match 3</div></div>
+                    <!-- Phase 2-2: Pitching 80km/h (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_2_2_pitching_80kmh_f1.jpg" alt="2-2 f1" onclick="openLightbox(this.src)"><div class="image-tag">2-2 80km/h: High-Speed Pitch</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_2_2_pitching_80kmh_f2.jpg" alt="2-2 f2" onclick="openLightbox(this.src)"><div class="image-tag">2-2 80km/h: Mid-Flight Arc</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_2_2_pitching_80kmh_f3.jpg" alt="2-2 f3" onclick="openLightbox(this.src)"><div class="image-tag">2-2 80km/h: 93.3% Strike</div></div>
 
-                    <div class="image-item"><img src="report_assets/frames/phase_5_1_stadium_match_f1.jpg" alt="5-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">5-1 Stadium 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_5_1_stadium_match_f2.jpg" alt="5-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">5-1 Stadium 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_5_1_stadium_match_f3.jpg" alt="5-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">5-1 Stadium 3</div></div>
+                    <!-- Phase 2-3: Pitcher Final 84.4km/h (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_2_3_pitcher_final_f1.jpg" alt="2-3 f1" onclick="openLightbox(this.src)"><div class="image-tag">2-3 Final: Kinetic Chain</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_2_3_pitcher_final_f2.jpg" alt="2-3 f2" onclick="openLightbox(this.src)"><div class="image-tag">2-3 Final: Release Weld Off</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_2_3_pitcher_final_f3.jpg" alt="2-3 f3" onclick="openLightbox(this.src)"><div class="image-tag">2-3 Final: 100% Strike Pinpoint</div></div>
 
-                    <div class="image-item"><img src="report_assets/frames/phase_6_2_mocap_match_f1.jpg" alt="6-2 f1" onclick="openLightbox(this.src)"><div class="image-tag">6-2 MoCap Duel 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_6_2_mocap_match_f2.jpg" alt="6-2 f2" onclick="openLightbox(this.src)"><div class="image-tag">6-2 MoCap Duel 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_6_2_mocap_match_f3.jpg" alt="6-2 f3" onclick="openLightbox(this.src)"><div class="image-tag">6-2 MoCap Duel 3</div></div>
+                    <!-- Phase 3-1: Match Duel (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_3_1_match_duel_f1.jpg" alt="3-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">3-1 Duel: Pitcher vs Batter</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_3_1_match_duel_f2.jpg" alt="3-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">3-1 Duel: Live Fastball</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_3_1_match_duel_f3.jpg" alt="3-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">3-1 Duel: Fair Grounder HUD</div></div>
 
-                    <div class="image-item"><img src="report_assets/frames/phase_7_1_wheeled_fielder_f1.jpg" alt="7-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">7-1 Fielder 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_7_1_wheeled_fielder_f2.jpg" alt="7-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">7-1 Fielder 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_7_1_wheeled_fielder_f3.jpg" alt="7-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">7-1 Fielder 3</div></div>
+                    <!-- Phase 4-1: MLB Match 178km/h & Walk (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_4_1_mlb_match_f1.jpg" alt="4-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">4-1 MLB: 178.3km/h Fastball</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_4_1_mlb_match_f2.jpg" alt="4-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">4-1 MLB: Plate Discipline Take</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_4_1_mlb_match_f3.jpg" alt="4-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">4-1 MLB: Walk Acquired</div></div>
 
-                    <div class="image-item"><img src="report_assets/frames/phase_8_1_broadcast_match_f1.jpg" alt="8-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">8-1 Broadcast 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_8_1_broadcast_match_f2.jpg" alt="8-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">8-1 Broadcast 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_8_1_broadcast_match_f3.jpg" alt="8-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">8-1 Broadcast 3</div></div>
+                    <!-- Phase 5-1: Stadium Match 137.7km/h Home Run (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_5_1_stadium_match_f1.jpg" alt="5-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">5-1 Stadium: Realistic Grass/Dirt</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_5_1_stadium_match_f2.jpg" alt="5-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">5-1 Stadium: Wind & Drag Vector</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_5_1_stadium_match_f3.jpg" alt="5-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">5-1 Stadium: 137.7km/h Home Run</div></div>
 
-                    <div class="image-item"><img src="report_assets/frames/phase_8_3_base_stealing_f1.jpg" alt="8-3 f1" onclick="openLightbox(this.src)"><div class="image-tag">8-3 Base Stealing 1</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_8_3_base_stealing_f2.jpg" alt="8-3 f2" onclick="openLightbox(this.src)"><div class="image-tag">8-3 Base Stealing 2</div></div>
-                    <div class="image-item"><img src="report_assets/frames/phase_8_3_base_stealing_f3.jpg" alt="8-3 f3" onclick="openLightbox(this.src)"><div class="image-tag">8-3 Base Stealing 3</div></div>
+                    <!-- Phase 6-1: MoCap Preview (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_6_1_mocap_preview_f1.jpg" alt="6-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">6-1 MoCap: Ohtani High Leg-Kick</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_6_1_mocap_preview_f2.jpg" alt="6-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">6-1 MoCap: Arm Cocking Phase</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_6_1_mocap_preview_f3.jpg" alt="6-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">6-1 MoCap: Follow-Through</div></div>
+
+                    <!-- Phase 6-2: MoCap Match (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_6_2_mocap_match_f1.jpg" alt="6-2 f1" onclick="openLightbox(this.src)"><div class="image-tag">6-2 MoCap Duel: Setup</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_6_2_mocap_match_f2.jpg" alt="6-2 f2" onclick="openLightbox(this.src)"><div class="image-tag">6-2 MoCap Duel: Hip-Shoulder Lag</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_6_2_mocap_match_f3.jpg" alt="6-2 f3" onclick="openLightbox(this.src)"><div class="image-tag">6-2 MoCap Duel: Explosive Swing</div></div>
+
+                    <!-- Phase 7-1: Wheeled Fielder (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_7_1_wheeled_fielder_f1.jpg" alt="7-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">7-1 Fielder: Outfield Stance</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_7_1_wheeled_fielder_f2.jpg" alt="7-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">7-1 Fielder: Omni-Base Sprint</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_7_1_wheeled_fielder_f3.jpg" alt="7-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">7-1 Fielder: 5/5 Glove Catch</div></div>
+
+                    <!-- Phase 8-1: Broadcast Match (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_8_1_broadcast_match_f1.jpg" alt="8-1 f1" onclick="openLightbox(this.src)"><div class="image-tag">8-1 Broadcast: Catcher-Cam Pitch</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_8_1_broadcast_match_f2.jpg" alt="8-1 f2" onclick="openLightbox(this.src)"><div class="image-tag">8-1 Broadcast: Dynamic Cut to Ball</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_8_1_broadcast_match_f3.jpg" alt="8-1 f3" onclick="openLightbox(this.src)"><div class="image-tag">8-1 Broadcast: Strike Zone Telemetry</div></div>
+
+                    <!-- Phase 8-3: Base Stealing (3 frames) -->
+                    <div class="image-item"><img src="report_assets/frames/phase_8_3_base_stealing_f1.jpg" alt="8-3 f1" onclick="openLightbox(this.src)"><div class="image-tag">8-3 Steal: 1B Lead & Pitch Start</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_8_3_base_stealing_f2.jpg" alt="8-3 f2" onclick="openLightbox(this.src)"><div class="image-tag">8-3 Steal: 35km/h 2B Sprint</div></div>
+                    <div class="image-item"><img src="report_assets/frames/phase_8_3_base_stealing_f3.jpg" alt="8-3 f3" onclick="openLightbox(this.src)"><div class="image-tag">8-3 Steal: Slide & Tag Resolution</div></div>
                 </div>
 
                 <h3 class="subsec-heading">9.3 카메라 시점 및 텍스처 에셋 검증</h3>
+                <h4 class="subsubsec-heading">9.3.1 4개 방송 시점 카메라 (Multi-Angle Broadcast Cameras)</h4>
                 <p>
-                    시뮬레이터 내부에는 다각도 방송 렌더링을 위해 4개의 고정/동적 카메라 시점(<code>batter_cam</code>, <code>pitcher_cam</code>, <code>front_cam</code>, <code>side_cam</code>)이 사전 구축되어 있으며, 초고해상도 텍스처가 지면에 정밀 투핑된다:
+                    시뮬레이터 내부에는 다각도 방송 렌더링을 위해 4개의 고정/동적 카메라 시점(<code>batter_cam</code>, <code>pitcher_cam</code>, <code>front_cam</code>, <code>side_cam</code>)이 사전 구축되어 실시간 렌더링 및 디렉터 스위칭에 활용된다:
                 </p>
 
                 <div class="image-grid-2">
@@ -1715,6 +1773,15 @@
                     <div class="image-item"><img src="report_assets/cameras/pitcher_cam.png" alt="Pitcher Cam" onclick="openLightbox(this.src)"><div class="image-tag">Camera: Pitcher Perspective</div></div>
                     <div class="image-item"><img src="report_assets/cameras/front_cam.png" alt="Front Cam" onclick="openLightbox(this.src)"><div class="image-tag">Camera: Stadium Frontal Cam</div></div>
                     <div class="image-item"><img src="report_assets/cameras/side_cam.png" alt="Side Cam" onclick="openLightbox(this.src)"><div class="image-tag">Camera: 1st Base Side Cam</div></div>
+                </div>
+
+                <h4 class="subsubsec-heading">9.3.2 경기장 실감형 고해상도 지면 텍스처 (Grass & Dirt Textures)</h4>
+                <p>
+                    모션 시차 왜곡(Motion Parallax Illusion)을 극복하고 실감형 AAA 스타디움을 구현하기 위해 생성된 고해상도 지면 텍스처 에셋이다. 균일한 단색 지면을 탈피하여 MuJoCo의 <code>&lt;texture&gt;</code> 및 <code>&lt;material&gt;</code> 파이프라인에 주입됨으로써, 타구 비행 및 로봇 질주 시 완벽한 광학 흐름(Optical Flow) 기준점을 제공한다:
+                </p>
+                <div class="image-grid-2">
+                    <div class="image-item"><img src="report_assets/textures/grass.png" alt="Natural Grass Texture" onclick="openLightbox(this.src)"><div class="image-tag">Texture: Outfield Natural Grass (1024x1024)</div></div>
+                    <div class="image-item"><img src="report_assets/textures/dirt.png" alt="Infield Dirt Texture" onclick="openLightbox(this.src)"><div class="image-tag">Texture: Infield Clay / Dirt (1024x1024)</div></div>
                 </div>
             </section>
 
@@ -1847,7 +1914,16 @@
             const current = html.getAttribute('data-theme');
             const next = current === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', next);
+            try { localStorage.setItem('baseball_report_theme', next); } catch(e) {}
         }
+
+        // Restore saved theme on initial load
+        try {
+            const savedTheme = localStorage.getItem('baseball_report_theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            }
+        } catch(e) {}
 
         function openLightbox(src) {
             const lb = document.getElementById('lightbox');
@@ -1859,6 +1935,13 @@
         function closeLightbox() {
             document.getElementById('lightbox').style.display = 'none';
         }
+
+        // Close lightbox on Escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
 
         // Active link scrollspy
         window.addEventListener('scroll', () => {

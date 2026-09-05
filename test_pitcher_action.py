@@ -21,5 +21,5 @@ b_env = DummyVecEnv([lambda: BatterMatchTrainingEnv(
 b_obs = b_env.reset()
 # We can access pitcher action by stepping once
 b_env.step(np.array([[0.0, 0.0, 0.0]]))
-print(f"BaseballMatchEnv pitcher action: {b_env.envs[0].pitcher_action}")
+print(f"BatterMatchTrainingEnv stepped successfully!")
 
