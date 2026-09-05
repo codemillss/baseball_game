@@ -12,30 +12,26 @@ venv/
 .venv/
 env/
 
-# Training Data & Checkpoints
-checkpoints/
+# Large Training Logs & Heavy Outputs
+checkpoints/**/tb_logs/
+checkpoints/**/logs/
 data/
+runs/
+MUJOCO_LOG.TXT
 *.pt
 *.pth
 
-# IDE
+# IDE & OS
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Jupyter
 .ipynb_checkpoints/
 
-# Logs & Media artifacts
-logs/
-MUJOCO_LOG.TXT
+# Temporary / Intermediate Artifacts
 humanoid_tmp.xml
-videos/*.mp4
-videos/*.gif
-
+archive/mujoco_menagerie
+archive/humanoid/assets/atlas_repo
