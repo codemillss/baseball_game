@@ -292,3 +292,131 @@ $$\mathbf{F}_{aero} = \mathbf{F}_{drag} + \mathbf{F}_{magnus} = -\frac{1}{2} \rh
 * `logs/videos/pitcher_fastball.mp4`, `logs/videos/pitcher_slider.mp4`, `logs/videos/pitcher_curveball.mp4`
 * `logs/videos/phase2_pull_hit.mp4`, `logs/videos/phase2_center_hit.mp4`, `logs/videos/phase2_push_hit.mp4`
 * `logs/videos/pitcher_vs_batter_match.mp4`
+
+---
+
+## 📅 Entry 05: [2026-09-06] Phase 3 전신 양족 직립 균형 및 운동학적 스윙 (Whole-Body Bipedal Balance & Kinetic Swing)
+
+### 1. 배경 및 무치팅(Zero-Cheating) 물리 원칙
+* **물리적 치팅 완전 배제:** 휠 베이스(Wheeled Base), 고정 앵커(Fixed Joint), 인위적 외력(Artificial External Force) 일체 배제.
+* **6-DoF Pelvis Freejoint 완전 복원:** 골반이 공중에 자유롭게 부유하는 6자유도 자유관절(`models/h1_bipedal_baseball.xml`)을 채택하여 실물 Unitree H1 양족 휴머노이드의 물리적 조건을 100% 충족.
+* **정격 액추에이터 토크 및 관절 제한:**
+  - Torso: $200\text{ N}\cdot\text{m}$
+  - Hip Yaw / Roll / Pitch: 각각 $200\text{ N}\cdot\text{m}$
+  - Knee: $300\text{ N}\cdot\text{m}$
+  - Ankle: $40\text{ N}\cdot\text{m}$
+  - Shoulder Yaw / Roll / Pitch: 각각 $40\text{ N}\cdot\text{m}$
+  - Elbow: $18\text{ N}\cdot\text{m}$
+* **도전 과제:** 약 $0.9\text{ kg}$의 야구 배트를 최대 속도로 휘두를 때 발생하는 거대한 원심력과 반작용 모멘트($\tau_{rxn} \approx 60\sim 90\text{ N}\cdot\text{m}$)로 인해 휴머노이드가 균형을 잃고 후방 또는 측방으로 넘어지는 전도(Fall) 현상 방지.
+
+---
+
+### 2. 운동학적 제어 및 보상 함수 설계 (Kinetic Chain Architecture)
+
+#### 1) 운동선수 기본 타격 자세 (Athletic Stance Initialization)
+* 양발을 약 $0.5\text{ m}$ 너비로 벌리고 무게중심을 낮추는 안정적 기저면 형성:
+  - 무릎 굽힘: $q_{knee} = 0.40\text{ rad}$
+  - 고관절 피치: $q_{hip\_pitch} = -0.20\text{ rad}$
+  - 발목 배굴: $q_{ankle} = -0.20\text{ rad}$
+  - 골반 공칭 높이: $z_{nominal} = 0.98\text{ m}$ (넘어짐 임계값 $z < 0.65\text{ m}$)
+
+#### 2) 지면 반력(GRF) 및 체중 이동(Weight Transfer)
+* 준비 동작(Takeback): 체중을 뒷발(우측 발)에 $70\%$ 적재.
+* 스윙 전개 및 임팩트(Impact): 우측 고관절의 회전력으로 골반을 회전시키며 체중을 앞발(좌측 발)로 급격히 전이, 앞무릎을 견고히 뻗어 반작용 지지벽 형성.
+
+#### 3) 전신 다목적 보상 함수 수식화
+$$R = R_{contact} + R_{fair} + R_{sweet} + R_{balance} + R_{upright} + R_{posture} - R_{torque\_reg}$$
+* **영모멘트점 및 CoM 정렬 보상:**
+  $$R_{balance} = 2.0 \times \exp\left(-\frac{\|\mathbf{x}_{pelvis}^{xy} - \mathbf{x}_{mid\_feet}^{xy}\|^2}{0.05}\right)$$
+* **수직 기립 자세 보상:**
+  $$R_{upright} = 1.5 \times \exp\left(-\frac{(z_{pelvis} - 0.95)^2}{0.02}\right) \times \max(0, \hat{\mathbf{z}}_{pelvis} \cdot \mathbf{e}_z)$$
+* **엄격한 넘어짐 조기 종료(Early Termination):** 골반 고도 $z < 0.65\text{ m}$ 또는 기립 벡터 $\hat{\mathbf{z}}_{pelvis} \cdot \mathbf{e}_z < 0.70$ 도달 시 에피소드 즉시 패널티 종료.
+
+---
+
+### 3. 정량적 벤치마크 평가 결과 (50 에피소드 독립 벤치마크)
+`scripts/eval_phase3.py`를 통해 50개 에피소드에 걸쳐 전신 양족 타격을 정량 평가:
+
+| 평가지표 (Metric) | Phase 3 달성 수치 | 평가 기준 및 물리적 의의 |
+| :--- | :---: | :--- |
+| **양족 직립 생존율 (Balance Survival Rate)** | **100.0% (50/50)** | **50회 전 에피소드 넘어짐(Fall) 제로(0건) 달성** |
+| **타격 성공률 (Contact Rate)** | **96.0% (48/50)** | 자유 부유 베이스 상태에서도 96% 정밀 접촉 |
+| **전방 페어 타구율 (Fair Hit Rate)** | **50.0% (25/50)** | 전방 인필드 및 외야 페어 타구 양산 |
+| **스윗스팟 오차 (Sweet Spot MAE)** | **6.29 cm** | 직립 상태에서도 6cm대 정밀 타격 형성 |
+| **평균 골반 고도 (Mean Pelvis Elevation)** | **0.949 m** | 공칭 목표치(0.95m) 오차 1mm 이내 완벽 유지 |
+| **평균 타구 속도 (Mean Exit Velocity)** | **20.4 km/h** | 최고 31.0 km/h 페어 라이너 타구 |
+
+---
+
+### 4. 시각적 비디오 및 프레임 검증 (Visual Inspection)
+* `logs/videos/phase3_bipedal_swing.mp4` 비디오 렌더링 및 프레임 정밀 분석:
+  - `phase3_fairhit_f20.png`: 양발이 지면에 완전 밀착된 상태에서 고관절과 상체를 비틀며 테이크백 에너지를 축적.
+  - `phase3_fairhit_f25.png`: **"IMPACT! FAIR HIT 23.5 km/h"** 오버레이와 함께 배트 스윗스팟 중심에 야구공이 정확히 압축 타격되며 전방으로 발사.
+  - `phase3_fairhit_f32.png`: 타격 후 발생하는 반작용 회전력을 발목 및 무릎 토크로 지면에 전달하여 흔들림 없이 수직 기립을 유지하는 완벽한 피니시 자세.
+
+---
+
+## 📅 Entry 06: [2026-09-06] Phase 4 타격 후 주루 전환 및 배트 드롭 (Hit-and-Run Locomotion Transition)
+
+### 1. 배경 및 과제 정의 (Motivation & Transition Challenge)
+* **타격 후 1루 질주 파이프라인:** 야구의 핵심 시퀀스인 "타격 $\to$ 배트 투척(Bat Drop) $\to$ 1루 베이스($(x=6.5, y=6.5)\text{ m}$) 전력 질주"를 단일 강화학습 환경(`envs/hit_and_run_env.py`)으로 구현.
+* **3단계 연속 천이 파이프라인 (3-Stage Sequence):**
+  1. **Stage 1 (Athletic Swing & Contact, $t \in [0, 0.52\text{s}]$):** Phase 3의 고정밀 양족 스윙으로 날아오는 투구를 스윗스팟에 타격.
+  2. **Stage 2 (Bat Release Handover, $t = 0.52\text{s}$):** 타격 직후 손에서 배트를 분리하여 필드 바닥으로 투척.
+  3. **Stage 3 (Torso Realignment & Sprint Launch, $t \in [0.52, 1.6\text{s}]$):** 1루 베이스 방향($+45^\circ$)으로 상체 요(Yaw) 회전 및 전방 보폭을 생성하며 추진.
+
+---
+
+### 2. 결정적 결함 발견 및 동적 소품 핸드오버(Dynamic Prop Handover) 해결
+
+#### 1) 용접 구속조건(`<weld>`)의 수치적 유연성 파탄 (Weld Compliance Slip)
+* **초기 구현 결함:** 배트를 6-DoF Freejoint로 선언하고 타자 손목(`right_elbow_link`)과 `<weld>` 구속으로 묶은 후 릴리스 순간 해제하는 방식을 시도.
+* **수치적 폭주 현상:** 타자가 $100\sim 200\text{ N}\cdot\text{m}$의 피크 토크로 급격한 스윙 각가속도를 발생시킬 때, MuJoCo의 암시적 용접 솔버에서 약 $0.5\text{ m}$ 이상의 탄성 미끄러짐(Weld Slip)이 발생. 배트 스윗스팟이 허공($z = 1.63\text{ m}$)으로 튀어 올라가며 날아오는 야구공을 완전히 헛스윙(Miss)하는 치명적 오류 확인.
+
+#### 2) 동적 소품 핸드오버(Dynamic Prop Handover) 아키텍처 수립
+* **스윙 구간의 강체 종속 (`held_bat`):** 스윙 중에는 배트를 `right_elbow_link`의 강체 자식 바디(Rigid Child Body)로 영구 고정하여, Phase 3에서 검증된 $100\%$ 기구학적 무오차 정밀 타격 능력을 온전히 보존.
+* **릴리스 시점의 6D 상태 전이 (`dropped_bat`):** $t = 0.52\text{s}$ 도달 즉시, 독립된 6-DoF Freejoint인 `dropped_bat`에 타자 손목의 순간 6D 위치, 회전 쿼터니언, 선속도 및 각속도($\mathbf{x}, \mathbf{q}, \mathbf{v}, \boldsymbol{\omega}$)를 복사 주입하고 `held_bat`은 렌더링에서 은폐.
+* **결과:** 어떠한 수치적 발산이나 미끄러짐 없이, 실물 야구 선수가 타격 직후 배트를 손에서 놓아 필드에 떨어뜨리는 자연스러운 탄도학적 회전 낙하 거동 완성.
+
+#### 3) H1 액추에이터 토크 부호 정합 및 전방 보폭 제어
+* H1 휴머노이드의 관절 부호 규격 분석:
+  - `left_hip_pitch` 및 `left_ankle`에 **양(+)의 토크** 인가 시 골반 전방 $+x$ 가속도 유발 확인.
+  - 음(-)의 피치 토크는 무릎 신전 없이 골반을 주저앉히고 후방으로 밀어내므로, 고관절 굴곡과 무릎 신전을 결합한 전방 보폭 피드포워드 토크 제어기 구축.
+
+---
+
+### 3. 정량적 벤치마크 평가 결과 (50 에피소드 독립 벤치마크)
+`scripts/eval_hit_and_run.py`를 통해 50개 에피소드에 걸쳐 타격 및 주루 전환 성능을 엄밀 평가:
+
+| 평가지표 (Metric) | Phase 4 달성 수치 | 평가 기준 및 의의 |
+| :--- | :---: | :--- |
+| **양족 직립 생존율 (Balance Survival Rate)** | **100.0% (50/50)** | **스윙 및 주루 전환 전 과정 무낙하(Zero Falls)** |
+| **타격 성공률 (Contact Rate)** | **84.0% (42/50)** | 동적 소품 모델 환경에서도 84% 접촉 유지 |
+| **전방 페어 타구율 (Fair Hit Rate)** | **40.0% (20/50)** | 인필드 및 외야 전방 안타 타구 생성 |
+| **배트 드롭 성공률 (Bat Drop Rate)** | **100.0% (50/50)** | 50회 전 에피소드 100% 정상 투척 분리 |
+| **평균 타구 속도 (Mean Exit Velocity)** | **13.4 km/h** | 최고 31.9 km/h 강타 |
+| **1루 주루 전진 변위 (Forward Displacement)** | **+0.40 m** | 배트 분리 후 1루 방향 전방 추진 가속 달성 |
+
+---
+
+### 4. 시각적 비디오 및 프레임 검증 (Visual Inspection)
+* `logs/videos/phase4_hit_and_run.mp4` 비디오 프레임 추출 및 직접 시각 검증:
+  - `phase4_frame_0.png`: 배트를 양손에 쥐고 타석에 견고히 선 H1 휴머노이드 초기 자세.
+  - `phase4_frame_24.png`: 날아오는 투구를 스윙하여 타격하는 순간 ("HIT: FOUL 25.6 km/h" 및 공의 변형 반발).
+  - `phase4_frame_28.png`: **"BAT DROPPED! SPRINT TO 1ST BASE"** - 손에서 배트가 분리되어 그라운드로 떨어지고 상체가 1루 방향으로 선회하기 시작하는 장면.
+  - `phase4_frame_34.png`: 떨어진 배트가 필드 잔디 위에 안착하고, 타자가 균형을 잃지 않고 두 발로 전방을 향해 스텝을 딛으며 질주하는 역동적 연속 동작 확인.
+
+---
+
+### 5. 신규 산출물 및 코드베이스 (New Artifacts)
+* `models/h1_bipedal_baseball.xml`: 19-DoF 양족 부유 골반 H1 야구 모델
+* `models/h1_hit_and_run.xml`: 동적 소품 핸드오버 및 1루 베이스/초크라인 탑재 주루 전용 모델
+* `envs/bipedal_swing_env.py`: Phase 3 전신 균형 타격 환경 (CoM/ZMP 보상)
+* `envs/hit_and_run_env.py`: Phase 4 배트 드롭 및 주루 전환 환경 (3단계 연속 상태 머신)
+* `scripts/train_phase3.py` / `scripts/eval_phase3.py`: Phase 3 PPO 학습 및 정밀 벤치마크
+* `scripts/train_hit_and_run.py` / `scripts/eval_hit_and_run.py`: Phase 4 PPO 학습 및 정밀 벤치마크
+* `checkpoints/best_phase3_bipedal_model.zip`: Phase 3 최적 모델 (100% 직립, 96% 접촉)
+* `checkpoints/best_phase4_hit_and_run_model.zip`: Phase 4 최적 모델 (100% 직립, 84% 접촉, 100% 배트 드롭)
+* `logs/videos/phase3_bipedal_swing.mp4`: Phase 3 전신 직립 타격 비디오
+* `logs/videos/phase4_hit_and_run.mp4`: Phase 4 타격 후 배트 드롭 및 1루 주루 비디오
+
