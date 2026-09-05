@@ -27,9 +27,15 @@ This project evolves from a simple robotic arm throwing a ball into a fully auto
 *   `/cognitive_ai/evaluation/`: Director scripts (`simulate_full_match.py`, `simulate_9_innings.py`) that stitch agents together into a coherent broadcast.
 *   `/final_videos/`: Contains generated `.mp4` renders of the agents in action.
 
+## 📄 Comprehensive Technical Report (~15-Page Monograph)
+For the exhaustive technical breakdown, mathematical formulations, curriculum progression (Phase 1 to 10), robotics kinematics, troubleshooting case studies, and embedded visual frames, open:
+*   [**`REPORT.html`**](file:///Users/jin10000/Desktop/mini-project/baseball/REPORT.html) *(Publication-grade comprehensive monograph with dark/light mode and print-to-PDF support)*
+*   [**`PAPER.md`**](file:///Users/jin10000/Desktop/mini-project/baseball/PAPER.md) *(Academic paper draft)*
+
 ## 📺 Demo
 To run the fully integrated broadcast match (Pitcher vs Batter with Umpire and camera switching):
 ```bash
 python cognitive_ai/evaluation/simulate_full_match.py
 ```
 *The resulting video will be saved in `data/eval_videos/phase_8_1_broadcast_match.mp4`.*
+
