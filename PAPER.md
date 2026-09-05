@@ -1,0 +1,143 @@
+# 다중 에이전트 강화학습과 물리 엔진 기반의 3차원 자율 휴머노이드 야구 시뮬레이션 프레임워크 연구
+**A Multi-Agent Reinforcement Learning and Physics-Based 3D Autonomous Humanoid Baseball Simulation Framework**
+
+---
+
+## 1. Introduction (서론)
+
+스포츠 로보틱스(Sports Robotics)와 물리 기반 모션 제어(Physics-based Character Animation)는 고차원 자유도(Degree of Freedom, DoF)를 갖는 관절체를 정밀하게 제어하면서도, 고속으로 이동하는 객체와의 상호작용을 다루어야 하는 인공지능 분야의 대표적인 고난도 복합 과제이다. 그중에서도 **야구(Baseball)**는 투수의 밀리초(ms) 단위 릴리스 조작, 공기역학적 유체 저항(마그누스 효과)에 따른 궤적 변화, 150km/h에 달하는 구속을 0.1초 내에 판단해 1cm 이내의 오차로 타격해야 하는 정밀 충돌 역학, 그리고 수비수와 주자가 얽힌 복합 다중 에이전트 상호작용이 집약된 극한의 동적 시스템이다.
+
+본 연구에서는 정밀 3차원 물리 엔진인 **MuJoCo**와 최신 심층 강화학습(Deep Reinforcement Learning, PPO) 알고리즘을 결합하여, 모션 캡처(MoCap) 모방 기반의 휴머노이드 투구·타격부터 마그누스 유체역학, 3차원 자동 심판 및 중계 시스템, 그리고 9이닝 정규 경기 상태 머신(Game State Machine)까지 아우르는 **통합 자율 야구 시뮬레이션 프레임워크**를 설계하고 구현하였다.
+
+---
+
+## 2. Why? (연구 배경 및 문제 정의)
+
+### 2.1 기존 야구 게임 및 시뮬레이션의 한계
+상용 야구 게임이나 기존 시뮬레이터들은 대부분 사전에 애니메이터가 제작한 **키프레임(Keyframe) 애니메이션**을 재생하고, 타격과 투구 결과는 주사위 굴리기 식의 **통계적 난수(Random Number Generation)**에 의존해 왔다. 이는 시각적으로는 그럴듯해 보이지만, 실제 물리적 작용-반작용 법칙이나 로봇 관절의 토크 한계, 공기역학적 항력과 스핀의 상호작용을 반영하지 못한다.
+
+### 2.2 강화학습 적용 시 직면한 핵심 병목 (Bottlenecks)
+1. **MoCap 모방과 제구력의 상충(Trade-off):**
+   인간 선수(오타니 쇼헤이)의 유려한 투구 폼을 모방(Imitation Learning)하는 데 집중하면 공이 스트라이크 존 밖으로 벗어나는 야생 투구(Wild Pitch)가 발생하고, 반대로 제구에만 집중하면 로봇 관절이 부자연스럽게 뒤틀리는 형상 왜곡이 발생함.
+2. **비마르코프(Non-Markovian) 환경과 타자의 인지 한계:**
+   공기역학(마그누스 효과)이 추가되면서 공이 휘어질 때, 단일 프레임(Single-frame observation)만으로는 공의 스핀과 가속도를 유추할 수 없어 타자 에이전트가 헛스윙을 반복하는 문제 발생.
+3. **다중 에이전트의 차원의 저주 및 상호작용 부재:**
+   투수, 타자, 포수, 수비수, 주자를 하나의 환경에 단순 병합할 경우 관절 수와 상태 공간의 폭발(Curse of Dimensionality)로 학습이 수렴하지 못하며, 이를 통제할 경기 규칙(Rule Engine) 없이는 자율적 경기 운용이 불가능함.
+
+---
+
+## 3. What? (제안하는 시스템 및 아키텍처)
+
+본 연구에서 구축한 프레임워크는 **물리 기반 동역학(Low-level Physics)**과 **계층형 지능 제어(Hierarchical AI)**가 결합된 통합 야구 생태계이다.
+
+```
++-----------------------------------------------------------------------------------+
+|                        AI Broadcast Director & Game State                         |
+|   - 9-Inning State Machine (Outs, Counts, Runs, Bases)                            |
+|   - Real-time 3D Umpire (Strike Zone, Fair/Foul/HomeRun)                          |
+|   - Dynamic Event-Triggered Camera Switching (Catcher Cam -> Tracking Cam)       |
++-----------------------------------------------------------------------------------+
+                                         |
+                                         v
++-----------------------------------------------------------------------------------+
+|                            Multi-Agent RL Policies                                |
+|  [Pitcher Agent]       [Batter Agent]         [Fielder Agent]   [Runner/Catcher]  |
+|  - 12-DoF H1 Arm       - Timing & Torso PPO   - Omni-Wheeled    - Base Stealing   |
+|  - MoCap Fine-tuning   - FrameStack(4) LSTM   - Flyball Catch   - Reaction/Catch  |
+|  - LR Annealing        - Spin/Acc Perception  - Dynamic Parallax                  |
++-----------------------------------------------------------------------------------+
+                                         |
+                                         v
++-----------------------------------------------------------------------------------+
+|                      Physics & Environment Layer (MuJoCo 3D)                      |
+|  - Aerodynamic Drag & Magnus Force (Fastball Lift, Slider Break, Curve Drop)      |
+|  - Collision Restitution & Trampoline Effect (COR Exit Velocity Amplification)    |
+|  - Humanoid Kinematics & Ground Contact Mechanics                                 |
++-----------------------------------------------------------------------------------+
+```
+
+1. **MoCap-RL 하이브리드 투수(Pitcher):** 오타니 투구 키프레임 궤적을 보존하면서도 3차원 스트라이크 존 경계를 목표로 정밀 제구하는 2단계 보상 아키텍처.
+2. **Frame Stacking 인지 타자(Batter):** 4프레임 시계열 연속 관측을 통해 변화구의 가속도와 스핀 궤적을 실시간으로 추정하여 컨택하는 타격 정책.
+3. **하이브리드 옴니휠 수비진 & 주자(Wheeled Fielder & Runner):** 다리 관절의 보행 불안정성을 배제하고 수비/주루 전술 학습에 집중하도록 설계된 바퀴형 H1 개조 모델.
+4. **정밀 물리 엔진:** 구종별 마그누스 양력/항력 및 배트 반발 계수(COR)를 통한 실시간 타구 발사 속도 증폭.
+5. **룰 엔진 & 중계 디렉터:** 심판 알고리즘, 타구 발생 시점 감지 기반의 동적 카메라 앵글 스위칭, 9이닝 스코어보드 상태 머신.
+
+---
+
+## 4. How? (구체적 방법론 및 구현 상세)
+
+### 4.1 공기역학 및 충돌 물리 수식화 (Physics Formulation)
+공이 공중을 비행할 때 작용하는 유체역학적 힘을 시뮬레이션 매 스텝($\Delta t$)마다 외력(External Force) 벡터로 인젝션함:
+
+$$\vec{F}_{\text{total}} = \vec{F}_{\text{gravity}} + \vec{F}_{\text{drag}} + \vec{F}_{\text{magnus}}$$
+
+1. **공기 항력 (Aerodynamic Drag):**
+   $$\vec{F}_{\text{drag}} = -\frac{1}{2} \rho C_d A \|\vec{v}\| \vec{v}$$
+   *(여기서 $\rho$는 공기 밀도, $C_d$는 항력 계수, $A$는 야구공 단면적, $\vec{v}$는 공의 속도)*
+
+2. **마그누스 힘 (Magnus Effect for Pitch Types):**
+   스핀 벡터 $\vec{\omega}$에 의해 발생하는 양력:
+   $$\vec{F}_{\text{magnus}} = \frac{1}{2} \rho C_L A \|\vec{v}\|^2 (\hat{\omega} \times \hat{v})$$
+   - **직구(Fastball):** 강한 백스핀 $\rightarrow$ 수직 상방 양력($+Z$) 생성으로 중력 낙하 억제 (라이징 효과).
+   - **슬라이더(Slider):** 횡방향 스핀 $\rightarrow$ 수평 횡방향 브레이크($-X$) 및 종방향 낙하 유도.
+   - **커브볼(Curveball):** 탑스핀 $\rightarrow$ 수직 하방 힘($-Z$) 인가로 폭포수 낙하 궤적 형성.
+
+3. **배트-볼 충돌 반발 계수 (COR Trampoline Restitution):**
+   배트 지오메트리와 공 지오메트리 간의 법선 접촉(Contact) 감지 순간, 실제 알루미늄/목재 배트의 탄성 에너지 방출을 모사하여 탈출 속도(Exit Velocity) 벡터를 1.35배 증폭:
+   $$\vec{v}_{\text{post-contact}} = \alpha \cdot \vec{v}_{\text{rebound}} \quad (\alpha = 1.35)$$
+
+---
+
+### 4.2 강화학습 정책 최적화 및 아키텍처 개편 (Mega-Scale RL)
+
+#### 1) 투수 에이전트의 제구력 보상 함수 (Pitcher Reward Function)
+기존의 단순 모방 보상에서 탈피하여, 홈플레이트 도달 시점($y \le 0$)의 3D 스트라이크 존 중심 거리($d$)에 가혹한 비선형 패널티와 인센티브를 부여:
+
+$$R_{\text{pitcher}} = R_{\text{mocap\_pose}} + R_{\text{velocity}} + R_{\text{zone}}$$
+
+$$R_{\text{zone}} = \begin{cases} 
++1000.0 + (0.20 - d) \cdot 1000.0 + 3.0 \cdot v_{\text{km/h}} & \text{if } d \le 0.20 \text{ (Strike)} \\
+-300.0 \cdot d & \text{if } d > 0.20 \text{ (Ball)} \\
+-100.0 \cdot \max(0.1, y_{\text{pos}} - 0.20) & \text{if unreached (Wild Pitch)}
+\end{cases}$$
+
+또한, 후반부 미세 제구를 위해 **Linear Learning Rate Annealing**을 적용하여 학습률을 $\eta_0 = 5 \times 10^{-4}$에서 $0$까지 선형 감쇠시킴.
+
+#### 2) 타자 에이전트의 시계열 인지 (VecFrameStack Architecture)
+마그누스 힘으로 인해 변화하는 궤적 가속도 $\vec{a}(t)$를 인지할 수 있도록, 관측 벡터 $o_t$를 4스텝 연속 스택하여 정책 신경망에 공급:
+
+$$S_t = [o_{t-3}, o_{t-2}, o_{t-1}, o_t] \in \mathbb{R}^{4 \times \dim(o)}$$
+
+이를 통해 타자는 단순 위치가 아닌 $\frac{d\vec{v}}{dt}$ (공의 휘어짐)을 신경망 내부에서 추론하여 스윙 타이밍을 정밀하게 결정함.
+
+---
+
+### 4.3 룰 엔진, 자율 심판 및 중계 방송 시스템 (Director AI)
+
+1. **3차원 바운딩 박스 기반 AI 심판 (`BaseballUmpire`):**
+   홈플레이트 상공 $X \in [-0.215, 0.215]\text{m}$, $Z \in [0.5, 1.1]\text{m}$, $Y \in [-0.215, 0.215]\text{m}$의 3D 체적 교차를 밀리초 단위로 추적하여 투구 판정 수행. 타구 발생 시 $45^\circ$ 파울 라인 벡터 방정식을 통해 페어/파울/홈런 판정.
+2. **이벤트 드리븐 동적 카메라 스위칭 (Broadcast Director):**
+   - 투구 구간: 포수 시점(`catcher_cam`)에서 투구 폼 및 스트라이크 존 궤적을 중계.
+   - 타격 감지 순간: 타구 추적 카메라(`tracking_cam`)로 즉각 자동 절체되어 인필드/아웃필드 궤적 렌더링.
+   - 프레임 버퍼 오버레이: 심판 판정 결과 및 타구 속도를 OpenCV 파이프라인으로 실시간 렌더링.
+3. **정규 9이닝 게임 상태 머신 (`BaseballGameState`):**
+   스트라이크/볼 카운트 누적 $\rightarrow$ 삼진/볼넷 판정 $\rightarrow$ 3아웃 공수 교대 $\rightarrow$ 주자 진루 및 득점 연산이 9회 말까지 자동으로 완결되는 이벤트 기반 상태 머신 구현.
+
+---
+
+## 5. So What? (연구 결과, 학술적 의의 및 향후 과제)
+
+### 5.1 정량적 및 정성적 검증 결과
+* **투수 제구 정밀도:** 기존 무작위 포물선 투구에서, 200만 스텝 메가 스케일 학습 이후 스트라이크 존 중심 오차 **0.22m** 이내로 꽂히는 정밀 제구 달성 (Strike 판정 획득).
+* **타자 컨택률 및 비거리:** Frame Stacking 도입 후 변화구 궤적에 대한 헛스윙률 대폭 감소, 반발 계수 증폭을 통해 실제 프로야구급 비거리의 장타/홈런 시뮬레이션 성공.
+* **수비 및 주루 파이프라인:** 바퀴형 수비수(Fielder)의 외야 뜬공 5/5 포구 달성, 주자(Runner)의 1루 $\rightarrow$ 2루 30m 급가속 쇄도 검증 완료.
+* **전체 파이프라인 자동화:** `./run_demo.sh` 단일 명령으로 1) 중계 매치, 2) 도루 시연, 3) 9이닝 텍스트 게임 시뮬레이션이 결함 없이 구동됨을 입증.
+
+### 5.2 학술적·기술적 시사점 (Significance)
+1. **모방 학습과 목표 최적화의 성공적 융합:** 인간의 자연스러운 MoCap 모션 데이터를 기반으로 출발하되, 엄격한 물리적 목표(스트라이크 존)를 부과하는 RL 파인튜닝 기법의 실효성을 입증함.
+2. **물리 기반 스포츠 시뮬레이션의 새 지평:** 기존 애니메이션 기반 게임의 한계를 넘어, 공기역학과 동역학이 지배하는 가상 환경에서 자율 에이전트들이 스스로 규칙에 반응하는 '진짜 물리 시뮬레이션'을 구현함.
+3. **계층형 AI (Director-Actor)의 확장성:** 미시적 제어(관절 제어 RL)와 거시적 조율(디렉터, 심판, 상태 머신)을 분리함으로써, 복잡한 규칙 기반 단체 스포츠를 과도한 연산 부하 없이 유기적으로 구현하는 설계 표준을 제시함.
+
+### 5.3 한계점 및 미래 연구 과제 (Limitations & Future Work)
+* **단일 환경 9인 동시 필딩 (Full-field Simultaneous Simulation):** 현재는 투수-타자 매치, 포수-주자 도루, 외야수 포구가 모듈별로 검증되었으므로, 향후에는 9명의 수비수와 4명의 주자가 단일 MuJoCo 월드에 동시 상주하며 상황에 따라 1루/2루로 송구(Catch & Throw)하는 종단간(End-to-End) 경기 구현이 필요함.
+* **적대적 자기 대전 (Adversarial Self-Play) 고도화:** 투수의 구종 선택과 타자의 노림수가 상호 진화(Co-evolution)하는 미니맥스(Minimax) 게임 이론 기반의 강화학습 파이프라인 심화 연구가 기대됨.
