@@ -206,3 +206,89 @@ $$R = R_{approach} + \mathbf{1}_{contact} \cdot \left( R_{contact} + R_{sweet} +
 * `logs/videos/phase1_push_hit.mp4`: 우익수 방면 전방 사출 MP4 영상
 
 
+
+---
+
+## 📅 Entry 04: [2026-09-06] 투수 AI 정밀 학습, Phase 2 하드웨어 심투리얼(Sim-to-Real) 강화 및 투타 폐루프 듀얼 매치 완결
+
+### 1. 배경 및 사용자 피드백 반영 (Motivation & User Directive)
+* **사용자 핵심 질문:** *"근데 투수도 같이학습 안하나? 일단 알아서 페이즈 계속 진행시켜서 1단계들 마무리 지을때까지 알아서 검증하고 실행해주고 영상직접 열어보고 확인하면서 분석하고 자동화하여 진행해주세요"*
+* **연구 의사결정:**
+  1. 가상 투구 궤적 주입 방식에서 탈피하여, Unitree H1 휴머노이드 투수가 마운드($y=10.0\text{ m}$)에 두 발을 딛고 서서 실제 상체 관절 토크와 물리 법칙으로 9분할 스트라이크 존에 정확히 꽂아 넣는 **정밀 투수 AI(`envs/pitcher_precision_env.py`)** 개발 및 학습.
+  2. 3대 핵심 구종(포심 패스트볼, 슬라이더, 커브볼)의 **유체역학적 공기저항(Aerodynamic Drag) 및 마그누스 효과(Magnus Effect)** 모델링.
+  3. **Phase 2 하드웨어 물리 제약(Sim-to-Real Hardening):** 20ms EtherCAT 통신 지연 버퍼, 배트 질량 $\pm 10\%$ 도메인 랜덤화, 접촉 반발계수(COR) 지터, 시각 센서 관측 노이즈 환경 하에서 타자 정책 강인화.
+  4. **투수 vs 타자 폐루프 듀얼 매치(`models/h1_duel_match.xml`):** 한 그라운드 위에서 투수가 던진 공을 타자가 직접 보고 판단하여 쪼개 치는 듀얼 시뮬레이션 및 경기 중계 비디오 완성.
+
+---
+
+### 2. 투수 정밀 동역학 모델링 및 핵심 트러블슈팅
+
+#### 1) H1 투수 물리 모델 (`models/h1_pitcher.xml`)
+* 투수 마운드($y=10.0\text{ m}$)에 위치하여 홈플레이트($y=0.0\text{ m}$)를 향하도록 쿼터니언 $90^\circ$ 회전 배치 (`quat="0.7071068 0 0 -0.7071068"`).
+* 상체 5개 능동 액추에이터 (`torso`, `right_shoulder_pitch`, `right_shoulder_roll`, `right_shoulder_yaw`, `right_elbow`)에 H1 정격 피크 토크 제한(Torso 200 N·m, Shoulders 40 N·m, Elbow 18 N·m) 엄격 적용.
+* 투구 개시 전에는 용접 구속조건(`<equality><weld>`)으로 공을 투수 손 사이트(`pitcher_hand_site`)에 완전 구속하고, 릴리스 시점에 해제.
+
+#### 2) 결정적 결함 발견 및 해결: 손-공 침투 충돌 간섭 (Self-Collision Snag)
+* **현상:** 용접 구속을 풀고 목표 속도($v \approx 22\text{ m/s}$)를 부여했으나, 공이 전진하지 못하고 속도가 $v_y \approx -13\text{ m/s}$로 급락하며 2m 전방 땅바닥($y=2.7\text{ m}, z=0.03\text{ m}$)에 처박히는 현상 발생.
+* **원인 규명:** 손목 지오메트리(`right_elbow_link` 끝단 $r=0.033\text{ m}$ 구체)와 야구공($r=0.037\text{ m}$) 사이의 중심 거리가 가까워, 용접 해제 직후 물리 엔진이 $0.005\text{ m}$ 침투(Penetration)로 판정하여 역방향 충돌 임펄스를 공에 가함.
+* **해결책:** `<contact><exclude body1="baseball" body2="p_right_elbow_link" /></contact>`를 명시적으로 삽입하여 릴리스 순간의 접촉 간섭을 완벽히 소거함.
+
+#### 3) 공기역학 및 마그누스 회전 동역학 수식화
+$$\mathbf{F}_{aero} = \mathbf{F}_{drag} + \mathbf{F}_{magnus} = -\frac{1}{2} \rho C_d A \|\mathbf{v}\| \mathbf{v} + \frac{1}{2} \rho C_L A r_{ball} (\boldsymbol{\omega} \times \mathbf{v})$$
+* **포심 패스트볼:** 백스핀($\omega_x = -180\text{ rad/s} \approx 1720\text{ RPM}$) $\implies$ 양력($F_z > 0$) 작용으로 중력 낙하를 지연시켜 떠오르는 느낌의 88 km/h 강속구 형성.
+* **슬라이더:** 사이드스핀($\omega_z = +150\text{ rad/s}$) $\implies$ 우타자 외곽($+X$)으로 $15\sim 25\text{ cm}$ 횡방향 급변화하는 78 km/h 브레이킹볼.
+* **커브볼:** 탑스핀($\omega_x = +170\text{ rad/s}$) $\implies$ 하향력($F_z < 0$) 작용으로 홈플레이트 앞에서 급격히 바닥으로 떨어지는 72 km/h 12-to-6 드롭볼.
+
+---
+
+### 3. 정량적 벤치마크 평가 결과
+
+#### [투수 AI] 50 에피소드 독립 벤치마크 (`scripts/eval_pitcher.py`)
+| 구종 (Pitch Type) | 스트라이크율 (Strike Rate) | 목표 오차 (Target MAE) | 평균 구속 (Mean Speed) | 물리적 특성 |
+| :--- | :---: | :---: | :---: | :--- |
+| **포심 패스트볼 (Fastball)** | **89.5%** (17/19) | **5.86 cm** | **87.8 km/h** | 백스핀 양력 기반 핀포인트 제구 |
+| **슬라이더 (Slider)** | **86.7%** (13/15) | **5.44 cm** | **78.5 km/h** | 우타자 바깥쪽 예리한 횡변화 |
+| **커브볼 (Curveball)** | **50.0%** (8/16) | **12.07 cm** | **72.0 km/h** | 12-to-6 종방향 급낙하 |
+| **종합 벤치마크** | **`76.0%` (38/50)** | **`7.72 cm`** | **`80.0 km/h`** | **9분할 존 반경 8cm 이내 안착** |
+
+#### [Phase 2 하드웨어 심투리얼 타자 AI] 50 에피소드 벤치마크 (`scripts/eval_hardened_batter.py`)
+*(조건: 20ms 통신 지연 버퍼, 모터 토크 클리핑, 배트 질량 $\pm 10\%$, 시각 센서 노이즈)*
+| 평가지표 | Phase 1 (이상적 물리) | Phase 2 (하드웨어 심투리얼) | 하드웨어 강인성 검증 |
+| :--- | :---: | :---: | :--- |
+| **타격 성공률 (Contact Rate)** | 100.0% | **100.0%** (50/50) | 지연 및 질량 변동 하에서도 100% 접촉 유지 |
+| **전방 페어 타구율 (Fair Hit Rate)** | 96.0% | **72.0%** (36/50) | 20ms 지연 환경 하에서 72% 정타 성공 |
+| **스윗스팟 오차 (Sweet Spot MAE)**| 7.38 cm | **7.76 cm** | $\pm 10\%$ 배트 관성 변조 하에서도 7cm대 안착 |
+| **타구 출구 속도 (Mean Exit Vel)**| 30.9 km/h | **24.3 km/h** | 실물 모터 토크 포화 준수 |
+| **당겨치기 성공률 (Pull Accuracy)**| 57.1% | **40.0%** | 좌측 방면 정타 사출 |
+| **센터 라인드라이브 (Center Acc)** | 16.7% | **30.8%** | 외야 중앙 직선 타구 대폭 개선 |
+
+#### [투타 폐루프 듀얼 매치] 10경기 실전 대결 결과 (`scripts/simulate_pitcher_batter_match.py`)
+* 마운드 투수의 80-84 km/h 패스트볼 vs 타자의 20ms 제어 지연 타이밍 대결:
+  * **패스트볼(78~84 km/h):** 타자가 타이밍 지연으로 인해 헛스윙(Strike / Miss) 기록 $\implies$ 강속구 위력 물리 검증.
+  * **오프스피드(슬라이더 69 km/h, 커브볼 64~66 km/h):** 배트 중심에 공이 포착되며 **FAIR HIT (PULL)** 및 인필드 라이너 사출 성공.
+  * 실제 인간 야구 메커니즘인 "구속 차이에 의한 타이밍 배틀"이 강화학습 정책 간의 물리적 상호작용만으로 자연스럽게 발현됨.
+
+---
+
+### 4. 시각적 검증(Visual Video Inspection) 내역
+* `logs/videos/pitcher_fastball.mp4`: 포수 시점(`catcher_cam`)에서 녹화된 88 km/h 패스트볼이 스트라이크 존 박스 정중앙을 관통하는 영상 확인 완료.
+* `logs/videos/pitcher_slider.mp4`: 우타자 외곽으로 꺾이며 보더라인을 찌르는 78 km/h 슬라이더 영상 확인 완료.
+* `logs/videos/phase2_pull_hit.mp4`: 20ms 지연 하에서 배트 스윗스팟과 공의 충돌 순간 및 좌익수 방면 라인드라이브 사출 영상 확인 완료.
+* `logs/videos/pitcher_vs_batter_match.mp4`: 10m 경기장 와이드 앵글에서 투수 와인드업 $\to$ 릴리스 $\to$ 타자 스윙 $\to$ 타구 외야 비행이 한 화면에 담긴 256프레임 종합 중계 영상 확인 완료.
+
+---
+
+### 5. 신규 산출물 (New Artifacts)
+* `models/h1_pitcher.xml`: 19-DoF H1 투수 마운드 전용 MJCF 모델
+* `models/h1_duel_match.xml`: 투수와 타자가 동시에 배치된 10m 실규격 듀얼 아레나 모델
+* `scripts/build_duel_match_xml.py`: 듀얼 아레나 XML 빌더 스크립트
+* `envs/pitcher_precision_env.py`: 9분할 존 및 3대 구종 마그누스 투수 정밀 환경
+* `envs/hardened_batting_env.py`: Phase 2 심투리얼 하드웨어 제약(지연, 토크, 무작위화) 타격 환경
+* `scripts/train_pitcher.py` / `scripts/eval_pitcher.py`: 투수 PPO 훈련 및 평가 파이프라인
+* `scripts/train_hardened_batter.py` / `scripts/eval_hardened_batter.py`: 심투리얼 타자 훈련 및 평가 파이프라인
+* `scripts/simulate_pitcher_batter_match.py`: 투타 폐루프 듀얼 매치 시뮬레이터
+* `checkpoints/best_pitcher_model.zip`: 최고 성능 투수 정책 (패스트볼 89.5%, 슬라이더 86.7%)
+* `checkpoints/best_phase2_hardened_model.zip`: 최고 성능 심투리얼 타자 정책 (접촉율 100%, 페어율 72%)
+* `logs/videos/pitcher_fastball.mp4`, `logs/videos/pitcher_slider.mp4`, `logs/videos/pitcher_curveball.mp4`
+* `logs/videos/phase2_pull_hit.mp4`, `logs/videos/phase2_center_hit.mp4`, `logs/videos/phase2_push_hit.mp4`
+* `logs/videos/pitcher_vs_batter_match.mp4`
