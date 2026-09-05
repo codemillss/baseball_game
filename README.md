@@ -4,6 +4,22 @@ A cutting-edge 3D baseball simulation framework powered by **MuJoCo Physics**, *
 
 This project evolves from a simple robotic arm throwing a ball into a fully automated, physics-accurate baseball match complete with MoCap pitching, dynamic aerodynamics, AI umpires, and a 9-inning game state machine.
 
+---
+
+## 📚 Publications & Comprehensive Documentation
+
+All technical documentation, peer reviews, and papers have been organized into the [`docs/`](docs/) directory:
+
+| Document | Format | Description |
+| :--- | :---: | :--- |
+| **🌐 [Interactive Web Monograph](https://codemillss.github.io/baseball_game/)** | **HTML (Live)** | Fully interactive web paper with dark/light mode, lightbox keyframe gallery, and peer review. *(Hosted via GitHub Pages)* |
+| **📥 [30-Page Technical Report (PDF)](docs/REPORT.pdf)** | **PDF (20MB)** | Official publication-grade PDF report with complete formulas, 69 high-res figures, and retrospectives. |
+| **📄 [Academic Paper (Markdown)](docs/PAPER.md)** | **Markdown** | In-depth research paper structured as Introduction - Why - What - How - So What - Retrospective. |
+| **🧪 [Experiment Logs](docs/EXPERIMENT_LOG.md)** | **Markdown** | Chronological record of training parameters and milestone outcomes. |
+| **🎥 [Video Catalog](docs/VIDEO_CATALOG.md)** | **Markdown** | Comprehensive catalog of all 15 phase experiment evaluation videos. |
+
+---
+
 ## 🚀 Key Features
 
 *   **Mega-Scale RL Pitcher & Batter:** Trained over millions of timesteps using PPO. The batter utilizes `VecFrameStack` (4-frame memory) to track ball acceleration and spin, while the pitcher utilizes Learning Rate Annealing for pinpoint strike zone control.
@@ -26,16 +42,12 @@ This project evolves from a simple robotic arm throwing a ball into a fully auto
 *   `/cognitive_ai/training/`: PPO training loops including the mega-architecture scaling scripts.
 *   `/cognitive_ai/evaluation/`: Director scripts (`simulate_full_match.py`, `simulate_9_innings.py`) that stitch agents together into a coherent broadcast.
 *   `/final_videos/`: Contains generated `.mp4` renders of the agents in action.
-
-## 📄 Comprehensive Technical Report (~15-Page Monograph)
-For the exhaustive technical breakdown, mathematical formulations, curriculum progression (Phase 1 to 10), robotics kinematics, troubleshooting case studies, and embedded visual frames, open:
-*   [**`REPORT.html`**](file:///Users/jin10000/Desktop/mini-project/baseball/REPORT.html) *(Publication-grade comprehensive monograph with dark/light mode and print-to-PDF support)*
-*   [**`PAPER.md`**](file:///Users/jin10000/Desktop/mini-project/baseball/PAPER.md) *(Academic paper draft)*
+*   `/docs/`: Comprehensive reports, interactive web monograph, 30-page PDF, and research papers.
+*   `/scripts/`: Diagnostic and patch tools.
 
 ## 📺 Demo
 To run the fully integrated broadcast match (Pitcher vs Batter with Umpire and camera switching):
 ```bash
-python cognitive_ai/evaluation/simulate_full_match.py
+./run_demo.sh
 ```
 *The resulting video will be saved in `data/eval_videos/phase_8_1_broadcast_match.mp4`.*
-
