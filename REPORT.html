@@ -657,6 +657,7 @@
             <li><a href="#sec-8">8. 도루 및 9이닝 게임 엔진</a></li>
             <li><a href="#sec-9">9. 종합 실험 검증 & 비디오 갤러리</a></li>
             <li><a href="#sec-10">10. 학술적 고찰 및 결론</a></li>
+            <li><a href="#sec-11">11. 엔지니어링 회고 및 한계</a></li>
             <li><a href="#appendix">부록 (Appendix)</a></li>
         </ul>
         <div class="sidebar-footer">
@@ -1882,7 +1883,8 @@
                             <li><strong>H1 다리 복원 & 이족 균형:</strong> Centroidal Dynamics 및 ZMP 기반 지면 반력(GRF) 안정화 제어기 통합.</li>
                             <li><strong>액추에이터 토크 포화 모델링:</strong> H1 정격 모터 사양에 맞춘 엄격한 토크 리미터 및 배트 손잡이 유연 기구(Compliance Joint) 설계.</li>
                             <li><strong>AMP 적대적 모방 학습:</strong> Kinematic 주입을 배제하고 토크 레벨에서 오타니 투구 폼을 자연스럽게 유도하는 Discriminator 학습.</li>
-                            <li><strong>심층 도메인 랜덤화:</strong> 바람, 공기 밀도(\(ho\)), 반발 계수, 센서 레이턴시를 랜덤화하여 정책 강인성(Robustness) 확보.</li>
+                            <li><strong>심층 도메인 랜덤화:</strong> 바람, 공기 밀도(\(
+ho\)), 반발 계수, 센서 레이턴시를 랜덤화하여 정책 강인성(Robustness) 확보.</li>
                         </ul>
                     </div>
 
@@ -1902,6 +1904,82 @@
                 <p>
                     본 연구는 Unitree H1 휴머노이드 로봇이 3차원 MuJoCo 물리 시뮬레이션 환경에서 스스로 투구와 타격을 자율 학습하고, 마그누스 유체역학, 3D 자동 심판 및 중계 방송, 그리고 9이닝 정규 경기 상태 머신까지 포괄하는 <strong>세계 최고 수준의 자율 야구 시뮬레이션 프레임워크</strong>를 성공적으로 구축하였음을 선언한다. 본 보고서에 기록된 이론적 수식, 아키텍처 다이어그램, 6대 엔지니어링 트러블슈팅, 그리고 45개의 시각적 실증 증거는 향후 피지컬 AI와 스포츠 로보틱스 연구에 영구적인 이정표가 될 것이다.
                 </p>
+            </section>
+
+            <!-- SECTION 11: RETROSPECTIVE & PERSONAL REFLECTION -->
+            <section id="sec-11">
+                <h2 class="sec-heading">11. 프로젝트 엔지니어링 회고 및 개인적 소회 (Retrospective & Lessons Learned)</h2>
+                
+                <p>
+                    본 프로젝트는 단순한 '코드 작성'을 넘어, 물리학의 법칙과 인공지능 강화학습의 수렴성, 그리고 로봇 동역학이 교차하는 최전선에서 수많은 실패와 디버깅을 거듭하며 완성되었다. 프로젝트의 전 과정을 마무리하며, 개발 과정에서 마주했던 기술적 난제들과 그 이면에 남겨진 공학적 한계, 그리고 <strong>'로봇 배포(Robot Deployment)'라는 개념에 대해 뒤늦게 얻은 뼈아픈 각성과 반성</strong>을 가감 없이 기록한다.
+                </p>
+
+                <h3 class="subsec-heading">11.1 개발 과정에서 치열하게 마주했던 공학적 고투 (Engineering Struggles)</h3>
+                <p>
+                    시뮬레이션 환경 구축과 정책 학습은 매 순간이 예상치 못한 물리적·수학적 난관의 연속이었다:
+                </p>
+                <ul style="margin-left: 24px; margin-bottom: 20px; line-height: 1.7;">
+                    <li><strong>MoCap 폼 모방과 제구력 간의 극심한 줄타기:</strong> 오타니 선수의 유려한 투구 폼을 보존하도록 보상 함수를 구성했을 때, 시각적으로는 완벽한 투구 동작을 구사하지만 공은 포수가 도저히 잡을 수 없는 허공으로 날아가는 <em>Reward Gaming</em> 현상에 직면했다. 폼 유지 보상과 스트라이크 존 중심 거리(\(d\))에 대한 비선형 지수 패널티(\(-300 \cdot d\)) 사이의 미세한 가중치 균형을 찾아내기까지 수백 번의 시행착오를 겪어야 했다.</li>
+                    <li><strong>비마르코프(Non-Markovian) 변화구와 타자의 암흑:</strong> 마그누스 유체역학을 환경에 주입했을 때, 타자 에이전트가 직구에는 잘 대응하면서도 슬라이더와 커브볼에는 배트를 완전히 헛돌리는 현상이 발생했다. 단일 프레임의 속도 벡터만으로는 공의 '가속도와 스핀 곡률'을 결코 인지할 수 없다는 POMDP의 본질을 깨닫고, <code>VecFrameStack(4)</code>를 통해 4스텝 시계열 기억력을 부여함으로써 타격 타이밍을 찾아내던 순간은 가장 지적인 카타르시스를 안겨준 순간이었다.</li>
+                    <li><strong>트래킹 카메라의 가상 모션 시차 왜곡 (Motion Parallax):</strong> 바퀴 달린 외야수 로봇에 카메라를 장착했을 때, 단색 바닥 텍스처로 인해 로봇은 제자리에 가만히 있고 공만 날아오는 것처럼 보이던 착시 현상 역시 텍스처 좌표계와 원근 지표 폴(Reference Pole)을 환경에 절차적으로 생성하며 광학 흐름(Optical Flow)의 원리를 체득할 수 있었다.</li>
+                </ul>
+
+                <h3 class="subsec-heading">11.2 '진짜 로봇 배포(Deployment)'에 대한 뒤늦은 각성과 뼈아픈 아쉬움</h3>
+                
+                <!-- Special Retrospective Callout -->
+                <div class="callout callout-danger" style="margin: 24px 0; border-left: 5px solid #ef4444; background: #fff1f2;">
+                    <div class="callout-title" style="color: #b91c1c; font-size: 1.05rem;">💡 SKALA 프로그램과 엘리베이터에서 마주친 깨달음: "내가 한 것은 진짜 로봇 Deploy였는가?"</div>
+                    <p style="margin-bottom: 10px; line-height: 1.7;">
+                        본 프로젝트를 거의 마무리 짓던 시점, 현재 참여 중인 <strong>SKALA 프로그램</strong> 과정에서 우연히 엘리베이터 디스플레이에 송출되는 로봇 공학 관련 영상을 접하게 되었다. 그 짧은 미디어 클립에 호기심이 생겨 이동 중 스마트폰으로 '실제 현업에서의 로봇 디플로이(Deployment)' 기술 스택을 집중적으로 검색해 보았다. 그리고 그 검색 결과는 머리를 강하게 얻어맞은 듯한 깊은 충격과 자괴감을 안겨주었다.
+                    </p>
+                    <p style="margin-bottom: 0; line-height: 1.7;">
+                        그동안 나는 파이썬 가상환경에서 모델을 훈련하고 비디오를 렌더링하며 '프로젝트를 완성했다'는 생각에 안주하고 있었다. 하지만 검색을 통해 알게 된 <strong>'진짜 피지컬 로보틱스 현업의 배포'</strong>는 내가 해온 것과는 차원이 다른 세계였다:
+                    </p>
+                </div>
+
+                <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 24px;">
+                    <h4 style="margin-top: 0; color: var(--primary); margin-bottom: 12px;">현업 피지컬 로보틱스 배포(Deployment)의 5대 필수 요건:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.7; font-size: 0.95rem;">
+                        <li><strong>Zero-Python & C++ 전면 재작성:</strong> 파이썬의 인터프리터 오버헤드와 가비지 컬렉션(GC)으로 인한 마이크로초 지연(Jitter)을 제거하고, <code>LibTorch</code>나 <code>ONNX Runtime C++</code>로 모델을 변환하여 0.2ms 내에 추론을 완료하는 임베디드 C++ 런타임.</li>
+                        <li><strong>RT-Preempt Linux 하드 실시간성:</strong> 1,000Hz (1밀리초) 주기를 단 1마이크로초의 오차도 없이 칼같이 보장하는 실시간 커널 제어기.</li>
+                        <li><strong>EtherCAT / CAN FD 하위 버스 통신:</strong> 모터 드라이버와 통신하여 매 밀리초마다 엔코더 각도와 전류를 수신하고 토크 명령(\(	au\))을 전송하는 물리적 버스 패킷 통신.</li>
+                        <li><strong>상태 추정기 (State Estimator, EKF):</strong> 시뮬레이션처럼 완벽한 진리값(Ground Truth)이 존재하지 않는 실제 세계에서, 노이즈투성이 IMU 센서와 엔코더 값을 융합해 자세와 속도를 유추하는 확장 칼만 필터.</li>
+                        <li><strong>하드웨어 안전 감시 계층 (Safety Watchdog):</strong> 인버터 과전류 차단, 감속기 백래시 파손 방지 토크 리미터, 비상 정지(E-Stop) 및 넘어짐 시 댐퍼 모드 전환.</li>
+                    </ol>
+                </div>
+
+                <p>
+                    솔직하게 고백하건대, 본 프로젝트는 이러한 <strong>'실물 하드웨어에 제어기를 플래시(Flash)하고 모터를 실시간 1kHz로 제어해 내는 진짜 로봇 배포 역량'</strong>을 직접적으로 습득하거나 증명하지 못했다. 시뮬레이션의 비트(Bits) 세계 안에 갇혀 이상적인 센서와 딜레이 없는 환경에 의존했을 뿐, 원자(Atoms)의 세계가 지닌 가혹한 물리적 마찰과 통신 지연을 마주하지 못했다는 점은 본 연구의 가장 뼈아픈 기술적 아쉬움으로 남는다.
+                </p>
+
+                <h3 class="subsec-heading">11.3 정량적 성능 지표 및 비교 벤치마크의 미흡함에 대한 반성</h3>
+                <p>
+                    또한, 본 프로젝트의 정량적 평가 체계 역시 학술적 관점에서 냉정히 반성할 점이 많다:
+                </p>
+                <ul style="margin-left: 24px; margin-bottom: 24px; line-height: 1.7;">
+                    <li><strong>표준 SOTA 알고리즘과의 비교 부재:</strong> 본 연구는 PPO 단일 알고리즘 내에서의 커리큘럼 성과(스트라이크 존 거리 0.22m 수렴, 외야 포구 5/5 성공)만을 단편적으로 제시했을 뿐, SAC, TD3 등 다른 연속 제어 강화학습 알고리즘과의 다중 시드(Multi-seed) 통계적 수렴 속도 비교가 누락되었다.</li>
+                    <li><strong>모방 학습 벤치마크 결핍:</strong> 오타니 폼 모방에 있어서도 AMP(Adversarial Motion Priors)나 DeepMimic과 같은 학계의 표준 모방 프레임워크와의 정량적 정밀도 비교 지표가 제시되지 못했다.</li>
+                    <li><strong>어블레이션(Ablation) 연구의 수치화 미흡:</strong> <code>VecFrameStack</code> 적용 시 1프레임 vs 2프레임 vs 4프레임 간의 타율 및 헛스윙률 변화를 통계적 그래프로 엄밀히 규명하지 못하고, 시각적 실증 영상 위주로 성과를 입증하려 한 점은 엄정한 공학적 보고서로서 보완해야 할 중대한 결함이다.</li>
+                </ul>
+
+                <h3 class="subsec-heading">11.4 향후 연구 및 다음 프로젝트를 향한 실천적 다짐</h3>
+                <p>
+                    이 아쉬움과 반성은 나를 멈추게 하는 좌절이 아니라, 차세대 엔지니어로 거듭나기 위한 가장 강력한 연료가 될 것이다. 나는 다음 프로젝트와 향후 연구에서 반드시 다음 세 가지 목표를 행동으로 옮길 것을 다짐한다:
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 20px 0;">
+                    <div class="metric-card" style="border-top: 3px solid #3b82f6;">
+                        <h4 style="color: #3b82f6; font-size: 1rem; margin-bottom: 8px;">1. Pure C++ 런타임 구축</h4>
+                        <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">파이썬 의존성을 완전히 끊어내고, ONNX Runtime C++ 및 LibTorch를 통해 1ms 이내로 제어 토크를 연산하는 완전한 무경량 C++ Policy Runner를 직접 코딩한다.</p>
+                    </div>
+                    <div class="metric-card" style="border-top: 3px solid #10b981;">
+                        <h4 style="color: #10b981; font-size: 1rem; margin-bottom: 8px;">2. 실물 모터 CAN 통신 실증</h4>
+                        <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">전신 로봇이 아니더라도 1자유도/2자유도 액추에이터 모터를 직접 구매하여, USB-to-CAN 모듈을 통해 시뮬레이션에서 훈련된 정책이 실물 모터를 1,000Hz로 회전시키는 종단간 실증을 반드시 완수한다.</p>
+                    </div>
+                    <div class="metric-card" style="border-top: 3px solid #f59e0b;">
+                        <h4 style="color: #f59e0b; font-size: 1rem; margin-bottom: 8px;">3. 엄격한 정량 벤치마크 설계</h4>
+                        <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">단순한 정성적 비디오 확인을 넘어, 최소 5개 이상의 랜덤 시드 통계 오차 막대(Error Bar), SOTA 베이스라인 비교, 엄격한 어블레이션 실험 매트릭스를 기본 프로토콜로 정착시킨다.</p>
+                    </div>
+                </div>
             </section>
 
             <!-- APPENDIX -->
