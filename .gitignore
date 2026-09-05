@@ -16,3 +16,4 @@ checkpoints/**/logs/
 logs/
 *.mp4
 *.gif
+MUJOCO_LOG.TXT
