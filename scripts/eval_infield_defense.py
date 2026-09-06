@@ -58,7 +58,7 @@ def draw_hud(frame, step, current_time, pitch_name, contact, fair_hit, released,
         stage_str = "STAGE 4: 1ST BASE RACE & 3D UMPIRE DECISION"
         stage_col = (255, 200, 50)
 
-    cv2.putText(frame, f"Time: {current_time:.2f}s (Step {step:2d}/88) | {stage_str}", (28, 68), cv2.FONT_HERSHEY_SIMPLEX, 0.50, (220, 235, 255), 1, cv2.LINE_AA)
+    cv2.putText(frame, f"Time: {current_time:.2f}s (Step {step:2d}/100) | {stage_str}", (28, 68), cv2.FONT_HERSHEY_SIMPLEX, 0.50, (220, 235, 255), 1, cv2.LINE_AA)
 
     # Ball / Play Status
     if contact:
@@ -184,18 +184,22 @@ def evaluate(
                     ep_frames.append(annotated)
 
                     # Capture Keyframe candidates
-                    # 1. Pitch & Swing (t ~ 0.44 - 0.48s)
-                    if 0.44 <= current_time <= 0.48 and "pitch_and_swing" not in cur_ep_keyframes:
+                    # 1. Pitch & Swing (t ~ 0.42 - 0.48s)
+                    if 0.42 <= current_time <= 0.48 and "pitch_and_swing" not in cur_ep_keyframes:
                         cur_ep_keyframes["pitch_and_swing"] = annotated.copy()
-                    # 2. Bat Drop & Sprint Launch (t ~ 0.54 - 0.60s)
-                    if 0.54 <= current_time <= 0.62 and "bat_drop_and_sprint" not in cur_ep_keyframes:
+                    # 2. Bat Drop & Sprint Launch (t ~ 0.54 - 0.64s)
+                    if 0.54 <= current_time <= 0.64 and "bat_drop_and_sprint" not in cur_ep_keyframes:
                         cur_ep_keyframes["bat_drop_and_sprint"] = annotated.copy()
-                    # 3. Fielder Intercept Scoop (t ~ 1.05 - 1.20s)
-                    if 1.05 <= current_time <= 1.22 and "fielder_intercept" not in cur_ep_keyframes:
+                    # 3. Fielder Intercept Scoop (t ~ 0.90 - 1.25s)
+                    if 0.90 <= current_time <= 1.25 and "fielder_intercept" not in cur_ep_keyframes and (info["ball_fielded"] or current_time >= 1.05):
                         cur_ep_keyframes["fielder_intercept"] = annotated.copy()
-                    # 4. 1st Base Umpire Call (t ~ 1.55 - 1.68s)
-                    if 1.55 <= current_time <= 1.70 and "umpire_call" not in cur_ep_keyframes and info["umpire_decision"] in ["OUT", "SAFE"]:
+                    # 4. 1st Base Umpire Call (t >= 1.45s)
+                    if current_time >= 1.45 and "umpire_call" not in cur_ep_keyframes and info["umpire_decision"] in ["OUT", "SAFE"]:
                         cur_ep_keyframes["umpire_call"] = annotated.copy()
+
+        # Fallback to ensure umpire_call is captured if decided
+        if "umpire_call" not in cur_ep_keyframes and ep_frames and info["umpire_decision"] in ["OUT", "SAFE"]:
+            cur_ep_keyframes["umpire_call"] = ep_frames[-1].copy()
 
         rec = {
             "ep": ep,
@@ -291,6 +295,12 @@ def evaluate(
                 dest_path = os.path.join(artifact_dir, filename)
                 shutil.copyfile(local_path, dest_path)
                 print(f"Copied to session artifact directory: {dest_path}")
+
+            cur_media_dir = "/Users/jin10000/.gemini/antigravity/brain/4b45c499-400c-4ec2-b810-7e844a40041f/.tempmediaStorage"
+            if os.path.exists(cur_media_dir):
+                media_dest = os.path.join(cur_media_dir, filename)
+                shutil.copyfile(local_path, media_dest)
+                print(f"Copied to media artifact directory: {media_dest}")
 
     env.close()
     return rec

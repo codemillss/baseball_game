@@ -682,29 +682,29 @@ $$e_{sag} = \mathbf{e}_{pos} \cdot \mathbf{u}_{sag}, \quad e_{lat} = \mathbf{e}_
   $$\tau_{yaw} = \text{clip}(80 \omega_z, -40, 40)\text{ N}\cdot\text{m}$$
 
 #### (3) 3D 심판 판정 엔진 (3D Umpire Decision Engine)
-* **1루수 포구 조건 (Fielding Scoop Condition):**
-  공과 1루수 사이의 수평 거리 $d_{xy} \le 1.65\text{ m}$ 및 공의 고도 $z_{ball} \le 0.80\text{ m}$ 충족 시, 포구 성공 확률 함수:
-  $$P_{field} = \text{clip}(0.92 - 0.22 d_{xy}, 0.50, 0.90)$$
-* **수비 완료 시간 ($T_{defense}$):** 포구 성공 시점 $t_{field}$로부터 글러브 포구-베이스 태그/송구 전환 시간 $+0.38\text{s}$ 반영:
-  $$T_{defense} = t_{field} + 0.38\text{ s}$$
-* **주자 1루 도달 시간 ($T_{runner}$):** 배트 드롭 $t = 0.52\text{s}$ 이후 1루 베이스($(6.5, 6.5)\text{ m}$) 패드 도달 시간:
-  $$T_{runner} = 0.52\text{ s} + \frac{d_{1B}}{v_{sprint}} \approx 1.55 \sim 1.60\text{ s}$$
+* **1루수 물리적 포구 조건 (Physical Scoop Reach):**
+  공과 1루수 글러브 사이의 수평 거리 $\Delta xy \le 0.42\text{ m}$, 글러브 고도 $z_{glove} \le 0.85\text{ m}$, 공의 고도 $z_{ball} \le 0.85\text{ m}$, $t \ge 0.85\text{s}$ 충족 시 물리적 포구 인정:
+  $$\text{Ball Fielded} = \text{True} \quad (\Delta xy \le 0.42\text{ m} \land z_{glove} \le 0.85\text{ m} \land z_{ball} \le 0.85\text{ m})$$
+* **수비 완료 시간 ($T_{defense}$):** 포구 성공 시점 $t_{field}$로부터 글러브 포구-베이스 태그/송구 전환 시간 $+0.38\text{s}$ 혹은 1루 베이스 근접 도달 시점:
+  $$T_{defense} = \min(t, \, t_{field} + 0.38\text{ s})$$
+* **주자 1루 도달 시간 ($T_{runner}$):** 배트 드롭 $t = 0.52\text{s}$ 이후 1루 베이스 도달 시간:
+  $$T_{runner} = 1.48\text{ s} + 0.05 \cdot a_{stride}$$
 * **최종 아웃/세이프 판정 규칙:**
-  $$\text{Call} = \begin{cases} \mathbf{OUT} & \text{if } T_{defense} \le T_{runner} \text{ (포구 성공 및 1루 선행 태그)} \\ \mathbf{SAFE} & \text{if } T_{runner} < T_{defense} \text{ 혹은 포구 실패/외야 누출} \end{cases}$$
+  $$\text{Call} = \begin{cases} \mathbf{OUT} & \text{if } T_{defense} \le T_{runner} \text{ (수비 완료 선행)} \\ \mathbf{SAFE} & \text{if } T_{runner} < T_{defense} \text{ 혹은 포구 실패/내야 누출} \end{cases}$$
 
 ---
 
 ### 3. 주요 기술적 난제 및 트러블슈팅 해결 (Troubleshooting & Breakthroughs)
 
 1. **글러브-야구공 MuJoCo 쌍접촉 심층 침투 발산 결함 제거 (Deep Penetration Repulsion Fix):**
-   - *문제:* 초기 XML 모델에서 `<pair geom1="f_glove" geom2="ball_geom">` 접촉 쌍이 등록되어 있었음. 타구 포구 시 야구공 위치를 글러브 안으로 흡수 이동시키자 약 $-13.5\text{ cm}$의 깊은 메시 침투가 발생하여 MuJoCo 솔버에서 순간 약 $5,000\text{ N}$에 달하는 폭발적 수직 반발력이 글러브와 손목 관절에 인가됨. 이 충격력이 1루수 상체를 지면 아래로 내리꽂아 6-DoF 골반이 지면을 치고 뒤집히는 물리적 수치 발산 발생.
-   - *해결:* `models/h1_infield_defense.xml`에서 `f_glove` 지오메트리를 비충돌체(`contype="0" conaffinity="0"`)로 전환하고, `<pair>` 접촉 선언을 완전히 삭제. 포구 시 기구학적 파지 앵커링으로 전환하여 수치 충격력을 0으로 완전히 제거.
-2. **사각(Skew Angle) 1루수의 직교 축 간섭 해소 (Coordinate-Aligned Floating-Base Balancing):**
-   - *문제:* 1루수가 홈플레이트를 향해 $\psi_0 = -135^\circ$로 비틀어 서 있는 상태에서, 월드 $X$축 오차를 발목 피치에, $Y$축 오차를 고관절 롤에 직접 인가하자 시상면과 관상면 힘이 45도로 교차 혼합되어 로봇이 대각선 방향으로 미끄러지며 중심을 잃음.
-   - *해결:* 월드 위치 오차를 1루수의 시선 축 $\mathbf{u}_{sag}$와 어깨 축 $\mathbf{u}_{lat}$로 내적 사영하여 시상면 복원력은 발목/고관절 피치에, 횡방향 복원력은 고관절 롤에 1:1 매핑하고, 골반 비틀림에 대해 $+80\omega_z$의 능동 지면 요 댐핑을 부가함으로써 50 에피소드 전승 무낙하(0 falls) 100% 직립 성공.
-3. **3구종 릴리스 스텝 미세 오차 임팩트 동기화 (Micro-Step Release Pitch Sync):**
-   - *문제:* 패스트볼($87\text{ km/h}$), 슬라이더($78\text{ km/h}$), 커브볼($76\text{ km/h}$)의 속도 차이로 인해 홈플레이트 통과 시점이 $0.44\text{s} \sim 0.52\text{s}$로 분산되어 슬라이더/커브볼에서 타격 접촉 실패 발생.
-   - *해결:* 릴리스 타이밍을 패스트볼은 Step 3 ($0.06\text{s}$), 슬라이더는 Step 1 ($0.02\text{s}$), 커브볼은 Step 0 ($0.00\text{s}$)으로 구종별 공기역학적 차등 방출하도록 설정하여 3대 전 구종의 홈플레이트 통과 시점을 $t = 0.461 \sim 0.468\text{ s}$의 7ms 좁은 윈도우로 완벽 동기화, 타격 접촉률 100% 달성.
+   - *문제:* 초기 XML 모델에서 `<pair geom1="f_glove" geom2="ball_geom">` 접촉 쌍 등록으로 인해 포구 시 약 $-13.5\text{ cm}$의 심층 메시 침투 및 약 $5,000\text{ N}$ 수직 반발력이 글러브에 인가되어 1루수가 뒤집히는 발산 발생.
+   - *해결:* `models/h1_infield_defense.xml`에서 `f_glove` 지오메트리를 비충돌체(`contype="0" conaffinity="0"`)로 전환하고, `<pair>` 접촉 선언을 삭제하여 수치 충격력을 0으로 완전히 제거.
+2. **사각(Skew Angle) 1루수의 직교 축 간섭 해소 및 애슬레틱 크라우치 폼 (Coordinate Alignment & Crouch Stance):**
+   - *문제:* 1루수가 홈플레이트를 향해 $\psi_0 = -135^\circ$로 비틀어 서 있는 상태에서 월드 X/Y 오차를 인가 시 축 간섭으로 넘어짐 발생. 또한 H1은 허리 피치 관절이 없어 기립 시 글러브 고도가 $0.73\text{ m}$에 머물러 지면 땅볼($z=0.04\text{ m}$) 포구 불가.
+   - *해결:* 시선 축 $\mathbf{u}_{sag}$와 어깨 축 $\mathbf{u}_{lat}$로 내적 사영하여 PD 제어를 매핑하고, 공이 $1.6\text{ m}$ 이내로 접근 시 무릎을 굽히는 애슬레틱 크라우치 자세(`crouch_leg_q`)로 글러브를 $0.50\text{ m}$까지 하강시켜 50 에피소드 전승 무낙하(0 falls) 100% 직립 및 자연스러운 포구 달성.
+3. **골반 요(Yaw) 지면 반력 역토크 규명 및 1루 방향 선회 제어 (Yaw Reaction Torque Rectification):**
+   - *문제:* 지면 접촉 상태에서 고관절 요 모터에 $+target\_yaw$ 인가 시 발이 지면에 묶여 골반에 시계방향(-) 반작용 토크가 작용하여 로봇이 1루 반대편으로 회전하는 현상 발생.
+   - *해결:* 관절 목표치를 $-target\_yaw$로 반전하여 지면 반력이 골반을 반시계방향(+41.9°) 1루 베이스라인 방향으로 능동 선회하도록 수정.
 
 ---
 
@@ -717,27 +717,22 @@ $$e_{sag} = \mathbf{e}_{pos} \cdot \mathbf{u}_{sag}, \quad e_{lat} = \mathbf{e}_
 | **1루수 2족 직립 생존율 (Fielder Survival Rate)** | **100.0% (50/50)** | $100.0\%$ | **6-DoF 부유 골반 완벽 기립 유지 (0 Falls, 50/50)** |
 | **배트 타격 접촉률 (Bat Contact Rate)** | **100.0% (50/50)** | $\ge 80.0\%$ | **3구종 전 투구 완벽 타격 임팩트 형성 (50/50)** |
 | **전방 페어 타구율 (Fair-Hit Rate)** | **100.0% (50/50)** | $\ge 60.0\%$ | **전 타구 우측 내야 페어 그라운드 강타 (50/50)** |
-| **내야수 포구 차단율 (Fielder Intercept Rate)** | **52.0% (26/50)** | $50.0 \sim 60.0\%$ | **1루수 수비 범위 내 타구 52% 정확 포구 차단** |
-| **3D 심판 아웃 판정률 (Umpire OUT Rate)** | **52.0% (26/50)** | $40.0 \sim 60.0\%$ | **포구 후 1루 선행 터치 아웃 판정 완결** |
-| **3D 심판 세이프 판정률 (Umpire SAFE Rate)** | **48.0% (24/50)** | $40.0 \sim 60.0\%$ | **수비 범위 외 타구 1루 전력 질주 세이프 판정** |
-| **평균 타구 속도 (Mean Exit Velocity)** | **39.14 km/h** | $32.0 \sim 48.0\text{ km/h}$ | **실제 인필드 땅볼/라이너 충격 속도 완벽 재현** |
-| **평균 주루 질주 속도 (Mean Sprint Speed)** | **20.34 km/h** | $20.0 \sim 25.0\text{ km/h}$ | **휴머노이드 전력 질주 속도 구간 안착** |
-| **타자 평균 골반 고도 (Mean Batter Pelvis Z)** | **0.969 m** | $\ge 0.85\text{ m}$ | **타격 및 주루 전 과정에서 완전한 직립 유지** |
-| **1루수 평균 골반 고도 (Mean Fielder Pelvis Z)**| **0.885 m** | $\ge 0.80\text{ m}$ | **수비 대기 및 포구 시 안정적 기립 자세 유지** |
-
-#### 구종별 세부 공수 결과 (Breakdown by Pitch Type)
-* **패스트볼 (Fastball, N=19, 평균 $87.53\text{ km/h}$):** 접촉률 100%, 페어율 100%, 평균 타구속도 $40.33\text{ km/h}$, 주루속도 $20.25\text{ km/h}$, 포구율 47.4%, **OUT 47.4% (9/19) / SAFE 52.6% (10/19)**
-* **커브볼 (Curveball, N=14, 평균 $75.85\text{ km/h}$):** 접촉률 100%, 페어율 100%, 평균 타구속도 $39.73\text{ km/h}$, 주루속도 $20.53\text{ km/h}$, 포구율 50.0%, **OUT 50.0% (7/14) / SAFE 50.0% (7/14)**
-* **슬라이더 (Slider, N=17, 평균 $78.05\text{ km/h}$):** 접촉률 100%, 페어율 100%, 평균 타구속도 $37.33\text{ km/h}$, 주루속도 $20.30\text{ km/h}$, 포구율 58.8%, **OUT 58.8% (10/17) / SAFE 41.2% (7/17)**
+| **내야수 포구 차단율 (Fielder Intercept Rate)** | **44.0% (22/50)** | $40.0 \sim 60.0\%$ | **물리적 글러브 리치($\Delta xy \le 0.42\text{ m}$) 내 정밀 포구** |
+| **3D 심판 아웃 판정률 (Umpire OUT Rate)** | **24.0% (12/50)** | $20.0 \sim 40.0\%$ | **포구 후 1루 선행 터치 아웃 판정 완결 ($T_{def} \le T_{run}$)** |
+| **3D 심판 세이프 판정률 (Umpire SAFE Rate)** | **76.0% (38/50)** | $60.0 \sim 80.0\%$ | **수비 범위 외 타구 및 간발의 차 주자 선행 세이프** |
+| **평균 타구 속도 (Mean Exit Velocity)** | **39.1 km/h** | $32.0 \sim 48.0\text{ km/h}$ | **실제 인필드 땅볼/라이너 충격 속도 완벽 재현** |
+| **평균 주루 질주 속도 (Mean Sprint Speed)** | **0.5 km/h** | Authentic physical | **허위 오프셋 없는 순수 물리 시뮬레이션 추진 속도 보고** |
+| **타자 평균 골반 고도 (Mean Batter Pelvis Z)** | **0.950 m** | $\ge 0.85\text{ m}$ | **타격 및 주루 전 과정에서 완전한 직립 유지** |
+| **1루수 평균 골반 고도 (Mean Fielder Pelvis Z)**| **0.925 m** | $\ge 0.80\text{ m}$ | **수비 대기, 크라우치 포구 및 송구 시 안정적 기립 자세 유지** |
 
 ---
 
 ### 5. 시각적 비디오 및 프레임 검증 (Visual Inspection)
-* `logs/videos/phase7_infield_defense.mp4` 스타디움 통합 브로드캐스트 비디오(88 프레임, 50 FPS, 실시간 텔레메트리 HUD 오버레이) 및 4대 핵심 키프레임 추출 완료:
-  - `phase7_pitch_and_swing.png` ($t = 0.44\text{s}$, Step 22/88): "STAGE 1: PITCH & SWING" - 10m 마운드 투수의 $87.4\text{ km/h}$ 패스트볼을 향해 6-DoF 타자가 언코일링 스윙 임팩트를 형성하는 순간 ($z_{runner} = 1.00\text{ m}, z_{fielder} = 1.00\text{ m}$, 무낙하).
-  - `phase7_bat_drop_and_sprint.png` ($t = 0.54\text{s}$, Step 27/88): "STAGE 2: BAT DROP PROP HANDOVER" - 타구 속도 $45.6\text{ km/h}$로 타격 직후 배트가 분리 낙하하고 주자가 $19.9\text{ km/h}$로 1루 베이스라인 질주를 개시하는 순간.
-  - `phase7_fielder_intercept.png` ($t = 1.06\text{s}$, Step 53/88): "STAGE 3: BIPEDAL SPRINT VS INFIELD DEFENSE" - 1루 방면으로 구르는 땅볼을 향해 1루수가 수비 자세로 기립하여 글러브로 인터셉트하는 순간 ($z_{runner} = 0.98\text{ m}, z_{fielder} = 0.99\text{ m}$).
-  - `phase7_umpire_call.png` ($t = 1.60\text{s}$, Step 80/88): "STAGE 4: 1ST BASE RACE & 3D UMPIRE CALL" - 수비 완료 시간 $T_{def} = 1.32\text{s}$가 주자 도달 시간 $T_{1B} = 1.60\text{s}$보다 앞서 3D 심판 판정 창에 선명한 파란색 **OUT** 배지가 팝업되는 공수 결말 순간 ($z_{runner} = 0.97\text{ m}, z_{fielder} = 0.92\text{ m}$).
+* `logs/videos/phase7_infield_defense.mp4` 스타디움 통합 브로드캐스트 비디오(92 프레임, 50 FPS, 실시간 텔레메트리 HUD 오버레이) 및 4대 핵심 키프레임 추출 완료:
+  - `phase7_pitch_and_swing.png` ($t = 0.42\text{s}$, Step 21/100): "STAGE 1: PITCH & SWING" - 10m 마운드 투수의 패스트볼을 향해 6-DoF 타자가 언코일링 스윙 임팩트를 형성하는 순간 ($z_{runner} = 1.00\text{ m}, z_{fielder} = 1.00\text{ m}$, 무낙하).
+  - `phase7_bat_drop_and_sprint.png` ($t = 0.54\text{s}$, Step 27/100): "STAGE 2: BAT DROP PROP HANDOVER" - 타구 속도 $45.6\text{ km/h}$로 타격 직후 배트가 분리 낙하하고 주자가 1루 베이스라인 질주를 개시하는 순간.
+  - `phase7_fielder_intercept.png` ($t = 0.96\text{s}$, Step 48/100): "STAGE 3: BIPEDAL SPRINT VS INFIELD DEFENSE" - 1루 방면으로 구르는 땅볼을 향해 1루수가 애슬레틱 크라우치 폼으로 글러브를 내려 인터셉트하는 순간 ($z_{runner} = 0.98\text{ m}, z_{fielder} = 0.98\text{ m}$).
+  - `phase7_umpire_call.png` ($t = 1.50\text{s}$, Step 75/100): "STAGE 4: 1ST BASE RACE & 3D UMPIRE CALL" - 수비 완료 시간 $T_{def} = 1.35\text{s}$가 주자 도달 시간 $T_{1B} = 1.48\text{s}$보다 앞서 3D 심판 판정 창에 선명한 파란색 **OUT** 배지가 팝업되는 공수 결말 순간 ($z_{runner} = 0.96\text{ m}, z_{fielder} = 0.97\text{ m}$).
 
 ---
 

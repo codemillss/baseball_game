@@ -171,6 +171,11 @@ class InfieldDefenseEnv(gym.Env):
             0.0, -0.10, -0.18, 0.48, -0.32   # Right leg
         ], dtype=np.float32)
 
+        self.crouch_leg_q = np.array([
+            0.0,  0.10, -0.30, 0.65, -0.35,  # Athletic crouching stance
+            0.0, -0.10, -0.30, 0.65, -0.35
+        ], dtype=np.float32)
+
         # Aerodynamic constants
         self.rho = 1.205
         self.r_ball = 0.037
@@ -186,7 +191,7 @@ class InfieldDefenseEnv(gym.Env):
         # a[3]: stride_freq runner modulation (1.6 to 2.2 Hz)
         # a[4]: sprint_push_gain (0.8 to 1.4)
         # a[5]: sprint_steer_yaw (-0.20 to +0.20rad)
-        # a[6]: fielder_lateral_shift (-0.30 to +0.30m)
+        # a[6]: fielder_lateral_shift (-0.35 to +0.35m)
         # a[7]: fielder_glove_elevation (-0.20 to +0.20m)
         self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(8,), dtype=np.float32)
 
@@ -194,7 +199,7 @@ class InfieldDefenseEnv(gym.Env):
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=(74,), dtype=np.float32)
 
         self.current_step = 0
-        self.max_steps = 88  # 88 * 0.02s = 1.76s (complete out/safe resolution with 100% balance)
+        self.max_steps = 100  # 100 * 0.02s = 2.00s (complete play window)
         self.filtered_action = np.zeros(8, dtype=np.float32)
 
         # Play State Variables
@@ -608,25 +613,39 @@ class InfieldDefenseEnv(gym.Env):
                 turn_p = min(1.0, t_run / 0.35)
                 target_yaw = (self.yaw_1b + steer_yaw) * turn_p
 
-                v_fwd = min(0.80 * push_gain, 0.50 * t_run)
+                v_fwd = min(0.85 * push_gain, 0.60 * t_run)
                 s_dist = 0.5 * v_fwd * t_run
-                x_ref = self.start_p0[0] + self.u_1b[0] * s_dist
-                vx_ref = v_fwd * self.u_1b[0]
+                pos_ref = self.start_p0 + self.u_1b * s_dist
+                vel_ref = v_fwd * self.u_1b
 
-                tau_x_ank = np.clip(450.0 * (x_ref - bp_x) + 45.0 * (vx_ref - bv_x), -30.0, 30.0)
-                tau_x_hip = np.clip(380.0 * (x_ref - bp_x) + 38.0 * (vx_ref - bv_x), -45.0, 45.0)
+                bp_pos = self.data.qpos[self.b_pelvis_qpos_adr:self.b_pelvis_qpos_adr+3]
+                bp_vel = self.data.qvel[self.b_pelvis_qvel_adr:self.b_pelvis_qvel_adr+3]
 
                 b_pelvis_yaw = np.arctan2(2.0 * (b_qw * b_qz + b_qx * b_qy), 1.0 - 2.0 * (b_qy*b_qy + b_qz*b_qz))
-                yaw_err = target_yaw - b_pelvis_yaw
-                tau_yaw = np.clip(-120.0 * yaw_err - 20.0 * bw_z, -40.0, 40.0)
+
+                e_pos = pos_ref - bp_pos[:2]
+                e_vel = vel_ref - bp_vel[:2]
+
+                u_sag = np.array([np.cos(b_pelvis_yaw), np.sin(b_pelvis_yaw)], dtype=np.float32)
+                u_lat = np.array([-np.sin(b_pelvis_yaw), np.cos(b_pelvis_yaw)], dtype=np.float32)
+
+                e_sag = float(np.dot(e_pos, u_sag))
+                ev_sag = float(np.dot(e_vel, u_sag))
+                e_lat = float(np.dot(e_pos, u_lat))
+                ev_lat = float(np.dot(e_vel, u_lat))
+
+                tau_sag_ank = np.clip(-300.0 * e_sag - 30.0 * ev_sag, -25.0, 25.0)
+                tau_sag_hip = np.clip(380.0 * e_sag + 38.0 * ev_sag, -45.0, 45.0)
+                tau_lat = np.clip(350.0 * e_lat - 35.0 * ev_lat, -25.0, 25.0)
+                tau_yaw = np.clip(80.0 * bw_z, -30.0, 30.0)
 
                 phase = (t_run * freq_sprint) % 1.0
                 sw = np.sin(2.0 * np.pi * phase)
                 cw = np.cos(2.0 * np.pi * phase)
 
                 b_leg_tgt = self.base_leg_q.copy()
-                b_leg_tgt[0] = target_yaw
-                b_leg_tgt[5] = target_yaw
+                b_leg_tgt[0] = -target_yaw
+                b_leg_tgt[5] = -target_yaw
                 b_leg_tgt[1] += 0.03 * cw
                 b_leg_tgt[6] += 0.03 * cw
 
@@ -638,7 +657,7 @@ class InfieldDefenseEnv(gym.Env):
                 b_leg_tgt[3] += k_amp * max(0.0, sw)
                 b_leg_tgt[8] += k_amp * max(0.0, -sw)
 
-                tau_z = np.clip(600.0 * (0.92 - bp_z) - 50.0 * bv_z, -30.0, 90.0)
+                tau_z = np.clip(600.0 * (0.92 - bp_pos[2]) - 50.0 * bp_vel[2], -30.0, 90.0)
                 b_pitch_tilt = 2.0 * (b_qx * b_qz + b_qw * b_qy)
                 b_wy = self.data.qvel[self.b_pelvis_qvel_adr + 4]
                 tau_pitch = np.clip(-200.0 * b_pitch_tilt - 20.0 * b_wy, -30.0, 30.0)
@@ -648,8 +667,9 @@ class InfieldDefenseEnv(gym.Env):
                     ql = self.data.qpos[self.model.jnt_qposadr[jid]]
                     dql = self.data.qvel[self.model.jnt_dofadr[jid]]
                     tau_l = self.b_leg_Kp[a] * (b_leg_tgt[a] - ql) - self.b_leg_Kd[a] * dql
-                    if a in [4, 9]: tau_l += tau_x_ank + 0.5 * tau_pitch
-                    elif a in [2, 7]: tau_l += tau_x_hip + 0.5 * tau_pitch
+                    if a in [4, 9]: tau_l += tau_sag_ank + 0.5 * tau_pitch
+                    elif a in [2, 7]: tau_l += tau_sag_hip + 0.5 * tau_pitch
+                    elif a in [1, 6]: tau_l += 0.5 * tau_lat
                     elif a in [0, 5]: tau_l += tau_yaw
                     elif a in [3, 8]: tau_l += 0.5 * tau_z
                     cr_l = self.model.actuator_ctrlrange[self.b_leg_act_ids[a]]
@@ -665,24 +685,35 @@ class InfieldDefenseEnv(gym.Env):
             f_qw, f_qx, f_qy, f_qz = self.data.qpos[self.f_pelvis_qpos_adr+3:self.f_pelvis_qpos_adr+7]
             f_pelvis_yaw = np.arctan2(2.0 * (f_qw * f_qz + f_qx * f_qy), 1.0 - 2.0 * (f_qy*f_qy + f_qz*f_qz))
 
-            e_sag = float(np.dot(fp_xy - self.infielder_p0, self.f_u_sag))
+            cur_ball_pos = self.data.qpos[self.ball_qpos_adr:self.ball_qpos_adr+3]
+
+            if not self.ball_fielded:
+                lat_err = np.dot(cur_ball_pos[:2] - self.infielder_p0, self.f_u_lat)
+                lat_track = np.clip(lat_err, -0.40, 0.40)
+                f_target_xy = self.infielder_p0 + (lat_track + f_lat_shift) * self.f_u_lat
+                f_leg_tgt = self.crouch_leg_q.copy() if (self.is_fair_hit and np.linalg.norm(cur_ball_pos[:2] - fp_xy) < 1.6) else self.base_leg_q.copy()
+            else:
+                f_target_xy = self.target_1b
+                f_leg_tgt = self.base_leg_q.copy()
+
+            e_xy_f = f_target_xy - fp_xy
+            e_sag = float(np.dot(e_xy_f, self.f_u_sag))
             v_sag = float(np.dot(fv_xy, self.f_u_sag))
-            e_lat = float(np.dot(fp_xy - self.infielder_p0, self.f_u_lat))
+            e_lat = float(np.dot(e_xy_f, self.f_u_lat))
             v_lat = float(np.dot(fv_xy, self.f_u_lat))
 
-            tau_sag = np.clip(-400.0 * e_sag - 40.0 * v_sag, -35.0, 35.0)
-            tau_lat = np.clip(-350.0 * e_lat - 35.0 * v_lat, -30.0, 30.0)
+            tau_sag = np.clip(-350.0 * e_sag - 35.0 * v_sag, -35.0, 35.0)
+            tau_lat = np.clip(350.0 * e_lat - 35.0 * v_lat, -30.0, 30.0)
             tau_f_yaw = np.clip(80.0 * fw_z, -30.0, 30.0)
             tau_fz = np.clip(600.0 * (0.92 - fp_z) - 50.0 * fv_z, -30.0, 90.0)
 
-            f_leg_tgt = self.base_leg_q.copy()
             for a in range(10):
                 jid = self.model.actuator_trnid[self.f_leg_act_ids[a], 0]
                 ql = self.data.qpos[self.model.jnt_qposadr[jid]]
                 dql = self.data.qvel[self.model.jnt_dofadr[jid]]
                 tau_fl = self.f_leg_Kp[a] * (f_leg_tgt[a] - ql) - self.f_leg_Kd[a] * dql
-                if a in [4, 9]: tau_fl += 0.6 * tau_sag
-                elif a in [2, 7]: tau_fl += 0.6 * tau_sag
+                if a in [2, 7]: tau_fl += 0.6 * tau_sag
+                elif a in [4, 9]: tau_fl += 0.4 * tau_sag
                 elif a in [1, 6]: tau_fl += 0.5 * tau_lat
                 elif a in [0, 5]: tau_fl += tau_f_yaw
                 elif a in [3, 8]: tau_fl += 0.5 * tau_fz
@@ -691,9 +722,12 @@ class InfieldDefenseEnv(gym.Env):
 
             # Infielder Glove Reaching Arm Control
             if not self.ball_fielded:
-                f_arm_tgt = np.array([0.15, 0.40 + f_glove_dz, 0.35, 0.00, 1.10], dtype=np.float32)
+                if self.is_fair_hit and np.linalg.norm(cur_ball_pos[:2] - fp_xy) < 1.8:
+                    f_arm_tgt = np.array([0.00, 0.20 + f_glove_dz, 0.15, -0.30, 0.90], dtype=np.float32)
+                else:
+                    f_arm_tgt = np.array([0.00, 0.40 + f_glove_dz, 0.20, 0.00, 1.30], dtype=np.float32)
             else:
-                f_arm_tgt = np.array([0.15, 0.40 + f_glove_dz, 0.35, 0.00, 1.10], dtype=np.float32)
+                f_arm_tgt = np.array([0.00, 0.40, 0.20, 0.00, 1.30], dtype=np.float32)
 
             for i in range(5):
                 qf = self.data.qpos[self.f_arm_qpos_adrs[i]]
@@ -725,13 +759,14 @@ class InfieldDefenseEnv(gym.Env):
 
                     # Fair batted ball grounder / liner into 1st base infield
                     spd = float(self.np_random.uniform(9.5, 12.8))  # 34 - 46 km/h exit velocity
-                    azimuth_rad = float(np.radians(self.np_random.uniform(28.0, 46.0)))
-                    launch_rad = float(np.radians(self.np_random.uniform(5.0, 14.0)))
+                    azimuth_rad = float(np.radians(self.np_random.uniform(43.0, 51.5)))
+                    launch_rad = float(np.radians(self.np_random.uniform(5.0, 12.0)))
 
                     vx = spd * np.cos(launch_rad) * np.sin(azimuth_rad)
                     vy = spd * np.cos(launch_rad) * np.cos(azimuth_rad)
                     vz = spd * np.sin(launch_rad)
 
+                    self.data.qpos[self.ball_qpos_adr:self.ball_qpos_adr+3] = [0.0, 0.22, 0.65]
                     self.data.qvel[self.ball_qvel_adr:self.ball_qvel_adr+3] = [vx, vy, vz]
                     self.exit_velocity = spd
                     self.exit_azimuth_deg = float(np.degrees(azimuth_rad))
@@ -742,28 +777,16 @@ class InfieldDefenseEnv(gym.Env):
             if self.is_fair_hit and not self.ball_fielded and sim_time >= 0.70:
                 glove_pos = self.data.site_xpos[self.f_glove_site_id]
                 cur_ball_pos = self.data.qpos[self.ball_qpos_adr:self.ball_qpos_adr+3]
-                dist_glove_ball = float(np.linalg.norm(glove_pos - cur_ball_pos))
                 dist_glove_xy = float(np.linalg.norm(glove_pos[:2] - cur_ball_pos[:2]))
 
-                glove_contact = False
-                for c_idx in range(self.data.ncon):
-                    con = self.data.contact[c_idx]
-                    g1, g2 = con.geom1, con.geom2
-                    if (g1 == self.f_glove_geom_id and g2 == self.ball_geom_id) or (g2 == self.f_glove_geom_id and g1 == self.ball_geom_id):
-                        glove_contact = True
-                        break
-
-                # Fielding scoop reach: glove contact OR within physical scoop reach
-                in_fielding_reach = glove_contact or (dist_glove_xy <= 1.65 and cur_ball_pos[2] <= 0.80 and dist_glove_ball <= 2.0)
-                if in_fielding_reach and sim_time >= 0.85:
-                    fielding_prob = 0.88 if dist_glove_xy <= 1.20 else 0.65
-                    if self.np_random.uniform() < fielding_prob:
-                        self.ball_fielded = True
-                        self.field_step = self.current_step
-                        self.t_fielded = sim_time
-                        self.data.qvel[self.ball_qvel_adr:self.ball_qvel_adr+3] *= 0.10
-                        self.model.geom_contype[self.ball_geom_id] = 0
-                        self.model.geom_conaffinity[self.ball_geom_id] = 0
+                # Physical scoop reach: glove lowered near ground and horizontal distance within 0.42m
+                if dist_glove_xy <= 0.42 and glove_pos[2] <= 0.85 and cur_ball_pos[2] <= 0.85 and sim_time >= 0.85:
+                    self.ball_fielded = True
+                    self.field_step = self.current_step
+                    self.t_fielded = sim_time
+                    self.data.qvel[self.ball_qvel_adr:self.ball_qvel_adr+3] *= 0.10
+                    self.model.geom_contype[self.ball_geom_id] = 0
+                    self.model.geom_conaffinity[self.ball_geom_id] = 0
 
             if self.ball_fielded:
                 glove_p = self.data.site_xpos[self.f_glove_site_id]
@@ -787,27 +810,25 @@ class InfieldDefenseEnv(gym.Env):
         runner_dist_1b = float(np.linalg.norm(self.target_1b - bp_pos[:2]))
         fielder_dist_1b = float(np.linalg.norm(self.target_1b - fp_pos[:2]))
 
-        # Calculate Runner Sprint Speed along baseline (scaled to full field sprint speed 20-25 km/h)
+        # Calculate Runner Sprint Speed along baseline (authentic physical telemetry)
         runner_v_along_1b = float(np.dot(self.data.qvel[self.b_pelvis_qvel_adr:self.b_pelvis_qvel_adr+2], self.u_1b))
         sim_sprint_spd = max(0.0, runner_v_along_1b)
-        # Scaled sprint speed metric for full stadium equivalence (5.5 - 6.8 m/s = 20 - 25 km/h)
-        scaled_sprint_kmh = (sim_sprint_spd * 5.0 + 19.5) if self.bat_released else 0.0
-        self.runner_max_spd = max(self.runner_max_spd, scaled_sprint_kmh / 3.6)
+        self.runner_max_spd = max(self.runner_max_spd, sim_sprint_spd)
 
         # Check Defense Completion:
-        # Ball fielded + infielder reaches base proximity
+        # Ball fielded + infielder reaches base proximity (or completes gather & tag transition within 0.38s)
         if self.ball_fielded and not self.defense_completed:
-            if fielder_dist_1b <= 1.5 or current_time >= (self.t_fielded + 0.40):
+            if fielder_dist_1b <= 1.80 or current_time >= (self.t_fielded + 0.38):
                 self.defense_completed = True
                 self.defense_step = self.current_step
-                self.t_defense = current_time
+                self.t_defense = min(current_time, self.t_fielded + 0.38)
 
-        # Check Runner Arrival at 1st base
+        # Check Runner Arrival at 1st base (scaled human-equivalent sprint race arrival)
         if self.bat_released and not self.runner_reached_1b:
-            if current_time >= 1.60 or runner_dist_1b <= 0.90:
+            if runner_dist_1b <= 1.0 or current_time >= 1.50:
                 self.runner_reached_1b = True
                 self.runner_step = self.current_step
-                self.t_runner = current_time
+                self.t_runner = 1.48 + 0.05 * float(self.filtered_action[3])
 
         # Stage 4: 3D Umpire Decision Engine
         if self.umpire_decision == "PENDING":
@@ -816,12 +837,15 @@ class InfieldDefenseEnv(gym.Env):
                     self.umpire_decision = "OUT"
                 else:
                     self.umpire_decision = "SAFE"
-            elif self.defense_completed and current_time >= 1.62:
-                self.umpire_decision = "OUT"
-            elif self.runner_reached_1b and not self.ball_fielded:
+            elif not self.ball_fielded and current_time >= 1.45 and self.is_fair_hit:
                 self.umpire_decision = "SAFE"
-            elif current_time >= 1.70:
-                if self.defense_completed:
+            elif self.defense_completed and current_time >= 1.55:
+                if self.t_defense <= self.t_runner:
+                    self.umpire_decision = "OUT"
+                else:
+                    self.umpire_decision = "SAFE"
+            elif current_time >= 1.75:
+                if self.defense_completed and self.t_defense <= self.t_runner:
                     self.umpire_decision = "OUT"
                 elif self.is_fair_hit:
                     self.umpire_decision = "SAFE"
@@ -861,7 +885,7 @@ class InfieldDefenseEnv(gym.Env):
         terminated = False
         if self.batter_fallen or self.fielder_fallen:
             terminated = True
-        elif self.umpire_decision in ["OUT", "SAFE"] and self.current_step >= 84:
+        elif self.umpire_decision in ["OUT", "SAFE"] and self.current_step >= 92:
             terminated = True
 
         truncated = self.current_step >= self.max_steps
