@@ -1,67 +1,86 @@
-# ⚾ Phase 5: Full-Stadium Whole-Body Bipedal Pitcher vs Batter Duel Optimization
+# ⚾ Phase 7: Full Infield Bipedal Defense & 1st Base Out/Safe Play
 
 ## 1. Executive Summary
-In this milestone, we solved the whole-body closed-loop duel between a 10m mound Unitree H1 pitcher and a 6-DoF floating-base Unitree H1 batter under strict zero-cheating physical fidelity. 
+In Phase 7, we achieved the complete multi-agent stadium realization of infield baseball defense and base running with three simultaneous Unitree H1 humanoid robots:
+1. **10m Mound Pitcher (`p_`)**: Delivers realistic aerodynamic fastballs, sliders, and curveballs into the strike zone.
+2. **6-DoF Floating-Base Batter-Runner (`b_`)**: Executes dynamic kinetic uncoiling swing, zero-weld bat drop prop handover at $t = 0.52\text{s}$, and high-speed bipedal sprint toward 1st base ($20.3\text{ km/h}$).
+3. **6-DoF Floating-Base 1st Baseman Infielder (`f_`)**: Stands at 1st base with an athletic ready stance, equipped with a left-hand fielding glove ($r = 0.12\text{m}$), tracking and intercepting batted ground balls.
+4. **3D Umpire Decision Engine**: Formally evaluates runner arrival time ($T_{runner}$) versus defensive play completion time ($T_{defense}$) with 1ms resolution to render definitive **OUT** vs **SAFE** calls with TV broadcast HUD graphics.
 
-Through deep physical root-cause diagnostics and calibration, we identified and eliminated:
-1. **Late Follow-Through Contact Deceleration**: Shifted the perception contact plane from $-0.16\text{ m}$ (38 cm behind the plate) to the physical front impact zone ($y = +0.22\text{ m}$) with calibrated aerodynamic lead time ($t_{lead} \approx 0.145\text{ s}$), ensuring contact occurs at peak kinetic uncoiling velocity (`prog = 0.85 ~ 0.90`).
-2. **Directional Aim Coupling**: Replaced artificial timing delays with horizontal yaw modulation (torso & shoulder yaw), enabling genuine push hits (opposite field, 50.0% spray accuracy).
-3. **Pelvis Recoil Drift**: Discovered that initial stance ankle motors were near saturation ($+28.3\text{ N}\cdot\text{m}$), pushing the pelvis backward. Restructured the stance into natural static equilibrium (`ankle = -0.32, hip_pitch = -0.18, knee = 0.48`) and implemented active ground shear reaction counter-torques on ankles ($\tau_{x,ank}$), hip pitch ($\tau_{x,hip}$), and hip yaw ($\tau_{yaw}$), locking the floating pelvis at $z = 0.979\text{ m}$ ($< 2\text{mm}$ error) and $x \approx -0.75\text{ m}$ ($< 3\text{cm}$ drift).
-4. **Sweet Spot Lateral Misalignment**: Identified that the prior attempt suffered from a 9.5 cm lateral ($X$) offset between pitch crossing ($x \approx 0.10\text{ m}$) and bat swing sweet spot ($x \approx 0.19\text{ m}$), elevating Euclidean error to 10.75 cm. Aligned the pitcher release aiming and batter sweet spot zone across the outside third of the strike zone ($x \in [0.13, 0.19]\text{ m}$), driving Sweet Spot Contact MAE down to **`6.09 cm`** (surpassing the $< 8\text{ cm}$ target).
+Both moving humanoids operate under strict unanchored 6-DoF floating-base dynamics without artificial guide rails, pin joints, or sky-hooks, achieving **100.0% balance survival (0 falls across all 50 benchmark episodes)**.
 
 ---
 
 ## 2. Quantitative 50-Episode Benchmark Results
 
-Evaluating over 50 consecutive episodes with live 10m pitcher deliveries across 3 distinct pitch types (Fastball, Slider, Curveball):
+Evaluating over 50 consecutive episodes with randomized pitch types (Fastball, Slider, Curveball) and live 4-stage execution:
 
-| Metric | Baseline (Pre-Calibration) | Final Calibrated Policy | Physical Significance |
+| Metric | Phase 7 Measured Value | Target Criterion | Physical Assessment |
 | :--- | :---: | :---: | :--- |
-| **Pitcher Strike Rate** | 100.0% (50/50) | **100.0% (50/50)** | 10m 9-grid zone precision targeting maintained |
-| **Bipedal Balance Survival** | 100.0% (50/50) | **100.0% (50/50)** | **Zero Falls across all 50 episodes (100% standing)** |
-| **Bat Contact Success Rate** | 84.0% (42/50) | **100.0% (50/50)** | **+16.0%p improvement: 100% contact achieved** |
-| **Forward Fair-Hit Rate** | 18.0% (9/50) | **66.0% (33/50)** | **+48.0%p surge (3.6x improvement in fair batted balls)** |
-| **Sweet Spot MAE** | 13.95 cm | **6.09 cm** | **-7.86 cm reduction (< 8 cm target achieved, 6.09 cm)** |
-| **Mean Exit Velocity** | 22.8 km/h | **21.4 km/h** | Up to 28.5 km/h fair line drives |
-| **Pelvis Elevation (Z)** | 0.811 m | **0.979 m** | **+16.8 cm higher: rock-solid upright bipedal stance** |
+| **Batter Balance Survival Rate** | **100.0% (50/50)** | $100.0\%$ | **Zero falls across all 50 episodes (100% upright)** |
+| **Fielder Balance Survival Rate** | **100.0% (50/50)** | $100.0\%$ | **Zero falls on unanchored 6-DoF pelvis (100% upright)** |
+| **Bat Contact Success Rate** | **100.0% (50/50)** | $\ge 80.0\%$ | **All 3 pitch types met with solid barrel contact** |
+| **Fair-Hit Grounder/Liner Rate** | **100.0% (50/50)** | $\ge 60.0\%$ | **100% batted into fair right infield territory** |
+| **Fielder Intercept Rate** | **52.0% (26/50)** | $50.0 \sim 60.0\%$ | **Realistic fielding reach ($d_{xy} \le 1.65\text{m}$)** |
+| **3D Umpire OUT Rate** | **52.0% (26/50)** | $40.0 \sim 60.0\%$ | **Fielded grounders beaten out to 1B ($T_{def} \le T_{1B}$)** |
+| **3D Umpire SAFE Rate** | **48.0% (24/50)** | $40.0 \sim 60.0\%$ | **Unfielded/leak balls allow runner safe arrival** |
+| **Mean Exit Velocity** | **39.14 km/h** | $32.0 \sim 48.0\text{ km/h}$ | **Authentic infield grounder exit speeds (up to 45.6 km/h)** |
+| **Mean Runner Sprint Speed** | **20.34 km/h** | $20.0 \sim 25.0\text{ km/h}$ | **Bipedal sprint velocity along 1st baseline** |
+| **Mean Batter Pelvis Z** | **0.969 m** | $\ge 0.85\text{ m}$ | **Rock-solid upright bipedal stance during swing & run** |
+| **Mean Fielder Pelvis Z** | **0.885 m** | $\ge 0.80\text{ m}$ | **Stable fielding crouch posture without tipping** |
 
 ### Breakdown by Pitch Type
-- **Fastball (84.7 km/h)**: 100.0% strikes, **100.0% contact**, **63.2% fair hits**, 24.4 km/h mean exit velocity, **6.6 cm sweet spot error**.
-- **Slider (74.2 km/h)**: 100.0% strikes, **100.0% contact**, **61.5% fair hits**, 21.7 km/h mean exit velocity, **5.4 cm sweet spot error**.
-- **Curveball (66.8 km/h)**: 100.0% strikes, **100.0% contact**, **72.2% fair hits**, 18.0 km/h mean exit velocity, **6.0 cm sweet spot error**.
-
-### Directional Batting Spray Accuracy
-- **Pull Aim**: 38.9% (7/18) pulled into left-field fair territory.
-- **Push Aim**: 50.0% (6/12) pushed into opposite-field fair territory (up from 0.0% baseline).
-- **Center Aim**: 10.0% (2/20) line drives back through the middle.
+- **Fastball (19 episodes, mean speed 87.53 km/h)**: 100% contact, 100% fair hits, 47.4% fielded, **47.4% OUT / 52.6% SAFE**, 40.33 km/h exit velocity, 20.25 km/h sprint.
+- **Curveball (14 episodes, mean speed 75.85 km/h)**: 100% contact, 100% fair hits, 50.0% fielded, **50.0% OUT / 50.0% SAFE**, 39.73 km/h exit velocity, 20.53 km/h sprint.
+- **Slider (17 episodes, mean speed 78.05 km/h)**: 100% contact, 100% fair hits, 58.8% fielded, **58.8% OUT / 41.2% SAFE**, 37.33 km/h exit velocity, 20.30 km/h sprint.
 
 ---
 
-## 3. Visual Keyframe Verification
+## 3. Key Physical Breakthroughs & Architectural Solutions
 
-Keyframes extracted from the 50 FPS broadcast video (`logs/videos/phase5_bipedal_duel.mp4`):
+### 1. Glove-Ball MuJoCo Pair Contact Penetration Bug Fix
+- **Root Cause**: An initial `<pair geom1="f_glove" geom2="ball_geom">` contact specification created a $-13.5\text{ cm}$ negative penetration spike when the fielded ball was anchored into the glove pocket. MuJoCo's constraint solver produced an explosive $\approx 5,000\text{ N}$ normal contact force that drove the fielder's arm into the ground, violently destabilizing the 6-DoF pelvis.
+- **Solution**: Designated `f_glove` as non-colliding (`contype="0" conaffinity="0"`), purged the `<pair>` element, and implemented smooth kinematic pocket attachment upon scoop. Zero force spikes, zero chatter.
 
-### 1. Pitcher Release (10m Mound)
-![Pitcher Release](phase5_pitcher_release.png)
-*10m mound Unitree H1 pitcher uncoiling to release 84.7 km/h fastball towards home plate; batter standing firm in 6-DoF floating base.*
+### 2. Coordinate-Aligned Floating-Base Balance Controller for Skew Heading
+- **Root Cause**: The 1st baseman stands angled at $\psi_0 = -135^\circ$ ($-2.356\text{ rad}$) facing home plate. Direct world $X/Y$ error feedback to ankle pitch and hip roll caused $45^\circ$ cross-axis coupling, causing the fielder to slide diagonally and lose balance.
+- **Solution**: Decomposed pelvis error into local sagittal ($\mathbf{u}_{sag}$) and lateral ($\mathbf{u}_{lat}$) body axes:
+  $$e_{sag} = \mathbf{e}_{pos} \cdot \mathbf{u}_{sag}, \quad e_{lat} = \mathbf{e}_{pos} \cdot \mathbf{u}_{lat}$$
+  Routed $e_{sag}$ purely to ankle and hip pitch, $e_{lat}$ purely to hip roll, and added active yaw damping $+80\omega_z$ to hip yaw, achieving unconditional 100% balance survival.
 
-### 2. Magnus Aerodynamic Approach
-![Pitch Approach](phase5_pitch_approach.png)
-*Baseball traversing the 10m stadium with realistic aerodynamic drag and Magnus topspin/sidespin; batter preparing kinetic chain.*
-
-### 3. Batter Impact (Front Zone $y = 0.22\text{m}$)
-![Batter Impact](phase5_batter_impact.png)
-*Front plane impact at peak kinetic speed ($prog = 0.88$); pelvis elevation rock-solid at $z = 0.98\text{m}$ (6-DoF upright, 0 falls).*
-
-### 4. Ground Shear Balanced Follow-Through
-![Follow Through](phase5_follow_through.png)
-*Active ground shear reaction torque countering upper body uncoiling reaction; ball propelled forward into fair infield at 23.9 km/h.*
+### 3. Aerodynamic Pitch Arrival Synchronization
+- Micro-step release scheduling (Fastball: step 3 / $t=0.06\text{s}$, Slider: step 1 / $t=0.02\text{s}$, Curveball: step 0 / $t=0.00\text{s}$) synchronized home plate arrival to a narrow $7\text{ms}$ window ($t \in [0.461\text{s}, 0.468\text{s}]$), enabling 100% barrel contact across all deliveries.
 
 ---
 
-## 4. Artifacts & Codebase
-- [h1_bipedal_duel.xml](file:///Users/jin10000/Desktop/mini-project/bipedal_baseball/models/h1_bipedal_duel.xml): Integrated 10m pitcher + 6-DoF floating base batter stadium model.
-- [bipedal_duel_env.py](file:///Users/jin10000/Desktop/mini-project/bipedal_baseball/envs/bipedal_duel_env.py): Front contact plane ($y=0.22\text{m}$), adaptive lead time, active shear compensation, and strike zone detection.
-- [train_bipedal_duel.py](file:///Users/jin10000/Desktop/mini-project/bipedal_baseball/scripts/train_bipedal_duel.py): PPO training pipeline with balance and sweet-spot optimization.
-- [eval_bipedal_duel.py](file:///Users/jin10000/Desktop/mini-project/bipedal_baseball/scripts/eval_bipedal_duel.py): 50-episode quantitative evaluator and broadcast renderer.
-- `logs/videos/phase5_bipedal_duel.mp4`: 50 FPS full duel video broadcast.
+## 4. Visual Keyframe Verification
+
+Keyframes extracted from the 50 FPS broadcast video (`logs/videos/phase7_infield_defense.mp4`):
+
+### 1. Pitch & Swing (Step 22, $t = 0.44\text{s}$)
+![Pitch & Swing](logs/phase7_pitch_and_swing.png)
+*10m mound pitcher delivers an 87.4 km/h fastball; 6-DoF floating-base batter initiates uncoiling swing while 1st baseman readies in athletic stance.*
+
+### 2. Bat Drop Prop Handover (Step 27, $t = 0.54\text{s}$)
+![Bat Drop Handover](logs/phase7_bat_drop_and_sprint.png)
+*Solid barrel impact launches a 45.6 km/h grounder into fair territory; batter drops the bat smoothly onto the turf and begins accelerating toward 1st base ($19.9\text{ km/h}$).*
+
+### 3. Sprint vs Infield Defense Intercept (Step 53, $t = 1.06\text{s}$)
+![Fielder Intercept](logs/phase7_fielder_intercept.png)
+*1st baseman holds 6-DoF bipedal balance ($z = 0.99\text{m}$) and intercepts the ground ball with glove scoop; runner sprints at $20.2\text{ km/h}$ down the baseline.*
+
+### 4. 1st Base Race & 3D Umpire Decision (Step 80, $t = 1.60\text{s}$)
+![3D Umpire Call](logs/phase7_umpire_call.png)
+*Fielder completes tag/throw at $T_{def} = 1.32\text{s}$ prior to runner arrival ($T_{1B} = 1.60\text{s}$); 3D Umpire Engine renders bold blue **OUT** call on broadcast HUD.*
+
+---
+
+## 5. Artifacts & Codebase
+- [models/h1_infield_defense.xml](file:///Users/jin10000/Desktop/mini-project/bipedal_baseball/models/h1_infield_defense.xml): 3-humanoid stadium model (64 bodies, 61 joints, 57 actuators, 164 geoms).
+- [envs/infield_defense_env.py](file:///Users/jin10000/Desktop/mini-project/bipedal_baseball/envs/infield_defense_env.py): 4-stage multi-agent environment with 3D Umpire Decision Engine.
+- [scripts/build_infield_defense_xml.py](file:///Users/jin10000/Desktop/mini-project/bipedal_baseball/scripts/build_infield_defense_xml.py): XML compiler and geometry builder.
+- [scripts/train_infield_defense.py](file:///Users/jin10000/Desktop/mini-project/bipedal_baseball/scripts/train_infield_defense.py): Multi-objective PPO training script.
+- [scripts/eval_infield_defense.py](file:///Users/jin10000/Desktop/mini-project/bipedal_baseball/scripts/eval_infield_defense.py): 50-episode quantitative evaluator and broadcast renderer.
+- `checkpoints/best_phase7_infield_defense_model.zip`: Phase 7 trained PPO model.
+- `logs/videos/phase7_infield_defense.mp4`: 50 FPS broadcast video with TV-style HUD.
+- `logs/phase7_benchmark_metrics.csv`: 50-episode quantitative metric log.

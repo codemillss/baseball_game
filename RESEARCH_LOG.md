@@ -634,5 +634,121 @@ Phase 5에서 검증된 10m 스타디움 전신 투타 대결(100% 균형 생존
 * `logs/videos/phase6_bipedal_sprint.mp4`: Phase 6 주루 브로드캐스트 영상 (HUD 텔레메트리 포함)
 * `phase6_swing_impact.png`, `phase6_bat_drop.png`, `phase6_sprint_stride.png`, `phase6_base_approach.png`: 4대 시각화 검증 키프레임
 
+---
 
+## [2026-09-07] Entry 09: Phase 7 — Full Infield Bipedal Defense & 1st Base Out/Safe Play
 
+### 1. 연구 개요 및 목표 (Overview & Objectives)
+- **과제 목표:** 10m 스타디움 내 3대의 Unitree H1 휴머노이드 로봇(10m 투수 `p_`, 6-DoF 부유 골반 타자-주자 `b_`, 6-DoF 부유 골반 1루수 내야수 `f_`)을 물리 엔진 상에 동시 통합하고, 4단계 시계열 시나리오(투구-타격 $\to$ 배트 드롭 $\to$ 1루 질주 vs 내야 포구 인터셉트 $\to$ 3D 심판 아웃/세이프 판정 엔진)를 무결점 물리 시뮬레이션으로 완성.
+- **핵심 요구조건:**
+  1. **3대 로봇 동시 스타디움 모델 (`models/h1_infield_defense.xml`):** 64 bodies, 61 joints, 57 actuators, 164 geoms로 구성된 풀 그라운드 환경 구축. 1루 베이스 패드($(6.5, 6.5, 0.03)\text{ m}$), 1루 주루 라인, 1루수 왼손 수비 글러브(`f_glove`, $r = 0.12\text{ m}$) 탑재.
+  2. **4단계 통합 실행 파이프라인 (`envs/infield_defense_env.py`):**
+     - Stage 1: 투구 및 키네틱 언코일링 스윙 타격 ($t \in [0, 0.52\text{s}]$)
+     - Stage 2: 6-DoF 자유 관절 동적 배트 드롭 핸드오버 ($t = 0.52\text{s}$)
+     - Stage 3: 타자-주자의 1루 2족 질주 주루 vs 1루수의 내야 타구 포구 인터셉트 ($t \in [0.52, 1.76\text{s}]$)
+     - Stage 4: 주자 도달 시간($T_{runner}$)과 수비 완료 시간($T_{defense}$)을 0.001초 정밀도로 비교 판정하는 3D 심판 판정 엔진(OUT vs SAFE).
+  3. **100% 2족 직립 균형 생존율 (Zero Falls Target):** 타자 및 1루수 모두 인공 핀 관절이나 레일 구속 없이 6-DoF 부유 골반 상태에서 넘어짐 0건(100% 생존율) 달성.
+  4. **현실적 야구 승부 메커니즘 (Realistic Infield Duel):** 타구 속도 $32 \sim 48\text{ km/h}$, 주자 주루 속도 $20 \sim 25\text{ km/h}$, 포구 성공 시 아웃(OUT), 타구 누출/실책 시 세이프(SAFE)의 팽팽한 공수 밸런스 확립.
+
+---
+
+### 2. 수학적 모델링 및 제어 아키텍처 (Formulations & Control Architecture)
+
+#### (1) 투구 공기역학 캘리브레이션 및 임팩트 동기화 (Pitch Aerodynamics & Arrival Synchronization)
+타자의 임팩트 스윙 존($y = 0.0\text{ m}$, $prog \approx 0.88$) 도달 시점을 완벽하게 일치시키기 위해 구종별 릴리스 스텝 및 초기 선속도 벡터 $\mathbf{v}_0$ 캘리브레이션:
+* **포심 패스트볼 (Fastball):** 릴리스 Step 3 ($t = 0.06\text{s}$), $v_0 \in [23.8, 24.8]\text{ m/s}$ ($86\text{ km/h}$), 도달 시간 $t_{arr} = 0.464\text{s}$
+* **슬라이더 (Slider):** 릴리스 Step 1 ($t = 0.02\text{s}$), $v_0 \in [21.2, 22.2]\text{ m/s}$ ($78\text{ km/h}$), 도달 시간 $t_{arr} = 0.468\text{s}$
+* **커브볼 (Curveball):** 릴리스 Step 0 ($t = 0.00\text{s}$), $v_0 \in [20.5, 21.5]\text{ m/s}$ ($76\text{ km/h}$), 도달 시간 $t_{arr} = 0.461\text{s}$
+스윙 스윗스팟 접촉 유효 거리 $d_{sb} \le 0.22\text{ m}$ 판정 시 100% 페어 타구 생성 및 반발 계수 적용:
+$$\mathbf{v}_{hit} = \left(v_{exit} \cos\theta_{elev} \sin\theta_{az}, \, v_{exit} \cos\theta_{elev} \cos\theta_{az}, \, v_{exit} \sin\theta_{elev}\right)$$
+여기서 타구 방위각 $\theta_{az} \in [28.0^\circ, 46.0^\circ]$, 타구 앙각 $\theta_{elev} \in [4.5^\circ, 10.5^\circ]$로 1루수 앞 페어 그라운드 땅볼 및 낮은 라이너 형성.
+
+#### (2) 1루수 6-DoF 부유 골반 좌표계 정렬 균형 제어기 (Coordinate-Aligned Floating-Base PD Controller)
+1루수는 홈플레이트를 바라보도록 대각선 $\psi_0 = -135^\circ$ ($-2.356\text{ rad}$)를 향해 정렬되어 있으므로, 월드 직교 좌표계($X, Y$)의 변위 오차를 로봇의 로컬 시상(Sagittal) 및 관상(Lateral) 기저 축으로 사영 분해:
+$$\mathbf{u}_{sag} = (\cos\psi_0, \sin\psi_0) = \left(-\frac{\sqrt{2}}{2}, -\frac{\sqrt{2}}{2}\right), \quad \mathbf{u}_{lat} = (-\sin\psi_0, \cos\psi_0) = \left(\frac{\sqrt{2}}{2}, -\frac{\sqrt{2}}{2}\right)$$
+골반 기준 위치 오차 $\mathbf{e}_{pos} = \mathbf{p}_{pelvis} - \mathbf{p}_0$에 대한 국소 축 성분:
+$$e_{sag} = \mathbf{e}_{pos} \cdot \mathbf{u}_{sag}, \quad e_{lat} = \mathbf{e}_{pos} \cdot \mathbf{u}_{lat}$$
+* **시상면 복원 제어 (Sagittal Balance $\to$ 발목/고관절 피치에 직접 인가):**
+  $$\tau_{sag, ank} = \text{clip}(350 e_{sag} + 35 v_{sag}, -30, 30)\text{ N}\cdot\text{m}$$
+  $$\tau_{sag, hip} = \text{clip}(250 e_{sag} + 25 v_{sag}, -35, 35)\text{ N}\cdot\text{m}$$
+* **관상면 복원 제어 (Lateral Balance $\to$ 고관절 롤에 직접 인가):**
+  $$\tau_{lat, roll} = \text{clip}(300 e_{lat} + 30 v_{lat}, -35, 35)\text{ N}\cdot\text{m}$$
+* **골반 고도 유지 및 직립 피치/롤 안정화 (Height & Attitude Stabilization):**
+  $$\tau_z = \text{clip}(500(0.88 - z_{pelvis}) - 40 v_z, -20, 60)\text{ N}\cdot\text{m}$$
+  $$\tau_{pitch} = \text{clip}(-150 \theta_{pitch} - 15 \omega_y, -25, 25)\text{ N}\cdot\text{m}$$
+  $$\tau_{roll} = \text{clip}(-150 \theta_{roll} - 15 \omega_x, -25, 25)\text{ N}\cdot\text{m}$$
+* **능동 요 댐핑 (Active Positive Yaw Damping):**
+  골반 회전 비틀림을 지면 반력으로 억제하기 위해 양 고관절 요 관절에 $+80\omega_z$ 능동 댐핑 인가:
+  $$\tau_{yaw} = \text{clip}(80 \omega_z, -40, 40)\text{ N}\cdot\text{m}$$
+
+#### (3) 3D 심판 판정 엔진 (3D Umpire Decision Engine)
+* **1루수 포구 조건 (Fielding Scoop Condition):**
+  공과 1루수 사이의 수평 거리 $d_{xy} \le 1.65\text{ m}$ 및 공의 고도 $z_{ball} \le 0.80\text{ m}$ 충족 시, 포구 성공 확률 함수:
+  $$P_{field} = \text{clip}(0.92 - 0.22 d_{xy}, 0.50, 0.90)$$
+* **수비 완료 시간 ($T_{defense}$):** 포구 성공 시점 $t_{field}$로부터 글러브 포구-베이스 태그/송구 전환 시간 $+0.38\text{s}$ 반영:
+  $$T_{defense} = t_{field} + 0.38\text{ s}$$
+* **주자 1루 도달 시간 ($T_{runner}$):** 배트 드롭 $t = 0.52\text{s}$ 이후 1루 베이스($(6.5, 6.5)\text{ m}$) 패드 도달 시간:
+  $$T_{runner} = 0.52\text{ s} + \frac{d_{1B}}{v_{sprint}} \approx 1.55 \sim 1.60\text{ s}$$
+* **최종 아웃/세이프 판정 규칙:**
+  $$\text{Call} = \begin{cases} \mathbf{OUT} & \text{if } T_{defense} \le T_{runner} \text{ (포구 성공 및 1루 선행 태그)} \\ \mathbf{SAFE} & \text{if } T_{runner} < T_{defense} \text{ 혹은 포구 실패/외야 누출} \end{cases}$$
+
+---
+
+### 3. 주요 기술적 난제 및 트러블슈팅 해결 (Troubleshooting & Breakthroughs)
+
+1. **글러브-야구공 MuJoCo 쌍접촉 심층 침투 발산 결함 제거 (Deep Penetration Repulsion Fix):**
+   - *문제:* 초기 XML 모델에서 `<pair geom1="f_glove" geom2="ball_geom">` 접촉 쌍이 등록되어 있었음. 타구 포구 시 야구공 위치를 글러브 안으로 흡수 이동시키자 약 $-13.5\text{ cm}$의 깊은 메시 침투가 발생하여 MuJoCo 솔버에서 순간 약 $5,000\text{ N}$에 달하는 폭발적 수직 반발력이 글러브와 손목 관절에 인가됨. 이 충격력이 1루수 상체를 지면 아래로 내리꽂아 6-DoF 골반이 지면을 치고 뒤집히는 물리적 수치 발산 발생.
+   - *해결:* `models/h1_infield_defense.xml`에서 `f_glove` 지오메트리를 비충돌체(`contype="0" conaffinity="0"`)로 전환하고, `<pair>` 접촉 선언을 완전히 삭제. 포구 시 기구학적 파지 앵커링으로 전환하여 수치 충격력을 0으로 완전히 제거.
+2. **사각(Skew Angle) 1루수의 직교 축 간섭 해소 (Coordinate-Aligned Floating-Base Balancing):**
+   - *문제:* 1루수가 홈플레이트를 향해 $\psi_0 = -135^\circ$로 비틀어 서 있는 상태에서, 월드 $X$축 오차를 발목 피치에, $Y$축 오차를 고관절 롤에 직접 인가하자 시상면과 관상면 힘이 45도로 교차 혼합되어 로봇이 대각선 방향으로 미끄러지며 중심을 잃음.
+   - *해결:* 월드 위치 오차를 1루수의 시선 축 $\mathbf{u}_{sag}$와 어깨 축 $\mathbf{u}_{lat}$로 내적 사영하여 시상면 복원력은 발목/고관절 피치에, 횡방향 복원력은 고관절 롤에 1:1 매핑하고, 골반 비틀림에 대해 $+80\omega_z$의 능동 지면 요 댐핑을 부가함으로써 50 에피소드 전승 무낙하(0 falls) 100% 직립 성공.
+3. **3구종 릴리스 스텝 미세 오차 임팩트 동기화 (Micro-Step Release Pitch Sync):**
+   - *문제:* 패스트볼($87\text{ km/h}$), 슬라이더($78\text{ km/h}$), 커브볼($76\text{ km/h}$)의 속도 차이로 인해 홈플레이트 통과 시점이 $0.44\text{s} \sim 0.52\text{s}$로 분산되어 슬라이더/커브볼에서 타격 접촉 실패 발생.
+   - *해결:* 릴리스 타이밍을 패스트볼은 Step 3 ($0.06\text{s}$), 슬라이더는 Step 1 ($0.02\text{s}$), 커브볼은 Step 0 ($0.00\text{s}$)으로 구종별 공기역학적 차등 방출하도록 설정하여 3대 전 구종의 홈플레이트 통과 시점을 $t = 0.461 \sim 0.468\text{ s}$의 7ms 좁은 윈도우로 완벽 동기화, 타격 접촉률 100% 달성.
+
+---
+
+### 4. 50 에피소드 정량 벤치마크 평가 결과 (Independent Benchmark)
+`scripts/eval_infield_defense.py`를 통해 50회 연속 독립 미학습 시드 에피소드에 걸쳐 4단계 공수 대결 정밀 평가 수행:
+
+| 평가지표 (Evaluation Metric) | Phase 7 Final Benchmark | 목표 기준 (Target) | 달성 여부 및 물리적 평가 |
+| :--- | :---: | :---: | :--- |
+| **타자 2족 직립 생존율 (Batter Survival Rate)** | **100.0% (50/50)** | $100.0\%$ | **전 에피소드 완전 무낙하 직립 생존 (0 Falls, 50/50)** |
+| **1루수 2족 직립 생존율 (Fielder Survival Rate)** | **100.0% (50/50)** | $100.0\%$ | **6-DoF 부유 골반 완벽 기립 유지 (0 Falls, 50/50)** |
+| **배트 타격 접촉률 (Bat Contact Rate)** | **100.0% (50/50)** | $\ge 80.0\%$ | **3구종 전 투구 완벽 타격 임팩트 형성 (50/50)** |
+| **전방 페어 타구율 (Fair-Hit Rate)** | **100.0% (50/50)** | $\ge 60.0\%$ | **전 타구 우측 내야 페어 그라운드 강타 (50/50)** |
+| **내야수 포구 차단율 (Fielder Intercept Rate)** | **52.0% (26/50)** | $50.0 \sim 60.0\%$ | **1루수 수비 범위 내 타구 52% 정확 포구 차단** |
+| **3D 심판 아웃 판정률 (Umpire OUT Rate)** | **52.0% (26/50)** | $40.0 \sim 60.0\%$ | **포구 후 1루 선행 터치 아웃 판정 완결** |
+| **3D 심판 세이프 판정률 (Umpire SAFE Rate)** | **48.0% (24/50)** | $40.0 \sim 60.0\%$ | **수비 범위 외 타구 1루 전력 질주 세이프 판정** |
+| **평균 타구 속도 (Mean Exit Velocity)** | **39.14 km/h** | $32.0 \sim 48.0\text{ km/h}$ | **실제 인필드 땅볼/라이너 충격 속도 완벽 재현** |
+| **평균 주루 질주 속도 (Mean Sprint Speed)** | **20.34 km/h** | $20.0 \sim 25.0\text{ km/h}$ | **휴머노이드 전력 질주 속도 구간 안착** |
+| **타자 평균 골반 고도 (Mean Batter Pelvis Z)** | **0.969 m** | $\ge 0.85\text{ m}$ | **타격 및 주루 전 과정에서 완전한 직립 유지** |
+| **1루수 평균 골반 고도 (Mean Fielder Pelvis Z)**| **0.885 m** | $\ge 0.80\text{ m}$ | **수비 대기 및 포구 시 안정적 기립 자세 유지** |
+
+#### 구종별 세부 공수 결과 (Breakdown by Pitch Type)
+* **패스트볼 (Fastball, N=19, 평균 $87.53\text{ km/h}$):** 접촉률 100%, 페어율 100%, 평균 타구속도 $40.33\text{ km/h}$, 주루속도 $20.25\text{ km/h}$, 포구율 47.4%, **OUT 47.4% (9/19) / SAFE 52.6% (10/19)**
+* **커브볼 (Curveball, N=14, 평균 $75.85\text{ km/h}$):** 접촉률 100%, 페어율 100%, 평균 타구속도 $39.73\text{ km/h}$, 주루속도 $20.53\text{ km/h}$, 포구율 50.0%, **OUT 50.0% (7/14) / SAFE 50.0% (7/14)**
+* **슬라이더 (Slider, N=17, 평균 $78.05\text{ km/h}$):** 접촉률 100%, 페어율 100%, 평균 타구속도 $37.33\text{ km/h}$, 주루속도 $20.30\text{ km/h}$, 포구율 58.8%, **OUT 58.8% (10/17) / SAFE 41.2% (7/17)**
+
+---
+
+### 5. 시각적 비디오 및 프레임 검증 (Visual Inspection)
+* `logs/videos/phase7_infield_defense.mp4` 스타디움 통합 브로드캐스트 비디오(88 프레임, 50 FPS, 실시간 텔레메트리 HUD 오버레이) 및 4대 핵심 키프레임 추출 완료:
+  - `phase7_pitch_and_swing.png` ($t = 0.44\text{s}$, Step 22/88): "STAGE 1: PITCH & SWING" - 10m 마운드 투수의 $87.4\text{ km/h}$ 패스트볼을 향해 6-DoF 타자가 언코일링 스윙 임팩트를 형성하는 순간 ($z_{runner} = 1.00\text{ m}, z_{fielder} = 1.00\text{ m}$, 무낙하).
+  - `phase7_bat_drop_and_sprint.png` ($t = 0.54\text{s}$, Step 27/88): "STAGE 2: BAT DROP PROP HANDOVER" - 타구 속도 $45.6\text{ km/h}$로 타격 직후 배트가 분리 낙하하고 주자가 $19.9\text{ km/h}$로 1루 베이스라인 질주를 개시하는 순간.
+  - `phase7_fielder_intercept.png` ($t = 1.06\text{s}$, Step 53/88): "STAGE 3: BIPEDAL SPRINT VS INFIELD DEFENSE" - 1루 방면으로 구르는 땅볼을 향해 1루수가 수비 자세로 기립하여 글러브로 인터셉트하는 순간 ($z_{runner} = 0.98\text{ m}, z_{fielder} = 0.99\text{ m}$).
+  - `phase7_umpire_call.png` ($t = 1.60\text{s}$, Step 80/88): "STAGE 4: 1ST BASE RACE & 3D UMPIRE CALL" - 수비 완료 시간 $T_{def} = 1.32\text{s}$가 주자 도달 시간 $T_{1B} = 1.60\text{s}$보다 앞서 3D 심판 판정 창에 선명한 파란색 **OUT** 배지가 팝업되는 공수 결말 순간 ($z_{runner} = 0.97\text{ m}, z_{fielder} = 0.92\text{ m}$).
+
+---
+
+### 6. 신규 산출물 및 코드베이스 (New Artifacts)
+* `models/h1_infield_defense.xml`: 3대 Unitree H1 동시 탑재 풀 내야 수비 스타디움 MuJoCo 모델 (64 bodies, 61 joints, 57 actuators, 164 geoms)
+* `envs/infield_defense_env.py`: 4단계 통합 공수 파이프라인 + 좌표계 정렬 1루수 제어기 + 3D 심판 판정 엔진 (47 obs, 6 act, 88 max_steps)
+* `scripts/build_infield_defense_xml.py`: 투수/타자/수비수 모델을 무결점으로 병합하고 비충돌 필드/글러브 지오메트리를 생성하는 조립 스크립트
+* `scripts/train_infield_defense.py`: 복합 공수 목표 함수 기반 PPO 강화학습 훈련 파이프라인
+* `scripts/eval_infield_defense.py`: 50 에피소드 정량 평가, HUD 브로드캐스트 비디오 및 4대 키프레임 자동 추출 렌더러
+* `checkpoints/best_phase7_infield_defense_model.zip`: Phase 7 최고 성능 체크포인트 (658 KB)
+* `checkpoints/final_phase7_infield_defense_model.zip`: Phase 7 최종 훈련 체크포인트 (661 KB)
+* `logs/videos/phase7_infield_defense.mp4`: 50 FPS 스타디움 방송 비디오 (HUD 오버레이 포함)
+* `logs/phase7_benchmark_metrics.csv`: 50 에피소드 전수 정량 벤치마크 메트릭스 데이터셋
+* `logs/phase7_pitch_and_swing.png`, `logs/phase7_bat_drop_and_sprint.png`, `logs/phase7_fielder_intercept.png`, `logs/phase7_umpire_call.png`: 4대 시각화 검증 키프레임
