@@ -168,8 +168,8 @@ class BipedalDuelEnv(gym.Env):
         self.pitch_name = "Fastball"
         self.pitch_speed = 22.5
         self.pitch_spin = np.array([-180.0, 0.0, 0.0], dtype=np.float32)
-        self.target_pitch_x = 0.12
-        self.target_pitch_z = 0.58
+        self.target_pitch_x = 0.16
+        self.target_pitch_z = 0.56
         self.contact_plane_y = 0.22
         self.contact_lead_time = 0.145
         self.nominal_swing_duration = 0.17
@@ -205,10 +205,10 @@ class BipedalDuelEnv(gym.Env):
         self.is_strike = False
         self.is_released = False
 
-        # 1. Pitch Type & Target Configuration across Strike Zone
+        # 1. Pitch Type & Target Configuration across Strike Zone (Aligned with Batter Sweet Spot Zone)
         self.pitch_type = int(self.np_random.choice(self.pitch_types))
-        self.target_pitch_x = float(self.np_random.uniform(0.06, 0.14))
-        self.target_pitch_z = float(self.np_random.uniform(0.55, 0.65))
+        self.target_pitch_x = float(self.np_random.uniform(0.13, 0.19))
+        self.target_pitch_z = float(self.np_random.uniform(0.52, 0.60))
 
         if self.pitch_type == 0:
             self.pitch_name = "Fastball"
@@ -557,8 +557,8 @@ class BipedalDuelEnv(gym.Env):
             self.contact_reward_given = True
             r_contact = 20.0
             sweet_offset = float(np.linalg.norm(self.contact_ball_pos - self.contact_sweet_pos))
-            effective_err = max(0.0, sweet_offset - 0.069)
-            r_sweet = 30.0 * float(np.exp(-40.0 * effective_err))
+            effective_err = max(0.0, sweet_offset - 0.062)
+            r_sweet = 35.0 * float(np.exp(-45.0 * effective_err))
             r_fair = 25.0 if self.is_fair_hit else -5.0
 
             # Directional aim reward
