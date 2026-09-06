@@ -198,6 +198,7 @@ def evaluate_bipedal_duel(
             artifact_dir,
             "/Users/jin10000/.gemini/antigravity/brain/3b74ebd0-a1ce-4525-b312-c5db96bec2d7/",
             "/Users/jin10000/.gemini/antigravity/brain/fae6624d-06df-4b92-82fa-5fa6bf786732/",
+            "/Users/jin10000/.gemini/antigravity/brain/228b4428-0e8a-419f-aa94-d5ff27726053/",
         ]
         for td in target_dirs:
             if td and os.path.exists(td):

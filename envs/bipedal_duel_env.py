@@ -111,8 +111,8 @@ class BipedalDuelEnv(gym.Env):
             [-0.40, -1.00,  0.00,  0.40,  1.50],
             [-0.60, -1.15,  0.00,  0.60,  1.70],
             [-0.10, -0.70, -0.05,  0.20,  1.20],
-            [ 0.50, -0.30, -0.10, -0.10,  0.70],
-            [ 1.15,  0.20, -0.08, -0.40,  0.35],
+            [ 0.50, -0.25, -0.10, -0.10,  0.70],
+            [ 1.15,  0.10, -0.08, -0.40,  0.35],
             [ 1.70,  0.80,  0.00, -0.70,  1.20]
         ], dtype=np.float32)
 
@@ -318,9 +318,20 @@ class BipedalDuelEnv(gym.Env):
         ball_pos = self.data.qpos[self.ball_qpos_adr:self.ball_qpos_adr+3]
         ball_vel = self.data.qvel[self.ball_qvel_adr:self.ball_qvel_adr+3]
         
+        # Real-time pitch perception: adapt nominal lead time to aerodynamic deceleration across pitch types:
+        # Fastball (~23 m/s) -> 0.196s, Slider (~20.5 m/s) -> 0.203s, Curveball (~18 m/s) -> 0.210s
+        if self.is_released and abs(ball_vel[1]) > 3.0:
+            speed_y = abs(ball_vel[1])
+            self.contact_lead_time = 0.200 + float(np.clip(21.5 - speed_y, -3.0, 4.0)) * 0.0028
+
+        # Directional spray aim coupling (Pull catches out front, Push lets pitch get deeper)
+        aim_norm = float(self.target_azimuth_rad / 0.5236)
+        dt_aim = -0.010 * aim_norm
+        dalpha_aim = 0.06 * aim_norm
+
         if self.is_released and abs(ball_vel[1]) > 3.0 and ball_pos[1] > self.contact_plane_y:
             t_remain = (ball_pos[1] - self.contact_plane_y) / abs(ball_vel[1])
-            trigger_lead = self.contact_lead_time + dt_lead_lag
+            trigger_lead = self.contact_lead_time + dt_lead_lag + dt_aim
             if not self.swing_triggered and t_remain <= trigger_lead:
                 self.swing_triggered = True
                 self.locked_t_trigger = current_time
@@ -329,13 +340,13 @@ class BipedalDuelEnv(gym.Env):
         # Modulate Batter Keyframes
         b_kfs = self.b_base_keyframes.copy()
         b_kfs[3, 1] += dz_bat * 0.6
-        b_kfs[3, 2] += dalpha_plane * 0.6
+        b_kfs[3, 2] += (dalpha_plane + dalpha_aim) * 0.6
         b_kfs[3, 4] += delbow_reach * 0.6
         b_kfs[4, 1] += dz_bat * 1.0
-        b_kfs[4, 2] += dalpha_plane * 1.0
+        b_kfs[4, 2] += (dalpha_plane + dalpha_aim) * 1.0
         b_kfs[4, 4] += delbow_reach * 1.0
         b_kfs[5, 1] += dz_bat * 0.5
-        b_kfs[5, 2] += dalpha_plane * 0.5
+        b_kfs[5, 2] += (dalpha_plane + dalpha_aim) * 0.5
 
         # Dynamic Leg Target with Athletic Weight Shift
         b_leg_target = self.b_base_leg_q.copy()
@@ -526,15 +537,15 @@ class BipedalDuelEnv(gym.Env):
             self.contact_reward_given = True
             r_contact = 15.0
             sweet_offset = float(np.linalg.norm(self.contact_ball_pos - self.contact_sweet_pos))
-            r_sweet = 10.0 * float(np.exp(-25.0 * sweet_offset))
-            r_fair = 12.0 if self.is_fair_hit else -5.0
+            r_sweet = 15.0 * float(np.exp(-25.0 * sweet_offset))
+            r_fair = 20.0 if self.is_fair_hit else -8.0
 
             # Directional aim reward
             az_err = abs(np.radians(self.exit_azimuth_deg) - self.target_azimuth_rad)
-            r_aim = 5.0 * float(np.exp(-10.0 * (az_err ** 2)))
+            r_aim = 8.0 * float(np.exp(-8.0 * (az_err ** 2)))
 
             # Exit speed bonus
-            r_speed = 0.25 * float(self.exit_velocity)
+            r_speed = 0.35 * float(self.exit_velocity)
 
             reward += r_contact + r_sweet + r_fair + r_aim + r_speed
 

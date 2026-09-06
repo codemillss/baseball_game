@@ -91,7 +91,7 @@ class BipedalDuelCallback(BaseCallback):
 
         # Prioritize zero falls (>= 95% balance) and reward high contact & fair hit rates
         balance_weight = balance_rate if balance_rate >= 95.0 else (balance_rate * 0.1)
-        score = balance_weight + 2.0 * contact_rate + 2.0 * fair_rate + 0.1 * mean_spd
+        score = balance_weight + 3.0 * contact_rate + 3.0 * fair_rate + 0.1 * mean_spd
         if score > self.best_score:
             self.best_score = score
             os.makedirs("checkpoints", exist_ok=True)
@@ -131,13 +131,15 @@ def train_bipedal_duel(total_timesteps=20000, seed=42, n_envs=4, warm_start=True
         verbose=1,
     )
 
-    base_ckpt = os.path.join("checkpoints", "best_phase3_bipedal_model.zip")
+    base_ckpt = os.path.join("checkpoints", "best_phase5_bipedal_duel_model.zip")
+    if not os.path.exists(base_ckpt):
+        base_ckpt = os.path.join("checkpoints", "best_phase3_bipedal_model.zip")
     if warm_start and os.path.exists(base_ckpt):
-        print(f"Warm-starting from Phase 3 checkpoint: {base_ckpt}")
+        print(f"Warm-starting from checkpoint: {base_ckpt}")
         model = PPO.load(
             base_ckpt,
             env=vec_env,
-            learning_rate=2e-4,
+            learning_rate=2.5e-4,
             n_steps=512,
             batch_size=64,
             n_epochs=10,
