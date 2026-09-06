@@ -196,6 +196,7 @@ def evaluate_bipedal_duel(
         # Copy to artifact directories
         target_dirs = [
             artifact_dir,
+            "/Users/jin10000/.gemini/antigravity/brain/b27efedd-978d-4093-a184-a76fc153249b/",
             "/Users/jin10000/.gemini/antigravity/brain/3b74ebd0-a1ce-4525-b312-c5db96bec2d7/",
             "/Users/jin10000/.gemini/antigravity/brain/fae6624d-06df-4b92-82fa-5fa6bf786732/",
             "/Users/jin10000/.gemini/antigravity/brain/228b4428-0e8a-419f-aa94-d5ff27726053/",

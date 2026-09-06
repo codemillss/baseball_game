@@ -116,10 +116,10 @@ class BipedalDuelEnv(gym.Env):
             [ 1.70,  0.80,  0.00, -0.70,  1.20]
         ], dtype=np.float32)
 
-        # Batter nominal leg stance
+        # Batter athletic nominal leg stance (Natural static equilibrium for rock-solid base)
         self.b_base_leg_q = np.array([
-            0.0, 0.12, -0.35, 0.65, -0.30,  # Left leg
-            0.0,-0.12, -0.35, 0.65, -0.30   # Right leg
+            0.0, 0.12, -0.18, 0.48, -0.32,  # Left leg
+            0.0,-0.12, -0.18, 0.48, -0.32   # Right leg
         ], dtype=np.float32)
 
         # Aerodynamic constants
@@ -168,10 +168,10 @@ class BipedalDuelEnv(gym.Env):
         self.pitch_name = "Fastball"
         self.pitch_speed = 22.5
         self.pitch_spin = np.array([-180.0, 0.0, 0.0], dtype=np.float32)
-        self.target_pitch_x = 0.08
+        self.target_pitch_x = 0.12
         self.target_pitch_z = 0.58
-        self.contact_plane_y = -0.16
-        self.contact_lead_time = 0.200
+        self.contact_plane_y = 0.22
+        self.contact_lead_time = 0.145
         self.nominal_swing_duration = 0.17
 
         self.rel_vx = 0.0
@@ -237,8 +237,8 @@ class BipedalDuelEnv(gym.Env):
         for i, adr in enumerate(self.p_qpos_adrs):
             self.data.qpos[adr] = self.p_keyframes[0, i]
 
-        # 4. Initialize Batter Robot (Full 6-DoF Pelvis Floating Base at x = -0.75m)
-        self.data.qpos[self.b_pelvis_qpos_adr:self.b_pelvis_qpos_adr+3] = [-0.75, 0.00, 0.88]
+        # 4. Initialize Batter Robot (Full 6-DoF Pelvis Floating Base at x = -0.75m, z = 0.92m)
+        self.data.qpos[self.b_pelvis_qpos_adr:self.b_pelvis_qpos_adr+3] = [-0.75, 0.00, 0.92]
         self.data.qpos[self.b_pelvis_qpos_adr+3:self.b_pelvis_qpos_adr+7] = [1.0, 0.0, 0.0, 0.0]
         self.data.qvel[self.b_pelvis_qvel_adr:self.b_pelvis_qvel_adr+6] = 0.0
 
@@ -319,15 +319,16 @@ class BipedalDuelEnv(gym.Env):
         ball_vel = self.data.qvel[self.ball_qvel_adr:self.ball_qvel_adr+3]
         
         # Real-time pitch perception: adapt nominal lead time to aerodynamic deceleration across pitch types:
-        # Fastball (~23 m/s) -> 0.196s, Slider (~20.5 m/s) -> 0.203s, Curveball (~18 m/s) -> 0.210s
+        # Fastball (~23 m/s) -> 0.142s, Slider (~20.5 m/s) -> 0.146s, Curveball (~18 m/s) -> 0.150s
         if self.is_released and abs(ball_vel[1]) > 3.0:
             speed_y = abs(ball_vel[1])
-            self.contact_lead_time = 0.200 + float(np.clip(21.5 - speed_y, -3.0, 4.0)) * 0.0028
+            self.contact_lead_time = 0.145 + float(np.clip(21.0 - speed_y, -3.0, 3.5)) * 0.0016
 
-        # Directional spray aim coupling (Pull catches out front, Push lets pitch get deeper)
+        # Directional push-aim coupling via horizontal yaw adjustment (Torso/shoulder yaw)
         aim_norm = float(self.target_azimuth_rad / 0.5236)
-        dt_aim = -0.010 * aim_norm
-        dalpha_aim = 0.06 * aim_norm
+        dt_aim = -0.002 * aim_norm  # minimal timing bias
+        dalpha_aim = 0.04 * aim_norm
+        dyaw_aim = -0.16 * aim_norm  # horizontal yaw adjustment
 
         if self.is_released and abs(ball_vel[1]) > 3.0 and ball_pos[1] > self.contact_plane_y:
             t_remain = (ball_pos[1] - self.contact_plane_y) / abs(ball_vel[1])
@@ -337,11 +338,13 @@ class BipedalDuelEnv(gym.Env):
                 self.locked_t_trigger = current_time
                 self.locked_swing_duration = max(0.13, self.nominal_swing_duration + dpower_dur)
 
-        # Modulate Batter Keyframes
+        # Modulate Batter Keyframes with Directional Aim Yaw Coupling
         b_kfs = self.b_base_keyframes.copy()
+        b_kfs[3, 0] += dyaw_aim * 0.6
         b_kfs[3, 1] += dz_bat * 0.6
         b_kfs[3, 2] += (dalpha_plane + dalpha_aim) * 0.6
         b_kfs[3, 4] += delbow_reach * 0.6
+        b_kfs[4, 0] += dyaw_aim * 1.0
         b_kfs[4, 1] += dz_bat * 1.0
         b_kfs[4, 2] += (dalpha_plane + dalpha_aim) * 1.0
         b_kfs[4, 4] += delbow_reach * 1.0
@@ -409,12 +412,26 @@ class BipedalDuelEnv(gym.Env):
                 cr_b = self.model.actuator_ctrlrange[self.b_swing_act_ids[i]]
                 self.data.ctrl[self.b_swing_act_ids[i]] = np.clip(tau_b, cr_b[0], cr_b[1])
 
-            # 3. Batter Leg Stance Balance PD Control (10 Leg Motors)
+            # 3. Batter Leg Stance Balance PD Control with Active Ground Shear Counter-Torque
+            p_x = self.data.qpos[self.b_pelvis_qpos_adr]
+            v_x = self.data.qvel[self.b_pelvis_qvel_adr]
+            w_z = self.data.qvel[self.b_pelvis_qvel_adr + 5]
+
+            tau_x_ank = np.clip(500.0 * (p_x - (-0.75)) + 50.0 * v_x, -35.0, 35.0)
+            tau_x_hip = np.clip(400.0 * (p_x - (-0.75)) + 40.0 * v_x, -50.0, 50.0)
+            tau_yaw = np.clip(80.0 * w_z, -50.0, 50.0)
+
             for a in range(10):
                 jid = self.model.actuator_trnid[self.b_leg_act_ids[a], 0]
                 ql = self.data.qpos[self.model.jnt_qposadr[jid]]
                 dql = self.data.qvel[self.model.jnt_dofadr[jid]]
                 tau_l = self.b_leg_Kp[a] * (b_leg_target[a] - ql) - self.b_leg_Kd[a] * dql
+                if a in [4, 9]:
+                    tau_l += tau_x_ank
+                elif a in [2, 7]:
+                    tau_l += tau_x_hip
+                elif a in [0, 5]:
+                    tau_l += tau_yaw
                 cr_l = self.model.actuator_ctrlrange[self.b_leg_act_ids[a]]
                 self.data.ctrl[self.b_leg_act_ids[a]] = np.clip(tau_l, cr_l[0], cr_l[1])
 
@@ -473,15 +490,16 @@ class BipedalDuelEnv(gym.Env):
         self.current_step += 1
         obs = self._get_obs()
 
-        # Check Strike Zone at Plate (y <= 0.0m)
+        # Check Strike Zone at Plate / Front Zone (y <= 0.25m)
         ball_pos = self.data.qpos[self.ball_qpos_adr:self.ball_qpos_adr+3]
         ball_vel = self.data.qvel[self.ball_qvel_adr:self.ball_qvel_adr+3]
-        if ball_pos[1] <= 0.10:
+        if ball_pos[1] <= 0.25:
             if abs(ball_pos[0]) <= 0.216 and 0.45 <= ball_pos[2] <= 0.85:
                 self.is_strike = True
 
         # Pelvis Balance & Fall Detection
         pelvis_pos = self.data.qpos[self.b_pelvis_qpos_adr:self.b_pelvis_qpos_adr+3]
+        pelvis_x = pelvis_pos[0]
         pelvis_z = pelvis_pos[2]
         if pelvis_z < 0.65:
             self.has_fallen = True
@@ -510,9 +528,10 @@ class BipedalDuelEnv(gym.Env):
         # Reward Formulation
         reward = 0.0
 
-        # 1. Bipedal Standing Balance Reward
-        r_balance = 5.0 * np.exp(-15.0 * ((pelvis_z - 0.88) ** 2))
-        reward += r_balance
+        # 1. Bipedal Standing Balance & Pelvis Position Reward
+        r_balance = 5.0 * np.exp(-15.0 * ((pelvis_z - 0.92) ** 2))
+        r_pelvis_x = 3.0 * np.exp(-30.0 * ((pelvis_x - (-0.75)) ** 2))
+        reward += r_balance + r_pelvis_x
 
         if self.has_fallen:
             reward -= 50.0
@@ -524,6 +543,7 @@ class BipedalDuelEnv(gym.Env):
             "fair_hit": self.is_fair_hit,
             "has_fallen": self.has_fallen,
             "pelvis_z": float(pelvis_z),
+            "pelvis_x": float(pelvis_x),
             "exit_speed_kmh": float(self.exit_velocity * 3.6),
             "azimuth_deg": float(self.exit_azimuth_deg),
             "pitch_name": self.pitch_name,
@@ -535,17 +555,18 @@ class BipedalDuelEnv(gym.Env):
         # 2. Contact, Sweet Spot, and Fair Hit Rewards
         if terminated and self.has_contacted and not self.contact_reward_given:
             self.contact_reward_given = True
-            r_contact = 15.0
+            r_contact = 20.0
             sweet_offset = float(np.linalg.norm(self.contact_ball_pos - self.contact_sweet_pos))
-            r_sweet = 15.0 * float(np.exp(-25.0 * sweet_offset))
-            r_fair = 20.0 if self.is_fair_hit else -8.0
+            effective_err = max(0.0, sweet_offset - 0.069)
+            r_sweet = 30.0 * float(np.exp(-40.0 * effective_err))
+            r_fair = 25.0 if self.is_fair_hit else -5.0
 
             # Directional aim reward
             az_err = abs(np.radians(self.exit_azimuth_deg) - self.target_azimuth_rad)
-            r_aim = 8.0 * float(np.exp(-8.0 * (az_err ** 2)))
+            r_aim = 10.0 * float(np.exp(-8.0 * (az_err ** 2)))
 
             # Exit speed bonus
-            r_speed = 0.35 * float(self.exit_velocity)
+            r_speed = 0.40 * float(self.exit_velocity)
 
             reward += r_contact + r_sweet + r_fair + r_aim + r_speed
 

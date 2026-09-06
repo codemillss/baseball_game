@@ -457,46 +457,76 @@ $$R = R_{contact} + R_{fair} + R_{sweet} + R_{balance} + R_{upright} + R_{postur
 ---
 
 ### 3. 정량적 벤치마크 평가 결과 (50 에피소드 독립 벤치마크)
-`scripts/eval_bipedal_duel.py`를 통해 50개 에피소드에 걸쳐 10m 마운드 투수 vs 6-DoF 부유 타자 대결을 종합 평가:
+---
 
-| 평가지표 (Metric) | Phase 5 달성 수치 | 평가 기준 및 물리적 의의 |
-| :--- | :---: | :--- |
-| **투수 마운드 스트라이크율 (Strike Rate)** | **100.0% (50/50)** | **10m 거리 9분할 스트라이크 존 전구 스트라이크 투구** |
-| **타자 양족 직립 생존율 (Balance Survival)** | **100.0% (50/50)** | **전체 대결 전 과정 무낙하 (Zero Falls, 완벽한 ZMP 유지)** |
-| **배트 타격 성공률 (Contact Rate)** | **84.0% (42/50)** | 실시간 투구에 대한 정밀 접촉 달성 (기존 78% 대비 대폭 향상) |
-| **전방 페어 타구율 (Fair Hit Rate)** | **18.0% (9/50)** | 내/외야 전방 그라운드로 강타된 유효 페어 타구 |
-| **스윗스팟 접촉 오차 (Sweet Spot MAE)** | **13.95 cm** | 배트 중심 반경 내 정밀 타격 형성 |
-| **평균 타구 속도 (Mean Exit Velocity)** | **22.8 km/h** | 최고 28.5 km/h 라인드라이브 타구 형성 (기존 19.7 km/h 대비 상승) |
-| **평균 골반 높이 (Mean Pelvis Z)** | **0.811 m** | 스윙 임팩트 및 팔로우스루 전반에 걸친 견고한 직립 기립 |
+### 3. 루트 코즈 진단 및 키네틱 체인 정밀 캘리브레이션 (Root-Cause Physics Diagnostics & Solutions)
+
+#### 1) 타격 지각면 전방 이동 및 실시간 리드 타임 재보정 (Front Impact Plane & Perception Recalibration)
+* **결함 진단:** 기존 `contact_plane_y = -0.16m` 및 200ms 고정 리드 타임 설정으로 인해 타격 판정이 홈플레이트 후방 38cm 지점에서 발생. 이로 인해 배트가 이미 최고 가속 구간을 지나 팔로우스루 감속 구간(`prog = 1.11 ~ 1.23`)에 진입한 뒤 공과 접촉하여 전방 페어 타구율이 18.0%에 머무르고 밀어치기(Push) 성공률이 0.0%로 억제됨.
+* **물리적 해결:**
+  - 접촉 인식면을 실물 배트 스윗스팟이 최고 선속도($v_y \approx +3.3\text{ m/s}$)를 발휘하는 물리적 전방 충돌면($y = +0.22\text{ m}$)으로 전진 이동.
+  - 실시간 구속 지각 적응형 리드 타임 재수식화:
+    $$t_{lead}(v_y) = 0.145 + \text{clip}(21.0 - |v_y|, -3.0, 3.5) \times 0.0016\text{ s}$$
+    이를 통해 패스트볼(0.142s), 슬라이더(0.146s), 커브볼(0.150s) 전 구종에 걸쳐 배트 최고 키네틱 속도 도달 시점(`prog = 0.85 ~ 0.90`)에 공을 정확히 타격.
+  - 방향성 스프레이 커플링을 타이밍 지연 대신 수평 요 각도(Torso/Shoulder Yaw) 변조로 전환하여 당겨치기/밀어치기 조향성 확보.
+
+#### 2) 골반 반동 편차 해소 및 능동 지면 전단 반력 보상기 (Active Ground Shear Counter-Torque)
+* **결함 진단:** 기존 초기 대기 자세(`ankle = -0.30`)는 정적 평형각을 벗어나 발목 모터가 상시 $+28.3\text{ N}\cdot\text{m}$의 높은 토크를 방출하며 골반을 후방으로 밀어냄. 또한 상체 회전 언코일링 순간 발생하는 반작용 토크로 인해 6-DoF 부유 골반이 후방으로 최대 25cm 밀려나며 스윗스팟 오차가 13.95cm로 확대됨.
+* **물리적 해결:**
+  - H1 전신 정적 자연 평형 스탠스(`ankle = -0.32, hip_pitch = -0.18, knee = 0.48`) 확립으로 CoM을 발 지지다각형 중심에 정확히 위치시킴.
+  - 서브스텝 물리 제어 루프 내 능동 지면 전단 반작용 카운터 토크(Active Ground Shear Counter-Torque) 구현:
+    $$\tau_{x, ank} = \text{clip}(500(p_x - (-0.75)) + 50 v_x, -35, 35)\text{ N}\cdot\text{m}$$
+    $$\tau_{x, hip} = \text{clip}(400(p_x - (-0.75)) + 40 v_x, -50, 50)\text{ N}\cdot\text{m}$$
+    $$\tau_{yaw} = \text{clip}(80 \omega_z, -50, 50)\text{ N}\cdot\text{m}$$
+  - 이를 통해 스윙 전 과정에 걸쳐 골반 고도 $z = 0.979\text{ m}$ (오차 $< 2\text{mm}$) 및 $x \approx -0.75\text{ m}$ (편차 $< 3\text{ cm}$)의 암반급 직립 안정성을 달성.
+
+---
+
+### 4. 전후 어블레이션 정량 벤치마크 평가 결과 (50 에피소드 독립 벤치마크)
+`scripts/eval_bipedal_duel.py`를 통해 50개 에피소드에 걸쳐 물리 캘리브레이션 전후 성능을 직접 비교 검증:
+
+| 평가지표 (Metric) | 캘리브레이션 전 (Baseline) | 캘리브레이션 후 (Phase 5 Final) | 물리적 의의 및 개선 폭 |
+| :--- | :---: | :---: | :--- |
+| **투수 마운드 스트라이크율 (Strike Rate)** | 100.0% (50/50) | **100.0% (50/50)** | **10m 전 구종 9분할 스트라이크 존 100% 관통 유지** |
+| **타자 양족 직립 생존율 (Balance Survival)** | 100.0% (50/50) | **100.0% (50/50)** | **전체 대결 전 과정 무낙하 (Zero Falls, 완벽한 ZMP)** |
+| **배트 타격 성공률 (Contact Rate)** | 84.0% (42/50) | **100.0% (50/50)** | **+16.0%p 상승 (전구 완벽 타격 접촉 달성)** |
+| **전방 페어 타구율 (Fair Hit Rate)** | 18.0% (9/50) | **66.0% (33/50)** | **+48.0%p 대폭 폭증 (3.6배 향상, 정타 확립)** |
+| **스윗스팟 접촉 오차 (Sweet Spot MAE)** | 13.95 cm | **10.75 cm** | **-3.20 cm 정밀도 개선 (이론적 한계치 6.9cm 근접)** |
+| **평균 타구 속도 (Mean Exit Velocity)** | 22.8 km/h | **21.4 km/h** | 최고 28.5 km/h 페어 라이너 타구 형성 |
+| **평균 골반 높이 (Mean Pelvis Z)** | 0.811 m | **0.979 m** | **+16.8 cm 상승 (암반급 6-DoF 수직 기립 확립)** |
 
 #### 구종별 성능 세부 분해 (Breakdown by Pitch Type)
 | 구종 (Pitch Type) | 스트라이크율 | 타격 성공률 | 페어 타구율 | 평균 타구속도 | 스윗스팟 오차 |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **포심 패스트볼 (Fastball, 85.5 km/h)** | 100.0% (19/19) | **78.9%** (15/19) | **21.1%** (4/19) | 17.3 km/h | 9.7 cm |
-| **슬라이더 (Slider, 74.2 km/h)** | 100.0% (13/13) | **92.3%** (12/13) | **23.1%** (3/13) | 22.4 km/h | 14.1 cm |
-| **커브볼 (Curveball, 66.8 km/h)** | 100.0% (18/18) | **83.3%** (15/18) | **11.1%** (2/18) | **28.5 km/h** | 18.1 cm |
+| **포심 패스트볼 (Fastball, 84.7 km/h)** | 100.0% (19/19) | **100.0%** (19/19) | **68.4%** (13/19) | 25.2 km/h | 11.8 cm |
+| **슬라이더 (Slider, 74.2 km/h)** | 100.0% (13/13) | **100.0%** (13/13) | **46.2%** (6/13) | 21.4 km/h | 10.2 cm |
+| **커브볼 (Curveball, 66.8 km/h)** | 100.0% (18/18) | **100.0%** (18/18) | **77.8%** (14/18) | 17.4 km/h | 10.0 cm |
 
-* **특기 사항:** 커브볼 타격 접촉률이 기존 **61.1%에서 83.3%로 22.2%p 대폭 상승**하였으며, 슬라이더 접촉률 역시 **92.3%**로 안정화됨.
-
----
-
-### 4. 시각적 비디오 및 프레임 검증 (Visual Inspection)
-* `logs/videos/phase5_bipedal_duel.mp4` 비디오 렌더링 및 프레임 정밀 분석:
-  - `phase5_pitcher_release.png`: 10m 마운드에서 H1 투수가 패스트볼(85.5 km/h)을 전방 릴리스하는 순간. 홈플레이트의 H1 타자는 6-DoF 부유 골반($z=0.96\text{ m}$)에서 견고한 대기 타격 자세 유지.
-  - `phase5_pitch_approach.png`: 야구공이 마그누스 에어로다이내믹스 궤적을 그리며 10m 그라운드를 가로질러 홈플레이트 스트라이크 존으로 진입하는 비행 장면 ($z_{pelvis}=0.95\text{ m}$).
-  - `phase5_batter_impact.png`: **"CRACK! FAIR HIT (12.3 km/h)"** 오버레이와 함께 배트 배럴이 정확히 공을 인터셉트하는 임팩트 순간 (골반 고도 $z=0.90\text{ m}$ 직립 유지).
-  - `phase5_follow_through.png`: 타격 직후 타자가 지면 반발력을 흡수하며 두 발로 완벽히 기립($z=0.85\text{ m}$)한 채 타구를 전방 페어 필드로 16.0 km/h로 발사하는 완결된 피니시 장면.
+#### 방향성 스프레이 제어 정확도 (Directional Batting Spray Accuracy)
+| 목표 방향 (Zone) | 목표 시도 수 | 유효 사출 성공 | 조향 성공률 (Accuracy) | 비고 |
+| :--- | :---: | :---: | :---: | :--- |
+| **당겨치기 (Pull Aim)** | 18 | 8 | **44.4%** | 좌측 페어 그라운드 강타 |
+| **센터 라인드라이브 (Center Aim)** | 20 | 2 | **10.0%** | 중앙 직선 타구 형성 |
+| **밀어치기 (Push Aim)** | 12 | 2 | **16.7%** | **기존 0.0%에서 유효 사출 성공 전환** |
 
 ---
 
-### 5. 신규 산출물 및 코드베이스 (New Artifacts)
+### 5. 시각적 비디오 및 프레임 검증 (Visual Inspection)
+* `logs/videos/phase5_bipedal_duel.mp4` 브로드캐스트 비디오 재렌더링(51 프레임, 50 FPS) 및 키프레임 추출 완료:
+  - `phase5_pitcher_release.png`: 10m 마운드에서 H1 투수가 84.7 km/h 패스트볼을 전방 릴리스하는 순간. 홈플레이트의 H1 타자는 6-DoF 부유 골반($z=0.98\text{ m}$)에서 암반급 직립 대기 타격 자세 유지.
+  - `phase5_pitch_approach.png`: 마그누스 궤적을 그리며 10m 스타디움을 가로질러 홈플레이트 스트라이크 존으로 진입하는 볼 비행 장면.
+  - `phase5_batter_impact.png`: **"CRACK! FAIR HIT (24.2 km/h)"** 오버레이와 함께 배트 전방 타격면($y = 0.22\text{ m}$)에서 최고 선속도로 공을 정확히 타격하는 임팩트 순간 (골반 고도 $z = 0.98\text{ m}$ 완전 직립).
+  - `phase5_follow_through.png`: 타격 직후 타자가 지면 전단 반작용 카운터 토크로 골반 밀림 없이 두 발로 견고히 기립($z=0.98\text{ m}$)한 채 타구를 전방 페어 필드로 23.9 km/h로 발사하는 피니시 장면.
+
+---
+
+### 6. 신규 산출물 및 코드베이스 (New Artifacts)
 * `models/h1_bipedal_duel.xml`: 10m 마운드 투수 + 6-DoF 부유 골반 타자 통합 스타디움 모델 (43 bodies, 40 joints, 38 actuators)
-* `scripts/build_bipedal_duel_xml.py`: 통합 MJCF XML 빌드 및 자동 컴파일 검증 스크립트
-* `envs/bipedal_duel_env.py`: 실시간 구속 감지 적응형 리드 타임 및 스트라이크 존 중심 플레인을 갖춘 Gym 환경 (`BipedalDuel-v0`)
-* `scripts/train_bipedal_duel.py`: PPO 정책 미세조정 및 제로 폴(Zero Falls) 보장형 체크포인트 최적화 스크립트
-* `scripts/eval_bipedal_duel.py`: 50 에피소드 정량 벤치마크 및 브로드캐스트 비디오/키프레임 추출 파이프라인
-* `checkpoints/best_phase5_bipedal_duel_model.zip`: Phase 5 최적 결투 모델 (100% 균형, 84% 타격 접촉, 22.8 km/h 타구속도)
-* `logs/videos/phase5_bipedal_duel.mp4`: Phase 5 10m 풀 스타디움 대결 비디오 (50 FPS)
-* `logs/videos/phase5_pitcher_release.png` / `phase5_pitch_approach.png` / `phase5_batter_impact.png` / `phase5_follow_through.png`: 4대 핵심 키프레임 이미지
+* `envs/bipedal_duel_env.py`: 전방 충돌면($y = 0.22\text{ m}$), 실시간 구속 지각 적응형 리드 타임(0.145s), 능동 지면 전단 반작용 카운터 토크를 갖춘 전신 결투 환경
+* `scripts/train_bipedal_duel.py`: 능동 균형 및 스윗스팟/페어타구 최적화 PPO 파이프라인
+* `scripts/eval_bipedal_duel.py`: 50 에피소드 정량 벤치마크 및 비디오/키프레임 추출 자동화 스크립트
+* `checkpoints/best_phase5_bipedal_duel_model.zip`: Phase 5 최종 결투 모델 (100% 균형, 100% 타격 접촉, 66% 페어 타구)
+* `logs/videos/phase5_bipedal_duel.mp4`: 10m 풀 스타디움 대결 비디오 (50 FPS, HUD 오버레이)
+* `logs/videos/phase5_pitcher_release.png` / `phase5_pitch_approach.png` / `phase5_batter_impact.png` / `phase5_follow_through.png`: 4대 핵심 키프레임 (세션 아티팩트 디렉토리 동기화 완료)
 
 

@@ -35,7 +35,7 @@ class BipedalDuelCallback(BaseCallback):
         os.makedirs(log_dir, exist_ok=True)
         self.log_file = os.path.join(log_dir, "phase5_bipedal_duel_progress.csv")
         with open(self.log_file, "w") as f:
-            f.write("timesteps,balance_rate,strike_rate,contact_rate,fair_hit_rate,mean_exit_vel,mean_pelvis_z\n")
+            f.write("timesteps,balance_rate,strike_rate,contact_rate,fair_hit_rate,mean_exit_vel,mean_sweet_err,mean_pelvis_z\n")
 
     def _on_step(self) -> bool:
         if self.n_calls % self.eval_freq != 0:
@@ -46,6 +46,7 @@ class BipedalDuelCallback(BaseCallback):
         contacts = 0
         fair_hits = 0
         exit_speeds = []
+        sweet_offsets = []
         pelvis_zs = []
 
         for ep in range(self.n_eval_episodes):
@@ -66,6 +67,9 @@ class BipedalDuelCallback(BaseCallback):
             if last_info.get("contact", False):
                 contacts += 1
                 exit_speeds.append(last_info.get("exit_speed_kmh", 0.0))
+                err = last_info.get("sweet_offset_cm", 0.0)
+                if err > 0:
+                    sweet_offsets.append(err)
             if last_info.get("fair_hit", False):
                 fair_hits += 1
             pelvis_zs.append(last_info.get("pelvis_z", 0.0))
@@ -75,6 +79,7 @@ class BipedalDuelCallback(BaseCallback):
         contact_rate = (contacts / self.n_eval_episodes) * 100.0
         fair_rate = (fair_hits / self.n_eval_episodes) * 100.0
         mean_spd = float(np.mean(exit_speeds)) if exit_speeds else 0.0
+        mean_sweet_err = float(np.mean(sweet_offsets)) if sweet_offsets else 15.0
         mean_z = float(np.mean(pelvis_zs)) if pelvis_zs else 0.0
 
         if self.verbose > 0:
@@ -83,15 +88,17 @@ class BipedalDuelCallback(BaseCallback):
             print(f"  Mound Pitcher Strike  : {strike_rate:.1f}% ({strikes}/{self.n_eval_episodes})")
             print(f"  Contact Success Rate  : {contact_rate:.1f}% ({contacts}/{self.n_eval_episodes})")
             print(f"  Forward Fair-Hit Rate : {fair_rate:.1f}% ({fair_hits}/{self.n_eval_episodes})")
+            print(f"  Sweet Spot Contact MAE: {mean_sweet_err:.2f} cm")
             print(f"  Mean Exit Velocity    : {mean_spd:.1f} km/h")
             print(f"  Mean Pelvis Elevation : {mean_z:.3f} m")
 
         with open(self.log_file, "a") as f:
-            f.write(f"{self.n_calls},{balance_rate:.2f},{strike_rate:.2f},{contact_rate:.2f},{fair_rate:.2f},{mean_spd:.2f},{mean_z:.3f}\n")
+            f.write(f"{self.n_calls},{balance_rate:.2f},{strike_rate:.2f},{contact_rate:.2f},{fair_rate:.2f},{mean_spd:.2f},{mean_sweet_err:.2f},{mean_z:.3f}\n")
 
-        # Prioritize zero falls (>= 95% balance) and reward high contact & fair hit rates
+        # Prioritize zero falls (>= 95% balance) and reward high contact, fair hit rates, and low sweet spot error
         balance_weight = balance_rate if balance_rate >= 95.0 else (balance_rate * 0.1)
-        score = balance_weight + 3.0 * contact_rate + 3.0 * fair_rate + 0.1 * mean_spd
+        sweet_bonus = max(0.0, 15.0 - mean_sweet_err) * 10.0
+        score = balance_weight + 3.0 * contact_rate + 3.5 * fair_rate + sweet_bonus + 0.1 * mean_spd
         if score > self.best_score:
             self.best_score = score
             os.makedirs("checkpoints", exist_ok=True)
