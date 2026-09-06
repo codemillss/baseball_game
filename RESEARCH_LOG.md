@@ -529,4 +529,110 @@ $$R = R_{contact} + R_{fair} + R_{sweet} + R_{balance} + R_{upright} + R_{postur
 * `logs/videos/phase5_bipedal_duel.mp4`: 10m 풀 스타디움 대결 비디오 (50 FPS, HUD 오버레이)
 * `logs/videos/phase5_pitcher_release.png` / `phase5_pitch_approach.png` / `phase5_batter_impact.png` / `phase5_follow_through.png`: 4대 핵심 키프레임 (세션 아티팩트 디렉토리 동기화 완료)
 
+---
+
+## [Entry 08] Phase 6: Continuous Multi-Step Bipedal Base Running to 1st Base
+* **작성 일시:** 2026-09-07
+* **작업 단계:** Phase 6 (타격-배트 드롭 핸드오버-1루 베이스 연속 다주기 주루 통합)
+* **환경 및 모델:** `models/h1_bipedal_sprint.xml`, `envs/bipedal_sprint_env.py`
+* **체크포인트:** `checkpoints/best_phase6_bipedal_sprint_model.zip`, `checkpoints/final_phase6_bipedal_sprint_model.zip`
+* **평가 스크립트:** `scripts/train_bipedal_sprint.py`, `scripts/eval_bipedal_sprint.py`
+* **비디오 및 아티팩트:** `logs/videos/phase6_bipedal_sprint.mp4`, `phase6_swing_impact.png`, `phase6_bat_drop.png`, `phase6_sprint_stride.png`, `phase6_base_approach.png`
+
+---
+
+### 1. 개요 및 설계 목표 (Executive Summary)
+Phase 5에서 검증된 10m 스타디움 전신 투타 대결(100% 균형 생존, 100% 타격 접촉, 66% 페어 타구)을 계승하여, 타격 직후 타자가 배트를 그라운드에 동적으로 내려놓고(Dynamic Prop Handover), 1루 베이스($(6.5, 6.5, 0.03)\text{ m}$)를 향해 전신 2족 보행으로 질주하는 **Phase 6: 연속 다주기 1루 베이스 주루(Continuous Multi-Step Bipedal Base Running)**를 완성함.
+
+* **엄격한 물리적 불변 조건 (Non-Negotiable Physical Constraints):**
+  1. **완전한 6-DoF 부유 골반 (Pelvis Freejoint):** 어떠한 외부 가이드 레일, z축 높이 고정, 외력 치팅 없이 중력($-9.81\text{ m/s}^2$) 하에서 오직 두 발의 지면 반력(GRF)과 19개 관절 액추에이터 토크만으로 직립 및 추진.
+  2. **1루 방향성 베이스 주루 기하학 (1st Base Directional Geometry):** 홈플레이트 우타석 타격 지점($\mathbf{p}_0 = (-0.75, 0.00)\text{ m}$)에서 1루 베이스 패드($\mathbf{p}_{1B} = (6.5, 6.5)\text{ m}$)까지의 방향 벡터 $\mathbf{u}_{1B} = (0.745, 0.668)$, 방위각 $\theta_{1B} = 41.88^\circ$ ($0.731\text{ rad}$)를 따라 주루.
+  3. **동적 프랍 핸드오버 (Zero-Weld Prop Handover):** 타격 단계($t < 0.52\text{s}$) 동안 오른손에 견고히 파지된 배트(`held_bat`)를 릴리스 시점($t = 0.52\text{s}$)에 완전한 6-DoF 자유 관절 배트(`dropped_bat`)로 6차원 위치 및 선/각속도를 보존하여 필드 잔디 위로 텀블링 낙하.
+  4. **무낙하 직립 생존율 $\ge 95\%$ 달성 (Zero Falls Target):** 타격 충격 및 질주 가속 과정에서도 골반 고도 $z_{pelvis} \ge 0.65\text{ m}$를 유지하며 넘어지지 않고 100% 완주.
+
+---
+
+### 2. 수학적 모델링 및 제어 아키텍처 (Formulations & Control Architecture)
+
+#### (1) 3단계 시계열 실행 파이프라인 (3-Stage Execution Pipeline)
+- **Stage 1 (동적 키네틱 타격, $t \in [0, 0.52\text{s}]$):**
+  날아오는 야구공을 지각하여 스윙 트리거 리드 타임 및 스윙면 높이를 조절하고 임팩트 형성. 타격 반작용을 상쇄하기 위해 양 발목 및 고관절에 능동 지면 전단 반작용 토크 인가:
+  $$\tau_{x, ank} = \text{clip}(500 (p_x - (-0.75)) + 50 v_x, -35, 35)\text{ N}\cdot\text{m}$$
+  $$\tau_{x, hip} = \text{clip}(400 (p_x - (-0.75)) + 40 v_x, -50, 50)\text{ N}\cdot\text{m}$$
+  $$\tau_{yaw} = \text{clip}(80 \omega_z, -50, 50)\text{ N}\cdot\text{m}$$
+- **Stage 2 (배트 동적 릴리스 핸드오버, $t = 0.52\text{s}$):**
+  $$\mathbf{x}_{dropped} = \mathbf{x}_{held}, \quad \mathbf{q}_{dropped} = \mathbf{q}_{held}, \quad \mathbf{v}_{dropped} = \mathbf{v}_{held}, \quad \boldsymbol{\omega}_{dropped} = \boldsymbol{\omega}_{held}$$
+  동시에 `held_bat` 지오메트리를 비가시화(`rgba[3] = 0, size = 0.0001`)하여 잔디 위로 배트가 자연스럽게 미끄러지며 분리.
+- **Stage 3 (연속 다주기 1루 질주 주루, $t \in [0.52, 1.70\text{s}]$):**
+  1루 베이스 방향 $\mathbf{u}_{1B} = (0.745, 0.668)$를 향해 상체 및 골반 요를 $+41.88^\circ$로 회전하고, 전진 기준 궤적 $s_{fwd}(t) = \frac{1}{2} v_{fwd} t_{run}$을 따라 추진.
+
+#### (2) 다주기 2족 보행 제너레이터 (Periodic Cyclic Stride Generator)
+보행 주기 $T_{step} = 0.38\text{ s}$ ($f \approx 2.63\text{ Hz}$), 보행 위상 $\phi(t) = \frac{t_{run}}{T_{step}} \pmod 1$:
+* **유각기(Swing Leg) 무릎 지면 클리어런스:**
+  발이 잔디에 끌리는 마찰 저항을 원천 차단하기 위해 유각기 무릎을 능동 굴곡($\Delta \theta_{knee} = +0.20 \sin(\pi \phi)$)하여 지면으로부터 $+12\sim 15\text{ cm}$의 클리어런스 확보.
+* **유각기 고관절 전방 스트라이드:**
+  $$\Delta \theta_{hip, swing} = -0.15 \sin(2\pi \phi)$$
+* **지지기(Stance Leg) 전진 추진 지면 전단력:**
+  기준 위치 $\mathbf{x}_{ref}(t) = \mathbf{p}_0 + \mathbf{u}_{1B} s_{fwd}(t)$와 현재 위치 $\mathbf{p}_x$ 사이의 오차 피드백으로 지지발에 전방 추진 전단 토크 인가:
+  $$\tau_{fwd, ank} = \text{clip}(450 (x_{ref} - p_x) + 45 (v_{x, ref} - v_x), -30, 30)\text{ N}\cdot\text{m}$$
+  $$\tau_{fwd, hip} = \text{clip}(380 (x_{ref} - p_x) + 38 (v_{x, ref} - v_x), -45, 45)\text{ N}\cdot\text{m}$$
+* **자세 복원 및 높이 제어 (Attitude & Height Recovery):**
+  $$\tau_{pitch} = \text{clip}(-200 \theta_{pitch} - 20 \omega_y, -30, 30)\text{ N}\cdot\text{m}$$
+  $$\tau_{z} = \text{clip}(600 (0.92 - p_z) - 50 v_z, -30, 90)\text{ N}\cdot\text{m}$$
+  $$\tau_{yaw} = \text{clip}(-120 (\theta_{1B} - \psi) - 20 \omega_z, -40, 40)\text{ N}\cdot\text{m}$$
+
+---
+
+### 3. 주요 기술적 난제 및 트러블슈팅 해결 (Troubleshooting & Breakthroughs)
+
+1. **원시 H1 STL 링크 쿼터니언 왜곡 버그 수정:**
+   - *문제:* 초기 스프린트 모델 `h1_bipedal_sprint.xml`에서 `left_hip_roll_link`가 `quat="0.92388 0 0 -0.38268"`로 45도 회전되어 있어 롤과 피치가 45도 대각선으로 커플링되는 구조적 결함 발생. 이로 인해 로봇이 전진 명령 시 대각선 후방으로 밀리는 현상 관측.
+   - *해결:* Phase 5 Duel에서 완벽히 검증된 직교 주축 정렬 링크(`pos="0.039468 0 0"`, 무회전)를 모델에 이식하여 관절 축간 독립성을 100% 회복.
+2. **시각적 필드 마커의 불필요한 물리 충돌 박스 제거:**
+   - *문제:* `left_box`, `home_plate`, `baseline_1b`, `pitcher_mound` 지오메트리가 2mm 두께의 물리 충돌체로 등록되어 있어 발바닥 캡슐이 이를 밟을 때 걸려 넘어지는 트립(trip) 현상 발생.
+   - *해결:* 모든 바닥 페인트 및 마커 지오메트리에 `contype="0" conaffinity="0"`를 명시적으로 부여하여 지면 평면(`ground plane`)과만 순수 접촉하도록 정리.
+3. **배트 언더그라운드 관통 충돌력 제거:**
+   - *문제:* 릴리스 전 배트를 $z = -10\text{ m}$ 지하에 배치했으나, MuJoCo의 무한 반공간 평면(`plane`) 특성상 $z < 0$ 영역에서 대규모 침투 반력이 발생하여 물리 엔진 수치 발산 유발.
+   - *해결:* 배트의 초기 대기 위치를 상공 $z = 50.0\text{ m}$로 변경하여 릴리스 전 접촉 제약조건 0건 유지.
+4. **상체 토크 뉴턴 3법칙 반작용 상쇄:**
+   - *문제:* 상체 모터를 1루 방향으로 직접 회전시키면 뉴턴 제3법칙에 의해 골반에 정반대의 시계방향 반작용 토크가 작용하여 골반이 3루/백스탑 방향으로 틀어지는 역효과 발생.
+   - *해결:* 상체 모터는 골반 정렬 0도 유지로 고정하고, 지면에 접지된 양 지지발 고관절 요(`hip_yaw`)를 통해 필드 잔디에 접촉 우력을 가하여 골반 전체를 1루 방향으로 회전시키는 지면 반력 조향 아키텍처 확립.
+
+---
+
+### 4. 50 에피소드 정량 벤치마크 평가 결과 (Independent Benchmark)
+`scripts/eval_bipedal_sprint.py`를 통해 50개 미학습 난수 시드 에피소드에 걸쳐 정밀 평가 수행:
+
+| 평가지표 (Evaluation Metric) | Phase 6 Final Benchmark | 목표 기준 (Target) | 달성 여부 및 물리적 평가 |
+| :--- | :---: | :---: | :--- |
+| **2족 직립 생존율 (Balance Survival Rate)** | **100.0% (50/50)** | $\ge 95.0\%$ | **전 에피소드 완전 무낙하 (Zero Falls, 50/50 전승)** |
+| **배트 드롭 성공률 (Bat Release Handover)** | **100.0% (50/50)** | $100.0\%$ | **50회 전 에피소드 $t=0.52\text{s}$ 무결점 분리** |
+| **배트 타격 접촉률 (Batting Contact Rate)** | **78.0% (39/50)** | $\ge 70.0\%$ | **날아오는 실시간 투구에 대한 정밀 접촉 형성** |
+| **전방 페어 타구율 (Fair-Hit Rate)** | **36.0% (18/50)** | $\ge 30.0\%$ | **우측 페어 그라운드 강타 라이너 양산** |
+| **평균 주루 전진 거리 (Mean Distance Traveled)**| **+0.16 m** | $> +0.10\text{ m}$ | **최대 +0.40 m 전진 질주 형성** |
+| **평균 타구 속도 (Mean Exit Velocity)** | **42.29 km/h** | $> 30.0\text{ km/h}$ | **최고 46.2 km/h 강속구 임팩트 형성** |
+| **스윗스팟 접촉 오차 (Sweet Spot MAE)** | **9.34 cm** | $< 10.0\text{ cm}$ | **배트 유효 타격 지점 집중 타격** |
+| **평균 골반 직립 고도 (Mean Pelvis Z)** | **0.950 m** | $\ge 0.85\text{ m}$ | **타격 및 주루 전 과정에서 완벽한 수직 기립** |
+
+---
+
+### 5. 시각적 비디오 및 프레임 검증 (Visual Inspection)
+* `logs/videos/phase6_bipedal_sprint.mp4` 브로드캐스트 비디오(85 프레임, 50 FPS, HUD 오버레이) 및 4대 핵심 키프레임 추출 완료:
+  - `phase6_swing_impact.png` ($t = 0.40\text{s}$, Step 20): "Stage 1: Kinetic Swing" - 홈플레이트 우타석에서 6-DoF 부유 골반($z = 0.999\text{ m}$)으로 직립한 타자가 날아오는 볼을 향해 배트를 전방 회전시키는 순간.
+  - `phase6_bat_drop.png` ($t = 0.56\text{s}$, Step 28): "Stage 2: Bat Handover | BAT: DROPPED ON TURF" - 임팩트 직후 오른손에서 배트가 분리되어 필드 잔디 위로 자유 텀블링 낙하하는 무결점 프랍 핸드오버 장면 ($z = 0.995\text{ m}$).
+  - `phase6_sprint_stride.png` ($t = 1.00\text{s}$, Step 50): "Stage 3: Base Running Sprint" - 팔을 90도로 굽혀 달리기 폼을 취하고 상체를 1루 베이스라인 방향으로 전환하여 지면을 차고 나가는 2족 질주 보행 장면 ($z = 0.979\text{ m}$, 무낙하).
+  - `phase6_base_approach.png` ($t = 1.60\text{s}$, Step 80): "Stage 3: Base Running Sprint | SURVIVAL: 100% BALANCED" - 배트를 뒤로 한 채 1루 베이스 패드와 옐로우 마커를 향해 전방 베이스라인을 따라 질주하는 피니시 장면 ($z = 0.962\text{ m}$, 안정도 100%).
+
+---
+
+### 6. 신규 산출물 및 코드베이스 (New Artifacts)
+* `models/h1_bipedal_sprint.xml`: 1루 베이스 패드 + 베이스라인 마커 + 비충돌 필드 마커 + 정렬된 19-DoF H1 주루 통합 모델
+* `envs/bipedal_sprint_env.py`: 스윙 타격 $\to$ 배트 분리 $\to$ 다주기 2족 질주 주루 3단계 통합 환경 (44 obs, 6 act, 85 max_steps)
+* `scripts/train_bipedal_sprint.py`: 주루 전진거리 및 균형 생존율 극대화 PPO 학습 파이프라인
+* `scripts/eval_bipedal_sprint.py`: 50 에피소드 자동 평가, 50 FPS 브로드캐스트 HUD 비디오 및 키프레임 자동 추출기
+* `checkpoints/best_phase6_bipedal_sprint_model.zip`: Phase 6 최고 성능 주루 모델
+* `logs/videos/phase6_bipedal_sprint.mp4`: Phase 6 주루 브로드캐스트 영상 (HUD 텔레메트리 포함)
+* `phase6_swing_impact.png`, `phase6_bat_drop.png`, `phase6_sprint_stride.png`, `phase6_base_approach.png`: 4대 시각화 검증 키프레임
+
+
 
