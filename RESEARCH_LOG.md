@@ -420,3 +420,77 @@ $$R = R_{contact} + R_{fair} + R_{sweet} + R_{balance} + R_{upright} + R_{postur
 * `logs/videos/phase3_bipedal_swing.mp4`: Phase 3 전신 직립 타격 비디오
 * `logs/videos/phase4_hit_and_run.mp4`: Phase 4 타격 후 배트 드롭 및 1루 주루 비디오
 
+---
+
+## 📅 Entry 07: [2026-09-07] Phase 5 풀 스타디움 전신 양족 투수-타자 폐루프 대결 (Full-Stadium Whole-Body Bipedal Pitcher vs Batter Closed-Loop Duel)
+
+### 1. 배경 및 과제 정의 (Motivation & Unified Stadium Architecture)
+* **10m 스타디움 통합 폐루프 결투:** 10m 마운드 위의 실시간 H1 투수와 홈플레이트 타석의 6-DoF 부유 골반 H1 전신 타자를 단일 MuJoCo 물리 환경(`models/h1_bipedal_duel.xml`)으로 통합.
+* **Zero-Cheating 물리적 충실도 준수:**
+  - 타자는 어떠한 인위적 월드 앵커나 고정 조인트 없이 6-DoF 부유 골반(`b_pelvis_joint`)과 10개의 하지 관절 액추에이터를 통해 동적 ZMP 및 지면 반발력(GRF)을 온전히 지지.
+  - 모든 관절 모터는 유니트리 H1 하드웨어 정격 토크 규격(몸통 200 N·m, 어깨 40 N·m, 팔꿈치 18 N·m)을 엄격히 준수.
+  - 야구공은 릴리스 후 대기 항력($C_d = 0.32$)과 마그누스 효과($C_L = 0.24$)를 실시간 연산하여 3가지 구종(패스트볼 80~88 km/h, 슬라이더 70~78 km/h, 커브볼 62~70 km/h)의 실물 궤적을 재현.
+
+---
+
+### 2. 핵심 물리적 난제 규명 및 해결 (Key Challenges & Kinematic Solutions)
+
+#### 1) 대형 관성 모터 지연과 적응형 리드 타임 제어 (`contact_lead_time = 0.200s`)
+* **물리적 지연 발견:** 타자의 상체 및 팔 모터는 정격 토크 한계와 링크 관성 모멘트로 인해, 스윙 명령 인가 시점부터 배트가 타격면($y = -0.16\text{ m}$)에 도달할 때까지 약 $0.18\sim 0.20\text{s}$의 물리적 기동 지연이 발생.
+* **동적 트리거 아키텍처:** 
+  - 기본 리드 타임을 `contact_lead_time = 0.200s`로 정합.
+  - 타자의 관측 벡터에 야구공의 실시간 3D 위치, 속도, 타격면 도달 잔여 시간 $t_{remain} = \frac{y_{ball} - y_{contact}}{|v_y|}$을 연속 공급.
+  - 강화학습 정책이 미세 타이밍 보정 $dt_{lead\_lag} = a[0] \times 0.040\text{s}$를 추론하여, 구종별 유효 속도 차이에 따른 임팩트 동기화를 자동 완결.
+
+#### 2) 마그누스 에어로다이내믹스 드롭 극복 및 스윙 플레인 적응 제어
+* **커브볼의 급격한 낙하:** 톱스핀 커브볼($\omega_x = +170\text{ rad/s}$)은 10m 비행 중 약 $15\sim 20\text{ cm}$의 강력한 하향 마그누스 침하를 유발.
+* **타격면 고저/좌우 보정 확장:**
+  - 어깨 피치 보정 스케일을 $dz_{bat} = a[1] \times 0.25\text{ rad}$ ($\pm 14.3^\circ$)로 확장하여 홈플레이트 저점 통과 커브볼부터 고점 패스트볼까지 전 영역 스윙 궤적 커버.
+  - 팔꿈치 리치 보정 $delbow = a[4] \times 0.20\text{ rad}$를 통해 외곽으로 휘어져 나가는 슬라이더에 대한 플레이트 커버리지 확보.
+* **릴리스 시점 손목 위치 기반 3-반복 수치 사격 솔버:**
+  - 투수가 투구 모션을 거쳐 실제 볼을 놓는 순간(Step 22, $\mathbf{x}_{hand} \approx [-0.25, 9.47, 1.10]\text{ m}$)의 정확한 공간 좌표를 기반으로, 3회 수치 사격 루프(Aerodynamic Shooting Loop)를 통해 9분할 스트라이크 존에 오차 0.1 mm 이내로 탄도를 투사.
+
+---
+
+### 3. 정량적 벤치마크 평가 결과 (50 에피소드 독립 벤치마크)
+`scripts/eval_bipedal_duel.py`를 통해 50개 에피소드에 걸쳐 10m 마운드 투수 vs 6-DoF 부유 타자 대결을 종합 평가:
+
+| 평가지표 (Metric) | Phase 5 달성 수치 | 평가 기준 및 물리적 의의 |
+| :--- | :---: | :--- |
+| **투수 마운드 스트라이크율 (Strike Rate)** | **100.0% (50/50)** | **10m 거리 9분할 스트라이크 존 전구 스트라이크 투구** |
+| **타자 양족 직립 생존율 (Balance Survival)** | **100.0% (50/50)** | **전체 대결 전 과정 무낙하 (Zero Falls, 완벽한 ZMP 유지)** |
+| **배트 타격 성공률 (Contact Rate)** | **78.0% (39/50)** | 80+ km/h 실시간 투구에 대한 78% 정밀 접촉 달성 |
+| **전방 페어 타구율 (Fair Hit Rate)** | **30.0% (15/50)** | 내/외야 전방 그라운드로 강타된 페어 타구 비율 |
+| **스윗스팟 접촉 오차 (Sweet Spot MAE)** | **13.19 cm** | 배트 중심 반경 내 정밀 타격 형성 |
+| **평균 타구 속도 (Mean Exit Velocity)** | **19.7 km/h** | 최고 25+ km/h 라인드라이브 타구 형성 |
+| **평균 골반 높이 (Mean Pelvis Z)** | **0.812 m** | 스윙 임팩트 및 팔로우스루 전반에 걸친 견고한 직립 기립 |
+
+#### 구종별 성능 세부 분해 (Breakdown by Pitch Type)
+| 구종 (Pitch Type) | 스트라이크율 | 타격 성공률 | 페어 타구율 | 평균 타구속도 | 스윗스팟 오차 |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **포심 패스트볼 (Fastball, 81.9 km/h)** | 100.0% (19/19) | **89.5%** (17/19) | **47.4%** (9/19) | 19.3 km/h | 9.3 cm |
+| **슬라이더 (Slider, 72.5 km/h)** | 100.0% (13/13) | **84.6%** (11/13) | **30.8%** (4/13) | 17.3 km/h | 14.5 cm |
+| **커브볼 (Curveball, 65.4 km/h)** | 100.0% (18/18) | **61.1%** (11/18) | **11.1%** (2/18) | 22.7 km/h | 17.8 cm |
+
+---
+
+### 4. 시각적 비디오 및 프레임 검증 (Visual Inspection)
+* `logs/videos/phase5_bipedal_duel.mp4` 비디오 렌더링 및 프레임 정밀 분석:
+  - `phase5_pitcher_release.png`: 10m 마운드에서 H1 투수가 패스트볼(81.9 km/h)을 전방 릴리스하는 순간. 홈플레이트의 H1 타자는 6-DoF 부유 골반($z=0.96\text{ m}$)에서 견고한 대기 타격 자세 유지.
+  - `phase5_pitch_approach.png`: 야구공이 마그누스 에어로다이내믹스 궤적을 그리며 10m 그라운드를 가로질러 홈플레이트 스트라이크 존으로 진입하는 비행 장면.
+  - `phase5_batter_impact.png`: **"CRACK! FAIR HIT (16.8 km/h)"** 오버레이와 함께 배트 배럴이 정확히 공을 인터셉트하는 임팩트 순간 (골반 고도 $z=0.89\text{ m}$ 직립 유지).
+  - `phase5_follow_through.png`: 타격 직후 타자가 지면 반발력을 흡수하며 두 발로 완벽히 기립($z=0.84\text{ m}$)한 채 타구를 전방 페어 필드로 19.8 km/h로 발사하는 완결된 피니시 장면.
+
+---
+
+### 5. 신규 산출물 및 코드베이스 (New Artifacts)
+* `models/h1_bipedal_duel.xml`: 10m 마운드 투수 + 6-DoF 부유 골반 타자 통합 스타디움 모델 (43 bodies, 40 joints, 38 actuators)
+* `scripts/build_bipedal_duel_xml.py`: 통합 MJCF XML 빌드 및 자동 컴파일 검증 스크립트
+* `envs/bipedal_duel_env.py`: 10m 마운드 투수-타자 폐루프 결투 Gym 환경 (`BipedalDuel-v0`)
+* `scripts/train_bipedal_duel.py`: PPO 정책 미세조정 및 제로 폴(Zero Falls) 보장형 체크포인트 최적화 스크립트
+* `scripts/eval_bipedal_duel.py`: 50 에피소드 정량 벤치마크 및 브로드캐스트 비디오/키프레임 추출 파이프라인
+* `checkpoints/best_phase5_bipedal_duel_model.zip`: Phase 5 최적 결투 모델 (100% 균형, 78% 타격, 30% 페어)
+* `logs/videos/phase5_bipedal_duel.mp4`: Phase 5 10m 풀 스타디움 대결 비디오 (50 FPS)
+* `logs/videos/phase5_pitcher_release.png` / `phase5_pitch_approach.png` / `phase5_batter_impact.png` / `phase5_follow_through.png`: 4대 핵심 키프레임 이미지
+
+
