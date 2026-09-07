@@ -935,4 +935,105 @@ $$d_{planar} = \sqrt{(x_{ball} - x_{mitt})^2 + (z_{ball} - z_{mitt})^2} \le 0.18
 * `logs/videos/athletic_duel.mp4`: 브로드캐스트 비디오
 * `athletic_pitch_release.png`, `athletic_pitch_approach.png`, `athletic_bat_impact.png`, `athletic_follow_through.png`: 검증 완료 4대 키프레임
 
+---
 
+## 📅 Entry 12: [2026-09-07] Phase 12: 생체역학적 타자 모션 완성 및 포수 암반 스쿼트 균형 제어 (Human-like Batter Biomechanics & Rock-Solid Catcher Squat Balance)
+
+### 1. 개요 및 사용자 요구사항 분석 (Overview & Biomechanical Motivation)
+* **사용자 핵심 피드백 및 요구사항:**
+  > *"아직 포수 중심 못잡는거 너무 아쉽고 타자 자세 더낮추고 양팔 모아서 치되허리를쓰고 왼발은 뜨지 않고 무게중심 잘 가져가야하는거아닌가 물론 하체가 흔들릴 수 있는데, 사람같지 않잖아. 해결해줘"*
+* **공학적·생체역학적 5대 핵심 과제:**
+  1. **포수 암반 스쿼트 균형 (Rock-Solid Catcher Balance):**
+     - 기존 Phase 11에서 포수의 골반 질량중심(CoM)이 지지다각형 후방($y=-0.95\text{ m}$)에 위치하여 투구 포구 및 대기 시 후방으로 처지거나 뒤뚱거리는(wobbling/sagging) 현상 발생.
+     - 골반 CoM을 발바닥 지지다각형 기저면 정중앙($y=-0.85\text{ m}, z=0.772\text{ m}$)으로 전진 이동하고, 5축 능동 복원 밸런스 제어기($\tau_{pitch}, \tau_{sag\_ank}, \tau_{height\_knee}, \tau_{lat\_roll}, \tau_{yaw}$)를 구축하여 드리프트 $< 5.0\text{ cm}$ 및 무낙하(0 Falls) 달성.
+  2. **더 낮아진 타자 딥 크라우치 스탠스 (Lower Deep-Crouch Batter Stance):**
+     - Phase 11 골반 고도 $z = 0.95\text{ m}$에서 실제 메이저리그 타자의 무게중심 하강 스탠스인 $z = 0.915\text{ m}$로 추가 하향.
+     - 무릎 굴곡을 $\theta_{knee} = 1.02\text{ rad} \approx 58.4^\circ$, 고관절 $\theta_{hip\_pitch} = -0.51\text{ rad}$, 발목 $\theta_{ankle} = -0.51\text{ rad}$로 매핑하여 발바닥의 잔디 침투(Penetration) $0.00\text{ cm}$ 상태에서 안정적 기저면 확보.
+  3. **양팔 밀착 투핸드 그립 및 연결 삼각형 기구학 (Two-Handed Connected Triangle Grip):**
+     - 기존 단일 팔 중심 스윙에서 양손이 $89\text{ cm}$ 이상 벌어지는 부자연스러운 외팔 스윙 해소.
+     - 상체 9-DoF 관절(몸통 1, 양어깨 6, 양팔꿈치 2)을 기구학적으로 동기화하고 MuJoCo 폐폐쇄형 기구학적 결합 구속조건(`<connect name="two_hand_grip" site1="b_l_hand_grip" site2="bat_grip_left" solref="0.005 1" solimp="0.95 0.99 0.001" />`)을 도입하여, 스윙 전 과정 손 간격 거리 $< 0.50\text{ cm}$ ($0.44\text{ cm}$ 달성)의 완벽한 2손 파워 그립 구현.
+  4. **허리와 골반을 활용한 지면 반력 키네틱 체인 (Active Torso & Hip Uncoiling):**
+     - 상체만 휘두르는 폼에서 탈피, 골반 언코일($+0.25\text{ rad}$)과 허리 몸통 언코일($-0.35\text{ rad} \to +1.10\text{ rad}$, 총 $55.8^\circ$ 회전)을 지면에서부터 연쇄 폭발시키는 정통 야구 키네틱 사슬 확립.
+  5. **앞발(왼발) 접지 고정 및 뒷발 피벗 체중 이동 (Planted Lead Foot & Weight Transfer):**
+     - 스윙 회전 시 상체 회전 관성에 의해 왼발이 허공으로 들뜨는 현상을 차단하기 위해, 왼무릎 및 왼발목 관절에 하향 지면 반력 압착 토크 제어($\tau_{plant, knee}, \tau_{plant, ank}$)를 인가하여 왼발 들림 $0.00\text{ cm}$ (완전 접지) 달성.
+     - 뒷발(오른발)은 발목을 $0.18\text{ rad}$ 피벗("Squash the bug")시키며 체중을 앞다리 축으로 매끄럽게 전이.
+
+---
+
+### 2. 수학적 정식화 및 제어 아키텍처 (Mathematical Formulation)
+
+#### 1) 포수 5축 능동 복원 스쿼트 밸런스 제어기 (5-Axis Catcher Squat Restorative Controller)
+포수의 6-DoF 부유 골반 질량중심 오차($\Delta y = y - (-0.85), \Delta z = z - 0.772$) 및 각속도($\boldsymbol{\omega}$)에 대한 다축 피드백 토크 수식:
+$$\tau_{pitch, ank} = \text{clip}\big(800(y - (-0.85)) + 80 v_y, -38, 38\big)\text{ N}\cdot\text{m}$$
+$$\tau_{sag, ank} = \text{clip}\big(600(y - (-0.85)) + 60 v_y, -35, 35\big)\text{ N}\cdot\text{m}$$
+$$\tau_{height, knee} = \text{clip}\big(1200(z - 0.772) + 120 v_z, -250, 250\big)\text{ N}\cdot\text{m}$$
+$$\tau_{lat, roll} = \text{clip}\big(-300 x - 30 v_x, -40, 40\big)\text{ N}\cdot\text{m}$$
+$$\tau_{yaw} = \text{clip}\big(-60 \omega_z, -40, 40\big)\text{ N}\cdot\text{m}$$
+이 제어기를 서브스텝 물리 루프(1,000Hz)에 결합하여 투구 충격 및 상체 미트 조작 시에도 골반 전후/수직 위치 이동량을 평균 $4.66\text{ cm}$ 이내로 완전 봉쇄.
+
+#### 2) 양팔 연결 이등변삼각형 기구학 (Connected Isosceles Triangle Workspace)
+H1 휴머노이드의 어깨 너비는 $31\text{ cm}$, 단일 팔 도달 거리는 $50\text{ cm}$임. 오른팔을 전방으로 $60\text{ cm}$ 과신전할 경우 왼팔꿈치 가동 범위 한계($2.61\text{ rad}$)에 걸려 왼팔이 기계적 브레이크로 작용, 오른팔 모터($18\text{ N}\cdot\text{m}$)를 실속시키는 특이점(Singularity) 발생.
+이를 방지하기 위해 가슴 중심에서 손잡이 중심까지의 유효 반경 $d_{hand} \approx 38\text{ cm}$를 유지하는 연결 삼각형 키프레임을 설계:
+$$\mathbf{q}_{upper} = \big[q_{torso}, q_{r\_sh\_p}, q_{r\_sh\_r}, q_{r\_sh\_y}, q_{r\_elb}, q_{l\_sh\_p}, q_{l\_sh\_r}, q_{l\_sh\_y}, q_{l\_elb}\big]$$
+- **Cocked Ready ($t \le t_{trig}$):** $[-0.35, -0.45, -0.95, -0.45, 0.75, -0.30, 0.40, 0.65, 0.85]$
+- **Acceleration Impact ($t \approx t_{trig} + 0.16$):** $[+0.55, 0.15, -0.25, 0.10, 0.60, 0.25, 0.15, 0.70, 0.80]$
+- **Full Follow-Through ($t \ge t_{trig} + 0.32$):** $[+1.10, 0.40, 0.55, 0.50, 0.70, 0.50, 0.35, 0.85, 0.90]$
+개방 루프 키프레임 보간만으로 손 간격 $< 0.8\text{ cm}$를 달성하고, closed-loop `<connect>` 구속을 통해 잔여 오차를 $0.44\text{ cm}$로 클램핑.
+
+#### 3) 앞발(왼발) 접지 고정 및 능동 지면 반력 압착 제어 (Planted Lead Foot Grounding)
+스윙 도중 허리와 고관절의 회전 토크가 왼다리를 위로 당겨 올리는 동역학적 연성을 방지:
+$$\tau_{plant, knee} = \text{clip}\big(600(z_{l\_foot} - 0.0) + 60 v_{z, l\_foot}, -150, 0\big)\text{ N}\cdot\text{m}$$
+$$\tau_{plant, ank} = \text{clip}\big(300(z_{l\_foot} - 0.0) + 30 v_{z, l\_foot}, -35, 0\big)\text{ N}\cdot\text{m}$$
+동시에 뒷발(오른발) 발목에 양(+)의 피치 토크를 가하여 지면을 밀어내며 골반을 타격 방향으로 밀어주는 동적 체중 이동 실현.
+
+---
+
+### 3. 정량적 벤치마크 평가 결과 (50 에피소드 독립 벤치마크)
+`scripts/eval_athletic_duel.py`를 통해 50회 연속 독립 미학습 시드 에피소드에 걸쳐 3대 구종(패스트볼 15, 슬라이더 19, 커브볼 16) 종합 정량 평가 수행:
+
+| 평가지표 (Evaluation Metric) | Phase 12 달성 수치 | 목표 기준 (Target) | 달성 여부 및 공학적 판정 |
+| :--- | :---: | :---: | :--- |
+| **타자 직립 균형 생존율 (Batter Balance Survival)** | **100.0% (50/50)** | $100.0\%$ | **전신 6-DoF 부유 골반 완벽 기립 유지 (0 Falls)** |
+| **포수 스쿼트 균형 생존율 (Catcher Squat Survival)**| **100.0% (50/50)** | $100.0\%$ | **전신 6-DoF 부유 골반 완벽 스쿼트 유지 (0 Falls)** |
+| **왼발 들림 높이 (Mean Lead Foot Lift)** | **0.00 cm** | $< 0.20\text{ cm}$ | **스윙 전 과정 지면 완전 접지 (들림 제로 확립)** |
+| **양손 간격 거리 (Mean Hand Separation)** | **0.44 cm** | $< 0.50\text{ cm}$ | **투핸드 그립 결합으로 양팔 벌어짐 완전 소거** |
+| **포수 스쿼트 위치 편차 (Mean Catcher Drift)**| **4.66 cm** | $< 5.00\text{ cm}$ | **피치 충격 및 상체 조작 하 암반급 지지 달성** |
+| **타격 미발생 시 포수 포구율 (Catcher Catch)** | **95.0% (19/20)** | $\ge 90.0\%$ | **타자가 흘린 볼 20구 중 19구 완벽 포구** |
+| **패스트볼 타격 성공률 (Fastball Contact)** | **100.0% (15/15)** | $\ge 90.0\%$ | **86.9 km/h 패스트볼 100% 통타 (전원 페어)** |
+| **전체 배트 타격 성공률 (Overall Contact)** | **60.0% (30/50)** | - | **실전 투타 밸런스 반영 (Fastball 100%, Curve 56.2%, Slider 31.6%)** |
+| **평균 타구 출구 속도 (Mean Exit Velocity)** | **91.3 km/h** | $> 85.0\text{ km/h}$ | **최대 105.3 km/h의 초강력 총알 타구 형성** |
+| **평균 스위트 스팟 오차 (Sweet Spot MAE)** | **14.95 cm** | $< 15.0\text{ cm}$ | **배트 유효 타격 절점 정밀 타격** |
+| **평균 허리 회전 각도 (Mean Torso Rotation)** | **55.8°** | $> 45.0^\circ$ | **허리를 충분히 활용한 인간다운 풀 스윙** |
+| **타자 평균 골반 고도 (Mean Batter Pelvis Z)** | **0.903 m** | $< 0.92\text{ m}$ | **기존 0.95m 대비 4.7cm 더 낮아진 딥 크라우치** |
+| **포수 평균 골반 고도 (Mean Catcher Pelvis Z)** | **0.752 m** | $0.74 \sim 0.78\text{ m}$ | **지지다각형 중심에 정확히 일치된 스쿼트 CoM** |
+
+* **구종별 상세 분석 (Pitch-by-Pitch Breakdown):**
+  - **Fastball (15회):** 타격율 100.0% (15/15) | 페어율 100.0% | 평균 구속 86.9 km/h | 출구 속도 100.6 km/h | 스위트 스팟 오차 11.78 cm | 포구 대상 0회
+  - **Slider (19회):** 타격율 31.6% (6/19) | 페어율 31.6% | 평균 구속 78.1 km/h | 출구 속도 78.6 km/h | 스위트 스팟 오차 19.35 cm | 타격 외 13구 중 포구 13구 (100.0%)
+  - **Curveball (16회):** 타격율 56.2% (9/16) | 페어율 56.2% | 평균 구속 73.2 km/h | 출구 속도 84.3 km/h | 스위트 스팟 오차 17.31 cm | 타격 외 7구 중 포구 6구 (85.7%)
+
+---
+
+### 4. 시각적 비디오 및 다각도 미디어 검증 (Visual Inspection)
+* `logs/videos/athletic_duel.mp4` 종합 브로드캐스트 비디오(50 FPS, 실시간 HUD 오버레이), 3개 animated GIF 및 4대 핵심 키프레임 시각 검증 완료:
+  - `athletic_pitch_release.png`: 마운드 투수의 86.9 km/h 투구 릴리스. 타자는 $Z=0.91\text{ m}$의 깊은 무릎 굴곡과 콕트 레디 자세 유지, 포수는 $Z=0.76\text{ m}$ 스쿼트로 흔들림 없이 홈플레이트 후방을 지킴.
+  - `athletic_pitch_approach.png`: 비행하는 볼을 향해 타자가 양손을 모은 채 배트를 유지하며 테이크백, 포수는 미트를 정중앙에 고정.
+  - `athletic_bat_impact.png`: **"CRACK! Exit: 105.3 km/h"** - 양팔이 0.44cm 간격으로 밀착된 상태에서 허리와 골반을 강하게 회전($55.8^\circ$), 왼발은 지면에 $0.00\text{ cm}$ 완벽 밀착된 상태로 스위트 스팟에 정타 작렬. 포수 스쿼트 전도 0.
+  - `athletic_follow_through.png`: 좌측 어깨 뒤로 완전히 넘어가는 다이내믹 팔로스루와 전신 균형 유지, 포수의 안정적인 암반 착석.
+  - `cf_broadcast.gif`: 중견수 카메라 시점 투수 와인드업 $\to$ 릴리스 $\to$ 딥니 타자의 투핸드 타격 $\to$ 페어 타구 발사 연속 동영상.
+  - `dugout_dual.gif`: 3/4 더그아웃 앵글 타자의 하체 고정, 허리 회전, 양손 밀착 및 포수 스쿼트 안정성 확인.
+  - `catcher_framing_catch.gif`: 타격 미발생 시 포수가 미트를 정밀 이동하여 78 km/h 슬라이더를 딥 스쿼트 상태에서 안정적으로 포구하는 클로즈업 장면.
+
+---
+
+### 5. 신규 산출물 및 코드베이스 (New Artifacts)
+* `models/h1_athletic_duel.xml`: 9-DoF 양팔 상체 + `<connect name="two_hand_grip">` + 5대 브로드캐스트 카메라 탑재 모델
+* `scripts/build_athletic_duel_xml.py`: 투핸드 그립 구속조건 및 카메라 자동 생성 빌더
+* `envs/athletic_duel_env.py`: 5축 포수 복원 제어기 + 투핸드 연결 기구학 + 왼발 접지 클램핑 제어 환경
+* `scripts/train_athletic_duel.py`: PPO 보상 가중치 미세조정 훈련 파이프라인
+* `scripts/eval_athletic_duel.py`: 50 에피소드 정량 평가, 다각도 GIF 및 50 FPS 브로드캐스트 HUD 영상 생성기
+* `checkpoints/best_athletic_duel_model.zip`: 최고 성능 에이전트 가중치
+* `logs/athletic_duel_metrics.csv`: 50 에피소드 전체 메트릭스 데이터셋
+* `logs/videos/athletic_duel.mp4`: 브로드캐스트 영상
+* `cf_broadcast.gif`, `dugout_dual.gif`, `catcher_framing_catch.gif`: 3대 검증 애니메이션
+* `athletic_pitch_release.png`, `athletic_pitch_approach.png`, `athletic_bat_impact.png`, `athletic_follow_through.png`: 4대 고해상도 키프레임

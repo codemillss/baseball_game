@@ -492,7 +492,13 @@
         </body>
       </body>
     </body>
-    <camera name="duel_broadcast_cam" pos="-3.8 -4.2 2.6" xyaxes="0.74 -0.67 0 0.28 0.31 0.91" /><camera name="umpire_cam" pos="0.0 -2.4 1.4" xyaxes="1 0 0 0 0.45 0.89" /><camera name="batter_side_cam" pos="-3.2 0.0 1.2" xyaxes="0 1 0 0 0 1" /><geom name="batter_box" type="box" size="0.45 0.70 0.002" pos="-1.10 0 0.002" rgba="0.8 0.8 0.8 0.35" contype="0" conaffinity="0" /></worldbody>
+    <camera name="duel_broadcast_cam" pos="-3.8 -4.2 2.6" xyaxes="0.74 -0.67 0 0.28 0.31 0.91" />
+    <camera name="umpire_cam" pos="0.0 -2.4 1.4" xyaxes="1 0 0 0 0.45 0.89" />
+    <camera name="batter_side_cam" pos="-3.2 0.0 1.2" xyaxes="0 1 0 0 0 1" />
+    <camera name="cf_broadcast_cam" pos="0.0 6.0 2.0" xyaxes="-1 0 0 0 -0.22 0.975" fovy="45" />
+    <camera name="catcher_framing_cam" pos="-1.5 -2.2 1.1" xyaxes="0.85 -0.53 0 0.18 0.29 0.94" fovy="42" />
+    <geom name="batter_box" type="box" size="0.45 0.70 0.002" pos="-1.10 0 0.002" rgba="0.8 0.8 0.8 0.35" contype="0" conaffinity="0" />
+  </worldbody>
   <contact>
         <exclude body1="p_torso_link" body2="p_right_shoulder_roll_link" />
         <exclude body1="p_torso_link" body2="p_left_shoulder_roll_link" />
@@ -505,6 +511,7 @@
   </contact>
   <equality>
     <weld name="pitch_weld" body1="baseball" body2="p_right_elbow_link" relpose="0.25 0 0 1 0 0 0" active="false" />
+    <connect name="two_hand_grip" site1="b_l_hand_grip" site2="bat_grip_left" solref="0.005 1" solimp="0.95 0.99 0.001" active="true" />
   </equality>
 <actuator>
     <motor class="h1" name="p_left_hip_yaw" joint="p_left_hip_yaw" ctrlrange="-200 200" />

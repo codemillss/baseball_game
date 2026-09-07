@@ -47,10 +47,16 @@ class AthleticDuelEnv(gym.Env):
         self.ball_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "baseball")
 
         self.bat_geom_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_GEOM, "bat_barrel")
+        self.bat_geom_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_GEOM, "bat_barrel")
         self.ball_geom_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_GEOM, "ball_geom")
         self.sweet_spot_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "bat_sweet_spot")
         self.c_mitt_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "c_mitt_site")
         self.p_hand_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "p_pitcher_hand_site")
+        self.b_left_ankle_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "b_left_ankle_link")
+        self.b_right_ankle_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, "b_right_ankle_link")
+        self.b_left_ankle_dof = self.model.jnt_dofadr[mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, "b_left_ankle")]
+        self.b_l_hand_grip_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "b_l_hand_grip")
+        self.bat_grip_left_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "bat_grip_left")
 
         # Freejoints
         ball_jnt_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, "ball_joint")
@@ -82,13 +88,13 @@ class AthleticDuelEnv(gym.Env):
         self.c_leg_qpos_adrs = [self.model.jnt_qposadr[self.model.actuator_trnid[a, 0]] for a in self.c_leg_act_ids]
         self.c_leg_qvel_adrs = [self.model.jnt_dofadr[self.model.actuator_trnid[a, 0]] for a in self.c_leg_act_ids]
 
-        # Batter Upper (Two-Handed Coordination)
+        # Batter Upper (Two-Handed Coordination: 9 DoF)
         self.b_upper_names = ["b_torso", "b_left_shoulder_pitch", "b_left_shoulder_roll", "b_left_shoulder_yaw", "b_left_elbow", "b_right_shoulder_pitch", "b_right_shoulder_roll", "b_right_shoulder_yaw", "b_right_elbow"]
         self.b_upper_act_ids = [mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, n) for n in self.b_upper_names]
         self.b_upper_qpos_adrs = [self.model.jnt_qposadr[self.model.actuator_trnid[a, 0]] for a in self.b_upper_act_ids]
         self.b_upper_qvel_adrs = [self.model.jnt_dofadr[self.model.actuator_trnid[a, 0]] for a in self.b_upper_act_ids]
 
-        # Batter Legs (10 DoF Whole-Body ZMP Balance)
+        # Batter Legs (10 DoF Whole-Body ZMP Balance & Planted Lead Foot)
         self.b_leg_names = ["b_left_hip_yaw", "b_left_hip_roll", "b_left_hip_pitch", "b_left_knee", "b_left_ankle", "b_right_hip_yaw", "b_right_hip_roll", "b_right_hip_pitch", "b_right_knee", "b_right_ankle"]
         self.b_leg_act_ids = [mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, n) for n in self.b_leg_names]
         self.b_leg_qpos_adrs = [self.model.jnt_qposadr[self.model.actuator_trnid[a, 0]] for a in self.b_leg_act_ids]
@@ -97,32 +103,40 @@ class AthleticDuelEnv(gym.Env):
         # PD Gains
         self.p_Kp = 350.0
         self.p_Kd = 25.0
-        self.c_leg_Kp = np.array([200, 200, 300, 400, 100, 200, 200, 300, 400, 100], dtype=np.float32)
-        self.c_leg_Kd = np.array([20, 20, 30, 40, 10, 20, 20, 30, 40, 10], dtype=np.float32)
-        self.c_upper_Kp = 60.0
-        self.c_upper_Kd = 6.0
+        self.c_leg_Kp = np.array([400, 400, 700, 1000, 250, 400, 400, 700, 1000, 250], dtype=np.float32)
+        self.c_leg_Kd = np.array([30, 30, 50, 70, 20, 30, 30, 50, 70, 20], dtype=np.float32)
+        self.c_upper_Kp = 80.0
+        self.c_upper_Kd = 8.0
 
-        self.b_leg_Kp = np.array([350, 350, 450, 500, 200, 350, 350, 450, 500, 200], dtype=np.float32)
-        self.b_leg_Kd = np.array([30, 30, 40, 45, 18, 30, 30, 40, 45, 18], dtype=np.float32)
-        self.b_upper_Kp = np.array([600, 200, 150, 100, 120, 300, 200, 150, 180], dtype=np.float32)
-        self.b_upper_Kd = np.array([40, 15, 12, 8, 10, 25, 15, 12, 14], dtype=np.float32)
+        self.b_leg_Kp = np.array([400, 400, 600, 700, 250, 400, 400, 600, 700, 250], dtype=np.float32)
+        self.b_leg_Kd = np.array([35, 35, 45, 55, 20, 35, 35, 45, 55, 20], dtype=np.float32)
+        self.b_upper_Kp = np.array([800, 250, 200, 150, 180, 250, 200, 150, 180], dtype=np.float32)
+        self.b_upper_Kd = np.array([50, 20, 15, 12, 14, 20, 15, 12, 14], dtype=np.float32)
 
-        # Catcher Postures
-        self.q_squat_legs = np.array([0.0, 0.0, -1.15, 1.88, -0.75, 0.0, 0.0, -1.15, 1.88, -0.75], dtype=np.float32)
+        # Catcher Rock-Solid Low Squat Targets (CoM aligned directly over midfoot)
+        self.c_pelvis_z_target = 0.772
+        self.c_pelvis_y_target = -0.85
+        self.c_pelvis_x_target = 0.0
+        self.q_squat_legs = np.array([0.0, 0.12, -0.85, 1.70, -0.85, 0.0, -0.12, -0.85, 1.70, -0.85], dtype=np.float32)
         self.q_squat_upper = np.array([0.0, -0.50, -0.30, -0.30, 0.20, -0.60, -0.20, 0.0, 1.50], dtype=np.float32)
 
-        # Batter Deep-Knee Athletic Stance
-        # knee = 0.65 rad (~37.2 deg), hip_pitch = -0.28 rad, ankle = -0.37 rad (rock-solid ground contact at z = 0.95m)
-        self.b_base_legs = np.array([0.0, 0.12, -0.28, 0.65, -0.37, 0.0, -0.12, -0.28, 0.65, -0.37], dtype=np.float32)
+        # Batter Deep-Knee Low Athletic Stance (Pelvis Z = 0.915m, knee = 58.4 deg)
+        self.b_pelvis_z_target = 0.915
+        self.b_pelvis_x_target = -1.10
+        th_k = 1.02
+        th_h = -0.51
+        th_a = -0.51
+        self.b_base_legs = np.array([0.0, 0.15, th_h, th_k, th_a, 0.0, -0.15, th_h, th_k, th_a], dtype=np.float32)
 
-        # Calibrated 6-Keyframe Kinetic Swing Sequence for Strike Zone (z ~ 0.82m)
+        # Fully Coordinated 9-DoF Whole-Body Kinetic Swing Sequence (Tight two-handed grip & Torso Uncoil)
+        # [torso, left_pitch, left_roll, left_yaw, left_elbow, right_pitch, right_roll, right_yaw, right_elbow]
         self.b_swing_keyframes = np.array([
-            [-0.25, -0.50, -1.10, -0.50, 0.55],  # 0: Ready Stance (Cocked upright bat at 42 deg)
-            [-0.35, -0.65, -0.80, -0.40, 0.85],  # 1: Stride / Load
-            [-0.05, -0.80, -0.20, -0.15, 1.05],  # 2: Slot / Uncoil
-            [ 0.35, -0.65, -0.15, -0.15, 1.00],  # 3: Impact (z ~ 0.80-0.85m at home plate)
-            [ 0.85, -0.40, -0.05, -0.25, 0.90],  # 4: Full Extension
-            [ 1.35, -0.55,  0.25, -0.40, 1.25]   # 5: High Follow-through
+            [-0.350, -1.226, -0.083, -0.670,  0.751, -0.352,  0.119, -0.110, -0.210],  # 0: Ready Cocked Bat (42 deg over shoulder)
+            [-0.450, -1.175, -0.047, -0.675,  0.660, -0.343,  0.120, -0.068, -0.213],  # 1: Deep Coil / Stride Load
+            [-0.149, -0.970, -0.235, -0.729,  1.375, -0.133,  0.340, -0.110,  0.260],  # 2: Slot / Kinetic Whip
+            [-0.010, -1.055, -0.190, -1.300,  1.517, -0.275,  0.340, -0.147,  0.438],  # 3: Impact on Plate (z ~ 0.82m)
+            [ 0.408, -1.025, -0.314, -1.300,  1.520, -0.036,  0.340, -0.097,  0.216],  # 4: Full Extension through ball
+            [ 1.101, -0.711, -0.120, -1.300,  0.190,  0.704, -0.033,  0.375, -0.655],  # 5: High Follow-through wrap
         ], dtype=np.float32)
 
         self.p_keyframes = np.array([
@@ -226,8 +240,8 @@ class AthleticDuelEnv(gym.Env):
         for i, adr in enumerate(self.p_qpos_adrs):
             self.data.qpos[adr] = self.p_keyframes[0, i]
 
-        # Setup Catcher Deep Squat behind Home Plate
-        self.data.qpos[self.c_pelvis_qpos_adr:self.c_pelvis_qpos_adr+3] = [0.0, -0.95, 0.69]
+        # Setup Catcher Deep Squat behind Home Plate (CoM aligned over midfoot)
+        self.data.qpos[self.c_pelvis_qpos_adr:self.c_pelvis_qpos_adr+3] = [self.c_pelvis_x_target, self.c_pelvis_y_target, self.c_pelvis_z_target]
         self.data.qpos[self.c_pelvis_qpos_adr+3:self.c_pelvis_qpos_adr+7] = [0.7071068, 0.0, 0.0, 0.7071068]
         self.data.qvel[self.c_pelvis_qvel_adr:self.c_pelvis_qvel_adr+6] = 0.0
         for i, adr in enumerate(self.c_leg_qpos_adrs):
@@ -235,27 +249,15 @@ class AthleticDuelEnv(gym.Env):
         for i, adr in enumerate(self.c_upper_qpos_adrs):
             self.data.qpos[adr] = self.q_squat_upper[i]
 
-        # Setup Batter Deep-Knee Athletic Stance in Batter's Box (x = -1.10, z = 0.95)
-        self.data.qpos[self.b_pelvis_qpos_adr:self.b_pelvis_qpos_adr+3] = [-1.10, 0.00, 0.95]
+        # Setup Batter Deep-Knee Low Athletic Stance in Batter's Box (x = -1.10, z = 0.915)
+        self.data.qpos[self.b_pelvis_qpos_adr:self.b_pelvis_qpos_adr+3] = [self.b_pelvis_x_target, 0.00, self.b_pelvis_z_target]
         self.data.qpos[self.b_pelvis_qpos_adr+3:self.b_pelvis_qpos_adr+7] = [1.0, 0.0, 0.0, 0.0]
         self.data.qvel[self.b_pelvis_qvel_adr:self.b_pelvis_qvel_adr+6] = 0.0
         for i, adr in enumerate(self.b_leg_qpos_adrs):
             self.data.qpos[adr] = self.b_base_legs[i]
 
-        torso_val = self.b_swing_keyframes[0, 0]
-        b_upper_init = np.array([
-            torso_val,
-            -0.30 - 0.50 * torso_val,
-             0.45 - 0.20 * torso_val,
-             0.70 + 0.30 * torso_val,
-             1.20 - 0.40 * torso_val,
-            self.b_swing_keyframes[0, 1],
-            self.b_swing_keyframes[0, 2],
-            self.b_swing_keyframes[0, 3],
-            self.b_swing_keyframes[0, 4]
-        ], dtype=np.float32)
         for i, adr in enumerate(self.b_upper_qpos_adrs):
-            self.data.qpos[adr] = b_upper_init[i]
+            self.data.qpos[adr] = self.b_swing_keyframes[0, i]
 
         # Place ball in pitcher's hand
         mujoco.mj_forward(self.model, self.data)
@@ -357,17 +359,14 @@ class AthleticDuelEnv(gym.Env):
         # 3. Dynamic In-Flight Perception & Swing Trigger
         if self.is_released and abs(ball_vel[1]) > 3.0 and ball_pos[1] > 0.0:
             speed_y = abs(ball_vel[1])
-            # Linear speed-adaptive lead time:
-            # Fastball (~24 m/s) -> ~0.221s
-            # Slider (~21.6 m/s) -> ~0.245s
-            # Curveball (~20.2 m/s) -> ~0.259s
-            base_lead = 0.245 + (21.6 - speed_y) * 0.0100
+            # Calibrated speed-adaptive lead time for 9-DoF connected swing:
+            base_lead = 0.255 + (21.6 - speed_y) * 0.006
             trigger_lead = base_lead + dt_lead
             t_rem = ball_pos[1] / speed_y
             if not self.swing_triggered and t_rem <= trigger_lead:
                 self.swing_triggered = True
                 self.locked_t_trigger = current_time
-                self.locked_swing_duration = max(0.16, 0.200 + dpower_dur)
+                self.locked_swing_duration = max(0.18, 0.220 + dpower_dur)
 
         # 4. Batter Stance Legs (with dynamic crouch modulation)
         b_leg_cmd = self.b_base_legs.copy()
@@ -414,50 +413,50 @@ class AthleticDuelEnv(gym.Env):
                     fm = 0.5 * self.rho * self.Cl * self.A_ball * self.r_ball * np.cross(self.pitch_spin, v_ball)
                     self.data.qvel[self.ball_qvel_adr:self.ball_qvel_adr+3] += (fd + fm) / self.m_ball * self.model.opt.timestep
 
-            # Batter Arm Kinematic Progression
+            # Batter Arm Kinematic Progression (Fully Coordinated 9-DoF Upper Body)
             if not self.swing_triggered:
-                b_r_tgt = list(self.b_swing_keyframes[0])
+                b_upper_cmd = list(self.b_swing_keyframes[0])
             else:
                 t_sw = sim_time - self.locked_t_trigger
                 prog = t_sw / self.locked_swing_duration
                 if prog < 0.20:
                     w = prog / 0.20
-                    b_r_tgt = [(1-w)*self.b_swing_keyframes[0][j] + w*self.b_swing_keyframes[1][j] for j in range(5)]
+                    b_upper_cmd = [(1-w)*self.b_swing_keyframes[0][j] + w*self.b_swing_keyframes[1][j] for j in range(9)]
                 elif prog < 0.45:
                     w = (prog - 0.20) / 0.25
-                    b_r_tgt = [(1-w)*self.b_swing_keyframes[1][j] + w*self.b_swing_keyframes[2][j] for j in range(5)]
+                    b_upper_cmd = [(1-w)*self.b_swing_keyframes[1][j] + w*self.b_swing_keyframes[2][j] for j in range(9)]
                 elif prog < 0.70:
                     w = (prog - 0.45) / 0.25
-                    b_r_tgt = [(1-w)*self.b_swing_keyframes[2][j] + w*self.b_swing_keyframes[3][j] for j in range(5)]
+                    b_upper_cmd = [(1-w)*self.b_swing_keyframes[2][j] + w*self.b_swing_keyframes[3][j] for j in range(9)]
                 elif prog < 0.90:
                     w = (prog - 0.70) / 0.20
-                    b_r_tgt = [(1-w)*self.b_swing_keyframes[3][j] + w*self.b_swing_keyframes[4][j] for j in range(5)]
+                    b_upper_cmd = [(1-w)*self.b_swing_keyframes[3][j] + w*self.b_swing_keyframes[4][j] for j in range(9)]
                 else:
                     w = min(1.0, (prog - 0.90) / 0.30)
-                    b_r_tgt = [(1-w)*self.b_swing_keyframes[4][j] + w*self.b_swing_keyframes[5][j] for j in range(5)]
+                    b_upper_cmd = [(1-w)*self.b_swing_keyframes[4][j] + w*self.b_swing_keyframes[5][j] for j in range(9)]
 
-                # Vertical height tracking & tilt modulation
-                dz = (self.target_pitch_z - 0.80) * 0.50 + dz_plane
-                b_r_tgt[1] += -dz
-                b_r_tgt[2] += dalpha_tilt
+                # Vertical and horizontal pitch tracking & tilt modulation for both arms
+                dz = (self.target_pitch_z - 0.82) * 1.15 + dz_plane
+                dx = (self.target_pitch_x - 0.00) * 0.40
+                b_upper_cmd[1] -= dz  # left shoulder pitch
+                b_upper_cmd[5] -= dz  # right shoulder pitch
+                b_upper_cmd[0] += dx  # torso uncoil reaches outside/inside
+                b_upper_cmd[2] += dalpha_tilt
+                b_upper_cmd[6] += dalpha_tilt
 
-            torso_val = b_r_tgt[0]
-            b_upper_cmd = [
-                torso_val,
-                -0.30 - 0.50 * torso_val,
-                 0.45 - 0.20 * torso_val,
-                 0.70 + 0.30 * torso_val,
-                 1.20 - 0.40 * torso_val,
-                b_r_tgt[1], b_r_tgt[2], b_r_tgt[3], b_r_tgt[4]
-            ]
-
-            # Dynamic Weight Shift Transfer during swing
+            # Dynamic Hip Uncoil & Weight Transfer during swing ("허리를쓰고")
             b_leg_curr = b_leg_cmd.copy()
             if self.swing_triggered:
                 prog = (sim_time - self.locked_t_trigger) / self.locked_swing_duration
-                shift = np.clip(prog, 0.0, 1.0) * 0.10
-                b_leg_curr[2] -= shift  # drive forward onto front hip
-                b_leg_curr[7] += shift
+                shift = np.clip(prog, 0.0, 1.0)
+                # Hip yaw actively rotates open ("허리를쓰고")
+                b_leg_curr[0] += shift * 0.25  # left hip yaw
+                b_leg_curr[5] += shift * 0.25  # right hip yaw
+                # Rear leg pivots on ball of foot (squash the bug)
+                b_leg_curr[8] -= shift * 0.10  # right knee slight extension
+                b_leg_curr[9] += shift * 0.18  # right ankle pivot
+                # Lead leg firm plant
+                b_leg_curr[3] -= shift * 0.05  # left knee firm plant
 
             # Plate Crossing Check (y = 0.0)
             curr_ball_pos = self.data.qpos[self.ball_qpos_adr:self.ball_qpos_adr+3]
@@ -527,29 +526,54 @@ class AthleticDuelEnv(gym.Env):
                 tau = self.c_upper_Kp * (c_arm_tgt[i] - q_cur) - self.c_upper_Kd * q_dot
                 self.data.ctrl[a_id] = np.clip(tau, -40.0, 40.0)
 
-            # 3. Catcher Legs
+            # 3. Catcher Legs: Rock-Solid Active Restorative Balance Controller (No sag, no wobble)
+            cp_x = self.data.qpos[self.c_pelvis_qpos_adr]
+            cp_y = self.data.qpos[self.c_pelvis_qpos_adr + 1]
+            cp_z = self.data.qpos[self.c_pelvis_qpos_adr + 2]
+            cv_x = self.data.qvel[self.c_pelvis_qvel_adr]
+            cv_y = self.data.qvel[self.c_pelvis_qvel_adr + 1]
+            cv_z = self.data.qvel[self.c_pelvis_qvel_adr + 2]
+            cw_x = self.data.qvel[self.c_pelvis_qvel_adr + 3]
+            cw_z = self.data.qvel[self.c_pelvis_qvel_adr + 5]
+
+            c_tau_pitch = np.clip(800.0 * (self.c_pelvis_y_target - cp_y) - 80.0 * cv_y - 100.0 * cw_x, -120.0, 120.0)
+            c_tau_sag_ank = np.clip(500.0 * (self.c_pelvis_y_target - cp_y) - 50.0 * cv_y - 50.0 * cw_x, -40.0, 40.0)
+            c_tau_height_knee = -np.clip(1200.0 * (self.c_pelvis_z_target - cp_z) - 80.0 * cv_z, -180.0, 180.0) - 80.0
+            c_tau_lat_roll = np.clip(400.0 * (self.c_pelvis_x_target - cp_x) + 40.0 * cv_x, -60.0, 60.0)
+            c_tau_yaw = np.clip(-80.0 * cw_z, -50.0, 50.0)
+
             for i, a_id in enumerate(self.c_leg_act_ids):
                 adr = self.c_leg_qpos_adrs[i]
                 q_cur = self.data.qpos[adr]
                 q_dot = self.data.qvel[self.c_leg_qvel_adrs[i]]
                 tau = self.c_leg_Kp[i] * (c_leg_tgt[i] - q_cur) - self.c_leg_Kd[i] * q_dot
-                self.data.ctrl[a_id] = np.clip(tau, -200.0, 200.0)
+                if i in [4, 9]: tau += c_tau_sag_ank
+                elif i in [2, 7]: tau += c_tau_pitch
+                elif i in [3, 8]: tau += c_tau_height_knee
+                elif i in [1, 6]: tau += c_tau_lat_roll
+                elif i in [0, 5]: tau += c_tau_yaw
+                self.data.ctrl[a_id] = np.clip(tau, -250.0, 250.0)
 
-            # 4. Batter Upper Body PD
+            # 4. Batter Upper Body PD (Torso uncoiling + 2-handed grip)
             for i, a_id in enumerate(self.b_upper_act_ids):
                 adr = self.b_upper_qpos_adrs[i]
                 q_cur = self.data.qpos[adr]
                 q_dot = self.data.qvel[self.b_upper_qvel_adrs[i]]
                 tau = self.b_upper_Kp[i] * (b_upper_cmd[i] - q_cur) - self.b_upper_Kd[i] * q_dot
-                self.data.ctrl[a_id] = np.clip(tau, -180.0, 180.0)
+                self.data.ctrl[a_id] = np.clip(tau, -200.0, 200.0)
 
-            # 5. Batter Legs with Active Ground Reaction Shear & Yaw Balancing
+            # 5. Batter Legs: Planted Lead Foot Grounding & Dynamic Weight Transfer
+            l_foot_z = self.data.xpos[self.b_left_ankle_id][2] - 0.070
+            l_foot_vz = self.data.qvel[self.b_left_ankle_dof]
+            tau_plant_knee = -np.clip(2500.0 * max(0.0, l_foot_z) + 100.0 * l_foot_vz, 0.0, 160.0)
+            tau_plant_ank = -np.clip(800.0 * max(0.0, l_foot_z), 0.0, 40.0)
+
             p_x = self.data.qpos[self.b_pelvis_qpos_adr]
             v_x = self.data.qvel[self.b_pelvis_qvel_adr]
             w_z = self.data.qvel[self.b_pelvis_qvel_adr + 5]
 
-            tau_x_ank = np.clip(500.0 * (p_x - (-1.10)) + 50.0 * v_x, -35.0, 35.0)
-            tau_x_hip = np.clip(400.0 * (p_x - (-1.10)) + 40.0 * v_x, -50.0, 50.0)
+            tau_x_ank = np.clip(500.0 * (p_x - self.b_pelvis_x_target) + 50.0 * v_x, -35.0, 35.0)
+            tau_x_hip = np.clip(400.0 * (p_x - self.b_pelvis_x_target) + 40.0 * v_x, -50.0, 50.0)
             tau_yaw = np.clip(80.0 * w_z, -50.0, 50.0)
 
             for i, a_id in enumerate(self.b_leg_act_ids):
@@ -560,7 +584,11 @@ class AthleticDuelEnv(gym.Env):
                 if i in [4, 9]:
                     cmd += dweight_shift
                 tau = self.b_leg_Kp[i] * (cmd - q_cur) - self.b_leg_Kd[i] * q_dot
-                if i in [4, 9]:
+                if i == 3:
+                    tau += tau_plant_knee
+                elif i == 4:
+                    tau += tau_plant_ank + tau_x_ank
+                elif i == 9:
                     tau += tau_x_ank
                 elif i in [2, 7]:
                     tau += tau_x_hip
@@ -572,11 +600,11 @@ class AthleticDuelEnv(gym.Env):
 
         # Fall Checks
         c_z = float(self.data.qpos[self.c_pelvis_qpos_adr + 2])
-        if c_z < 0.20 or c_z > 0.95:
+        if c_z < 0.40 or c_z > 0.95:
             self.catcher_fallen = True
 
         b_z = float(self.data.qpos[self.b_pelvis_qpos_adr + 2])
-        if b_z < 0.60 or b_z > 1.15:
+        if b_z < 0.55 or b_z > 1.15:
             self.batter_fallen = True
 
         # Reward formulation
@@ -598,6 +626,12 @@ class AthleticDuelEnv(gym.Env):
         else:
             reward -= 25.0
 
+        # Reward lead foot staying planted and hands together
+        cur_l_lift = max(0.0, float(self.data.xpos[self.b_left_ankle_id][2] - 0.070))
+        cur_h_dist = float(np.linalg.norm(self.data.site_xpos[self.b_l_hand_grip_id] - self.data.site_xpos[self.bat_grip_left_id]))
+        reward += 1.5 * np.exp(-50.0 * (cur_l_lift ** 2))
+        reward += 1.5 * np.exp(-50.0 * (cur_h_dist ** 2))
+
         if self.catcher_caught and not self.is_hit:
             reward += 8.0
 
@@ -612,6 +646,12 @@ class AthleticDuelEnv(gym.Env):
             terminated = True
         elif self.current_step >= self.max_steps:
             terminated = True
+
+        c_drift = float(np.linalg.norm([
+            self.data.qpos[self.c_pelvis_qpos_adr] - self.c_pelvis_x_target,
+            self.data.qpos[self.c_pelvis_qpos_adr + 1] - self.c_pelvis_y_target,
+            self.data.qpos[self.c_pelvis_qpos_adr + 2] - self.c_pelvis_z_target
+        ]))
 
         info = {
             "pitch_type": self.pitch_name,
@@ -628,15 +668,21 @@ class AthleticDuelEnv(gym.Env):
             "batter_pelvis_z": b_z,
             "catcher_pelvis_z": c_z,
             "plate_cross_x": self.plate_cross_x,
-            "plate_cross_z": self.plate_cross_z
+            "plate_cross_z": self.plate_cross_z,
+            "left_foot_lift_cm": cur_l_lift * 100.0,
+            "hand_distance_cm": cur_h_dist * 100.0,
+            "torso_rotation_deg": float(np.degrees(self.data.qpos[self.b_upper_qpos_adrs[0]])),
+            "catcher_drift_cm": c_drift * 100.0
         }
 
         return self._get_obs(), reward, terminated, False, info
 
-    def render(self):
+    def render(self, camera_name="duel_broadcast_cam"):
         if self.renderer is None:
             self.renderer = mujoco.Renderer(self.model, height=480, width=640)
-        cam_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_CAMERA, "duel_broadcast_cam")
+        cam_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_CAMERA, camera_name)
+        if cam_id < 0:
+            cam_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_CAMERA, "duel_broadcast_cam")
         self.renderer.update_scene(self.data, camera=cam_id)
         return self.renderer.render()
 

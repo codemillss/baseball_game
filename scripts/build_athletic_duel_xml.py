@@ -59,6 +59,32 @@ def build_athletic_duel_xml():
         'pos': '-3.2 0.0 1.2',
         'xyaxes': '0 1 0 0 0 1'
     }))
+    b_wb.append(ET.Element('camera', attrib={
+        'name': 'cf_broadcast_cam',
+        'pos': '0.0 6.0 2.0',
+        'xyaxes': '-1 0 0 0 -0.22 0.975',
+        'fovy': '45'
+    }))
+    b_wb.append(ET.Element('camera', attrib={
+        'name': 'catcher_framing_cam',
+        'pos': '-1.5 -2.2 1.1',
+        'xyaxes': '0.85 -0.53 0 0.18 0.29 0.94',
+        'fovy': '42'
+    }))
+
+    # Add two_hand_grip connect equality
+    equality = b_root.find('equality')
+    if equality is None:
+        equality = ET.SubElement(b_root, 'equality')
+    if equality.find(".//connect[@name='two_hand_grip']") is None:
+        equality.append(ET.Element('connect', attrib={
+            'name': 'two_hand_grip',
+            'site1': 'b_l_hand_grip',
+            'site2': 'bat_grip_left',
+            'solref': '0.005 1',
+            'solimp': '0.95 0.99 0.001',
+            'active': 'true'
+        }))
 
     out_path = os.path.join(BASE_DIR, 'models', 'h1_athletic_duel.xml')
     b_tree.write(out_path, encoding='utf-8', xml_declaration=True)
