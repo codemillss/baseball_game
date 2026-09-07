@@ -846,3 +846,93 @@ $$d_{planar} = \sqrt{(x_{ball} - x_{mitt})^2 + (z_{ball} - z_{mitt})^2} \le 0.18
 * `logs/videos/battery_pitch_catch.mp4`: 브로드캐스트 비디오
 * `battery_pitch_release.png`, `battery_pitch_approach.png`, `battery_mitt_catch.png`: 검증 완료 키프레임
 
+---
+
+## [2026-09-07] Entry 11: Deep-Knee Athletic Batter Stance & Strike-Zone-Aligned Whole-Body Duel
+
+### 1. 개요 및 배경 (Overview & Mathematical Foundation)
+* **사용자 핵심 피드백 반영:** "다음번에 타자 학습할 때 무릎을 좀더 굽혀야 높이 맞지 않겠나 싶은데 그거 다음번에 타자 때 고려해주고 일단 진행시켜"
+* **물리적·기구학적 과제:**
+  1. 기존 직립에 가까웠던 타자 자세($z_{pelvis} = 1.05\text{ m}, \theta_{knee} = 0.15\text{ rad}$)를 실제 프로야구 타자의 강력한 딥니 애슬레틱 스탠스(Deep-Knee Athletic Stance)로 완전히 개편.
+  2. 허벅지($l_1 = 0.40\text{ m}$) 및 정강이($l_2 = 0.40\text{ m}$) 링크 기구학을 정밀 해석하여, 발바닥 지면 침투($0.0\text{ cm}$) 없이 골반 고도를 $z_{pelvis} = 0.95\text{ m}$로 하향 안정화:
+     $$\theta_{knee} = 0.65\text{ rad} \approx 37.2^\circ, \quad \theta_{hip\_pitch} = -0.28\text{ rad}, \quad \theta_{ankle} = -0.37\text{ rad}$$
+     $$\theta_{ankle} = -(\theta_{knee} + \theta_{hip\_pitch}) \implies \text{Foot Flat on Turf Surface}$$
+  3. 타자석(Batter's Box) 규격 위치 정렬: 기존 $x = -0.75\text{ m}$에서 공식 타자석 중심인 $x = -1.10\text{ m}$로 후퇴 배치하여, 배트 스위트 스팟 회전 궤적이 홈플레이트 폭($x \in [-0.05, +0.15]\text{ m}$)과 스트라이크 존 높이($z \in [0.80, 0.95]\text{ m}$)를 정확하게 관통하도록 보정.
+  4. 42도 콕트 배팅 레디 자세(Authentic Cocked Bat Stance): 타격 시작 전 번트처럼 배트를 앞으로 내미는 비정상 자세를 배제하고, 우측 어깨 상단에 배트를 42도 각도로 세워 쥔 정통 타격 준비 자세 확립:
+     $$\mathbf{q}_{upper, 0} = [\text{torso}=-0.25, \text{pitch}=-0.50, \text{roll}=-1.10, \text{yaw}=-0.50, \text{elbow}=0.55]$$
+  5. 10m 투수 + 6-DoF 딥니 타자 + 6-DoF 딥스쿼트 포수의 전원 비고정 무치팅(Zero-Cheating Floating Base) 3자 통합 배틀 환경 구축.
+
+---
+
+### 2. 제어 및 물리 아키텍처 (Control & Physical Architecture)
+1. **동적 비행 지각 스윙 트리거 (Speed-Adaptive Lead Time Trigger):**
+   공기 저항 및 마그누스 양력에 의한 감속을 실시간 반영하여 남은 홈플레이트 도달 시간 $t_{remain} = y_{ball} / |v_y|$에 따라 스윙 개시 시점을 선형 적응:
+   $$t_{lead} = 0.245 + (21.6 - |v_y|) \times 0.010\text{ s} + \Delta t_{lead}$$
+   - Fastball ($v_y \approx 24.2\text{ m/s}$): $t_{lead} \approx 0.219\text{ s}$
+   - Slider ($v_y \approx 21.6\text{ m/s}$): $t_{lead} \approx 0.245\text{ s}$
+   - Curveball ($v_y \approx 20.2\text{ m/s}$): $t_{lead} \approx 0.259\text{ s}$
+2. **지면 반력 전단(Shear) 및 요(Yaw) 댐핑 ZMP 밸런스 제어:**
+   골반의 전후/좌우 선속도 및 요 회전속도에 대해 양 발목과 힙 조인트에 능동 복원 토크를 인가하여 스윙 회전 관성($I_{yaw}$)에 의한 전도를 완벽히 차단:
+   $$\tau_{x, ank} = \text{clip}\left(500(x_{pelvis} - x_0) + 50 v_x, -35, 35\right)\text{ Nm}$$
+   $$\tau_{x, hip} = \text{clip}\left(400(x_{pelvis} - x_0) + 40 v_x, -50, 50\right)\text{ Nm}$$
+   $$\tau_{yaw} = \text{clip}\left(80 \omega_z, -50, 50\right)\text{ Nm}$$
+3. **포수 논페네트레이션 스쿼트 안착:**
+   포수 골반 고도를 $z = 0.69\text{ m}$로 정밀 정렬하여 바닥 침투를 제거하고 지면 접촉점 20~38개를 상시 유지.
+
+---
+
+### 3. 주요 기술적 난제 및 트러블슈팅 (Troubleshooting)
+1. **타자 및 포수 초기 지면 침투에 의한 팝업(Pop-up) 현상 해결:**
+   - *문제:* 초기 $z_{pelvis} = 0.86\text{ m}$(타자) 및 $0.54\text{ m}$(포수) 설정 시 발바닥이 지면 아래 9.5~14.8cm 침투되어, 시뮬레이션 개시와 동시에 접촉 법선력으로 공중으로 튀어 오르고 착지 시 전도 발생.
+   - *해결:* 순기구학 분석을 통해 발바닥 최하단이 $z=0.00\text{ m}$에 정확히 일치하는 비침투 높이(타자 $z=0.95\text{ m}$, 포수 $z=0.69\text{ m}$)를 수학적으로 도출 및 고정하여 100% 무낙하 안착 성공.
+2. **배트 자세 번트 형상 왜곡 교정 (Cocked Bat Stance Restoration):**
+   - *문제:* 초기 키프레임 0의 팔 각도가 미흡하여 배트가 타격 준비 시 수평으로 포수를 향해 뻗어 있는 부자연스러운 외형 발생.
+   - *해결:* 42도 틸트 및 우측 어깨 후방 장전 자세($[-0.50, -1.10, -0.50, 0.55]$)로 재구성하고 부드러운 언코일링 키프레임 보간을 적용하여 실전 프로야구 선수와 동일한 폼 구현.
+3. **타격 후 포수 역방향 트래킹 팁오버(Tip-over) 차단:**
+   - *문제:* 타자가 공을 쳐서 외야로 날아갈 때($v_y > 0$) 포수 미트가 튕겨 나가는 타구를 역추적하려다 상체가 뒤로 젖혀져 넘어지는 현상 발생.
+   - *해결:* `not self.is_hit and ball_vel[1] < -0.5` 조건을 추가하여 인플레이 타구에 대한 미트 트래킹을 비활성화하고 스쿼트 프레이밍 자세를 안정적으로 유지하도록 수정.
+
+---
+
+### 4. 50 에피소드 정량 벤치마크 평가 결과 (50-Episode Benchmark)
+`scripts/eval_athletic_duel.py`를 통해 50회 연속 독립 미학습 시드 에피소드 정량 평가:
+
+| 평가지표 (Evaluation Metric) | Athletic Duel Final Benchmark | 목표 기준 (Target) | 달성 여부 및 평가 |
+| :--- | :---: | :---: | :--- |
+| **타자 직립 균형 생존율 (Batter Balance Survival)** | **100.0% (50/50)** | $100.0\%$ | **전 에피소드 6-DoF 부유 골반 완벽 기립 (0 Falls)** |
+| **포수 스쿼트 균형 생존율 (Catcher Squat Survival)**| **100.0% (50/50)** | $100.0\%$ | **전 에피소드 6-DoF 부유 골반 완벽 스쿼트 유지 (0 Falls)** |
+| **배트 타격 성공률 (Bat Contact Rate)** | **92.0% (46/50)** | $\ge 90.0\%$ | **딥니 스탠스에서 3구종 46회 정밀 타격 완결** |
+| **페어 타구율 (Fair-Hit Rate)** | **92.0% (46/50)** | $\ge 85.0\%$ | **전 타구 그라운드 내 페어 타구로 전방 분사** |
+| **스트라이크 존 적합률 (Strike Adherence)** | **100.0% (50/50)** | $100.0\%$ | **10m 투수 전 투구 공식 스트라이크 존 관통** |
+| **포수 미포구 포구율 (Catcher Catch Rate)** | **100.0% (4/4)** | $100.0\%$ | **타격 미발생 투구 4회 전원 미트 포구 성공** |
+| **평균 스위트 스팟 오차 (Sweet Spot MAE)** | **12.02 cm** | $< 15.0\text{ cm}$ | **배트 유효 타구 중심점 정밀 타격** |
+| **평균 타구 출구 속도 (Mean Exit Velocity)** | **98.1 km/h** | $> 90.0\text{ km/h}$ | **최대 102.4 km/h의 강력한 라인드라이브 타구 생성** |
+
+* **구종별 상세 분석:**
+  - **Fastball (15회):** 타격율 80.0% | 페어율 80.0% | 평균 구속 86.9 km/h | 스위트 스팟 오차 15.4 cm
+  - **Slider (19회):** 타격율 94.7% | 페어율 94.7% | 평균 구속 78.1 km/h | 스위트 스팟 오차 12.2 cm
+  - **Curveball (16회):** 타격율 100.0% | 페어율 100.0% | 평균 구속 73.2 km/h | 스위트 스팟 오차 9.3 cm
+
+---
+
+### 5. 시각적 비디오 및 프레임 검증 (Visual Inspection)
+* `logs/videos/athletic_duel.mp4` 3자 통합 브로드캐스트 비디오(50 FPS, 실시간 HUD 오버레이) 및 4대 핵심 키프레임 추출/검증 완료:
+  - `athletic_pitch_release.png` ($t = 0.04\text{s}$): 10m 마운드 투수의 86.7 km/h 패스트볼 릴리스, 우측 어깨 상단 42도 콕트 배팅 자세와 37.2도 무릎 굴곡 딥니 스탠스($Z=0.96\text{ m}$)의 타자, $Z=0.69\text{ m}$ 완벽 스쿼트 자세의 포수.
+  - `athletic_pitch_approach.png` ($t = 0.24\text{s}$): 비행 중인 투구를 지각하며 배트를 어깨 뒤에 콕트 상태로 유지하는 타자의 안정적인 레디 자세 및 포수 프레이밍 대기.
+  - `athletic_bat_impact.png` ($t = 0.48\text{s}$): 스트라이크 존 중심 높이($Z=0.90\text{ m}$)를 관통하며 볼을 스위트 스팟에 통타하는 임팩트 순간 (`CRACK! Exit: 101.3 km/h`), 타자 및 포수 전도 0.
+  - `athletic_follow_through.png` ($t = 0.58\text{s}$): 강력한 회전 후 좌측 어깨 뒤로 넘기는 하이 팔로스루와 전신 균형 유지($Z=0.93\text{ m}$), 포수의 안정적인 스쿼트 착석($Z=0.54\text{ m}$).
+
+---
+
+### 6. 신규 산출물 및 코드베이스 (New Artifacts)
+* `models/h1_athletic_duel.xml`: 10m 투수 + 6-DoF 딥니 타자 + 6-DoF 딥스쿼트 포수 3자 통합 모델
+* `envs/athletic_duel_env.py`: 딥니 기구학 + 42도 콕트 자세 + 적응형 지각 트리거 + 지면 전단 ZMP 제어 환경
+* `scripts/build_athletic_duel_xml.py`: 통합 XML 빌더
+* `scripts/train_athletic_duel.py`: 25,000 스텝 PPO 미세조정 학습 스크립트
+* `scripts/eval_athletic_duel.py`: 50 에피소드 정량 평가 및 50 FPS 브로드캐스트 HUD 영상 생성 스크립트
+* `checkpoints/best_athletic_duel_model.zip`: 최고 성능 PPO 체크포인트
+* `logs/athletic_duel_metrics.csv`: 50 에피소드 정량 메트릭스 데이터셋
+* `logs/videos/athletic_duel.mp4`: 브로드캐스트 비디오
+* `athletic_pitch_release.png`, `athletic_pitch_approach.png`, `athletic_bat_impact.png`, `athletic_follow_through.png`: 검증 완료 4대 키프레임
+
+
