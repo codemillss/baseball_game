@@ -108,10 +108,10 @@ class AthleticDuelEnv(gym.Env):
         self.c_upper_Kp = 80.0
         self.c_upper_Kd = 8.0
 
-        self.b_leg_Kp = np.array([500, 500, 750, 900, 350, 500, 500, 750, 900, 350], dtype=np.float32)
-        self.b_leg_Kd = np.array([40, 40, 55, 65, 28, 40, 40, 55, 65, 28], dtype=np.float32)
-        self.b_upper_Kp = np.array([1100, 300, 220, 160, 200, 300, 220, 160, 200], dtype=np.float32)
-        self.b_upper_Kd = np.array([65, 24, 17, 13, 16, 24, 17, 13, 16], dtype=np.float32)
+        self.b_leg_Kp = np.array([450, 450, 650, 720, 280, 450, 450, 650, 720, 280], dtype=np.float32)
+        self.b_leg_Kd = np.array([38, 38, 48, 58, 22, 38, 38, 48, 58, 22], dtype=np.float32)
+        self.b_upper_Kp = np.array([850, 260, 205, 152, 185, 260, 205, 152, 185], dtype=np.float32)
+        self.b_upper_Kd = np.array([55, 21, 16, 12, 14, 21, 16, 12, 14], dtype=np.float32)
 
         # Catcher Rock-Solid Low Squat Targets (CoM aligned directly over midfoot)
         self.c_pelvis_z_target = 0.765
@@ -443,13 +443,17 @@ class AthleticDuelEnv(gym.Env):
                     t_to_plate = max(0.0, b_p[1] / abs(b_v[1]))
                     pred_plate_x = b_p[0] + b_v[0] * t_to_plate
                     pred_plate_z = b_p[2] + b_v[2] * t_to_plate - 0.5 * 9.81 * (t_to_plate ** 2)
+                    # Blend toward target prior when ball is far away (t_to_plate > 0.35s)
+                    blend = min(1.0, (0.35 - t_to_plate) / 0.25) if t_to_plate < 0.35 else 0.0
+                    pred_plate_z = (1.0 - blend) * self.target_pitch_z + blend * pred_plate_z
+                    pred_plate_x = (1.0 - blend) * self.target_pitch_x + blend * pred_plate_x
                 else:
                     pred_plate_x = self.target_pitch_x
                     pred_plate_z = self.target_pitch_z
 
                 dz = (pred_plate_z - 0.83) * 1.20 + dz_plane
                 dx = (pred_plate_x - (-0.05)) * 0.85
-                b_upper_cmd[1] -= dz  # left shoulder pitch
+                b_upper_cmd[1] -= dz  # left shoulder pitch (lower = raise bat plane)
                 b_upper_cmd[5] -= dz  # right shoulder pitch
                 b_upper_cmd[0] += dx  # torso uncoil reaches outside/inside
                 b_upper_cmd[2] += dalpha_tilt
@@ -592,10 +596,10 @@ class AthleticDuelEnv(gym.Env):
             # 5. Batter Legs: Planted Lead Foot Grounding & Dynamic Weight Transfer
             l_foot_z = self.data.xpos[self.b_left_ankle_id][2] - 0.065
             l_foot_vz = self.data.qvel[self.b_left_ankle_dof]
-            # Strong ground-spring: aggressively push left foot down, especially during swing
-            swing_plant_boost = 2.5 if self.swing_triggered else 1.0
-            tau_plant_knee = -np.clip(swing_plant_boost * 5000.0 * max(0.0, l_foot_z) + 150.0 * l_foot_vz, 0.0, 220.0)
-            tau_plant_ank = -np.clip(swing_plant_boost * 2500.0 * max(0.0, l_foot_z), 0.0, 80.0)
+            # Ground-spring: keep left foot planted, but don't over-constrain during swing
+            # Only activate if foot is actually off the ground (l_foot_z > 0)
+            tau_plant_knee = -np.clip(4000.0 * max(0.0, l_foot_z) + 80.0 * max(0.0, l_foot_vz), 0.0, 120.0)
+            tau_plant_ank = -np.clip(1500.0 * max(0.0, l_foot_z), 0.0, 60.0)
 
             p_x = self.data.qpos[self.b_pelvis_qpos_adr]
             p_y = self.data.qpos[self.b_pelvis_qpos_adr + 1]

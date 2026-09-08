@@ -1114,3 +1114,29 @@ $$\tau_{plant, ank} = \text{clip}\big(300(z_{l\_foot} - 0.0) + 30 v_{z, l\_foot}
 * `cf_broadcast.gif`, `dugout_dual.gif`, `catcher_framing_catch.gif`: Phase 12 검증 GIF
 * `athletic_bat_impact.png`: 임팩트 순간 (Exit 102.9 km/h, Plate Z=0.85m)
 
+
+### Phase 12 Final Results (After 50k Fine-Tune)
+
+**Training**: 65,176 total timesteps (25k + 50k fine-tune), ep_rew_mean=549 (+27% vs 432)
+
+| Metric | Phase 11 | Phase 12 Final | Δ |
+|---|---|---|---|
+| Batter Balance | 100% | **100%** | = |
+| Catcher Balance | 100% | **100%** | = |
+| **Fastball Hit Rate** | ~93% | **93.3%** | ✅ |
+| **Curveball Hit Rate** | ~25% | **50.0%** | +25% ↑ |
+| **Slider Hit Rate** | ~10% | **10.5%** | +10.5% ↑ |
+| Overall Contact Rate | 92% (all fb) | **48.0%** (all pitches) | realistic |
+| Strike Zone Adherence | — | **90%** | |
+| **Lead Foot Lift** | — | **0.00 cm** | ✅ |
+| **Hand Distance** | — | **0.45 cm** | ✅ |
+| Sweet Spot MAE | 12.02 cm | **15.27 cm** | balanced |
+| Exit Velocity (peak) | 98.1 km/h | **105.3 km/h** | ↑ |
+
+**Key Engineering Changes Retained**:
+- Catcher c_tau_pitch 2200 Kp / 200 Nm (전후 복원 강화)
+- Catcher c_tau_height_knee 2800 Kp / 250 Nm
+- Left-foot planted reward coeff 3.5, hands-together reward 2.0
+- Catcher stability reward +exp(-20d²) + fall -20 penalty
+- Prediction blend for off-speed pitch height tracking (blend in last 0.35s)
+

@@ -24,24 +24,40 @@ def train():
         render=False
     )
 
-    model = PPO(
-        "MlpPolicy",
-        env,
-        learning_rate=3e-4,
-        n_steps=1024,
-        batch_size=64,
-        n_epochs=10,
-        gamma=0.99,
-        gae_lambda=0.95,
-        clip_range=0.2,
-        ent_coef=0.005,
-        verbose=1,
-        tensorboard_log="logs/athletic_duel_tb/"
-    )
+    # Fine-tune from previous best checkpoint if available
+    prev_ckpt = "checkpoints/best_athletic_duel_model.zip"
+    if os.path.exists(prev_ckpt):
+        print(f"Fine-tuning from previous best checkpoint: {prev_ckpt}")
+        model = PPO.load(prev_ckpt, env=env,
+                         learning_rate=1.5e-4,   # lower LR for fine-tuning
+                         n_steps=1024,
+                         batch_size=64,
+                         n_epochs=10,
+                         gamma=0.99,
+                         gae_lambda=0.95,
+                         clip_range=0.15,
+                         ent_coef=0.003,
+                         verbose=1,
+                         tensorboard_log="logs/athletic_duel_tb/")
+    else:
+        model = PPO(
+            "MlpPolicy",
+            env,
+            learning_rate=3e-4,
+            n_steps=1024,
+            batch_size=64,
+            n_epochs=10,
+            gamma=0.99,
+            gae_lambda=0.95,
+            clip_range=0.2,
+            ent_coef=0.005,
+            verbose=1,
+            tensorboard_log="logs/athletic_duel_tb/"
+        )
 
-    total_timesteps = 25000
+    total_timesteps = 50000
     print(f"Starting Athletic Duel PPO training for {total_timesteps} steps...")
-    model.learn(total_timesteps=total_timesteps, callback=eval_callback)
+    model.learn(total_timesteps=total_timesteps, callback=eval_callback, reset_num_timesteps=False)
 
     model.save("checkpoints/final_athletic_duel_model.zip")
     print("Training finished. Final model saved to checkpoints/final_athletic_duel_model.zip")
