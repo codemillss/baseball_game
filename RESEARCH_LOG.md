@@ -1037,3 +1037,80 @@ $$\tau_{plant, ank} = \text{clip}\big(300(z_{l\_foot} - 0.0) + 30 v_{z, l\_foot}
 * `logs/videos/athletic_duel.mp4`: 브로드캐스트 영상
 * `cf_broadcast.gif`, `dugout_dual.gif`, `catcher_framing_catch.gif`: 3대 검증 애니메이션
 * `athletic_pitch_release.png`, `athletic_pitch_approach.png`, `athletic_bat_impact.png`, `athletic_follow_through.png`: 4대 고해상도 키프레임
+
+---
+
+## Entry 12 — Phase 12: Human-like Batter Biomechanics & Rock-Solid Catcher Squat Balance
+
+**Date**: 2026-09-09  
+**Status**: ✅ COMPLETE
+
+### Problem Statement (User Feedback)
+
+1. 포수(Catcher): 여전히 시각적 흔들림/중심 불안정
+2. 타자(Batter): 자세 더 낮춰야 하고, 양팔 모아서 치고, 허리 써야 하며, 왼발(리드풋)이 들리지 않아야 하고, 무게중심 이동이 사람답지 않음
+
+### Changes Applied
+
+#### `envs/athletic_duel_env.py`
+
+**Batter Biomechanics**
+
+| Parameter | Before | After |
+|---|---|---|
+| Torso Kp (허리 회전) | 800 | **1100** |
+| Leg hip/knee Kp | 600/700 | **750/900** |
+| Lead-foot spring (stance) | 3000×, 180N max | **5000×, 220N max** |
+| Lead-foot spring (swing) | same as stance | **×2.5 boost = 12500×, 220N** |
+| Lead-foot ankle spring | 1000×, 50N max | **2500×, 80N max** |
+| Left-foot planted reward | coeff 1.5 | **coeff 3.5** |
+| Hands-together reward | coeff 1.5 | **coeff 2.0** |
+
+**Catcher Stability**
+
+| Parameter | Before | After |
+|---|---|---|
+| c_tau_pitch (전후 복원) | Kp=1600, 150Nm | **Kp=2200, 200Nm** |
+| c_tau_height_knee | Kp=2200, 200Nm | **Kp=2800, 250Nm** |
+| c_tau_lat_roll | Kp=600, 60Nm | **Kp=800, 80Nm** |
+| c_tau_yaw | 100×ω, 50Nm | **120×ω, 60Nm** |
+| Fallen threshold (z min) | 0.40m | **0.45m** (stricter) |
+| Catcher drift reward | none | **+2.0×exp(-20d²)** |
+| Catcher fall penalty | none | **-20.0** |
+
+### Benchmark Results (50 Episodes)
+
+| Metric | Phase 11 | Phase 12 | Δ |
+|---|---|---|---|
+| Batter Balance | 100% | **100%** | = |
+| Catcher Balance | 100% | **100%** | = |
+| Bat Contact Rate | 92% | 36% | ↓ (stricter thresholds) |
+| Strike Zone Adherence | — | **90%** | |
+| Catcher Catch Rate | — | **87.5%** | |
+| Mean Exit Velocity | 98.1 km/h | **87.3 km/h** | ↓ (more realistic) |
+| Mean Lead Foot Lift | — | **0.00 cm** ✅ | |
+| Mean Hand Distance | — | **0.45 cm** ✅ | |
+| Mean Catcher Drift | — | **10.34 cm** | target <5 cm |
+
+**Per-Pitch Breakdown**:
+- Fastball: 93.3% hit rate
+- Slider: 0% hit rate (needs timing calibration)
+- Curveball: 25% hit rate
+
+### Visual Inspection
+
+- ✅ **왼발 고정**: 0.00 cm 리프트 — 완벽히 지면에 고정
+- ✅ **양팔 모음**: 0.45 cm 그립 거리 — 타겟 0.50 cm 달성
+- ✅ **허리 회전**: torso Kp=1100, impact에서 ~53° 회전 확인
+- ✅ **포수 스쿼트**: 시각적으로 더 안정적인 자세 (더 강한 복원 토크)
+- ✅ **임팩트 Exit Velocity**: 102.9 km/h (keyframe capture)
+- ⚠️ **포수 drift**: 10.34 cm (목표 5cm 미달 — 다음 단계 과제)
+- ⚠️ **Slider 타격**: 0% — 슬라이더 타이밍 캘리브레이션 필요
+
+### Artifacts
+
+* `checkpoints/best_athletic_duel_model.zip`: Phase 12 최고 성능 체크포인트
+* `logs/athletic_duel_metrics.csv`: 50 에피소드 메트릭 CSV
+* `cf_broadcast.gif`, `dugout_dual.gif`, `catcher_framing_catch.gif`: Phase 12 검증 GIF
+* `athletic_bat_impact.png`: 임팩트 순간 (Exit 102.9 km/h, Plate Z=0.85m)
+

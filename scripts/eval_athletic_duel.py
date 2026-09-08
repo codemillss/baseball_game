@@ -37,6 +37,8 @@ def evaluate(episodes=50, render_video=True):
     # Track episodes for video/gif rendering
     best_hit_ep = -1
     best_hit_speed = -1.0
+    best_caught_ep = -1
+    best_framing_err = 999.0
 
     for ep in range(episodes):
         obs, info = env.reset(seed=ep * 100 + 42)
@@ -60,6 +62,10 @@ def evaluate(episodes=50, render_video=True):
         if step_info["is_hit"] and step_info["exit_velocity_kmh"] > best_hit_speed:
             best_hit_speed = step_info["exit_velocity_kmh"]
             best_hit_ep = ep
+        if not step_info["is_hit"] and step_info["catcher_caught"]:
+            if best_caught_ep == -1 or step_info.get("sweet_spot_error_cm", 999.0) < best_framing_err:
+                best_caught_ep = ep
+                best_framing_err = step_info.get("sweet_spot_error_cm", 999.0)
 
         records.append({
             "episode": ep + 1,
@@ -248,11 +254,27 @@ def evaluate(episodes=50, render_video=True):
                 print(f"Saved keyframe: {out_p}")
                 shutil.copy(out_p, os.path.join(ARTIFACTS_DIR, name))
 
+        # If best_caught_ep is available, render a clean catch sequence for catcher_framing_catch.gif
+        caught_gif_frames = catcher_frames
+        if best_caught_ep >= 0 and best_caught_ep != target_ep:
+            c_obs, _ = env.reset(seed=best_caught_ep * 100 + 42)
+            c_done = False
+            caught_gif_frames = []
+            while not c_done:
+                if model is not None:
+                    c_act, _ = model.predict(c_obs, deterministic=True)
+                else:
+                    c_act = np.zeros(6, dtype=np.float32)
+                c_obs, _, c_term, c_trunc, _ = env.step(c_act)
+                f_c = env.render(camera_name="catcher_framing_cam")
+                caught_gif_frames.append(f_c)
+                c_done = c_term or c_trunc
+
         # 3. Generate the 3 Animated GIFs (Downsampled to 25 FPS for web efficiency)
         gifs = [
             ("cf_broadcast.gif", cf_frames),
             ("dugout_dual.gif", dugout_frames),
-            ("catcher_framing_catch.gif", catcher_frames)
+            ("catcher_framing_catch.gif", caught_gif_frames)
         ]
         for gif_name, f_list in gifs:
             if len(f_list) > 0:
