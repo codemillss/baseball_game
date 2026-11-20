@@ -1,0 +1,426 @@
+{
+  "review_date": "2026-10-09",
+  "report": "02_물리_환경_관측_보상_코드해설.md",
+  "primary_file_count": 43,
+  "primary_source_lines": 4799,
+  "primary_reads": [
+    {
+      "path": "cognitive_ai/envs/adversarial_match_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 68,
+      "bytes": 3149,
+      "sha256": "a97e1e14d4881de7896e57be4cf504315757dd87563bbaa9e03cdccb7b9400e2",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/baseball_game_state.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 72,
+      "bytes": 2312,
+      "sha256": "878bfc289a518a6041ea93cecc10bebacb47d5b33aa674494b20712c20e33f49",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/baseball_match_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 408,
+      "bytes": 19752,
+      "sha256": "4ef6cf357806a284e6940fa2fef64c8b643bab287fcb0c0fe75202ed458ff275",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/baseball_rules.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 59,
+      "bytes": 1877,
+      "sha256": "153121bdec350562f28f889e9ca0e405467d38996f96453754764b371903eb16",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/breaking_ball_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 251,
+      "bytes": 11562,
+      "sha256": "b9f69eb3d23905c4cbd11588efa30cd86c8ede7a689af0d636e8d76a2e41ee7b",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/catcher_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 96,
+      "bytes": 4138,
+      "sha256": "5667e7ec30bbbe9c1dc85ab26b33fe43a580ceb4e6039227f660549ea08000b1",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/cognitive_baseball_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 166,
+      "bytes": 7411,
+      "sha256": "4df442f4c5fb1faa735894b1f1d85275470c9729739f1e1eabed3df72329be7c",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/fielder_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 151,
+      "bytes": 5933,
+      "sha256": "5b4a05e4123371192964ac0666b3417b5c8258d4182690f3a7dacaa7959d8535",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/pitcher_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 254,
+      "bytes": 12139,
+      "sha256": "1d5253ba7806cc404bc995a146ed62c193751d354239cd2e2311f44d62e77ccb",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/pitching_machine_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 224,
+      "bytes": 10234,
+      "sha256": "0c4f95738ed23598060cadb9d46f82b81710aa5005974ddbcb533afbbf89169c",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/runner_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 83,
+      "bytes": 2748,
+      "sha256": "3976159d16ab178df44836bac8d12460aa138059bc98a63a1dc87dca872495b1",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/soft_toss_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 195,
+      "bytes": 9010,
+      "sha256": "60156a964455ca199b64c80ba0fe894e7e9720a7924c4f626b663683e8cfd2f3",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/envs/teeball_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 170,
+      "bytes": 7633,
+      "sha256": "7a99741fdb43df9435102a22b8e8f23812ae8bd419ba2b9869e64e169a470c2f",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "shared_assets/h1_baseball.xml",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 217,
+      "bytes": 15995,
+      "sha256": "dbe97cb1638ff3384e53c82a1bb8c820060b6884cc05a53bc8091cfdbfc37008",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "shared_assets/h1_baseball_match.xml",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 282,
+      "bytes": 15116,
+      "sha256": "7267f7ed66d77c93b1e2825c3953ced1693520cb9db9a2bd723165015b3fcfba",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "shared_assets/h1_catcher.xml",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 170,
+      "bytes": 11185,
+      "sha256": "ae5b31f8305de9a9d601dfe8efa5b950c9e416537fc0d09df88852220bf948d4",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "shared_assets/h1_fielder.xml",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 170,
+      "bytes": 11156,
+      "sha256": "5b36fb95634e4c5958ab529c93892642714a4ede23d48e0cd54197f40b385ba2",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "shared_assets/h1_pitcher.xml",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 249,
+      "bytes": 15730,
+      "sha256": "1b49eabe291c344fa69031c3cfd2d08457766e469307b2a68a2c97f6d0f22c54",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "shared_assets/h1_runner.xml",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 170,
+      "bytes": 11178,
+      "sha256": "20a7070c1f4317974e7312efb0076d7b40f3ed54c4b9e7d9e10d50c4a5e209dd",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "shared_assets/humanoid_stadium.xml",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 195,
+      "bytes": 9800,
+      "sha256": "e8c8131eeb58464a8116ae313bcb91b53651fbc14bd3697a429685de3ea42969",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "shared_assets/stadium_3d.xml",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 274,
+      "bytes": 17935,
+      "sha256": "a46ed2bddaa70aa101a7cc2d42f0487771073db52b634484a3333b9a12b96914",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/check_ball_phys.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 20,
+      "bytes": 830,
+      "sha256": "78b240e94d83c88bf573ebac8ec0df31e182ff68159b4ca8374cc1c3c6abbd26",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/check_contact_pos.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 23,
+      "bytes": 936,
+      "sha256": "c82f577ee4d2c4d9bc03056014a71efe0f781a49c806b22f6db1c7d7b1e680bb",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/debug_miss.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 33,
+      "bytes": 1172,
+      "sha256": "6a49d7bc73ba4ec921af60a94931c8d51f3048406a143c4d08010fd90ec6823b",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/merge_h1.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 88,
+      "bytes": 4703,
+      "sha256": "2821b1729d396815486992469198016234a5d3bbac2e1436afb5c3dcf5083477",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/sweep_bat.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 37,
+      "bytes": 1536,
+      "sha256": "3ac378e266e22fa706c859addac25f61347096e79243d60e6ee6310b9e215f10",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_accurate.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 41,
+      "bytes": 1474,
+      "sha256": "6976e1db62e75fc846ef703c154cecef15155fd6805007acaa9cba456a005cab",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_aimed.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 43,
+      "bytes": 1597,
+      "sha256": "d4619d4b2c9b6a6313f9a1e6e512a77f5f351f259c70027d19db27a7d5b4d148",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_cameras.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 19,
+      "bytes": 605,
+      "sha256": "a87503ba6e2cffa7526f7bd829665da2f9d293a02cb1a1b08e0f951b6fcf2fb6",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_cognitive_env.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 27,
+      "bytes": 896,
+      "sha256": "80fde76a8ba2a23d5bed161cab91eed8bb349b6a855d6d75eac90c1580da9fa0",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_direct.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 57,
+      "bytes": 1985,
+      "sha256": "6cf2956b8aef62aa7c35df8e5ab46f087f615f3f3f01c414ea10f87b315a1965",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_grid.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 50,
+      "bytes": 1737,
+      "sha256": "2edd577dbbed3f244ab8495c5acb8053b0f206734c145ab5a9f3e5212f790ac1",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_h1_swing.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 57,
+      "bytes": 2155,
+      "sha256": "74be66a4fc9047a92535b614490d2419174bc91918b76686c2478dde989debb2",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_humanoid.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 32,
+      "bytes": 1074,
+      "sha256": "e959968d967c06152303647eea8414b25739f4550ac1009f764e346d8f90a691",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_lower_trig.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 35,
+      "bytes": 1241,
+      "sha256": "033b6de02a340312768b8cafff0cf947c0691410b09c3e03059e8efb2e3b8265",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_scaling.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 51,
+      "bytes": 1762,
+      "sha256": "b363bd53d8253749ca0623e0a256b496775d98d44e4f2aec15af9bda03af6b74",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_teeball.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 45,
+      "bytes": 1457,
+      "sha256": "2907fccb0982d3e3f70ef8448ccf6daa310607ba2cc1bdbe5576d3038815075b",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_timing_higher.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 38,
+      "bytes": 1341,
+      "sha256": "8ce7c61053feed0d9bada7cbea2ee88499f06f8f701261d870955dfaace04abc",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_timing_precise.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 38,
+      "bytes": 1351,
+      "sha256": "610d38df954d589565ad91860bc31f7a4944a912068af751c28e8a6a191189bf",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_trained_teeball.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 54,
+      "bytes": 1744,
+      "sha256": "6cdb2aee027878d6d58c5817788bc31d7d42005148ded364d93067393de7b7f5",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_trajectory.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 23,
+      "bytes": 951,
+      "sha256": "48bb7df23c255464d8fd25438952c4b867931b3262b4b56f6488659c03486636",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "cognitive_ai/scripts/test_trigger.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 39,
+      "bytes": 1338,
+      "sha256": "80e06f688873ce5f71b01e33643065aab4f6640cee954b6b3e4151e54a82a875",
+      "executed": false,
+      "modified": false
+    },
+    {
+      "path": "scripts/test_pitcher_action.py",
+      "read_mode": "full source read plus AST or XML static inspection",
+      "lines": 25,
+      "bytes": 922,
+      "sha256": "c492b9c75a4f42b5fe90e05ddac8f3a9ba46ddd4ee8376fe112538015fe8625a",
+      "executed": false,
+      "modified": false
+    }
+  ],
+  "supporting_reads": [
+    {
+      "path": ".agents/AGENTS.md",
+      "mode": "full"
+    },
+    {
+      "path": "_audit/20260926_013033/AUDIT_REPORT.md",
+      "mode": "targeted line searches for current defect crosscheck"
+    },
+    {
+      "path": "cognitive_ai/training/*.py and cognitive_ai/evaluation/*.py",
+      "mode": "import/call text searches only; detailed review handled by other report"
+    }
+  ],
+  "external_support": [
+    {
+      "path": "/Users/jin10000/.codex/memories/MEMORY.md",
+      "lines": "602-647",
+      "mode": "prior audit pointer only; all current conclusions checked in source"
+    },
+    {
+      "url": "https://mujoco.readthedocs.io/en/stable/XMLreference.html",
+      "mode": "official general attribute meaning verification"
+    },
+    {
+      "url": "https://mujoco.readthedocs.io/en/stable/computation/index.html",
+      "mode": "official state dimensions background"
+    }
+  ],
+  "source_mutations": false,
+  "runtime_execution": false
+}

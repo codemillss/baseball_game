@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-10-09T20:56:54.740430+09:00",
+  "repositories": {
+    "baseball": {
+      "original_files_checked": 393,
+      "original_bytes": 109711986,
+      "modified": [],
+      "missing": [],
+      "head": "f63dc977f29d53103b0853ac29fbaeddfb95b60e",
+      "tracked_diff": [],
+      "status": [
+        "?? _audit/"
+      ]
+    },
+    "bipedal": {
+      "original_files_checked": 240,
+      "original_bytes": 45914654,
+      "modified": [],
+      "missing": [],
+      "head": "ec3f85484ffb2d612fc890f2b515eba705748d9e",
+      "tracked_diff": [],
+      "status": []
+    }
+  },
+  "original_integrity_preserved": true
+}

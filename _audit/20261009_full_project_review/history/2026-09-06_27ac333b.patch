@@ -1,0 +1,19 @@
+commit 27ac333bbf6e6959167027d7b5f000ebe5d08cb6
+Author:     codemills <ggzgcode10000@gmail.com>
+AuthorDate: Sun Sep 6 03:15:43 2026 +0900
+Commit:     codemills <ggzgcode10000@gmail.com>
+CommitDate: Sun Sep 6 03:15:43 2026 +0900
+
+    fix(report): Restore 12 missing video keyframes, embed stadium textures, remove polyfill.io, and polish print CSS
+
+diff --git a/test_pitcher_action.py b/test_pitcher_action.py
+index a81e0b1..e7599cc 100644
+--- a/test_pitcher_action.py
++++ b/test_pitcher_action.py
+@@ -21,5 +21,5 @@ b_env = DummyVecEnv([lambda: BatterMatchTrainingEnv(
+ b_obs = b_env.reset()
+ # We can access pitcher action by stepping once
+ b_env.step(np.array([[0.0, 0.0, 0.0]]))
+-print(f"BaseballMatchEnv pitcher action: {b_env.envs[0].pitcher_action}")
++print(f"BatterMatchTrainingEnv stepped successfully!")
+ 

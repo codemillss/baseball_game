@@ -1,0 +1,209 @@
+{
+  "audit_date": "2026-10-09",
+  "project_root": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball",
+  "scope": "10 environment implementations + 10 XML models",
+  "file_count": 20,
+  "source_line_count": 9302,
+  "files": [
+    {
+      "path": "envs/athletic_duel_env.py",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/envs/athletic_duel_env.py",
+      "lines": 737,
+      "bytes": 38823,
+      "sha256": "9926d5d37152a657ad948263661c4dc7ea7542121e513624bf7f7791cf85dd92",
+      "read_method": "full numbered source + AST control/assignment inventory",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "envs/battery_pitch_catch_env.py",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/envs/battery_pitch_catch_env.py",
+      "lines": 385,
+      "bytes": 17641,
+      "sha256": "c344cc7e47595da6c1fe979c229d895c4d986dae99a6234e389e5113f29372e9",
+      "read_method": "full numbered source + AST control/assignment inventory",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "envs/bipedal_duel_env.py",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/envs/bipedal_duel_env.py",
+      "lines": 586,
+      "bytes": 28450,
+      "sha256": "d88a2c1c69e2d32dfcee4a5def99395fc3f0bdba6ece660682e5037ba642e06e",
+      "read_method": "full numbered source + AST control/assignment inventory",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "envs/bipedal_sprint_env.py",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/envs/bipedal_sprint_env.py",
+      "lines": 552,
+      "bytes": 25687,
+      "sha256": "ed74b14e74e161be6a96bee7398bf38a38b5972a674b45fe49bf3b28b395418c",
+      "read_method": "full numbered source + AST control/assignment inventory",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "envs/bipedal_swing_env.py",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/envs/bipedal_swing_env.py",
+      "lines": 401,
+      "bytes": 17724,
+      "sha256": "3ed0a1e4e13cd7f7fa73290e737ed78d5b969409a4cd93f33b56addb9cbc50c7",
+      "read_method": "full numbered source + AST control/assignment inventory",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "envs/directional_batting_env.py",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/envs/directional_batting_env.py",
+      "lines": 528,
+      "bytes": 23320,
+      "sha256": "520f0ad77c9b94655eeb59072d0b13c4bf49bec5ce98e3f0484520e3c672619d",
+      "read_method": "full numbered source + AST control/assignment inventory",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "envs/hardened_batting_env.py",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/envs/hardened_batting_env.py",
+      "lines": 489,
+      "bytes": 20310,
+      "sha256": "68ad332e2cc186dd9616591ffedf2418d7f07b0e7a3b97f2f732331fc8aa3bdb",
+      "read_method": "full numbered source + AST control/assignment inventory",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "envs/hit_and_run_env.py",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/envs/hit_and_run_env.py",
+      "lines": 454,
+      "bytes": 20711,
+      "sha256": "a7a604582f015b6abd993c5cfa3ac9c57389b84b25d859823a388c123907b608",
+      "read_method": "full numbered source + AST control/assignment inventory",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "envs/infield_defense_env.py",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/envs/infield_defense_env.py",
+      "lines": 928,
+      "bytes": 46123,
+      "sha256": "3e6a7c1a420e423f4384d59207446af21d48e7328f7aba9853532a7394106c35",
+      "read_method": "full numbered source + AST control/assignment inventory",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "envs/pitcher_precision_env.py",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/envs/pitcher_precision_env.py",
+      "lines": 421,
+      "bytes": 18092,
+      "sha256": "2fe66de47732cab340600f55e6360057c63e4bc721263bd7217920d63cf02085",
+      "read_method": "full numbered source + AST control/assignment inventory",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "models/h1_athletic_duel.xml",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/models/h1_athletic_duel.xml",
+      "lines": 575,
+      "bytes": 44138,
+      "sha256": "66b21dbec47b954fac9d822ec1cec5e72014d7da515ff133d316c2407d83a910",
+      "read_method": "full XML parse + every element contract + normalized baseline/difference cross-check",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "models/h1_baseball.xml",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/models/h1_baseball.xml",
+      "lines": 303,
+      "bytes": 19313,
+      "sha256": "25af198c993e26db456317bca1b6c25d6ac2d7dbbaa556849dc614baaa3dd116",
+      "read_method": "full XML parse + every element contract + normalized baseline/difference cross-check",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "models/h1_battery_pitch_catch.xml",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/models/h1_battery_pitch_catch.xml",
+      "lines": 412,
+      "bytes": 30607,
+      "sha256": "a59f7243b01adf63e262b7d79c96eaf01235e8d101fc8e9939bc440bcb313e4e",
+      "read_method": "full XML parse + every element contract + normalized baseline/difference cross-check",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "models/h1_bipedal_baseball.xml",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/models/h1_bipedal_baseball.xml",
+      "lines": 286,
+      "bytes": 18001,
+      "sha256": "d061fef632e9fb7177d39d8f2be4f91e6677d032238b1703a8989ed8d5b401b5",
+      "read_method": "full XML parse + every element contract + normalized baseline/difference cross-check",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "models/h1_bipedal_duel.xml",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/models/h1_bipedal_duel.xml",
+      "lines": 412,
+      "bytes": 31006,
+      "sha256": "1963f90f122d965d3209edf51879776c78e595a3c9fdf64ba7a288459d1a810f",
+      "read_method": "full XML parse + every element contract + normalized baseline/difference cross-check",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "models/h1_bipedal_sprint.xml",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/models/h1_bipedal_sprint.xml",
+      "lines": 290,
+      "bytes": 18486,
+      "sha256": "a405cc5e4ec6de41faf9cba69f29514fe966f970b1a06ff9bc13e82d1e1156bc",
+      "read_method": "full XML parse + every element contract + normalized baseline/difference cross-check",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "models/h1_duel_match.xml",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/models/h1_duel_match.xml",
+      "lines": 406,
+      "bytes": 30557,
+      "sha256": "a9cd898415f694dfdb7ffe7f60ad6eb13de5c6c8123de426cebb19824ae19a62",
+      "read_method": "full XML parse + every element contract + normalized baseline/difference cross-check",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "models/h1_hit_and_run.xml",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/models/h1_hit_and_run.xml",
+      "lines": 288,
+      "bytes": 18243,
+      "sha256": "9e274643379643a1c19b8db15fd71da86a23094b9e1ff87a6a2783866544d620",
+      "read_method": "full XML parse + every element contract + normalized baseline/difference cross-check",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "models/h1_infield_defense.xml",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/models/h1_infield_defense.xml",
+      "lines": 569,
+      "bytes": 44291,
+      "sha256": "2ddbfda1b081ca706714a6087eed71069bdcafc686afcf1b5a209064c255c76a",
+      "read_method": "full XML parse + every element contract + normalized baseline/difference cross-check",
+      "execution_performed": false,
+      "original_modified": false
+    },
+    {
+      "path": "models/h1_pitcher.xml",
+      "absolute_path": "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/models/h1_pitcher.xml",
+      "lines": 280,
+      "bytes": 17574,
+      "sha256": "44c93a2d7713ed04c1fd0a1e7b254849ca29bbf39bbc4f5444e99e1f64c6c046",
+      "read_method": "full XML parse + every element contract + normalized baseline/difference cross-check",
+      "execution_performed": false,
+      "original_modified": false
+    }
+  ]
+}

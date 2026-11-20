@@ -1,0 +1,45 @@
+{
+  "scope": "bipedal research journal, docs and chronology",
+  "fully_read_source_documents": [
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/README.md",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/RESEARCH_LOG.md",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/bipedal_baseball/walkthrough.md"
+  ],
+  "fully_read_external_current_documents": [
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/evidence/external_current_implementation_plan.md",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/evidence/external_current_task.md",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/evidence/external_current_walkthrough.md"
+  ],
+  "git_diff_file_inventory_and_changed_hunks_reviewed": [
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-06_7c82e9d8.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-06_8346fcf0.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-06_b0d11e01.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-06_dd5baf58.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-06_ee5a4a04.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-07_453be6cd.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-07_6e35b96c.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-07_80bc120b.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-07_8c3e6e2e.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-07_8d0a745a.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-07_9c5bcad6.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-07_ad484464.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-07_c8388fc0.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-07_cd23803b.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-07_f29fc65e.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-09_3dc3ab8d.patch",
+    "원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20261009_full_project_review/history_bipedal/2026-09-09_ec3f8548.patch"
+  ],
+  "supporting_code_excerpts": [
+    "../bipedal_baseball/envs/athletic_duel_env.py",
+    "../bipedal_baseball/envs/infield_defense_env.py",
+    "../bipedal_baseball/scripts/eval_athletic_duel.py"
+  ],
+  "source_document_count": 3,
+  "external_document_count": 3,
+  "git_commit_count": 17,
+  "files": [
+    "../bipedal_baseball/README.md",
+    "../bipedal_baseball/RESEARCH_LOG.md",
+    "../bipedal_baseball/walkthrough.md"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-10-09T20:44:48.818594+09:00",
+  "scope": "exact BaseballUmpire class; synthetic point sequence; no physical rollout or hit method execution",
+  "source_sha256": "153121bdec350562f28f889e9ca0e405467d38996f96453754764b371903eb16",
+  "samples": [
+    [
+      0,
+      0.3,
+      0.8
+    ],
+    [
+      0,
+      -0.3,
+      0.8
+    ]
+  ],
+  "segment_midpoint": [
+    0,
+    0,
+    0.8
+  ],
+  "segment_midpoint_is_inside": true,
+  "two_endpoints_result": "BALL",
+  "with_midpoint_result": "STRIKE",
+  "interpretation": "point-only algorithm cannot detect a crossing represented only by outside endpoints; this does not quantify actual missed pitch frequency"
+}

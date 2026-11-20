@@ -1,0 +1,2271 @@
+{
+  "source_count": 251,
+  "source_lines": 41271,
+  "project_counts": {
+    "baseball": 194,
+    "bipedal": 57
+  },
+  "missing": [],
+  "note": "Every source is assigned to a fully read detailed chapter and a complete line-numbered sourcebook. Semantic assertions still require source review; this mechanical check alone does not prove correctness.",
+  "files": [
+    {
+      "project": "baseball",
+      "path": ".agents/AGENTS.md",
+      "lines": 22,
+      "sha256": "284c6dc440f50ffe827ae55970097cd498f245ad38f99134050cd70588f46812",
+      "chapter": "01_목적_문제정의_설계판단_시간순_복원.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/.agents__AGENTS.md.md"
+    },
+    {
+      "project": "baseball",
+      "path": ".gitignore",
+      "lines": 37,
+      "sha256": "a41ebc6aad8a19d19806603fde0fd0e581607a6f30062de7025edeebb42beb50",
+      "chapter": "06_문서주장_실제구현_검증수준_대조.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/.gitignore.md"
+    },
+    {
+      "project": "baseball",
+      "path": "README.md",
+      "lines": 53,
+      "sha256": "78d408abd1ee3c7f33971f2c494df20c5d104a1ea472475173a44077b4b6c9ba",
+      "chapter": "06_문서주장_실제구현_검증수준_대조.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/README.md.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/EXECUTION_GUIDE.md",
+      "lines": 94,
+      "sha256": "69387cc292de78fbe4bb2e2cf4970d3fd6236f7e661c0e8b5418c1b84b056b55",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__EXECUTION_GUIDE.md.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/assets/stadium_3d.xml",
+      "lines": 274,
+      "sha256": "a46ed2bddaa70aa101a7cc2d42f0487771073db52b634484a3333b9a12b96914",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__assets__stadium_3d.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/auto_builder/__init__.py",
+      "lines": 4,
+      "sha256": "797c2f19356e67469a6e9f03da884d93b9913cf4944dc89d88aaccc5df2912df",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__auto_builder____init__.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/auto_builder/auto_game_builder.py",
+      "lines": 125,
+      "sha256": "eff375cb4c09c4e53e7364d2c28331077f4dee1f13106c63f8f74f2fe432c1be",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__auto_builder__auto_game_builder.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/auto_builder/diagnostician.py",
+      "lines": 77,
+      "sha256": "2fd9546543b487b1608ec8976a4ded2fdebc49799129c834404920a4651370d5",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__auto_builder__diagnostician.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/auto_builder/phase_0_sanity_check.py",
+      "lines": 95,
+      "sha256": "b5ffea76c701456651687236319b879eec5b5d0bfc221dc4778e5931b1dbae09",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__auto_builder__phase_0_sanity_check.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/auto_builder/stage_gate.py",
+      "lines": 227,
+      "sha256": "9a820e691868df4686fef597a149e82202550f71458bea236323d9cca35e2f5c",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__auto_builder__stage_gate.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/dashboard/app.js",
+      "lines": 162,
+      "sha256": "a58036db7401eae03e2ad8e5f0676c530335f91762294391e878e9a1c9554e57",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__dashboard__app.js.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/dashboard/index.html",
+      "lines": 66,
+      "sha256": "eb49823def79fab0495a8a1e26a61e053ef460661b1c28f5dc153664ab7204e1",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__dashboard__index.html.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/dashboard/style.css",
+      "lines": 203,
+      "sha256": "99fb46ffedcb82a6e3016600ff6690b0019a2e6fe31eff952948e3715ea66031",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__dashboard__style.css.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/envs/__init__.py",
+      "lines": 1,
+      "sha256": "f421d2afe15865e9c9d063315e0c1428fbd0757c7cefda75cbdd5ffad7f869a9",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__envs____init__.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/envs/baseball_game_env.py",
+      "lines": 486,
+      "sha256": "0b045350353c2ef18bafc8cbc45dcf851a73cae7906af3938b3a9d65282f527d",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__envs__baseball_game_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/envs/game_engine.py",
+      "lines": 163,
+      "sha256": "d9485f665ab2509d38c87d87253a5456585d86876dee2b513e6a34f9d1ef78a4",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__envs__game_engine.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/envs/multi_agent_env.py",
+      "lines": 338,
+      "sha256": "c7b127e27315523b4d9d63154d525052cbf986c61e0565220abb6a73fb9ff234",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__envs__multi_agent_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/envs/unified_baseball_env.py",
+      "lines": 446,
+      "sha256": "8839132e581e273d9acb34b23bf38bf363cdd40a0ee320445fc515c1c9c91e6a",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__envs__unified_baseball_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/expert/demo_collector.py",
+      "lines": 112,
+      "sha256": "0103843142fa6a5d595fe03f77910e48ea0d9b108eaba8a00570210f2382b40d",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__expert__demo_collector.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/expert/trajectory_solver.py",
+      "lines": 101,
+      "sha256": "92bd94de02b919d315d386ae23b811deee9df0df7ed0711125a0aadb18634af8",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__expert__trajectory_solver.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/game.py",
+      "lines": 567,
+      "sha256": "cc618886f2978f52ced61fdc9cac94d388ed7842cfc7aeab7bea8db8a3200662",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__game.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/humanoid/assets/stadium_3d_atlas.xml",
+      "lines": 369,
+      "sha256": "295ab8664f14203965b9ef3fbca7a2d645d2881dacd9b7c0973ec43791da90e5",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__humanoid__assets__stadium_3d_atlas.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/humanoid/assets/stadium_3d_humanoid.xml",
+      "lines": 296,
+      "sha256": "3fcc20c4f4df8ee917e390460f457ed804b7fd2cdfae828b6f2c366c70ad9c04",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__humanoid__assets__stadium_3d_humanoid.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/humanoid/envs/atlas_baseball_env.py",
+      "lines": 205,
+      "sha256": "e2fc1ecef7d4dff3e818626445f059d8305d1339af3a75a846d8f57cdcdbcfa3",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__humanoid__envs__atlas_baseball_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/humanoid/envs/game_engine.py",
+      "lines": 165,
+      "sha256": "adb53cec803cf1c66f50b7eb8c5ce849019c6d0f76bccbdb741e41ee98b86c03",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__humanoid__envs__game_engine.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/humanoid/envs/humanoid_baseball_env.py",
+      "lines": 340,
+      "sha256": "6333f1a512df42ccbb6fec645d1df0864acf98cca555b3ceea54ef2b5f3d50c5",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__humanoid__envs__humanoid_baseball_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/humanoid/training/atlas_networks.py",
+      "lines": 136,
+      "sha256": "0bd28982ab67585bb2f14e0ac4a3c60b55ebc11bd08a0ec53669eb7517c7ed4b",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__humanoid__training__atlas_networks.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/humanoid/training/atlas_trainer.py",
+      "lines": 198,
+      "sha256": "02f612570455acce74ceae7a625a528f0bb57cdf7cb832b5599462b12686b01a",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__humanoid__training__atlas_trainer.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/humanoid/training/humanoid_networks.py",
+      "lines": 207,
+      "sha256": "0e3ed6f0ceaa68a9ab51d74b4a9cd3c0fe9258c8eb6396babc12e6c76a826b0a",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__humanoid__training__humanoid_networks.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/humanoid/training/humanoid_trainer.py",
+      "lines": 257,
+      "sha256": "d7c1080f4d934246e925aa2bd85050b4f1be52509f7d4c495fac2b1ff3a6a260",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__humanoid__training__humanoid_trainer.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/interactive_pose.py",
+      "lines": 32,
+      "sha256": "597a274f31793850784182ae61ab7a79f26fa2a13b9c274f1d3b2f6b9408ecc0",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__interactive_pose.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_envs/batter_mechanism.py",
+      "lines": 656,
+      "sha256": "af8044ed1fdbd417747f6d60f76eb2303c018bcdd663e88cfae3a762e9d64529",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_envs__batter_mechanism.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_envs/mujoco_baseball_env.py",
+      "lines": 243,
+      "sha256": "54f365bdac3311eee1d5a996cad0fa1093c0136c38fabce2f2e6886192f1cef0",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_envs__mujoco_baseball_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_envs/pitcher_mechanism.py",
+      "lines": 606,
+      "sha256": "cba6a6ffa6bf7575d5a2a3929a61b3d09ea479a944edfec12a389aa6f43f242d",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_envs__pitcher_mechanism.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_scripts/auto_pipeline.py",
+      "lines": 60,
+      "sha256": "662b088c60315d6dc83f3c5f780274eb1c83db63ed82d5e23f1d113d91054f1e",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_scripts__auto_pipeline.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_scripts/build_atlas_stadium.py",
+      "lines": 96,
+      "sha256": "47d0e5642c81df3a8f50ab1bf1b0f0e4062dd5bd7eeeaca6e994406146682f54",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_scripts__build_atlas_stadium.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_scripts/build_humanoid_stadium.py",
+      "lines": 99,
+      "sha256": "ce549aabc6a7a10a13faf5080c8d9ca00e645272c2c57fdfb83e8054f0d9bab5",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_scripts__build_humanoid_stadium.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_scripts/convert_videos.py",
+      "lines": 50,
+      "sha256": "a35ee34ae64175374e4e3958e3670bff405bfadce839f3b697489ba53b2e5ad7",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_scripts__convert_videos.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_scripts/simulator/__init__.py",
+      "lines": 1,
+      "sha256": "69e1abd04de586957d461450e86054bd5846af63f102b13861262654c5178f0a",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_scripts__simulator____init__.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_scripts/simulator/dashboard.py",
+      "lines": 751,
+      "sha256": "687f80eac5d9676fc526d50fe4bb82d954929622d52a63c8081200e8b4882d4a",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_scripts__simulator__dashboard.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_scripts/simulator/game_engine.py",
+      "lines": 138,
+      "sha256": "2038bbcc52425b8a1402788bd8ae4c64b79dc2b560ad6be64e22acbe73621325",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_scripts__simulator__game_engine.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_scripts/simulator/live_viewer.py",
+      "lines": 124,
+      "sha256": "854440a30874f81bd8ded2281a44afc75d0df02b351e7098f4e73bc1b215d0ea",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_scripts__simulator__live_viewer.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_scripts/simulator/video_recorder.py",
+      "lines": 120,
+      "sha256": "e9cd2953525a3930d55db2683fe9e975dd0d70d73e10dd93720b2e97da43b1dc",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_scripts__simulator__video_recorder.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_training/bc_trainer.py",
+      "lines": 117,
+      "sha256": "3ecabc2ed1fabefd5430eb20ae661a1f07eb9269b79e949f97f9c3dae20e03ac",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_training__bc_trainer.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/legacy_training/mujoco_ppo_trainer.py",
+      "lines": 200,
+      "sha256": "32e97e41923a94c2059a63bd290e0d72fa68aa81cf8573eae3e49d520e9dc204",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__legacy_training__mujoco_ppo_trainer.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/render_angles.py",
+      "lines": 32,
+      "sha256": "2b019ff5e5dbad71b21c13ae33ea587e898b2b88b76422022897b6494c6de66d",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__render_angles.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/robots/__init__.py",
+      "lines": 4,
+      "sha256": "edc8f4616fe5509d905128af4db243173fedbae2ea4cb9732bb130450d5a819a",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__robots____init__.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/robots/batter_robot.py",
+      "lines": 204,
+      "sha256": "b863844a8d038e3e8b8def13648a99bd406a1ef125aeebf89506296c92a29a74",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__robots__batter_robot.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/robots/pitcher_robot.py",
+      "lines": 252,
+      "sha256": "f9dd34e53402e4ca07fe3a0169113a9eb21db49314dca8f705420b12fd783437",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__robots__pitcher_robot.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/simulate_swing.py",
+      "lines": 60,
+      "sha256": "f21c8d772e0fb6708d099af9ee1b8348fe8d97632544862a5ad114d63a0c5bef",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__simulate_swing.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/test_arm.py",
+      "lines": 63,
+      "sha256": "db64c9ad02acb295d544e7711ff8f6aef434c2b559cc14203c49ce933f1d9cd4",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__test_arm.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/test_arm.xml",
+      "lines": 45,
+      "sha256": "ebc00c6b9ea6b15d39dbecf35a3b92c6d91385aec5c89baf94bb7a302d59db76",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__test_arm.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/test_posture.py",
+      "lines": 20,
+      "sha256": "8d07fac3f0bebbe466f515a8f3f2bc61d4a05fdcdc4ebe3007b8561bfbbdfed6",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__test_posture.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/test_sim.py",
+      "lines": 16,
+      "sha256": "dd3971847e66ec8727420f40edd5258f371b32a87e3ddd7e5722f88ac320185e",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__test_sim.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/__init__.py",
+      "lines": 7,
+      "sha256": "338c9c3fbb914a870b920ece3da1054c5512a416881fee7d5bc16ac82fe30ff2",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training____init__.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/curriculum_manager.py",
+      "lines": 150,
+      "sha256": "af0b8d346486af066ac28f71fac04147482de7a47690681cd0b5c2a413765005",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__curriculum_manager.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/curriculum_trainer.py",
+      "lines": 277,
+      "sha256": "7a0234d78d45e3a73b016d7890c9ceab6f354ee61efc8d252efed2ccfdac24e4",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__curriculum_trainer.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/episode_recorder.py",
+      "lines": 164,
+      "sha256": "b97a0efec05bd40c6b0e2f88ad7ab25e82e1c21df0405e7ef02d3ba1e70717b1",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__episode_recorder.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/health_monitor.py",
+      "lines": 165,
+      "sha256": "5b975955d75465b080edf71af13535ffe457fa360ae9a5b91c748e7a5ae5c6d4",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__health_monitor.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/logger.py",
+      "lines": 72,
+      "sha256": "f40b8cd2312fdbd1fa1cd3c0d5aa9a03fed719e7a156553222d73b1ec2db292e",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__logger.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/multi_agent_dreamer.py",
+      "lines": 467,
+      "sha256": "c44afb4b0bdef7a1bb9349defdba1ca6eb35943b444ff8210fbe5a58e86290b2",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__multi_agent_dreamer.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/multi_agent_world_model.py",
+      "lines": 307,
+      "sha256": "62835f8f4bb2ec23fd2ebf172468fc2afc6538f38c61350838cb6aa521f2fc85",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__multi_agent_world_model.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/multimodal_networks.py",
+      "lines": 215,
+      "sha256": "8f853f29cbad22340c1fc1ff40a736a9d6d70c377ce7bb73547f9340073dfff8",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__multimodal_networks.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/networks.py",
+      "lines": 430,
+      "sha256": "81ffac836c401738a00b32333e0a1923fc9ea2fd7b684b1a24633865c071c5c4",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__networks.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/replay_buffer.py",
+      "lines": 311,
+      "sha256": "43c37fd026e815c92abfb7445c187172b6f4f41d4c5d173bfc9d739fc0bbedc5",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__replay_buffer.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/reward_audit.py",
+      "lines": 96,
+      "sha256": "5fc9fa3806adbd88f89d3048120baceec7f89ed0fecfcc16f7809cb6ec51307e",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__reward_audit.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/trainer.py",
+      "lines": 748,
+      "sha256": "baca9f1f52c708b3ea67b577413a1719ef44e00feb560eb2b73cd549daf5c783",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__trainer.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/visualize_latent.py",
+      "lines": 88,
+      "sha256": "7cba43aa0ea886260b50aede7af4b823ad96fe69c24917964e55a043ad85a681",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__visualize_latent.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/world_model.py",
+      "lines": 441,
+      "sha256": "efc332b4c19ec60f11ec321635714735384ff2727ae649ee742b231d1b6bba31",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__world_model.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/training/world_model_trainer.py",
+      "lines": 680,
+      "sha256": "1f42fd199a852a26c5a37fc94fe3b702c6a6c959e6a7bdb202e7115ba1421bd7",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__training__world_model_trainer.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "archive/visualize_trained.py",
+      "lines": 73,
+      "sha256": "5d94a64159ec4da6aa1742974e469038aeebcd07538d09df0b57b9101a32596e",
+      "chapter": "04_초기설계_레거시_월드모델_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/archive__visualize_trained.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/adversarial_match_env.py",
+      "lines": 68,
+      "sha256": "a97e1e14d4881de7896e57be4cf504315757dd87563bbaa9e03cdccb7b9400e2",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__adversarial_match_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/baseball_game_state.py",
+      "lines": 72,
+      "sha256": "878bfc289a518a6041ea93cecc10bebacb47d5b33aa674494b20712c20e33f49",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__baseball_game_state.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/baseball_match_env.py",
+      "lines": 408,
+      "sha256": "4ef6cf357806a284e6940fa2fef64c8b643bab287fcb0c0fe75202ed458ff275",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__baseball_match_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/baseball_rules.py",
+      "lines": 59,
+      "sha256": "153121bdec350562f28f889e9ca0e405467d38996f96453754764b371903eb16",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__baseball_rules.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/breaking_ball_env.py",
+      "lines": 251,
+      "sha256": "b9f69eb3d23905c4cbd11588efa30cd86c8ede7a689af0d636e8d76a2e41ee7b",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__breaking_ball_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/catcher_env.py",
+      "lines": 96,
+      "sha256": "5667e7ec30bbbe9c1dc85ab26b33fe43a580ceb4e6039227f660549ea08000b1",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__catcher_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/cognitive_baseball_env.py",
+      "lines": 166,
+      "sha256": "4df442f4c5fb1faa735894b1f1d85275470c9729739f1e1eabed3df72329be7c",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__cognitive_baseball_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/fielder_env.py",
+      "lines": 151,
+      "sha256": "5b4a05e4123371192964ac0666b3417b5c8258d4182690f3a7dacaa7959d8535",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__fielder_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/pitcher_env.py",
+      "lines": 254,
+      "sha256": "1d5253ba7806cc404bc995a146ed62c193751d354239cd2e2311f44d62e77ccb",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__pitcher_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/pitching_machine_env.py",
+      "lines": 224,
+      "sha256": "0c4f95738ed23598060cadb9d46f82b81710aa5005974ddbcb533afbbf89169c",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__pitching_machine_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/runner_env.py",
+      "lines": 83,
+      "sha256": "3976159d16ab178df44836bac8d12460aa138059bc98a63a1dc87dca872495b1",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__runner_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/soft_toss_env.py",
+      "lines": 195,
+      "sha256": "60156a964455ca199b64c80ba0fe894e7e9720a7924c4f626b663683e8cfd2f3",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__soft_toss_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/envs/teeball_env.py",
+      "lines": 170,
+      "sha256": "7a99741fdb43df9435102a22b8e8f23812ae8bd419ba2b9869e64e169a470c2f",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__envs__teeball_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/eval_breaking_ball.py",
+      "lines": 109,
+      "sha256": "38eae59c31e59cbce878a9fa2cb2180447987e7b7cf7c6a7b8be0fe564e13422",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__eval_breaking_ball.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/eval_normalized.py",
+      "lines": 113,
+      "sha256": "a410627c5f295f38383c694ba7ce2fcab3f3bb2e1cac678ca8745c09ea934db3",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__eval_normalized.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/eval_pitcher.py",
+      "lines": 109,
+      "sha256": "b833f6d81f33381ef126d96f07d8218a0742c164828b66347918deef328d4d9a",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__eval_pitcher.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/eval_pitching_machine.py",
+      "lines": 109,
+      "sha256": "4c2e761847ad1691d5bcea16ca28e96d48c1bfe7c6237bb0bf8f4436dd654552",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__eval_pitching_machine.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/eval_soft_toss.py",
+      "lines": 93,
+      "sha256": "7ec4468db48465b3366db866779ff8ed79d7472ebd8a7a65432d55570cfb9cae",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__eval_soft_toss.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/evaluate_base_stealing.py",
+      "lines": 80,
+      "sha256": "c08984cd6048668145ac9125d5b2bd22e40be03e11de7b4bd878d896609c72f7",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__evaluate_base_stealing.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/evaluate_fielder.py",
+      "lines": 76,
+      "sha256": "1778586c2ce07b487451ef25b0bb2c8917cea2f220017db69e53767d20d899ea",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__evaluate_fielder.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/evaluate_mocap_match.py",
+      "lines": 109,
+      "sha256": "671f2a208d271a5b31494f28570c5ca808067c86e7ea55998306b266fd0a3f4e",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__evaluate_mocap_match.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/simulate_9_innings.py",
+      "lines": 37,
+      "sha256": "8b58c45e5b55667061151a4b88113963c32b8222941d9ae572b6e796aae6ed94",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__simulate_9_innings.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/simulate_full_match.py",
+      "lines": 106,
+      "sha256": "18ab2e4e227b5716a9ce5b192466001abd806b2b4c916a945b56d70342548f9f",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__simulate_full_match.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/simulate_mlb_match.py",
+      "lines": 153,
+      "sha256": "88fad1935bfdeec164b1d3e235bcafcd02b4c8c4f2b9173661a68445afcefddd",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__simulate_mlb_match.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/evaluation/video_evaluator.py",
+      "lines": 141,
+      "sha256": "12ff8023269c1a057be6d792d1f9e625111b5349a1e5a037a37463ced288ac0a",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__evaluation__video_evaluator.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/check_ball_phys.py",
+      "lines": 20,
+      "sha256": "78b240e94d83c88bf573ebac8ec0df31e182ff68159b4ca8374cc1c3c6abbd26",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__check_ball_phys.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/check_contact_pos.py",
+      "lines": 23,
+      "sha256": "c82f577ee4d2c4d9bc03056014a71efe0f781a49c806b22f6db1c7d7b1e680bb",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__check_contact_pos.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/debug_miss.py",
+      "lines": 33,
+      "sha256": "6a49d7bc73ba4ec921af60a94931c8d51f3048406a143c4d08010fd90ec6823b",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__debug_miss.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/merge_h1.py",
+      "lines": 88,
+      "sha256": "2821b1729d396815486992469198016234a5d3bbac2e1436afb5c3dcf5083477",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__merge_h1.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/sweep_bat.py",
+      "lines": 37,
+      "sha256": "3ac378e266e22fa706c859addac25f61347096e79243d60e6ee6310b9e215f10",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__sweep_bat.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_accurate.py",
+      "lines": 41,
+      "sha256": "6976e1db62e75fc846ef703c154cecef15155fd6805007acaa9cba456a005cab",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_accurate.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_aimed.py",
+      "lines": 43,
+      "sha256": "d4619d4b2c9b6a6313f9a1e6e512a77f5f351f259c70027d19db27a7d5b4d148",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_aimed.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_cameras.py",
+      "lines": 19,
+      "sha256": "a87503ba6e2cffa7526f7bd829665da2f9d293a02cb1a1b08e0f951b6fcf2fb6",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_cameras.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_cognitive_env.py",
+      "lines": 27,
+      "sha256": "80fde76a8ba2a23d5bed161cab91eed8bb349b6a855d6d75eac90c1580da9fa0",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_cognitive_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_direct.py",
+      "lines": 57,
+      "sha256": "6cf2956b8aef62aa7c35df8e5ab46f087f615f3f3f01c414ea10f87b315a1965",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_direct.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_grid.py",
+      "lines": 50,
+      "sha256": "2edd577dbbed3f244ab8495c5acb8053b0f206734c145ab5a9f3e5212f790ac1",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_grid.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_h1_swing.py",
+      "lines": 57,
+      "sha256": "74be66a4fc9047a92535b614490d2419174bc91918b76686c2478dde989debb2",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_h1_swing.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_humanoid.py",
+      "lines": 32,
+      "sha256": "e959968d967c06152303647eea8414b25739f4550ac1009f764e346d8f90a691",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_humanoid.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_lower_trig.py",
+      "lines": 35,
+      "sha256": "033b6de02a340312768b8cafff0cf947c0691410b09c3e03059e8efb2e3b8265",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_lower_trig.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_scaling.py",
+      "lines": 51,
+      "sha256": "b363bd53d8253749ca0623e0a256b496775d98d44e4f2aec15af9bda03af6b74",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_scaling.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_teeball.py",
+      "lines": 45,
+      "sha256": "2907fccb0982d3e3f70ef8448ccf6daa310607ba2cc1bdbe5576d3038815075b",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_teeball.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_timing_higher.py",
+      "lines": 38,
+      "sha256": "8ce7c61053feed0d9bada7cbea2ee88499f06f8f701261d870955dfaace04abc",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_timing_higher.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_timing_precise.py",
+      "lines": 38,
+      "sha256": "610d38df954d589565ad91860bc31f7a4944a912068af751c28e8a6a191189bf",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_timing_precise.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_trained_teeball.py",
+      "lines": 54,
+      "sha256": "6cdb2aee027878d6d58c5817788bc31d7d42005148ded364d93067393de7b7f5",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_trained_teeball.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_trajectory.py",
+      "lines": 23,
+      "sha256": "48bb7df23c255464d8fd25438952c4b867931b3262b4b56f6488659c03486636",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_trajectory.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/scripts/test_trigger.py",
+      "lines": 39,
+      "sha256": "80e06f688873ce5f71b01e33643065aab4f6640cee954b6b3e4151e54a82a875",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__scripts__test_trigger.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_80kmh_deep.py",
+      "lines": 48,
+      "sha256": "215bce4175c35cb5e28b1d8c8c4dfde8f3be6281cb965a2500cbc45f70be1de9",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_80kmh_deep.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_breaking_ball.py",
+      "lines": 48,
+      "sha256": "bb1af2c30ce65a8ce73c56e4e47e773100959c9559a9407a9b5d079cf23974e7",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_breaking_ball.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_catcher.py",
+      "lines": 26,
+      "sha256": "0c06a7057c454e196e7362235eada6f49ee6ea227ee3e15b7e3e44d1249e8f26",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_catcher.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_cognitive.py",
+      "lines": 73,
+      "sha256": "46a57aed27c3e6b84f26da372e783e4220396748147b01b51a85105c9c798ad0",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_cognitive.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_curriculum_pitching.py",
+      "lines": 92,
+      "sha256": "d68da7821fa393a213e52a72a8f2264c7532b5a095d5c6991443fc0b9ac32df7",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_curriculum_pitching.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_fielder.py",
+      "lines": 39,
+      "sha256": "a6222c1355a674121bf9ae567351d0552e52e5ed66be7841656459ca2d154a75",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_fielder.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_match_batter.py",
+      "lines": 87,
+      "sha256": "c507fe79d41f46f78cf79f2449ada96c3b2c369bf7f448592adcfd45e17b03ea",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_match_batter.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_mega_architecture.py",
+      "lines": 112,
+      "sha256": "74998e864cb921fff6781a4a79ca15c75c333821e2bfb2e617f3d133e82e1469",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_mega_architecture.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_mlb_batter.py",
+      "lines": 96,
+      "sha256": "35d2762db01ccab1f454c814beea13e1e6eacb950e56a0403910a9e58dd47444",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_mlb_batter.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_mlb_pitcher.py",
+      "lines": 49,
+      "sha256": "27a2ab55be695e0faedd8f33f66c49e9051e98cf524e99ffa5738c1f4e1b96e8",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_mlb_pitcher.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_mocap_batter.py",
+      "lines": 51,
+      "sha256": "f47541a80e17cce77693293aa861696c43c09e33755977cddcb9eb5b10f188e0",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_mocap_batter.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_mocap_pitcher.py",
+      "lines": 49,
+      "sha256": "bb2531fb4121d4623375a02c2187a424654cbdcb7e7815e5562e027f499c7656",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_mocap_pitcher.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_normalized.py",
+      "lines": 46,
+      "sha256": "a6894c724091114c7cecfdc2099ae92d84ff5bb17719909414bdf360b9383480",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_normalized.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_pitcher.py",
+      "lines": 49,
+      "sha256": "21ed5c0370984224f5b714f8f191485e690dd15cd9071ae9504630248c18206c",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_pitcher.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_runner.py",
+      "lines": 26,
+      "sha256": "51fe424fb261ad0919a2b48fadca3d1e9b1a5a45a0ff0ebfbcb02069c0dc6e83",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_runner.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_soft_toss.py",
+      "lines": 51,
+      "sha256": "fe10c7065ce5684b236102af04fc215f8ceeb908ac2c113986d93278ec5221e3",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_soft_toss.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "cognitive_ai/training/train_teeball.py",
+      "lines": 54,
+      "sha256": "aae1e81d666790e7ee1ed9ce5c6873859792c54bed62127c41b1f6e72cbf6eda",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/cognitive_ai__training__train_teeball.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "docs/EXPERIMENT_LOG.md",
+      "lines": 59,
+      "sha256": "5b49f8648bf27a6f8c0541cf28c933784f4f50c18aa44c271cfee0053c44fee2",
+      "chapter": "06_문서주장_실제구현_검증수준_대조.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/docs__EXPERIMENT_LOG.md.md"
+    },
+    {
+      "project": "baseball",
+      "path": "docs/PAPER.md",
+      "lines": 197,
+      "sha256": "163a4dbe22048a06f3cd5b581fec45724d4b419626975d63cdb91952477c4927",
+      "chapter": "06_문서주장_실제구현_검증수준_대조.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/docs__PAPER.md.md"
+    },
+    {
+      "project": "baseball",
+      "path": "docs/VIDEO_CATALOG.md",
+      "lines": 20,
+      "sha256": "9d8d9477ab06e4d5ea51eda3f89c2a4e0d7ad45518195700cff28187646c5bb8",
+      "chapter": "06_문서주장_실제구현_검증수준_대조.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/docs__VIDEO_CATALOG.md.md"
+    },
+    {
+      "project": "baseball",
+      "path": "docs/index.html",
+      "lines": 2137,
+      "sha256": "b1f29658ac9d74d3a8bc8d156cac0feeabf0302d8616499d8e6d54a2b7f929be",
+      "chapter": "06_문서주장_실제구현_검증수준_대조.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/docs__index.html.md"
+    },
+    {
+      "project": "baseball",
+      "path": "requirements.txt",
+      "lines": 10,
+      "sha256": "99dc27677fad0c00835919898a8a9ed4c6c345df9d63f560fcdb47f74e92a7f2",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/requirements.txt.md"
+    },
+    {
+      "project": "baseball",
+      "path": "run_dashboard.sh",
+      "lines": 9,
+      "sha256": "8a582c6ac1d3a091ee4294de9bd574a484bd8b2b2634ce3c20e2962cc47745dc",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/run_dashboard.sh.md"
+    },
+    {
+      "project": "baseball",
+      "path": "run_demo.sh",
+      "lines": 15,
+      "sha256": "2afafc90df88ec128861a1ef86ea670d7144e2a7ecfafd4a3d741f70f22355e4",
+      "chapter": "03_학습_평가_모델_실험증거_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/run_demo.sh.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/add_ball_to_catcher.py",
+      "lines": 10,
+      "sha256": "6d7fab8af1ab6084f045b7f72ad83d485c948170b22d11c6d50a61e267e1e583",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__add_ball_to_catcher.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/add_stadium.py",
+      "lines": 17,
+      "sha256": "2f82f8e2d045b5e4eb331e01f0711485c9679121439a3171a6186a3279416a14",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__add_stadium.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/check_dof.py",
+      "lines": 4,
+      "sha256": "a63ffc6bd60f439c0c58845756da79d1d64c25f85c76dfbf845719fbb1cb2f7f",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__check_dof.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/check_obs.py",
+      "lines": 18,
+      "sha256": "e4cc740c20f658e9106e7b20760dd303f91aa7d28e98c85465b91cf2d9e2c5f3",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__check_obs.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/convert_videos_h264.py",
+      "lines": 31,
+      "sha256": "0f57c91f6021ab84bac399c4b1f90165faf9d33823421b25d3c969717bae392a",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__convert_videos_h264.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/debug_action.py",
+      "lines": 5,
+      "sha256": "b72afeeeb51b9670c89e0169c157dab1c0530925772a5d27c9b5e93fd0a45cb9",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__debug_action.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/debug_match.py",
+      "lines": 35,
+      "sha256": "c6dbf4fd838332a3c133414eec24088d7928906e4a8ff111e4063570bf3e17ce",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__debug_match.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/fix_actuators.py",
+      "lines": 21,
+      "sha256": "e942613199a343d45053867380e47769a2a80c86ba7b6385e9987a8d153c22cf",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__fix_actuators.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/fix_ball.py",
+      "lines": 13,
+      "sha256": "707d3eee5ab464afaeaf4a178964170dcd98e4e68d2986b7a56edfeaaf8228f7",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__fix_ball.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/fix_body.py",
+      "lines": 16,
+      "sha256": "6215bc50daec238cc0d464512f9694fabd437a527796bf0e1859b4ce985f2dbf",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__fix_body.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/fix_camera.py",
+      "lines": 29,
+      "sha256": "ca27673c7eb3d9e93980ea2e8ffbaae1c7c5808dcd086e70c7ea8d9e94b04afa",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__fix_camera.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/fix_ground.py",
+      "lines": 24,
+      "sha256": "eafeada8df606a7ac82bccfb8b154190fef174bd48a44a9c68ec84faefba4dd8",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__fix_ground.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/fix_include.py",
+      "lines": 15,
+      "sha256": "4ba0d529a53127f6f625df674d67a6884a87c2dbafac973aa8ba10f03e489f2e",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__fix_include.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/fix_mat.py",
+      "lines": 16,
+      "sha256": "4c29f7615a59f7c001774e54acfa696e6af1fb91dd0d0944ccf6b141ae043248",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__fix_mat.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/fix_mocap_bug.py",
+      "lines": 5,
+      "sha256": "7b1b7770327c366d0db08a1b641f8e375f5186338df25545084b0e69d2320feb",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__fix_mocap_bug.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/fix_qvel.py",
+      "lines": 51,
+      "sha256": "9ec9566687bf1a7d6cf740ad88a3dc16c3f602dfa140a26446613658970ef691",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__fix_qvel.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/inject_mocap_batter.py",
+      "lines": 80,
+      "sha256": "e958a944ae0597a10f1363390d7b83caedf36f83538a515595bab3b36050b992",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__inject_mocap_batter.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/inject_mocap_pitcher.py",
+      "lines": 40,
+      "sha256": "4305d5b40bb22207d50cbf43b546ad54eadb074b1dfb1666eb825cd6898795cf",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__inject_mocap_pitcher.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/make_catcher_runner_xml.py",
+      "lines": 39,
+      "sha256": "00ff0f3840dd2e1e95824dfcecbc2bdce522b042dd48eeb2e94a9bcbc3d2affb",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__make_catcher_runner_xml.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/make_fielder_xml.py",
+      "lines": 62,
+      "sha256": "45f930f4cfcef001a0b5db6f4d8cfc2c0bd0c5f204a3ab22dc7c89c7966993fc",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__make_fielder_xml.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/mocap_preview.py",
+      "lines": 110,
+      "sha256": "80f7018f496b9ecd0b94eeac8c45b78389db948104eb16972f1f0f184953b9f2",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__mocap_preview.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch2.py",
+      "lines": 12,
+      "sha256": "19a5f3e154e8d179b87cd6bcf8f6d1797b2d9a3e55f3f59f2a03ef7f189567b8",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch2.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch_actuators.py",
+      "lines": 20,
+      "sha256": "514260271e70e91ee5954064a83437db88f276fee5b9463df7c399dfd8151465",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch_actuators.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch_env_joints.py",
+      "lines": 49,
+      "sha256": "ee433f7ef402b85360a950b6140600f561f1e8c90dab603d76501ff2a346dd8c",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch_env_joints.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch_eval.py",
+      "lines": 20,
+      "sha256": "5dfd6de59ff99e80c4e52d3107625aa243284dacee00d235c6f4bad61e647cc8",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch_eval.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch_info.py",
+      "lines": 10,
+      "sha256": "74ff3f959ad01f5b1daa5f697cbbd9dc3b9d88b4c6991886f50e5fbf9dbefc56",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch_info.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch_left_arm.py",
+      "lines": 14,
+      "sha256": "9823e9e1e55a89b50bfae0f8fec48eba3b973f6da2c2dabde07396b3977581c9",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch_left_arm.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch_physics.py",
+      "lines": 8,
+      "sha256": "8a2e011d5006753f6d108cfe22620caf8b3e318657d56e4e7f27e0e3444b3c39",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch_physics.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch_physics_full.py",
+      "lines": 57,
+      "sha256": "36849b3942f830dd49685d707ce52823f7ea51cfda762b66a95e760210d7cbb6",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch_physics_full.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch_pitcher_control.py",
+      "lines": 8,
+      "sha256": "3fdd7a5289cb69efe3ad1d33ba38464f99479d6fc8b6f8f82afe8766ef053100",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch_pitcher_control.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch_pitcher_env.py",
+      "lines": 24,
+      "sha256": "a50d6d3e120bd8d1a3f8ca51fc8cb4a18b1e9f4e9999821ead13e1b82071fbcd",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch_pitcher_env.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/patch_strike_zone.py",
+      "lines": 36,
+      "sha256": "e6fbd41a5a475fc361b9d36a06977f3fee1017e6b348cb16b7d7482782110659",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__patch_strike_zone.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/print_act.py",
+      "lines": 26,
+      "sha256": "dcf7535ffd50ced88c44646cf9513896fa040c0980eea5067ef0c20fb795e974",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__print_act.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/remove_ball.py",
+      "lines": 10,
+      "sha256": "7f2db932c71f39081f9c5da9a5f7a9ee40e8f1e61042a125900fb8e4ff2108c6",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__remove_ball.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/rename_videos.py",
+      "lines": 34,
+      "sha256": "85042985c291a9b464cac096bce8fa4c060c5ba7ab7fcca55be53e16de9cbc3c",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__rename_videos.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/update_catalog.py",
+      "lines": 26,
+      "sha256": "63a46d40dc9b559af2122a984836387298edfe474fee6ec3d72349629a67acc6",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__update_catalog.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/update_eval_videos.py",
+      "lines": 25,
+      "sha256": "bf771d24cd147644bc71e7acaac1a80247f2b7aab41ef06e37c9a99d49149288",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__update_eval_videos.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/update_mds.py",
+      "lines": 12,
+      "sha256": "a86127953cc7ed2b512236b5ca66aac28c083e6dfedab874953dedeb24bfc769",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__update_mds.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/update_mds_8_1.py",
+      "lines": 12,
+      "sha256": "75e7082b21c48a1caddbf7fc28333d071cb93628e2d6fdcb665cdc597cdb17c3",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__update_mds_8_1.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/update_mds_8_2.py",
+      "lines": 9,
+      "sha256": "0a2507fbd642e293118824bb036f705ab605b9c637c72d36cf3aa4fdb4fdedd9",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__update_mds_8_2.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/update_mds_fielder.py",
+      "lines": 21,
+      "sha256": "e26e06fc740d04aaa1d115f087b31c95576f8ee4d30095f8b5ec50ed7fd36469",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__update_mds_fielder.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/update_mds_phase9.py",
+      "lines": 10,
+      "sha256": "6b2b6cfda632cabc091ab33246ba780fcbd3ae288ef11d8be5139204861c656a",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__update_mds_phase9.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/update_phase9.py",
+      "lines": 22,
+      "sha256": "0a5b0db94f2f5334583b19e7a60a42f8f151f70777de93e82c83bf6ac46b0017",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__update_phase9.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/patches/update_walkthrough.py",
+      "lines": 26,
+      "sha256": "a833a931948e718bbf6c6748e0d5338a490c2ddcc66b5ce27e6fa33d9dc0d735",
+      "chapter": "05_패치44개_실패_수정_설계사고_해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__patches__update_walkthrough.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "scripts/test_pitcher_action.py",
+      "lines": 25,
+      "sha256": "c492b9c75a4f42b5fe90e05ddac8f3a9ba46ddd4ee8376fe112538015fe8625a",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/scripts__test_pitcher_action.py.md"
+    },
+    {
+      "project": "baseball",
+      "path": "shared_assets/h1_baseball.xml",
+      "lines": 217,
+      "sha256": "dbe97cb1638ff3384e53c82a1bb8c820060b6884cc05a53bc8091cfdbfc37008",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/shared_assets__h1_baseball.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "shared_assets/h1_baseball_match.xml",
+      "lines": 282,
+      "sha256": "7267f7ed66d77c93b1e2825c3953ced1693520cb9db9a2bd723165015b3fcfba",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/shared_assets__h1_baseball_match.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "shared_assets/h1_catcher.xml",
+      "lines": 170,
+      "sha256": "ae5b31f8305de9a9d601dfe8efa5b950c9e416537fc0d09df88852220bf948d4",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/shared_assets__h1_catcher.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "shared_assets/h1_fielder.xml",
+      "lines": 170,
+      "sha256": "5b36fb95634e4c5958ab529c93892642714a4ede23d48e0cd54197f40b385ba2",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/shared_assets__h1_fielder.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "shared_assets/h1_pitcher.xml",
+      "lines": 249,
+      "sha256": "1b49eabe291c344fa69031c3cfd2d08457766e469307b2a68a2c97f6d0f22c54",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/shared_assets__h1_pitcher.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "shared_assets/h1_runner.xml",
+      "lines": 170,
+      "sha256": "20a7070c1f4317974e7312efb0076d7b40f3ed54c4b9e7d9e10d50c4a5e209dd",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/shared_assets__h1_runner.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "shared_assets/humanoid_stadium.xml",
+      "lines": 195,
+      "sha256": "e8c8131eeb58464a8116ae313bcb91b53651fbc14bd3697a429685de3ea42969",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/shared_assets__humanoid_stadium.xml.md"
+    },
+    {
+      "project": "baseball",
+      "path": "shared_assets/stadium_3d.xml",
+      "lines": 274,
+      "sha256": "a46ed2bddaa70aa101a7cc2d42f0487771073db52b634484a3333b9a12b96914",
+      "chapter": "02_물리_환경_관측_보상_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/baseball/shared_assets__stadium_3d.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": ".gitignore",
+      "lines": 19,
+      "sha256": "ee6dbe3903cf1ff6e05a02dcade793346470a1464d7f10cf0ce51d584c71e6d0",
+      "chapter": "06_문서주장_실제구현_검증수준_대조.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/.gitignore.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "README.md",
+      "lines": 15,
+      "sha256": "e47b62582c9f662a8f0270c0fb0fda2ba38455dba5f080f7a501fe159facfb01",
+      "chapter": "09_이족후속_연구일지_설계판단_시간순_복원.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/README.md.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "RESEARCH_LOG.md",
+      "lines": 1142,
+      "sha256": "97e52ecc215a43ce0605c5c5a57aa8f50404a4100be67082f63ffb37a4a7ad21",
+      "chapter": "09_이족후속_연구일지_설계판단_시간순_복원.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/RESEARCH_LOG.md.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "__init__.py",
+      "lines": 3,
+      "sha256": "1ec823d77cd42b90b98ec3d716f262831e5940315e14ec8286d201de0786ea91",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/__init__.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/__init__.py",
+      "lines": 27,
+      "sha256": "3a49867010b71d9d58d2867b7e7214f1200e17d0ac65f489a740c29f8811b3a1",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs____init__.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/athletic_duel_env.py",
+      "lines": 737,
+      "sha256": "9926d5d37152a657ad948263661c4dc7ea7542121e513624bf7f7791cf85dd92",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs__athletic_duel_env.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/battery_pitch_catch_env.py",
+      "lines": 385,
+      "sha256": "c344cc7e47595da6c1fe979c229d895c4d986dae99a6234e389e5113f29372e9",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs__battery_pitch_catch_env.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/bipedal_duel_env.py",
+      "lines": 586,
+      "sha256": "d88a2c1c69e2d32dfcee4a5def99395fc3f0bdba6ece660682e5037ba642e06e",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs__bipedal_duel_env.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/bipedal_sprint_env.py",
+      "lines": 552,
+      "sha256": "ed74b14e74e161be6a96bee7398bf38a38b5972a674b45fe49bf3b28b395418c",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs__bipedal_sprint_env.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/bipedal_swing_env.py",
+      "lines": 401,
+      "sha256": "3ed0a1e4e13cd7f7fa73290e737ed78d5b969409a4cd93f33b56addb9cbc50c7",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs__bipedal_swing_env.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/directional_batting_env.py",
+      "lines": 528,
+      "sha256": "520f0ad77c9b94655eeb59072d0b13c4bf49bec5ce98e3f0484520e3c672619d",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs__directional_batting_env.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/hardened_batting_env.py",
+      "lines": 489,
+      "sha256": "68ad332e2cc186dd9616591ffedf2418d7f07b0e7a3b97f2f732331fc8aa3bdb",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs__hardened_batting_env.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/hit_and_run_env.py",
+      "lines": 454,
+      "sha256": "a7a604582f015b6abd993c5cfa3ac9c57389b84b25d859823a388c123907b608",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs__hit_and_run_env.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/infield_defense_env.py",
+      "lines": 928,
+      "sha256": "3e6a7c1a420e423f4384d59207446af21d48e7328f7aba9853532a7394106c35",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs__infield_defense_env.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "envs/pitcher_precision_env.py",
+      "lines": 421,
+      "sha256": "2fe66de47732cab340600f55e6360057c63e4bc721263bd7217920d63cf02085",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/envs__pitcher_precision_env.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "models/h1_athletic_duel.xml",
+      "lines": 575,
+      "sha256": "66b21dbec47b954fac9d822ec1cec5e72014d7da515ff133d316c2407d83a910",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/models__h1_athletic_duel.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "models/h1_baseball.xml",
+      "lines": 303,
+      "sha256": "25af198c993e26db456317bca1b6c25d6ac2d7dbbaa556849dc614baaa3dd116",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/models__h1_baseball.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "models/h1_battery_pitch_catch.xml",
+      "lines": 412,
+      "sha256": "a59f7243b01adf63e262b7d79c96eaf01235e8d101fc8e9939bc440bcb313e4e",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/models__h1_battery_pitch_catch.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "models/h1_bipedal_baseball.xml",
+      "lines": 286,
+      "sha256": "d061fef632e9fb7177d39d8f2be4f91e6677d032238b1703a8989ed8d5b401b5",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/models__h1_bipedal_baseball.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "models/h1_bipedal_duel.xml",
+      "lines": 412,
+      "sha256": "1963f90f122d965d3209edf51879776c78e595a3c9fdf64ba7a288459d1a810f",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/models__h1_bipedal_duel.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "models/h1_bipedal_sprint.xml",
+      "lines": 290,
+      "sha256": "a405cc5e4ec6de41faf9cba69f29514fe966f970b1a06ff9bc13e82d1e1156bc",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/models__h1_bipedal_sprint.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "models/h1_duel_match.xml",
+      "lines": 406,
+      "sha256": "a9cd898415f694dfdb7ffe7f60ad6eb13de5c6c8123de426cebb19824ae19a62",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/models__h1_duel_match.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "models/h1_hit_and_run.xml",
+      "lines": 288,
+      "sha256": "9e274643379643a1c19b8db15fd71da86a23094b9e1ff87a6a2783866544d620",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/models__h1_hit_and_run.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "models/h1_infield_defense.xml",
+      "lines": 569,
+      "sha256": "2ddbfda1b081ca706714a6087eed71069bdcafc686afcf1b5a209064c255c76a",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/models__h1_infield_defense.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "models/h1_pitcher.xml",
+      "lines": 280,
+      "sha256": "44c93a2d7713ed04c1fd0a1e7b254849ca29bbf39bbc4f5444e99e1f64c6c046",
+      "chapter": "07_이족후속_전신제어_물리환경_코드해설.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/models__h1_pitcher.xml.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/build_athletic_duel_xml.py",
+      "lines": 100,
+      "sha256": "6e298105c0dcfbad21f1c1d370a8d67894bb20ec515f433b9acda0a9303753e6",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__build_athletic_duel_xml.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/build_battery_xml.py",
+      "lines": 174,
+      "sha256": "af36ae4ee5990bc66f73a5571ba04db77934614ffba09c3e5a858c6f3c7c1da7",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__build_battery_xml.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/build_bipedal_duel_xml.py",
+      "lines": 215,
+      "sha256": "5c006a9922db3433665976e82f01c8ebb1128896dfd225f65e085c76a6f6cc2a",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__build_bipedal_duel_xml.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/build_duel_match_xml.py",
+      "lines": 173,
+      "sha256": "a7976d4ee8e58dafd8d812a8e016312b869e1a0cc0dbc978559a2e89bce15f90",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__build_duel_match_xml.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/build_infield_defense_xml.py",
+      "lines": 340,
+      "sha256": "22ef069eceb48a633b1b81e095a39968c243283f1a150c32c8abc4e28b132555",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__build_infield_defense_xml.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/eval_athletic_duel.py",
+      "lines": 299,
+      "sha256": "84c1ae8ef815008776b8c4921a7fbf65ea4edcc557cc9114865ee6dc84bbddb1",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__eval_athletic_duel.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/eval_battery.py",
+      "lines": 172,
+      "sha256": "5b8471331c75c8f2cbf67dce0ba393d25d4aabf7e5bce58ffa24c9cfb45c15a4",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__eval_battery.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/eval_bipedal_duel.py",
+      "lines": 278,
+      "sha256": "cb551858e4a00ea0087c0d9f938f182e09141159a160cbbf49b1dca758f57b98",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__eval_bipedal_duel.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/eval_bipedal_sprint.py",
+      "lines": 261,
+      "sha256": "e7044e95db2bd96c056f22b044b2fc35da356543c101a09d4c94bf8f7af9749c",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__eval_bipedal_sprint.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/eval_hardened_batter.py",
+      "lines": 157,
+      "sha256": "0eeeed75200244d3850a9dc51d60b67c335dadf542b8fe3330ad23fafb284411",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__eval_hardened_batter.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/eval_hit_and_run.py",
+      "lines": 128,
+      "sha256": "6178e61f865da857ae96196f519e53489ed737bb673c99ccf01bbd6fb7a56908",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__eval_hit_and_run.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/eval_infield_defense.py",
+      "lines": 320,
+      "sha256": "7b7da00502d50a0e1135033fc1d73ef64b8f7e085bbfb4c782465a0e1ab4cbcc",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__eval_infield_defense.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/eval_phase1.py",
+      "lines": 197,
+      "sha256": "0739b1bbc15238ab43522d621b46c036a7a8456c2f676b4c6a3d2f865247eb82",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__eval_phase1.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/eval_phase3.py",
+      "lines": 152,
+      "sha256": "2356963a7b3efa020ce6c232b1767f976f1dacdc781ec30d236a4fb10de5f8ad",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__eval_phase3.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/eval_pitcher.py",
+      "lines": 140,
+      "sha256": "3da65a8552183a264680527543460691b5b34c748e4af495145347c0c947ff79",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__eval_pitcher.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/simulate_pitcher_batter_match.py",
+      "lines": 391,
+      "sha256": "504ada84f6047626f75d83cd77907941ec299426319a70ba01450ef2d91c04a3",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__simulate_pitcher_batter_match.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/test_athletic_duel_render.py",
+      "lines": 68,
+      "sha256": "2bff660265f7bb5e39a9970b919bac6f405cff5dda32f6d4d0d2443a3e5816dd",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__test_athletic_duel_render.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/test_battery_render.py",
+      "lines": 61,
+      "sha256": "bd0df27eff8d2f38169d5b419d8f956beb1823f9c483f7a10867ef6ec9287c7e",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__test_battery_render.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/train_athletic_duel.py",
+      "lines": 75,
+      "sha256": "8b319088b473c408373873b0d21aef4944459edcebf9741f5869b56fd7eec343",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__train_athletic_duel.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/train_battery.py",
+      "lines": 59,
+      "sha256": "fb2b1ff3274f3e1959fbfb086ece58fc983a766e1d658b8050faef8bbc638c78",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__train_battery.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/train_bipedal_duel.py",
+      "lines": 192,
+      "sha256": "f754b77fdf93f7a4a7c9454c6837884c46ee9bc094ef2eda65f01e83e6427810",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__train_bipedal_duel.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/train_bipedal_sprint.py",
+      "lines": 213,
+      "sha256": "a303f1c3940663b26def479d6164e9e9a3827cfc32459a5251056c79e9d03474",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__train_bipedal_sprint.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/train_hardened_batter.py",
+      "lines": 167,
+      "sha256": "87440195f02557796e5244d3ade94b100cb4f87acfbbf91c765358bfaa66ef45",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__train_hardened_batter.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/train_hit_and_run.py",
+      "lines": 166,
+      "sha256": "cdd744d2e7ada72c0bf9e64d0ab1231d8a7b30e8948aefb7d308872c5f7b7184",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__train_hit_and_run.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/train_infield_defense.py",
+      "lines": 181,
+      "sha256": "fcfbb65ccd42604116ff53d3be2b3afdecd5f2695d34d074debbb3d2c453fdf9",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__train_infield_defense.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/train_phase1.py",
+      "lines": 224,
+      "sha256": "764472b0281dc7a73f357171bb6566860f2fdf2b288cf9ce46f48905c29aa6d9",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__train_phase1.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/train_phase3.py",
+      "lines": 155,
+      "sha256": "0d26d4d01b09414efd4231fbf69bdf1ba2d0de0a5b828d631b1183a703884430",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__train_phase3.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/train_pitcher.py",
+      "lines": 189,
+      "sha256": "ebeb1ca17eb94bbc3309344d50c40d0d96ffe864076c8443a8a42f4b6e6aa6d1",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__train_pitcher.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/tune_cam.py",
+      "lines": 65,
+      "sha256": "7fb33c79f40a465af488ff805363596ac46ca39144b66b0a3c8092ef3077eb9b",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__tune_cam.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "scripts/tune_catcher_arm.py",
+      "lines": 69,
+      "sha256": "68d151428265afbcae488d3959c842dc2513c8054dab879eb560f1580f49b13b",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/scripts__tune_catcher_arm.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "test_sim.py",
+      "lines": 181,
+      "sha256": "888ad1e46a81c0dd51ca840cf523feb87f741f863d403a2dab935a8fe41fc388",
+      "chapter": "08_이족후속_학습_평가_모델_실험증거.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/test_sim.py.md"
+    },
+    {
+      "project": "bipedal",
+      "path": "walkthrough.md",
+      "lines": 86,
+      "sha256": "6674d0e1f2363dadecb897f160f8c4429f84998b7a7c022b11d7770624a9f89f",
+      "chapter": "09_이족후속_연구일지_설계판단_시간순_복원.md",
+      "named_in_chapter": true,
+      "full_sourcebook": "sourcebook/bipedal/walkthrough.md.md"
+    }
+  ]
+}

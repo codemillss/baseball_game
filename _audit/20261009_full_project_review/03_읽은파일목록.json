@@ -1,0 +1,3653 @@
+{
+  "created": "2026-10-09",
+  "scope": "training/evaluation/model evidence chapter",
+  "no_model_execution": true,
+  "no_unpickle": true,
+  "read_files": [
+    {
+      "path": "cognitive_ai/training/train_80kmh_deep.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1512,
+      "sha256": "215bce4175c35cb5e28b1d8c8c4dfde8f3be6281cb965a2500cbc45f70be1de9"
+    },
+    {
+      "path": "cognitive_ai/training/train_breaking_ball.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1564,
+      "sha256": "bb1af2c30ce65a8ce73c56e4e47e773100959c9559a9407a9b5d079cf23974e7"
+    },
+    {
+      "path": "cognitive_ai/training/train_catcher.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 927,
+      "sha256": "0c06a7057c454e196e7362235eada6f49ee6ea227ee3e15b7e3e44d1249e8f26"
+    },
+    {
+      "path": "cognitive_ai/training/train_cognitive.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 2817,
+      "sha256": "46a57aed27c3e6b84f26da372e783e4220396748147b01b51a85105c9c798ad0"
+    },
+    {
+      "path": "cognitive_ai/training/train_curriculum_pitching.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 3284,
+      "sha256": "d68da7821fa393a213e52a72a8f2264c7532b5a095d5c6991443fc0b9ac32df7"
+    },
+    {
+      "path": "cognitive_ai/training/train_fielder.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1038,
+      "sha256": "a6222c1355a674121bf9ae567351d0552e52e5ed66be7841656459ca2d154a75"
+    },
+    {
+      "path": "cognitive_ai/training/train_match_batter.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 3325,
+      "sha256": "c507fe79d41f46f78cf79f2449ada96c3b2c369bf7f448592adcfd45e17b03ea"
+    },
+    {
+      "path": "cognitive_ai/training/train_mega_architecture.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 4544,
+      "sha256": "74998e864cb921fff6781a4a79ca15c75c333821e2bfb2e617f3d133e82e1469"
+    },
+    {
+      "path": "cognitive_ai/training/train_mlb_batter.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 3811,
+      "sha256": "35d2762db01ccab1f454c814beea13e1e6eacb950e56a0403910a9e58dd47444"
+    },
+    {
+      "path": "cognitive_ai/training/train_mlb_pitcher.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1529,
+      "sha256": "27a2ab55be695e0faedd8f33f66c49e9051e98cf524e99ffa5738c1f4e1b96e8"
+    },
+    {
+      "path": "cognitive_ai/training/train_mocap_batter.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1885,
+      "sha256": "f47541a80e17cce77693293aa861696c43c09e33755977cddcb9eb5b10f188e0"
+    },
+    {
+      "path": "cognitive_ai/training/train_mocap_pitcher.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1809,
+      "sha256": "bb2531fb4121d4623375a02c2187a424654cbdcb7e7815e5562e027f499c7656"
+    },
+    {
+      "path": "cognitive_ai/training/train_normalized.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1449,
+      "sha256": "a6894c724091114c7cecfdc2099ae92d84ff5bb17719909414bdf360b9383480"
+    },
+    {
+      "path": "cognitive_ai/training/train_pitcher.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1516,
+      "sha256": "21ed5c0370984224f5b714f8f191485e690dd15cd9071ae9504630248c18206c"
+    },
+    {
+      "path": "cognitive_ai/training/train_runner.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 919,
+      "sha256": "51fe424fb261ad0919a2b48fadca3d1e9b1a5a45a0ff0ebfbcb02069c0dc6e83"
+    },
+    {
+      "path": "cognitive_ai/training/train_soft_toss.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1560,
+      "sha256": "fe10c7065ce5684b236102af04fc215f8ceeb908ac2c113986d93278ec5221e3"
+    },
+    {
+      "path": "cognitive_ai/training/train_teeball.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1702,
+      "sha256": "aae1e81d666790e7ee1ed9ce5c6873859792c54bed62127c41b1f6e72cbf6eda"
+    },
+    {
+      "path": "cognitive_ai/evaluation/eval_breaking_ball.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 4188,
+      "sha256": "38eae59c31e59cbce878a9fa2cb2180447987e7b7cf7c6a7b8be0fe564e13422"
+    },
+    {
+      "path": "cognitive_ai/evaluation/eval_normalized.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 4237,
+      "sha256": "a410627c5f295f38383c694ba7ce2fcab3f3bb2e1cac678ca8745c09ea934db3"
+    },
+    {
+      "path": "cognitive_ai/evaluation/eval_pitcher.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 4089,
+      "sha256": "b833f6d81f33381ef126d96f07d8218a0742c164828b66347918deef328d4d9a"
+    },
+    {
+      "path": "cognitive_ai/evaluation/eval_pitching_machine.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 4238,
+      "sha256": "4c2e761847ad1691d5bcea16ca28e96d48c1bfe7c6237bb0bf8f4436dd654552"
+    },
+    {
+      "path": "cognitive_ai/evaluation/eval_soft_toss.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 3548,
+      "sha256": "7ec4468db48465b3366db866779ff8ed79d7472ebd8a7a65432d55570cfb9cae"
+    },
+    {
+      "path": "cognitive_ai/evaluation/evaluate_base_stealing.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 3142,
+      "sha256": "c08984cd6048668145ac9125d5b2bd22e40be03e11de7b4bd878d896609c72f7"
+    },
+    {
+      "path": "cognitive_ai/evaluation/evaluate_fielder.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 2771,
+      "sha256": "1778586c2ce07b487451ef25b0bb2c8917cea2f220017db69e53767d20d899ea"
+    },
+    {
+      "path": "cognitive_ai/evaluation/evaluate_mocap_match.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 4409,
+      "sha256": "671f2a208d271a5b31494f28570c5ca808067c86e7ea55998306b266fd0a3f4e"
+    },
+    {
+      "path": "cognitive_ai/evaluation/simulate_9_innings.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 1370,
+      "sha256": "8b58c45e5b55667061151a4b88113963c32b8222941d9ae572b6e796aae6ed94"
+    },
+    {
+      "path": "cognitive_ai/evaluation/simulate_full_match.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 4241,
+      "sha256": "18ab2e4e227b5716a9ce5b192466001abd806b2b4c916a945b56d70342548f9f"
+    },
+    {
+      "path": "cognitive_ai/evaluation/simulate_mlb_match.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 6777,
+      "sha256": "88fad1935bfdeec164b1d3e235bcafcd02b4c8c4f2b9173661a68445afcefddd"
+    },
+    {
+      "path": "cognitive_ai/evaluation/video_evaluator.py",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 5336,
+      "sha256": "12ff8023269c1a057be6d792d1f9e625111b5349a1e5a037a37463ced288ac0a"
+    },
+    {
+      "path": "run_demo.sh",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 683,
+      "sha256": "2afafc90df88ec128861a1ef86ea670d7144e2a7ecfafd4a3d741f70f22355e4"
+    },
+    {
+      "path": "run_dashboard.sh",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 464,
+      "sha256": "8a582c6ac1d3a091ee4294de9bd574a484bd8b2b2634ce3c20e2962cc47745dc"
+    },
+    {
+      "path": "requirements.txt",
+      "method": "full text with numbered lines",
+      "full_read": true,
+      "bytes": 133,
+      "sha256": "99dc27677fad0c00835919898a8a9ed4c6c345df9d63f560fcdb47f74e92a7f2"
+    },
+    {
+      "path": "checkpoints/breaking_ball_best/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 146952,
+      "sha256": "fc9d55083bc32b7a798882ded0d1388a36442ab18c5ab049861efc7113b756ab"
+    },
+    {
+      "path": "checkpoints/breaking_ball_final_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 146968,
+      "sha256": "eb60e73ee4d6255faa46832c4a81e37ef38f637c4ec6f8ebb17a2e7476d10885"
+    },
+    {
+      "path": "checkpoints/catcher/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 192190,
+      "sha256": "436f5f13422d18e3a33d4c81ba210b0e8d5c2dc6ed010f7e539d22434be7bf4e"
+    },
+    {
+      "path": "checkpoints/fielder/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 187374,
+      "sha256": "aea34aa8dccf91d48d4f408540463c443c9e7a1793b8520daac806c2a018ffb5"
+    },
+    {
+      "path": "checkpoints/match_batter_best/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 146965,
+      "sha256": "66a00464a6c6446179b990b0bb35e2390f28e20c142924e0cb881c1d7af44ff4"
+    },
+    {
+      "path": "checkpoints/mega_batter/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 215515,
+      "sha256": "abbed97e482917833bb7c3d12463a27f098608d1c63ce793cd290f7c86bbd9c3"
+    },
+    {
+      "path": "checkpoints/mega_pitcher/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 163731,
+      "sha256": "e61fde1ef3cb8ebaa03b8afeefb80fc657c80ab1fb56e8efe57ba6550fdee552"
+    },
+    {
+      "path": "checkpoints/mlb_batter_best/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 151719,
+      "sha256": "324d7ab0b77de02a4ee1f38ffb43a7233c2983879adca9b586c4dda658a5f339"
+    },
+    {
+      "path": "checkpoints/mlb_pitcher_best/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 158867,
+      "sha256": "ea517ce920d2c6d5820e8543a329eb9bc77ee6caed1c86adacbb6ec6e1e75f35"
+    },
+    {
+      "path": "checkpoints/mocap_batter_best/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 151715,
+      "sha256": "85c7c2d5289cdab26063144ac26a0f2bb07b9683af57051d1245d0e5a76f5681"
+    },
+    {
+      "path": "checkpoints/mocap_pitcher_best/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 159003,
+      "sha256": "40c39450b8dbd1de9b0310ec29dd0e81679fecd32a5277baae51a5a5358082ee"
+    },
+    {
+      "path": "checkpoints/pitcher_best/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 154113,
+      "sha256": "28a877ca50b21d7c0a125ffbdffb5f4b8d30d703e6f7612d8f4782b051070cc1"
+    },
+    {
+      "path": "checkpoints/pitcher_final_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 158870,
+      "sha256": "488c698f5ce55a45e409f7fc5660260ca41c7419ea61056915edcfdc1a13d34e"
+    },
+    {
+      "path": "checkpoints/pitching_50kmh_best/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 144586,
+      "sha256": "7fb78d76804753c843922a71cac887dea8b3851fd100a1128ad70589274974a7"
+    },
+    {
+      "path": "checkpoints/pitching_50kmh_final_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 144588,
+      "sha256": "7d96066601b23af7551581cf528af4204bd4f35389954efe37da9bab6e11d218"
+    },
+    {
+      "path": "checkpoints/pitching_80kmh_best/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 144586,
+      "sha256": "5accf0e52bb5d922669bb2712211769bb8705a36a8aa8e4f03b2864b4796b753"
+    },
+    {
+      "path": "checkpoints/pitching_80kmh_deep_best/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 144589,
+      "sha256": "97275c20645c2faf8ab940780db5b64ff1f15fb2c9fffe4a14efb93b8f4ea080"
+    },
+    {
+      "path": "checkpoints/pitching_80kmh_deep_final.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 144591,
+      "sha256": "b236f0040cafc9286a983fd703ee8dc32765c01b065539058edd942db2017d3e"
+    },
+    {
+      "path": "checkpoints/pitching_80kmh_final_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 144590,
+      "sha256": "de6cc71367eda40214c435d7a2d55bced5e049ddd7ffaa78b9600e3b12fa34de"
+    },
+    {
+      "path": "checkpoints/runner/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 146673,
+      "sha256": "a20f6c6f7e86c2080d31a725f06ac57afbea10c4cbcd9027207e1eba7fec933e"
+    },
+    {
+      "path": "checkpoints/soft_toss_best_model/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 144570,
+      "sha256": "ac08207143048c39250da4eb137e78cc7877049e99de91bd9b21816bffd6a4cf"
+    },
+    {
+      "path": "checkpoints/soft_toss_final_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 144572,
+      "sha256": "ee16b914ad9c9385840e3325e53a606aa5464aac57524c2d69d62c820100a6cb"
+    },
+    {
+      "path": "checkpoints/teeball_best_model/best_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 139605,
+      "sha256": "2661499a7cdeb0b951141f56e804591ce6576a6d87810fac9d1a764ae7f49f29"
+    },
+    {
+      "path": "checkpoints/teeball_final_model.zip",
+      "method": "ZIP data JSON and SB3 version only; weight and serialized objects not loaded",
+      "full_read": true,
+      "bytes": 139607,
+      "sha256": "7f10a38b0d2800b43b6259673d706505f3b0361e4917a352bee3a83ccb91db2f"
+    },
+    {
+      "path": "checkpoints/breaking_ball_vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1606,
+      "sha256": "2195a31e1444ee6bd33c7c86a2975ef474e2caa3c9465d2ff29f028b09daab4a"
+    },
+    {
+      "path": "checkpoints/catcher/vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 4365,
+      "sha256": "dac11c8ca7b251fcde172605bd8a653496d90477ec4ba29c11573fcf5339e843"
+    },
+    {
+      "path": "checkpoints/fielder/vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 2326,
+      "sha256": "d24d8cd7d09ceed4ee0cbfb10c4baf8efed15424441680c683a232e98654c713"
+    },
+    {
+      "path": "checkpoints/match_batter_vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1606,
+      "sha256": "80cde4f7c38811fe1ec4cea151834b160690292cc4165d84849dcf644e9e2f61"
+    },
+    {
+      "path": "checkpoints/mega_batter/vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 2655,
+      "sha256": "033f92d92bb776e5566cdd538469a06fda3aaefebbd060686328101cce267b95"
+    },
+    {
+      "path": "checkpoints/mega_pitcher/vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 3025,
+      "sha256": "45b87013bb71e7d92132406ca26566cf23a4352c0a6959f5acb1923eb4c821ba"
+    },
+    {
+      "path": "checkpoints/mlb_batter_vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1696,
+      "sha256": "e60886e8b1a2c07f1a71048f74a154ad094a0ca04cce40c126b452411e1d365e"
+    },
+    {
+      "path": "checkpoints/mlb_pitcher_vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1826,
+      "sha256": "ce37543650d37d1e4084592a3e52402d32e732be47a884cc97cd9be87070acd2"
+    },
+    {
+      "path": "checkpoints/mocap_batter_vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1764,
+      "sha256": "90ac88a2b5ef9d49205d9dc71ec8ec4cadb03bed09dc71f48c51310aeff51663"
+    },
+    {
+      "path": "checkpoints/mocap_pitcher_vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1894,
+      "sha256": "6d23e07f85082abb594ecc7d8f84326f425ea575c7a00216747a4435145c78bd"
+    },
+    {
+      "path": "checkpoints/pitcher_vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1736,
+      "sha256": "536c2d12aa3d97e147e1e7b8313035a44c1676befe57747cb9fb660b7aab38bf"
+    },
+    {
+      "path": "checkpoints/pitching_50kmh_vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1566,
+      "sha256": "4e71a36479d9ef6bcfbee5e715216f996582ac91c5b3e7e6d2974ce3400a7c7e"
+    },
+    {
+      "path": "checkpoints/pitching_80kmh_deep_norm.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1566,
+      "sha256": "195e2f44f12dbd2512864b118d7aed308b359c097191110b2565ab99545a6058"
+    },
+    {
+      "path": "checkpoints/pitching_80kmh_vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1566,
+      "sha256": "17cd37997e5427de37bf2ccf6cea3711e5835ea7f681b0705e0b4d6a99e269d1"
+    },
+    {
+      "path": "checkpoints/runner/vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 2295,
+      "sha256": "b7dc0d3feeed944b6846ba335003fc9f8ddf34ffea5c30c5d11fc514e2843941"
+    },
+    {
+      "path": "checkpoints/soft_toss_vec_normalize.pkl",
+      "method": "pickletools.genops static opcode only; no unpickle",
+      "full_read": true,
+      "bytes": 1566,
+      "sha256": "c8c09bfc40e16555b5fb9162fa1187224a549f8bb1ad685478f112e813f861a0"
+    },
+    {
+      "path": "archive/runs/tee_ball_drills_20260730_104233/events.out.tfevents.1785375753.Jinmanui-MacBookPro.local.29630.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 11582,
+      "sha256": "e65c407dbe3593a6a45b9bf6bc3cd058be7e95d385d2c9309f6a83a36e09f875"
+    },
+    {
+      "path": "archive/runs/tee_ball_drills_20260730_105020/events.out.tfevents.1785376220.Jinmanui-MacBookPro.local.29967.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 5014,
+      "sha256": "53fc652a92a9d8cc46f27af4bdb99b0f3624f3878853d8cac8e0b0c72aa42ce5"
+    },
+    {
+      "path": "archive/runs/tee_ball_drills_20260730_105332/events.out.tfevents.1785376412.Jinmanui-MacBookPro.local.30127.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 1730,
+      "sha256": "1aa828ec624cebd3d78c34d354028db9ce2285fc47b9bbf62c25bac40fbcf83e"
+    },
+    {
+      "path": "archive/runs/tee_ball_drills_20260730_105517/events.out.tfevents.1785376517.Jinmanui-MacBookPro.local.30192.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 3372,
+      "sha256": "dd572d0bfccb08477b252dbadfa60ce3b06d264a2cff45cfd1ca1575f28a760b"
+    },
+    {
+      "path": "archive/runs/tee_ball_drills_20260730_110309/events.out.tfevents.1785376989.Jinmanui-MacBookPro.local.30472.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 44786,
+      "sha256": "39888e87867d99a1e6468bd4a5474269642738cc89490839bf096e901b741114"
+    },
+    {
+      "path": "checkpoints/mega_batter/tb_logs/PPO_1/events.out.tfevents.1788274863.man-ui-MacBookPro.local.80228.1",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 38646,
+      "sha256": "26e519bc15870bfd5ce75b87945b2d05cc0f6985e9b3007446c8177292d93db6"
+    },
+    {
+      "path": "checkpoints/mega_pitcher/tb_logs/PPO_1/events.out.tfevents.1788274612.man-ui-MacBookPro.local.80228.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 84188,
+      "sha256": "322161b39a88cbe10a8e5993ff7d637ec2b2ba17eb443786bdb81b1003a9f1fe"
+    },
+    {
+      "path": "runs/soft_toss_tensorboard/PPO_1/events.out.tfevents.1788184767.man-ui-MacBookPro.local.66497.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 46297,
+      "sha256": "ff5bae4409ba3bdece7a45cd13217441d9e4aa186d5fe4112c8b701a723b1290"
+    },
+    {
+      "path": "runs/soft_toss_tensorboard/PPO_2/events.out.tfevents.1788184970.man-ui-MacBookPro.local.66571.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 46297,
+      "sha256": "4df8a85cd9bfc22437559f827259f5de391a4d2e3270197613839f6b42873d3e"
+    },
+    {
+      "path": "runs/soft_toss_tensorboard/PPO_3/events.out.tfevents.1788185710.man-ui-MacBookPro.local.66771.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 46297,
+      "sha256": "85c65aeb708ec06c480c83a5eeb0100cbd82684de3320a937cd8352b02b21f8f"
+    },
+    {
+      "path": "runs/soft_toss_tensorboard/PPO_4/events.out.tfevents.1788185800.man-ui-MacBookPro.local.66810.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 62207,
+      "sha256": "3ad418bed18b8d1d7cd0fa7b19319f1c0139abc656992ca431884b9dc4c70629"
+    },
+    {
+      "path": "runs/soft_toss_tensorboard/PPO_5/events.out.tfevents.1788186543.man-ui-MacBookPro.local.67043.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 46297,
+      "sha256": "7e72a0a639ae6488c42a9de8446250294dd32e1806748babbfe85714328c20e2"
+    },
+    {
+      "path": "runs/teeball_tensorboard/PPO_1/events.out.tfevents.1788182355.man-ui-MacBookPro.local.65853.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 38342,
+      "sha256": "2b1dc16c7c185e0f8e65eb241cc341a1e562bfe8af8b746a2952ddf8cf403e5d"
+    },
+    {
+      "path": "runs/teeball_tensorboard/PPO_2/events.out.tfevents.1788184119.man-ui-MacBookPro.local.66220.0",
+      "method": "TensorBoard EventFileLoader read-only protobuf parse",
+      "full_read": true,
+      "bytes": 38342,
+      "sha256": "324761e2363f58afffa472a39584c9bf08a6675a5fbd858013f717b21adb8316"
+    },
+    {
+      "path": "checkpoints/mega_pitcher/logs/evaluations.npz",
+      "method": "np.load allow_pickle=False read-only",
+      "full_read": true,
+      "bytes": 1578,
+      "sha256": "9f44a1f8e21b7c93fa16e9f2b9bfd848ebcc7d898658dc15cf4c6f21f2c4f537"
+    },
+    {
+      "path": "checkpoints/mega_batter/logs/evaluations.npz",
+      "method": "np.load allow_pickle=False read-only",
+      "full_read": true,
+      "bytes": 1298,
+      "sha256": "b45f245e321505c5c6a70b17434ad41c30188ed3c1f8bec4ac703daa29786e9d"
+    },
+    {
+      "path": ".agents/AGENTS.md",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 1868,
+      "sha256": "284c6dc440f50ffe827ae55970097cd498f245ad38f99134050cd70588f46812"
+    },
+    {
+      "path": "docs/EXPERIMENT_LOG.md",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 4255,
+      "sha256": "5b49f8648bf27a6f8c0541cf28c933784f4f50c18aa44c271cfee0053c44fee2"
+    },
+    {
+      "path": "_audit/20260926_013033/logs/initial_manifest.json",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 62626,
+      "sha256": "669cdf4575bc86ad3dd3bb1d4f8272542bf4022fbac6e32956b0765b17f853a1"
+    },
+    {
+      "path": "_audit/20260926_013033/logs/final_integrity.json",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 195,
+      "sha256": "96f3ce40bf780e71d74d7e99092018f2c87545827d03d466a0176cb60809e616"
+    },
+    {
+      "path": "_audit/20260926_013033/logs/runtime_results.jsonl",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 242655,
+      "sha256": "65b8c1bf0debc2f11449132a2ac54def3b20a81557a84f48b14569cf5e0a8ce5"
+    },
+    {
+      "path": "_audit/20260926_013033/logs/analysis_summary.json",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 12603,
+      "sha256": "576a777fd60fc738c2be2de1f3fb95a8b4dc9dc333c0841d9be7feb3960f3d37"
+    },
+    {
+      "path": "_audit/20260926_013033/logs/vecenv_contract_probe.json",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 729,
+      "sha256": "f550ebb0ab8688d8c55ca030ea70e516eea982be70399478e41520ce087c4354"
+    },
+    {
+      "path": "_audit/20260926_013033/logs/rules_and_checkpoint_probe.json",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 26663,
+      "sha256": "1a2cda4f66b2ec5169f7b57b29962a22c1f75e664eb1ac1a5f1e5771480ac581"
+    },
+    {
+      "path": "_audit/20260926_013033/logs/source_history_contracts.json",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 991,
+      "sha256": "7bcd16f1d75fb9e8173b149ee824db9d65262fa59a7221da5e6d6d83d0321dbe"
+    },
+    {
+      "path": "_audit/20260926_013033/logs/artifact_manifest.json",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 7721,
+      "sha256": "ab769f08c20ae624d47463993338de01da8576fd55dbf6cb270baafc219a577b"
+    },
+    {
+      "path": "_audit/20260926_013033/logs/fielder_trace.stderr.txt",
+      "method": "full text read",
+      "full_read": true,
+      "bytes": 94,
+      "sha256": "857fd454997e87e71d93cad36115b68d6b2cc99aeca86c916892e0de4dbecc3d"
+    },
+    {
+      "path": "docs/PAPER.md",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 21764,
+      "sha256": "163a4dbe22048a06f3cd5b581fec45724d4b419626975d63cdb91952477c4927"
+    },
+    {
+      "path": "cognitive_ai/envs/pitcher_env.py",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 12139,
+      "sha256": "1d5253ba7806cc404bc995a146ed62c193751d354239cd2e2311f44d62e77ccb"
+    },
+    {
+      "path": "cognitive_ai/envs/baseball_match_env.py",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 19752,
+      "sha256": "4ef6cf357806a284e6940fa2fef64c8b643bab287fcb0c0fe75202ed458ff275"
+    },
+    {
+      "path": "cognitive_ai/envs/soft_toss_env.py",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 9010,
+      "sha256": "60156a964455ca199b64c80ba0fe894e7e9720a7924c4f626b663683e8cfd2f3"
+    },
+    {
+      "path": "cognitive_ai/envs/pitching_machine_env.py",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 10234,
+      "sha256": "0c4f95738ed23598060cadb9d46f82b81710aa5005974ddbcb533afbbf89169c"
+    },
+    {
+      "path": "_audit/20260926_013033/scripts/runtime_audit.py",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 14580,
+      "sha256": "1b07e3219d516b3351727414a6ce607435c233bf5780775fb1eedcb8776a61b6"
+    },
+    {
+      "path": "_audit/20260926_013033/notes/training_eval.md",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 27569,
+      "sha256": "69e6bc7cf93f37b674aa6f85adb11ad0144afa739c0533fe0dca42ed8a901dea"
+    },
+    {
+      "path": ".venv/lib/python3.11/site-packages/stable_baselines3/common/callbacks.py",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 27529,
+      "sha256": "29c3b9668239ef872fbf94a2ef37c672889947b0531c9a6ec963fd12c00d255e"
+    },
+    {
+      "path": ".venv/lib/python3.11/site-packages/stable_baselines3/common/base_class.py",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 38680,
+      "sha256": "8e142f3efc4397a94dbe8bbb0ee1998cfe9e809b2fb34a9297f737ed4d81ab63"
+    },
+    {
+      "path": ".venv/lib/python3.11/site-packages/stable_baselines3/common/vec_env/vec_normalize.py",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 13594,
+      "sha256": "1a6e5e84fe9836d79cd188ae345644c16215df7e94755d29dbc39e15ea83c9d9"
+    },
+    {
+      "path": ".venv/lib/python3.11/site-packages/stable_baselines3/common/vec_env/vec_frame_stack.py",
+      "method": "targeted numbered blocks and text searches",
+      "full_read": false,
+      "bytes": 2079,
+      "sha256": "d1f9c1a1de8442da389560af54a344dc3644be0ded71da2736889a7cf147931f"
+    },
+    {
+      "path": "cognitive_ai/envs/teeball_env.py",
+      "method": "targeted numbered lines and contract searches",
+      "full_read": false,
+      "bytes": 7633,
+      "sha256": "7a99741fdb43df9435102a22b8e8f23812ae8bd419ba2b9869e64e169a470c2f"
+    },
+    {
+      "path": "cognitive_ai/envs/fielder_env.py",
+      "method": "targeted numbered lines and contract searches",
+      "full_read": false,
+      "bytes": 5933,
+      "sha256": "5b4a05e4123371192964ac0666b3417b5c8258d4182690f3a7dacaa7959d8535"
+    },
+    {
+      "path": "cognitive_ai/envs/runner_env.py",
+      "method": "targeted numbered lines and contract searches",
+      "full_read": false,
+      "bytes": 2748,
+      "sha256": "3976159d16ab178df44836bac8d12460aa138059bc98a63a1dc87dca872495b1"
+    },
+    {
+      "path": ".venv/lib/python3.11/site-packages/stable_baselines3/common/vec_env/base_vec_env.py",
+      "method": "targeted numbered lines and contract searches",
+      "full_read": false,
+      "bytes": 19099,
+      "sha256": "1e7da85077c947fc1ec81941de793cabcc039a8ff8e0172b6b7078bd492ddf80"
+    }
+  ],
+  "tensorboard_metadata": [
+    {
+      "path": "archive/runs/tee_ball_drills_20260730_104233/events.out.tfevents.1785375753.Jinmanui-MacBookPro.local.29630.0",
+      "first_wall_time_kst": "2026-07-30T10:42:33.146057+09:00",
+      "last_wall_time_kst": "2026-07-30T10:50:03.215685+09:00",
+      "duration_seconds": 450.069628238678,
+      "max_step": 35,
+      "tags": {
+        "Reward/pitcher": {
+          "count": 35,
+          "first": {
+            "step": 1,
+            "wall_time": 1785375762.518778,
+            "value": 0.0
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376200.447414,
+            "value": 0.0
+          }
+        },
+        "Reward/batter": {
+          "count": 35,
+          "first": {
+            "step": 1,
+            "wall_time": 1785375762.518805,
+            "value": 2.230374574661255
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376200.44744,
+            "value": 2.1319706439971924
+          }
+        },
+        "Reward/fielder": {
+          "count": 35,
+          "first": {
+            "step": 1,
+            "wall_time": 1785375762.51881,
+            "value": 0.0
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376200.447445,
+            "value": 0.0
+          }
+        },
+        "보상(Reward)/투수": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.503403,
+            "value": 0.0
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.215594,
+            "value": 0.0
+          }
+        },
+        "보상(Reward)/타자": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.503437,
+            "value": 2.2005088329315186
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.215609,
+            "value": 2.1319706439971924
+          }
+        },
+        "보상(Reward)/수비수": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.5034418,
+            "value": 0.0
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.215613,
+            "value": 0.0
+          }
+        },
+        "손실(Loss)/투수_월드모델(WM)": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.503455,
+            "value": 0.7213655710220337
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.2156181,
+            "value": 0.026453977450728416
+          }
+        },
+        "손실(Loss)/투수_액터(Actor)": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.5034602,
+            "value": 0.06639555096626282
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.2156212,
+            "value": -0.04133463650941849
+          }
+        },
+        "손실(Loss)/투수_상상_보상(Imagined)": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.503468,
+            "value": -0.0006127894157543778
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.2156239,
+            "value": 0.02233811840415001
+          }
+        },
+        "손실(Loss)/타자_월드모델(WM)": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.5034711,
+            "value": 1.2085473537445068
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.215627,
+            "value": 0.33661118149757385
+          }
+        },
+        "손실(Loss)/타자_액터(Actor)": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.503474,
+            "value": -0.23191089928150177
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.215629,
+            "value": -0.273803174495697
+          }
+        },
+        "손실(Loss)/타자_상상_보상(Imagined)": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.503477,
+            "value": 0.03058583289384842
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.215631,
+            "value": -0.003876884700730443
+          }
+        },
+        "손실(Loss)/수비수_월드모델(WM)": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.503479,
+            "value": 0.7587865591049194
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.2156339,
+            "value": 0.029179725795984268
+          }
+        },
+        "손실(Loss)/수비수_액터(Actor)": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.503482,
+            "value": -0.21847261488437653
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.215636,
+            "value": -0.06904327869415283
+          }
+        },
+        "손실(Loss)/수비수_상상_보상(Imagined)": {
+          "count": 7,
+          "first": {
+            "step": 5,
+            "wall_time": 1785375805.5036001,
+            "value": 0.08677323162555695
+          },
+          "last": {
+            "step": 35,
+            "wall_time": 1785376203.2156851,
+            "value": 0.028983214870095253
+          }
+        }
+      }
+    },
+    {
+      "path": "archive/runs/tee_ball_drills_20260730_105020/events.out.tfevents.1785376220.Jinmanui-MacBookPro.local.29967.0",
+      "first_wall_time_kst": "2026-07-30T10:50:20.508186+09:00",
+      "last_wall_time_kst": "2026-07-30T10:53:17.103541+09:00",
+      "duration_seconds": 176.59535479545593,
+      "max_step": 15,
+      "tags": {
+        "Reward/pitcher": {
+          "count": 15,
+          "first": {
+            "step": 1,
+            "wall_time": 1785376229.798366,
+            "value": 0.0
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376393.849961,
+            "value": 0.0
+          }
+        },
+        "Reward/batter": {
+          "count": 15,
+          "first": {
+            "step": 1,
+            "wall_time": 1785376229.798411,
+            "value": 2.2402875423431396
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376393.849979,
+            "value": 2.138091802597046
+          }
+        },
+        "Reward/fielder": {
+          "count": 15,
+          "first": {
+            "step": 1,
+            "wall_time": 1785376229.7984169,
+            "value": 0.0
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376393.849984,
+            "value": 0.0
+          }
+        },
+        "보상(Reward)/투수": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.1021051,
+            "value": 0.0
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.10339,
+            "value": 0.0
+          }
+        },
+        "보상(Reward)/타자": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.102134,
+            "value": 2.210371494293213
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.103432,
+            "value": 2.138091802597046
+          }
+        },
+        "보상(Reward)/수비수": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.102139,
+            "value": 0.0
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.103437,
+            "value": 0.0
+          }
+        },
+        "손실(Loss)/투수_월드모델(WM)": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.102159,
+            "value": 0.7399365901947021
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.10345,
+            "value": 0.10201701521873474
+          }
+        },
+        "손실(Loss)/투수_액터(Actor)": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.102164,
+            "value": -0.02316432073712349
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.1034539,
+            "value": 0.07454636693000793
+          }
+        },
+        "손실(Loss)/투수_상상_보상(Imagined)": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.102172,
+            "value": -0.012635523453354836
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.103457,
+            "value": -0.020449453964829445
+          }
+        },
+        "손실(Loss)/타자_월드모델(WM)": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.102175,
+            "value": 1.2514946460723877
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.10346,
+            "value": 0.42843881249427795
+          }
+        },
+        "손실(Loss)/타자_액터(Actor)": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.102178,
+            "value": -0.5098368525505066
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.103462,
+            "value": -0.19503316283226013
+          }
+        },
+        "손실(Loss)/타자_상상_보상(Imagined)": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.1021812,
+            "value": 0.13587267696857452
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.1034648,
+            "value": -0.022341232746839523
+          }
+        },
+        "손실(Loss)/수비수_월드모델(WM)": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.1021829,
+            "value": 0.6860451698303223
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.103468,
+            "value": 0.10951206833124161
+          }
+        },
+        "손실(Loss)/수비수_액터(Actor)": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.102186,
+            "value": 0.043419137597084045
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.10347,
+            "value": 0.3310679495334625
+          }
+        },
+        "손실(Loss)/수비수_상상_보상(Imagined)": {
+          "count": 3,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376273.1023,
+            "value": 0.036084529012441635
+          },
+          "last": {
+            "step": 15,
+            "wall_time": 1785376397.103541,
+            "value": -0.0036792478058487177
+          }
+        }
+      }
+    },
+    {
+      "path": "archive/runs/tee_ball_drills_20260730_105332/events.out.tfevents.1785376412.Jinmanui-MacBookPro.local.30127.0",
+      "first_wall_time_kst": "2026-07-30T10:53:32.884794+09:00",
+      "last_wall_time_kst": "2026-07-30T10:54:24.565211+09:00",
+      "duration_seconds": 51.68041682243347,
+      "max_step": 5,
+      "tags": {
+        "Reward/pitcher": {
+          "count": 5,
+          "first": {
+            "step": 1,
+            "wall_time": 1785376422.1625469,
+            "value": 0.0
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376461.2138371,
+            "value": 0.0
+          }
+        },
+        "Reward/batter": {
+          "count": 5,
+          "first": {
+            "step": 1,
+            "wall_time": 1785376422.162573,
+            "value": 2.63262939453125
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376461.213928,
+            "value": 2.650991201400757
+          }
+        },
+        "Reward/fielder": {
+          "count": 5,
+          "first": {
+            "step": 1,
+            "wall_time": 1785376422.162579,
+            "value": 0.0
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376461.213932,
+            "value": 0.0
+          }
+        },
+        "보상(Reward)/투수": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.565058,
+            "value": 0.0
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.565058,
+            "value": 0.0
+          }
+        },
+        "보상(Reward)/타자": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.565098,
+            "value": 2.650991201400757
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.565098,
+            "value": 2.650991201400757
+          }
+        },
+        "보상(Reward)/수비수": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.565102,
+            "value": 0.0
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.565102,
+            "value": 0.0
+          }
+        },
+        "손실(Loss)/투수_월드모델(WM)": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.565113,
+            "value": 0.7338905334472656
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.565113,
+            "value": 0.7338905334472656
+          }
+        },
+        "손실(Loss)/투수_액터(Actor)": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.5651178,
+            "value": -0.18269988894462585
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.5651178,
+            "value": -0.18269988894462585
+          }
+        },
+        "손실(Loss)/투수_상상_보상(Imagined)": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.565124,
+            "value": -0.0036055126693099737
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.565124,
+            "value": -0.0036055126693099737
+          }
+        },
+        "손실(Loss)/타자_월드모델(WM)": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.565127,
+            "value": 12.719717979431152
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.565127,
+            "value": 12.719717979431152
+          }
+        },
+        "손실(Loss)/타자_액터(Actor)": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.56513,
+            "value": -0.0713145062327385
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.56513,
+            "value": -0.0713145062327385
+          }
+        },
+        "손실(Loss)/타자_상상_보상(Imagined)": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.5651321,
+            "value": 0.07528392225503922
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.5651321,
+            "value": 0.07528392225503922
+          }
+        },
+        "손실(Loss)/수비수_월드모델(WM)": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.565135,
+            "value": 0.7059608697891235
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.565135,
+            "value": 0.7059608697891235
+          }
+        },
+        "손실(Loss)/수비수_액터(Actor)": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.5651379,
+            "value": 0.20899292826652527
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.5651379,
+            "value": 0.20899292826652527
+          }
+        },
+        "손실(Loss)/수비수_상상_보상(Imagined)": {
+          "count": 1,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376464.5652108,
+            "value": -0.015914294868707657
+          },
+          "last": {
+            "step": 5,
+            "wall_time": 1785376464.5652108,
+            "value": -0.015914294868707657
+          }
+        }
+      }
+    },
+    {
+      "path": "archive/runs/tee_ball_drills_20260730_105517/events.out.tfevents.1785376517.Jinmanui-MacBookPro.local.30192.0",
+      "first_wall_time_kst": "2026-07-30T10:55:17.712559+09:00",
+      "last_wall_time_kst": "2026-07-30T10:57:09.438194+09:00",
+      "duration_seconds": 111.72563481330872,
+      "max_step": 10,
+      "tags": {
+        "Reward/pitcher": {
+          "count": 10,
+          "first": {
+            "step": 1,
+            "wall_time": 1785376526.9268968,
+            "value": 0.0
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376626.080846,
+            "value": 0.0
+          }
+        },
+        "Reward/batter": {
+          "count": 10,
+          "first": {
+            "step": 1,
+            "wall_time": 1785376526.926923,
+            "value": 2.616656541824341
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376626.080865,
+            "value": 2.5435261726379395
+          }
+        },
+        "Reward/fielder": {
+          "count": 10,
+          "first": {
+            "step": 1,
+            "wall_time": 1785376526.926929,
+            "value": 0.0
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376626.0808692,
+            "value": 0.0
+          }
+        },
+        "보상(Reward)/투수": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.0797272,
+            "value": 0.0
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.4380548,
+            "value": 0.0
+          }
+        },
+        "보상(Reward)/타자": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.079745,
+            "value": 2.6099443435668945
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.4380789,
+            "value": 2.5435261726379395
+          }
+        },
+        "보상(Reward)/수비수": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.0797498,
+            "value": 0.0
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.4380841,
+            "value": 0.0
+          }
+        },
+        "손실(Loss)/투수_월드모델(WM)": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.079765,
+            "value": 0.8046722412109375
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.4380999,
+            "value": 0.2690155804157257
+          }
+        },
+        "손실(Loss)/투수_액터(Actor)": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.0797691,
+            "value": 0.09195789694786072
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.438103,
+            "value": 0.23308303952217102
+          }
+        },
+        "손실(Loss)/투수_상상_보상(Imagined)": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.079774,
+            "value": -0.030478516593575478
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.438106,
+            "value": -0.04391045868396759
+          }
+        },
+        "손실(Loss)/타자_월드모델(WM)": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.079777,
+            "value": 1.5436925888061523
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.438109,
+            "value": 0.6126988530158997
+          }
+        },
+        "손실(Loss)/타자_액터(Actor)": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.07978,
+            "value": -0.4383068084716797
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.438112,
+            "value": -0.22567662596702576
+          }
+        },
+        "손실(Loss)/타자_상상_보상(Imagined)": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.0797818,
+            "value": 0.12667295336723328
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.4381142,
+            "value": 0.013723774813115597
+          }
+        },
+        "손실(Loss)/수비수_월드모델(WM)": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.0797849,
+            "value": 0.6890753507614136
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.438117,
+            "value": 0.2184125781059265
+          }
+        },
+        "손실(Loss)/수비수_액터(Actor)": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.079787,
+            "value": -0.0877465084195137
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.438119,
+            "value": -0.09706393629312515
+          }
+        },
+        "손실(Loss)/수비수_상상_보상(Imagined)": {
+          "count": 2,
+          "first": {
+            "step": 5,
+            "wall_time": 1785376569.079852,
+            "value": -0.002427206374704838
+          },
+          "last": {
+            "step": 10,
+            "wall_time": 1785376629.438194,
+            "value": -0.027170229703187943
+          }
+        }
+      }
+    },
+    {
+      "path": "archive/runs/tee_ball_drills_20260730_110309/events.out.tfevents.1785376989.Jinmanui-MacBookPro.local.30472.0",
+      "first_wall_time_kst": "2026-07-30T11:03:09.323823+09:00",
+      "last_wall_time_kst": "2026-07-30T11:38:10.036256+09:00",
+      "duration_seconds": 2100.712432861328,
+      "max_step": 137,
+      "tags": {
+        "Reward/pitcher": {
+          "count": 137,
+          "first": {
+            "step": 1,
+            "wall_time": 1785377004.138485,
+            "value": 0.0
+          },
+          "last": {
+            "step": 137,
+            "wall_time": 1785379090.0362282,
+            "value": 0.0
+          }
+        },
+        "Reward/batter": {
+          "count": 137,
+          "first": {
+            "step": 1,
+            "wall_time": 1785377004.138624,
+            "value": 2.6206610202789307
+          },
+          "last": {
+            "step": 137,
+            "wall_time": 1785379090.0362508,
+            "value": 2.5267577171325684
+          }
+        },
+        "Reward/fielder": {
+          "count": 137,
+          "first": {
+            "step": 1,
+            "wall_time": 1785377004.13863,
+            "value": 0.0
+          },
+          "last": {
+            "step": 137,
+            "wall_time": 1785379090.036256,
+            "value": 0.0
+          }
+        },
+        "보상(Reward)/투수": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.4772322,
+            "value": 0.0
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.365334,
+            "value": 0.0
+          }
+        },
+        "보상(Reward)/타자": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.477271,
+            "value": 2.587315082550049
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.3653498,
+            "value": 2.517324686050415
+          }
+        },
+        "보상(Reward)/수비수": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.4772758,
+            "value": 0.0
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.365355,
+            "value": 0.0
+          }
+        },
+        "손실(Loss)/투수_월드모델(WM)": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.477291,
+            "value": 0.6675405502319336
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.36536,
+            "value": 0.00514934491366148
+          }
+        },
+        "손실(Loss)/투수_액터(Actor)": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.477296,
+            "value": -0.16568559408187866
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.365363,
+            "value": -0.13709783554077148
+          }
+        },
+        "손실(Loss)/투수_상상_보상(Imagined)": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.477302,
+            "value": -0.014706828631460667
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.365366,
+            "value": -0.026391280815005302
+          }
+        },
+        "손실(Loss)/타자_월드모델(WM)": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.4773061,
+            "value": 1.402683973312378
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.365369,
+            "value": 0.07169220596551895
+          }
+        },
+        "손실(Loss)/타자_액터(Actor)": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.47731,
+            "value": -0.21568717062473297
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.365371,
+            "value": -0.8482045531272888
+          }
+        },
+        "손실(Loss)/타자_상상_보상(Imagined)": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.477313,
+            "value": 0.03981982171535492
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.3653738,
+            "value": 0.003063064767047763
+          }
+        },
+        "손실(Loss)/수비수_월드모델(WM)": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.477317,
+            "value": 0.7146973609924316
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.365376,
+            "value": 0.00664959941059351
+          }
+        },
+        "손실(Loss)/수비수_액터(Actor)": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.47732,
+            "value": 0.4559258818626404
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.365379,
+            "value": -0.03903751075267792
+          }
+        },
+        "손실(Loss)/수비수_상상_보상(Imagined)": {
+          "count": 27,
+          "first": {
+            "step": 5,
+            "wall_time": 1785377070.477437,
+            "value": -0.16071757674217224
+          },
+          "last": {
+            "step": 135,
+            "wall_time": 1785379065.365433,
+            "value": -0.036332495510578156
+          }
+        }
+      }
+    },
+    {
+      "path": "checkpoints/mega_batter/tb_logs/PPO_1/events.out.tfevents.1788274863.man-ui-MacBookPro.local.80228.1",
+      "first_wall_time_kst": "2026-09-02T00:01:03.866732+09:00",
+      "last_wall_time_kst": "2026-09-02T00:07:08.396578+09:00",
+      "duration_seconds": 364.52984595298767,
+      "max_step": 2031616,
+      "tags": {
+        "time/fps": {
+          "count": 62,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274869.02234,
+            "value": 6316.0
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.396519,
+            "value": 5572.0
+          }
+        },
+        "train/approx_kl": {
+          "count": 61,
+          "first": {
+            "step": 65536,
+            "wall_time": 1788274875.040031,
+            "value": 0.0038873376324772835
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.3965409,
+            "value": 1.317741407547146e-06
+          }
+        },
+        "train/clip_fraction": {
+          "count": 61,
+          "first": {
+            "step": 65536,
+            "wall_time": 1788274875.0400379,
+            "value": 0.02457275427877903
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.3965461,
+            "value": 0.0
+          }
+        },
+        "train/clip_range": {
+          "count": 61,
+          "first": {
+            "step": 65536,
+            "wall_time": 1788274875.040043,
+            "value": 0.20000000298023224
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.396551,
+            "value": 0.20000000298023224
+          }
+        },
+        "train/entropy_loss": {
+          "count": 61,
+          "first": {
+            "step": 65536,
+            "wall_time": 1788274875.0400472,
+            "value": -4.280134201049805
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.396555,
+            "value": -4.3247761726379395
+          }
+        },
+        "train/explained_variance": {
+          "count": 61,
+          "first": {
+            "step": 65536,
+            "wall_time": 1788274875.040051,
+            "value": -0.010514497756958008
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.396559,
+            "value": 0.6960833072662354
+          }
+        },
+        "train/learning_rate": {
+          "count": 61,
+          "first": {
+            "step": 65536,
+            "wall_time": 1788274875.040055,
+            "value": 0.0004918079939670861
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.396563,
+            "value": 2.879999954075174e-07
+          }
+        },
+        "train/loss": {
+          "count": 61,
+          "first": {
+            "step": 65536,
+            "wall_time": 1788274875.0400589,
+            "value": 0.6078841090202332
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.396567,
+            "value": 0.521330714225769
+          }
+        },
+        "train/policy_gradient_loss": {
+          "count": 61,
+          "first": {
+            "step": 65536,
+            "wall_time": 1788274875.040062,
+            "value": -0.0014346345560625196
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.3965702,
+            "value": -3.3420314139220864e-05
+          }
+        },
+        "train/std": {
+          "count": 61,
+          "first": {
+            "step": 65536,
+            "wall_time": 1788274875.040066,
+            "value": 1.0090502500534058
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.396574,
+            "value": 1.0711735486984253
+          }
+        },
+        "train/value_loss": {
+          "count": 61,
+          "first": {
+            "step": 65536,
+            "wall_time": 1788274875.0400698,
+            "value": 2.798720359802246
+          },
+          "last": {
+            "step": 2031616,
+            "wall_time": 1788275228.396578,
+            "value": 1.4783462285995483
+          }
+        },
+        "eval/mean_ep_length": {
+          "count": 6,
+          "first": {
+            "step": 320000,
+            "wall_time": 1788274921.959649,
+            "value": 43.79999923706055
+          },
+          "last": {
+            "step": 1920000,
+            "wall_time": 1788275208.8221529,
+            "value": 51.400001525878906
+          }
+        },
+        "eval/mean_reward": {
+          "count": 6,
+          "first": {
+            "step": 320000,
+            "wall_time": 1788274921.95967,
+            "value": 3.7060585021972656
+          },
+          "last": {
+            "step": 1920000,
+            "wall_time": 1788275208.822176,
+            "value": 5.2736101150512695
+          }
+        }
+      }
+    },
+    {
+      "path": "checkpoints/mega_pitcher/tb_logs/PPO_1/events.out.tfevents.1788274612.man-ui-MacBookPro.local.80228.0",
+      "first_wall_time_kst": "2026-09-01T23:56:52.681138+09:00",
+      "last_wall_time_kst": "2026-09-02T00:00:51.289845+09:00",
+      "duration_seconds": 238.60870695114136,
+      "max_step": 2015232,
+      "tags": {
+        "rollout/success_rate": {
+          "count": 123,
+          "first": {
+            "step": 16384,
+            "wall_time": 1788274613.706628,
+            "value": 0.009999999776482582
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.289697,
+            "value": 0.9200000166893005
+          }
+        },
+        "time/fps": {
+          "count": 123,
+          "first": {
+            "step": 16384,
+            "wall_time": 1788274613.706655,
+            "value": 15875.0
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.289717,
+            "value": 8445.0
+          }
+        },
+        "train/approx_kl": {
+          "count": 122,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274615.5264158,
+            "value": 0.00509214960038662
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.289723,
+            "value": 3.051700332434848e-06
+          }
+        },
+        "train/clip_fraction": {
+          "count": 122,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274615.526421,
+            "value": 0.04108276218175888
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.289728,
+            "value": 0.0
+          }
+        },
+        "train/clip_range": {
+          "count": 122,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274615.526428,
+            "value": 0.20000000298023224
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.289732,
+            "value": 0.20000000298023224
+          }
+        },
+        "train/entropy_loss": {
+          "count": 122,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274615.526448,
+            "value": -5.665847301483154
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.289736,
+            "value": -4.882482051849365
+          }
+        },
+        "train/explained_variance": {
+          "count": 122,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274615.526454,
+            "value": 0.060610830783843994
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.28974,
+            "value": 0.8989235758781433
+          }
+        },
+        "train/learning_rate": {
+          "count": 122,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274615.526459,
+            "value": 0.00029754239949397743
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.289744,
+            "value": 1.728000000866814e-07
+          }
+        },
+        "train/loss": {
+          "count": 122,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274615.526463,
+            "value": 0.6881047487258911
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.289748,
+            "value": 0.1238110139966011
+          }
+        },
+        "train/policy_gradient_loss": {
+          "count": 122,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274615.526467,
+            "value": -0.0031888142693787813
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.289752,
+            "value": -5.0077869673259556e-05
+          }
+        },
+        "train/std": {
+          "count": 122,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274615.526471,
+            "value": 0.9957681894302368
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.2897549,
+            "value": 0.8412440419197083
+          }
+        },
+        "train/value_loss": {
+          "count": 122,
+          "first": {
+            "step": 32768,
+            "wall_time": 1788274615.52656,
+            "value": 3.318556070327759
+          },
+          "last": {
+            "step": 2015232,
+            "wall_time": 1788274851.289845,
+            "value": 0.43223825097084045
+          }
+        },
+        "eval/mean_ep_length": {
+          "count": 6,
+          "first": {
+            "step": 320000,
+            "wall_time": 1788274649.153725,
+            "value": 27.799999237060547
+          },
+          "last": {
+            "step": 1920000,
+            "wall_time": 1788274840.853179,
+            "value": 30.200000762939453
+          }
+        },
+        "eval/mean_reward": {
+          "count": 6,
+          "first": {
+            "step": 320000,
+            "wall_time": 1788274649.153743,
+            "value": 5.682572841644287
+          },
+          "last": {
+            "step": 1920000,
+            "wall_time": 1788274840.8532,
+            "value": 6.608436584472656
+          }
+        },
+        "eval/success_rate": {
+          "count": 6,
+          "first": {
+            "step": 320000,
+            "wall_time": 1788274649.153749,
+            "value": 0.6000000238418579
+          },
+          "last": {
+            "step": 1920000,
+            "wall_time": 1788274840.853205,
+            "value": 1.0
+          }
+        }
+      }
+    },
+    {
+      "path": "runs/soft_toss_tensorboard/PPO_1/events.out.tfevents.1788184767.man-ui-MacBookPro.local.66497.0",
+      "first_wall_time_kst": "2026-08-31T22:59:27.184864+09:00",
+      "last_wall_time_kst": "2026-08-31T23:00:09.958783+09:00",
+      "duration_seconds": 42.773918867111206,
+      "max_step": 60416,
+      "tags": {
+        "rollout/ep_len_mean": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788184767.5508952,
+            "value": 13.904109954833984
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788184809.958721,
+            "value": 67.23999786376953
+          }
+        },
+        "rollout/ep_rew_mean": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788184767.5509288,
+            "value": -1248.1654052734375
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788184809.958775,
+            "value": -81.71482849121094
+          }
+        },
+        "time/fps": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788184767.5509372,
+            "value": 2782.0
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788184809.958783,
+            "value": 1412.0
+          }
+        },
+        "eval/mean_ep_length": {
+          "count": 30,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.301398,
+            "value": 13.0
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.758083,
+            "value": 70.0
+          }
+        },
+        "eval/mean_reward": {
+          "count": 30,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.3017359,
+            "value": -1234.315185546875
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.758111,
+            "value": 0.0
+          }
+        },
+        "train/approx_kl": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.3018281,
+            "value": 0.0021909247152507305
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.7581172,
+            "value": 0.0009695737389847636
+          }
+        },
+        "train/clip_fraction": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.301881,
+            "value": 0.02011718787252903
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.758122,
+            "value": 0.0010742187732830644
+          }
+        },
+        "train/clip_range": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.301928,
+            "value": 0.20000000298023224
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.7581272,
+            "value": 0.20000000298023224
+          }
+        },
+        "train/entropy_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.3019369,
+            "value": -2.857309341430664
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.758131,
+            "value": -2.0021331310272217
+          }
+        },
+        "train/explained_variance": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.301943,
+            "value": 5.173683166503906e-05
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.758135,
+            "value": 0.21011054515838623
+          }
+        },
+        "train/learning_rate": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.3019469,
+            "value": 0.0010000000474974513
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.758139,
+            "value": 0.0010000000474974513
+          }
+        },
+        "train/loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.301952,
+            "value": 381240.15625
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.758143,
+            "value": 658.5488891601562
+          }
+        },
+        "train/policy_gradient_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.3019562,
+            "value": -0.0015946843195706606
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.758147,
+            "value": -0.0011229763040319085
+          }
+        },
+        "train/std": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.301961,
+            "value": 1.0170596837997437
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.7581508,
+            "value": 0.6831352710723877
+          }
+        },
+        "train/value_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184768.302121,
+            "value": 772401.125
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788184809.7582211,
+            "value": 2243.783935546875
+          }
+        }
+      }
+    },
+    {
+      "path": "runs/soft_toss_tensorboard/PPO_2/events.out.tfevents.1788184970.man-ui-MacBookPro.local.66571.0",
+      "first_wall_time_kst": "2026-08-31T23:02:50.568923+09:00",
+      "last_wall_time_kst": "2026-08-31T23:03:35.492128+09:00",
+      "duration_seconds": 44.92320489883423,
+      "max_step": 60416,
+      "tags": {
+        "rollout/ep_len_mean": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788184971.06956,
+            "value": 8.029999732971191
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788185015.492099,
+            "value": 44.06999969482422
+          }
+        },
+        "rollout/ep_rew_mean": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788184971.0697112,
+            "value": -425.52154541015625
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788185015.4921222,
+            "value": -8.779546737670898
+          }
+        },
+        "time/fps": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788184971.069725,
+            "value": 2039.0
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788185015.492128,
+            "value": 1344.0
+          }
+        },
+        "eval/mean_ep_length": {
+          "count": 30,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.204915,
+            "value": 35.150001525878906
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.347897,
+            "value": 45.0
+          }
+        },
+        "eval/mean_reward": {
+          "count": 30,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.2049432,
+            "value": -68.95726776123047
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.347918,
+            "value": 0.0
+          }
+        },
+        "train/approx_kl": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.20495,
+            "value": 0.007859515026211739
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.347925,
+            "value": 0.003071296028792858
+          }
+        },
+        "train/clip_fraction": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.204957,
+            "value": 0.08974609524011612
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.3479302,
+            "value": 0.06103515625
+          }
+        },
+        "train/clip_range": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.2049742,
+            "value": 0.20000000298023224
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.347934,
+            "value": 0.20000000298023224
+          }
+        },
+        "train/entropy_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.20498,
+            "value": -2.827481508255005
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.347939,
+            "value": -1.5360242128372192
+          }
+        },
+        "train/explained_variance": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.205019,
+            "value": 5.608797073364258e-05
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.3479428,
+            "value": -0.00574946403503418
+          }
+        },
+        "train/learning_rate": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.205033,
+            "value": 0.0010000000474974513
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.3479471,
+            "value": 0.0010000000474974513
+          }
+        },
+        "train/loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.205039,
+            "value": 52125.90625
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.3479521,
+            "value": 5.8102006912231445
+          }
+        },
+        "train/policy_gradient_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.205045,
+            "value": -0.006624170113354921
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.347956,
+            "value": 0.0022744806483387947
+          }
+        },
+        "train/std": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.2050502,
+            "value": 0.9925709962844849
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.34796,
+            "value": 0.5564947128295898
+          }
+        },
+        "train/value_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184972.205211,
+            "value": 114072.5859375
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185015.348067,
+            "value": 264.8747253417969
+          }
+        }
+      }
+    },
+    {
+      "path": "runs/soft_toss_tensorboard/PPO_3/events.out.tfevents.1788185710.man-ui-MacBookPro.local.66771.0",
+      "first_wall_time_kst": "2026-08-31T23:15:10.993319+09:00",
+      "last_wall_time_kst": "2026-08-31T23:15:54.588655+09:00",
+      "duration_seconds": 43.59533619880676,
+      "max_step": 60416,
+      "tags": {
+        "rollout/ep_len_mean": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788185711.45984,
+            "value": 7.800000190734863
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788185754.5886269,
+            "value": 20.739999771118164
+          }
+        },
+        "rollout/ep_rew_mean": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788185711.459866,
+            "value": -289.8797912597656
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788185754.588649,
+            "value": 8.737594604492188
+          }
+        },
+        "time/fps": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788185711.4598742,
+            "value": 2186.0
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788185754.588655,
+            "value": 1385.0
+          }
+        },
+        "eval/mean_ep_length": {
+          "count": 30,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.33999,
+            "value": 27.350000381469727
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.4291542,
+            "value": 20.75
+          }
+        },
+        "eval/mean_reward": {
+          "count": 30,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.3400161,
+            "value": -27.241918563842773
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.4291809,
+            "value": 28.549619674682617
+          }
+        },
+        "train/approx_kl": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.340023,
+            "value": 0.007357696071267128
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.4291892,
+            "value": 0.010119380429387093
+          }
+        },
+        "train/clip_fraction": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.34003,
+            "value": 0.09658203274011612
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.429194,
+            "value": 0.16884765028953552
+          }
+        },
+        "train/clip_range": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.340043,
+            "value": 0.20000000298023224
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.4291992,
+            "value": 0.20000000298023224
+          }
+        },
+        "train/entropy_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.3400488,
+            "value": -2.8246378898620605
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.429204,
+            "value": -1.5116909742355347
+          }
+        },
+        "train/explained_variance": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.340054,
+            "value": 0.00013381242752075195
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.429208,
+            "value": 0.023178696632385254
+          }
+        },
+        "train/learning_rate": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.340061,
+            "value": 0.0010000000474974513
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.429213,
+            "value": 0.0010000000474974513
+          }
+        },
+        "train/loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.340066,
+            "value": 27416.6484375
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.429217,
+            "value": 534.6630859375
+          }
+        },
+        "train/policy_gradient_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.3400698,
+            "value": -0.006432858295738697
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.4292219,
+            "value": -0.006568904034793377
+          }
+        },
+        "train/std": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.340074,
+            "value": 0.9875181913375854
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.429226,
+            "value": 0.5409137606620789
+          }
+        },
+        "train/value_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185712.3401442,
+            "value": 56203.375
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788185754.429332,
+            "value": 1269.2833251953125
+          }
+        }
+      }
+    },
+    {
+      "path": "runs/soft_toss_tensorboard/PPO_4/events.out.tfevents.1788185800.man-ui-MacBookPro.local.66810.0",
+      "first_wall_time_kst": "2026-08-31T23:16:40.356889+09:00",
+      "last_wall_time_kst": "2026-08-31T23:17:50.418632+09:00",
+      "duration_seconds": 70.06174302101135,
+      "max_step": 80896,
+      "tags": {
+        "rollout/ep_len_mean": {
+          "count": 79,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788185800.7916899,
+            "value": 21.10416603088379
+          },
+          "last": {
+            "step": 80896,
+            "wall_time": 1788185870.418603,
+            "value": 22.18000030517578
+          }
+        },
+        "rollout/ep_rew_mean": {
+          "count": 79,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788185800.791716,
+            "value": -6.523393154144287
+          },
+          "last": {
+            "step": 80896,
+            "wall_time": 1788185870.418626,
+            "value": 32.479793548583984
+          }
+        },
+        "time/fps": {
+          "count": 79,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788185800.791724,
+            "value": 2342.0
+          },
+          "last": {
+            "step": 80896,
+            "wall_time": 1788185870.418632,
+            "value": 1154.0
+          }
+        },
+        "eval/mean_ep_length": {
+          "count": 40,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.5966358,
+            "value": 20.799999237060547
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.975927,
+            "value": 21.75
+          }
+        },
+        "eval/mean_reward": {
+          "count": 40,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.596662,
+            "value": 15.976643562316895
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.975948,
+            "value": 81.04682922363281
+          }
+        },
+        "train/approx_kl": {
+          "count": 78,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.596669,
+            "value": 0.007811188697814941
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.9759538,
+            "value": 0.005622591823339462
+          }
+        },
+        "train/clip_fraction": {
+          "count": 78,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.5966752,
+            "value": 0.08193359524011612
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.975958,
+            "value": 0.08349609375
+          }
+        },
+        "train/clip_range": {
+          "count": 78,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.596692,
+            "value": 0.20000000298023224
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.9759629,
+            "value": 0.20000000298023224
+          }
+        },
+        "train/entropy_loss": {
+          "count": 78,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.596697,
+            "value": -1.5139037370681763
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.975967,
+            "value": -1.0548914670944214
+          }
+        },
+        "train/explained_variance": {
+          "count": 78,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.5967019,
+            "value": 0.11953651905059814
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.975971,
+            "value": 0.057071566581726074
+          }
+        },
+        "train/learning_rate": {
+          "count": 78,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.5967062,
+            "value": 0.0005000000237487257
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.9759748,
+            "value": 0.0005000000237487257
+          }
+        },
+        "train/loss": {
+          "count": 78,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.59671,
+            "value": 77.67867279052734
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.975979,
+            "value": 1299.68994140625
+          }
+        },
+        "train/policy_gradient_loss": {
+          "count": 78,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.596714,
+            "value": -0.001934978412464261
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.9759831,
+            "value": -0.0006572094280272722
+          }
+        },
+        "train/std": {
+          "count": 78,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.596718,
+            "value": 0.5393537282943726
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.975987,
+            "value": 0.4208582639694214
+          }
+        },
+        "train/value_loss": {
+          "count": 78,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788185801.596815,
+            "value": 427.4419250488281
+          },
+          "last": {
+            "step": 80000,
+            "wall_time": 1788185869.9760761,
+            "value": 2649.99560546875
+          }
+        }
+      }
+    },
+    {
+      "path": "runs/soft_toss_tensorboard/PPO_5/events.out.tfevents.1788186543.man-ui-MacBookPro.local.67043.0",
+      "first_wall_time_kst": "2026-08-31T23:29:03.393902+09:00",
+      "last_wall_time_kst": "2026-08-31T23:29:51.654514+09:00",
+      "duration_seconds": 48.26061177253723,
+      "max_step": 60416,
+      "tags": {
+        "rollout/ep_len_mean": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788186544.0116549,
+            "value": 7.760000228881836
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788186591.654489,
+            "value": 24.479999542236328
+          }
+        },
+        "rollout/ep_rew_mean": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788186544.011689,
+            "value": -308.984375
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788186591.654508,
+            "value": 31.267576217651367
+          }
+        },
+        "time/fps": {
+          "count": 59,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788186544.011698,
+            "value": 1649.0
+          },
+          "last": {
+            "step": 60416,
+            "wall_time": 1788186591.6545138,
+            "value": 1251.0
+          }
+        },
+        "eval/mean_ep_length": {
+          "count": 30,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.083932,
+            "value": 23.700000762939453
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.500314,
+            "value": 24.149999618530273
+          }
+        },
+        "eval/mean_reward": {
+          "count": 30,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.083956,
+            "value": 58.554710388183594
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.500334,
+            "value": 113.10398864746094
+          }
+        },
+        "train/approx_kl": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.0839639,
+            "value": 0.007244788110256195
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.50034,
+            "value": 0.004769918043166399
+          }
+        },
+        "train/clip_fraction": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.083971,
+            "value": 0.09462890774011612
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.500345,
+            "value": 0.11611328274011612
+          }
+        },
+        "train/clip_range": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.08399,
+            "value": 0.20000000298023224
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.50035,
+            "value": 0.20000000298023224
+          }
+        },
+        "train/entropy_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.0839958,
+            "value": -2.837463617324829
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.500354,
+            "value": -1.8827952146530151
+          }
+        },
+        "train/explained_variance": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.084001,
+            "value": -0.0002936124801635742
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.5003579,
+            "value": 0.03195136785507202
+          }
+        },
+        "train/learning_rate": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.0840058,
+            "value": 0.0010000000474974513
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.500363,
+            "value": 0.0010000000474974513
+          }
+        },
+        "train/loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.08401,
+            "value": 30281.765625
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.5003672,
+            "value": 1187.94775390625
+          }
+        },
+        "train/policy_gradient_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.0840151,
+            "value": -0.00871647335588932
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.500371,
+            "value": 0.005362387280911207
+          }
+        },
+        "train/std": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.084019,
+            "value": 0.9987273216247559
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.500375,
+            "value": 0.6443438529968262
+          }
+        },
+        "train/value_loss": {
+          "count": 58,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788186545.084073,
+            "value": 60139.5390625
+          },
+          "last": {
+            "step": 60000,
+            "wall_time": 1788186591.500458,
+            "value": 1999.15283203125
+          }
+        }
+      }
+    },
+    {
+      "path": "runs/teeball_tensorboard/PPO_1/events.out.tfevents.1788182355.man-ui-MacBookPro.local.65853.0",
+      "first_wall_time_kst": "2026-08-31T22:19:15.993823+09:00",
+      "last_wall_time_kst": "2026-08-31T22:19:57.535265+09:00",
+      "duration_seconds": 41.541441917419434,
+      "max_step": 50176,
+      "tags": {
+        "rollout/ep_len_mean": {
+          "count": 49,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788182356.574555,
+            "value": 72.71428680419922
+          },
+          "last": {
+            "step": 50176,
+            "wall_time": 1788182397.5352378,
+            "value": 84.86000061035156
+          }
+        },
+        "rollout/ep_rew_mean": {
+          "count": 49,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788182356.574582,
+            "value": 29.285715103149414
+          },
+          "last": {
+            "step": 50176,
+            "wall_time": 1788182397.5352588,
+            "value": 10.899999618530273
+          }
+        },
+        "time/fps": {
+          "count": 49,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788182356.574589,
+            "value": 1758.0
+          },
+          "last": {
+            "step": 50176,
+            "wall_time": 1788182397.535265,
+            "value": 1207.0
+          }
+        },
+        "eval/mean_ep_length": {
+          "count": 25,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.849361,
+            "value": 100.0
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.456009,
+            "value": 53.20000076293945
+          }
+        },
+        "eval/mean_reward": {
+          "count": 25,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.84939,
+            "value": -10.0
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.456033,
+            "value": 100.0
+          }
+        },
+        "train/approx_kl": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.849398,
+            "value": 0.005201135296374559
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.456039,
+            "value": 0.005087768658995628
+          }
+        },
+        "train/clip_fraction": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.8494039,
+            "value": 0.025390625
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.456044,
+            "value": 0.02880859375
+          }
+        },
+        "train/clip_range": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.849422,
+            "value": 0.20000000298023224
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.456077,
+            "value": 0.20000000298023224
+          }
+        },
+        "train/entropy_loss": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.849429,
+            "value": -2.8317763805389404
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.456089,
+            "value": -2.6728644371032715
+          }
+        },
+        "train/explained_variance": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.8494341,
+            "value": 3.361701965332031e-05
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.456095,
+            "value": 0.3712034225463867
+          }
+        },
+        "train/learning_rate": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.849438,
+            "value": 0.0003000000142492354
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.4561,
+            "value": 0.0003000000142492354
+          }
+        },
+        "train/loss": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.849443,
+            "value": 140.70249938964844
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.456104,
+            "value": 71.17689514160156
+          }
+        },
+        "train/policy_gradient_loss": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.849447,
+            "value": -0.002550169825553894
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.456108,
+            "value": -0.0004577713261824101
+          }
+        },
+        "train/std": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.849451,
+            "value": 0.9964220523834229
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.4561129,
+            "value": 0.9222981929779053
+          }
+        },
+        "train/value_loss": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788182357.849546,
+            "value": 368.32159423828125
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788182397.456179,
+            "value": 34.49482727050781
+          }
+        }
+      }
+    },
+    {
+      "path": "runs/teeball_tensorboard/PPO_2/events.out.tfevents.1788184119.man-ui-MacBookPro.local.66220.0",
+      "first_wall_time_kst": "2026-08-31T22:48:39.338203+09:00",
+      "last_wall_time_kst": "2026-08-31T22:49:17.979303+09:00",
+      "duration_seconds": 38.64109992980957,
+      "max_step": 50176,
+      "tags": {
+        "rollout/ep_len_mean": {
+          "count": 49,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788184119.7752519,
+            "value": 100.0
+          },
+          "last": {
+            "step": 50176,
+            "wall_time": 1788184157.979276,
+            "value": 81.12999725341797
+          }
+        },
+        "rollout/ep_rew_mean": {
+          "count": 49,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788184119.775281,
+            "value": -10.0
+          },
+          "last": {
+            "step": 50176,
+            "wall_time": 1788184157.979297,
+            "value": 12.0
+          }
+        },
+        "time/fps": {
+          "count": 49,
+          "first": {
+            "step": 1024,
+            "wall_time": 1788184119.775288,
+            "value": 2325.0
+          },
+          "last": {
+            "step": 50176,
+            "wall_time": 1788184157.979303,
+            "value": 1298.0
+          }
+        },
+        "eval/mean_ep_length": {
+          "count": 25,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.66892,
+            "value": 100.0
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.902863,
+            "value": 100.0
+          }
+        },
+        "eval/mean_reward": {
+          "count": 25,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.668949,
+            "value": -10.0
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.902886,
+            "value": -10.0
+          }
+        },
+        "train/approx_kl": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.6689558,
+            "value": 0.0019261697307229042
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.902892,
+            "value": 0.001118422020226717
+          }
+        },
+        "train/clip_fraction": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.668963,
+            "value": 0.004101562313735485
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.902897,
+            "value": 0.0068359375
+          }
+        },
+        "train/clip_range": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.668981,
+            "value": 0.20000000298023224
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.9029021,
+            "value": 0.20000000298023224
+          }
+        },
+        "train/entropy_loss": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.668988,
+            "value": -2.83048152923584
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.9029062,
+            "value": -2.7561237812042236
+          }
+        },
+        "train/explained_variance": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.668993,
+            "value": 4.589557647705078e-06
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.90291,
+            "value": 0.18356990814208984
+          }
+        },
+        "train/learning_rate": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.669019,
+            "value": 0.0003000000142492354
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.902914,
+            "value": 0.0003000000142492354
+          }
+        },
+        "train/loss": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.669172,
+            "value": 2.5090596675872803
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.9029179,
+            "value": 5.578381061553955
+          }
+        },
+        "train/policy_gradient_loss": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.669186,
+            "value": -0.0008867012802511454
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.902922,
+            "value": -0.0009228033595718443
+          }
+        },
+        "train/std": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.669247,
+            "value": 0.9939805269241333
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.902926,
+            "value": 0.9605242013931274
+          }
+        },
+        "train/value_loss": {
+          "count": 48,
+          "first": {
+            "step": 2000,
+            "wall_time": 1788184120.669745,
+            "value": 6.155367851257324
+          },
+          "last": {
+            "step": 50000,
+            "wall_time": 1788184157.903113,
+            "value": 90.36084747314453
+          }
+        }
+      }
+    }
+  ],
+  "memory_used": [
+    {
+      "path": "/Users/jin10000/.codex/memories/MEMORY.md",
+      "lines": "602-648",
+      "rollout_id": "01a0d966-e7ec-7d21-9c0b-edbc8e01b722",
+      "use": "prior audit pointers followed by current static and original log verification"
+    }
+  ],
+  "report_qa": {
+    "source_appendix32_exact": true,
+    "placeholders_absent": true,
+    "report_lines": 3425,
+    "report_bytes": 211443,
+    "no_original_edits": true
+  }
+}

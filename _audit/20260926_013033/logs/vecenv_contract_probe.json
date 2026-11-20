@@ -1,0 +1,33 @@
+{
+  "python": "3.11.5 (main, Sep 11 2023, 08:31:25) [Clang 14.0.6 ]",
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "stable_baselines3": "2.9.0",
+  "boundary": "2 synthetic one-step episodes, no renderer, no model, no training",
+  "autoreset": {
+    "done": true,
+    "returned_obs": [
+      [
+        -10.0
+      ]
+    ],
+    "terminal_observation": [
+      99.0
+    ],
+    "raw_state_after_step": -10.0,
+    "terminal_info_position": 99.0
+  },
+  "mega_eval_defaults": {
+    "training": true,
+    "norm_reward": true,
+    "obs_and_return_count_before": [
+      0.0001,
+      0.0001
+    ],
+    "obs_and_return_count_after": [
+      2.0000999999999998,
+      1.0001
+    ],
+    "raw_reward": 5.0,
+    "returned_reward": 10.0
+  }
+}

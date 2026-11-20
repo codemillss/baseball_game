@@ -1,0 +1,36 @@
+[
+  {
+    "path": "cognitive_ai/envs/pitcher_env.py",
+    "sha": "a7227be3bc58d49ce2ca963284b52cc494387fdb",
+    "spaces": [
+      "self.observation_space = spaces.Box(low=-100.0, high=100.0, shape=(16,), dtype=np.float32)"
+    ],
+    "has_1_35": false
+  },
+  {
+    "path": "cognitive_ai/envs/pitcher_env.py",
+    "sha": "62f112bd43860b055ed4a3ed32f3436e495f9d92",
+    "spaces": [
+      "self.observation_space = spaces.Box(low=-100.0, high=100.0, shape=(16,), dtype=np.float32)"
+    ],
+    "has_1_35": false
+  },
+  {
+    "path": "cognitive_ai/envs/baseball_match_env.py",
+    "sha": "58b2a5888cfaa4590d4a8501727242efa6d28668",
+    "spaces": [],
+    "has_1_35": false
+  },
+  {
+    "path": "cognitive_ai/envs/baseball_match_env.py",
+    "sha": "a7227be3bc58d49ce2ca963284b52cc494387fdb",
+    "spaces": [],
+    "has_1_35": false
+  },
+  {
+    "path": "cognitive_ai/envs/baseball_match_env.py",
+    "sha": "62f112bd43860b055ed4a3ed32f3436e495f9d92",
+    "spaces": [],
+    "has_1_35": false
+  }
+]

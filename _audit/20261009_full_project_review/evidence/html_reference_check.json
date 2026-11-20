@@ -1,0 +1,420 @@
+{
+  "local_refs": [
+    {
+      "type": "a",
+      "reference": "#abstract",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-1",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-2",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-3",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-4",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-5",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-6",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-7",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-8",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-9",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-10",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#sec-11",
+      "exists": true
+    },
+    {
+      "type": "a",
+      "reference": "#appendix",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_1_soft_toss_initial_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_2_soft_toss_normalized_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_4_breaking_ball_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_1_pitching_50kmh_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_3_pitcher_final_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_3_1_match_duel_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_4_1_mlb_match_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_5_1_stadium_match_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_5_1_stadium_match_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_6_1_mocap_preview_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_6_2_mocap_match_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_6_2_mocap_match_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_7_1_wheeled_fielder_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_7_1_wheeled_fielder_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_7_1_wheeled_fielder_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_8_1_broadcast_match_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_8_1_broadcast_match_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_8_3_base_stealing_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_1_soft_toss_initial_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_1_soft_toss_initial_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_1_soft_toss_initial_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_2_soft_toss_normalized_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_2_soft_toss_normalized_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_2_soft_toss_normalized_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_3_soft_toss_advanced_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_3_soft_toss_advanced_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_3_soft_toss_advanced_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_4_breaking_ball_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_4_breaking_ball_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_1_4_breaking_ball_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_1_pitching_50kmh_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_1_pitching_50kmh_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_1_pitching_50kmh_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_2_pitching_80kmh_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_2_pitching_80kmh_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_2_pitching_80kmh_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_3_pitcher_final_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_3_pitcher_final_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_2_3_pitcher_final_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_3_1_match_duel_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_3_1_match_duel_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_3_1_match_duel_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_4_1_mlb_match_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_4_1_mlb_match_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_4_1_mlb_match_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_5_1_stadium_match_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_5_1_stadium_match_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_5_1_stadium_match_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_6_1_mocap_preview_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_6_1_mocap_preview_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_6_1_mocap_preview_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_6_2_mocap_match_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_6_2_mocap_match_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_6_2_mocap_match_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_7_1_wheeled_fielder_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_7_1_wheeled_fielder_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_7_1_wheeled_fielder_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_8_1_broadcast_match_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_8_1_broadcast_match_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_8_1_broadcast_match_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_8_3_base_stealing_f1.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_8_3_base_stealing_f2.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/frames/phase_8_3_base_stealing_f3.jpg",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/cameras/batter_cam.png",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/cameras/pitcher_cam.png",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/cameras/front_cam.png",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/cameras/side_cam.png",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/textures/grass.png",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "assets/textures/dirt.png",
+      "exists": true
+    },
+    {
+      "type": "img",
+      "reference": "",
+      "exists": true
+    }
+  ],
+  "missing": []
+}

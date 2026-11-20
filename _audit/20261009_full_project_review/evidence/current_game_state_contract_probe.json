@@ -1,0 +1,76 @@
+{
+  "timestamp": "2026-10-09T20:36:38.524839+09:00",
+  "scope": "current exact pure-Python BaseballGameState; no physics/model/render/training execution",
+  "source_sha256": "878bfc289a518a6041ea93cecc10bebacb47d5b33aa674494b20712c20e33f49",
+  "results": [
+    {
+      "case": "ordinary_foul",
+      "before": {
+        "balls": 1,
+        "strikes": 1
+      },
+      "expected": {
+        "balls": 1,
+        "strikes": 2
+      },
+      "actual": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "contract_matches": false
+    },
+    {
+      "case": "ordinary_foul",
+      "before": {
+        "balls": 3,
+        "strikes": 2
+      },
+      "expected": {
+        "balls": 3,
+        "strikes": 2
+      },
+      "actual": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "contract_matches": false
+    },
+    {
+      "case": "ordinary_foul",
+      "before": {
+        "balls": 0,
+        "strikes": 2
+      },
+      "expected": {
+        "balls": 0,
+        "strikes": 2
+      },
+      "actual": {
+        "balls": 0,
+        "strikes": 1
+      },
+      "contract_matches": false
+    },
+    {
+      "case": "three_strikes_control",
+      "actual": {
+        "outs": 1,
+        "balls": 0,
+        "strikes": 0
+      },
+      "contract_matches": true
+    },
+    {
+      "case": "four_balls_control",
+      "actual": {
+        "bases": [
+          true,
+          false,
+          false
+        ],
+        "balls": 0
+      },
+      "contract_matches": true
+    }
+  ]
+}

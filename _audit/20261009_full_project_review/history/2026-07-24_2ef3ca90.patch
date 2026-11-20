@@ -1,0 +1,3380 @@
+commit 2ef3ca90e7e4a4b2c82440d19f7f24344ee9ebdc
+Author:     JinmanJeon <ggzgcode10000@gmail.com>
+AuthorDate: Fri Jul 24 19:15:50 2026 +0900
+Commit:     JinmanJeon <ggzgcode10000@gmail.com>
+CommitDate: Fri Jul 24 19:15:50 2026 +0900
+
+    feat: End-to-End Baseball RL Framework & Simulator
+    
+    - Phase 1: Pitcher/Batter physics engines (Magnus effect, Sweet Spot collision)
+    - Phase 2: Multi-Agent Gymnasium environment + PyTorch Actor-Critic networks
+    - Phase 3: Dash 4-panel real-time training dashboard (Simulator Studio)
+    - Phase 4: Self-Play PPO trainer, PER replay buffer, interactive game engine
+    - Added .gitignore for Python ML project
+
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..b894220
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,33 @@
++# Python
++__pycache__/
++*.py[cod]
++*$py.class
++*.egg-info/
++dist/
++build/
++*.egg
++
++# Virtual Environment
++venv/
++.venv/
++env/
++
++# Training Data & Checkpoints
++checkpoints/
++data/
++*.pt
++*.pth
++
++# IDE
++.vscode/
++.idea/
++*.swp
++*.swo
++*~
++
++# OS
++.DS_Store
++Thumbs.db
++
++# Jupyter
++.ipynb_checkpoints/
+diff --git a/envs/baseball_game_env.py b/envs/baseball_game_env.py
+new file mode 100644
+index 0000000..d546025
+--- /dev/null
++++ b/envs/baseball_game_env.py
+@@ -0,0 +1,486 @@
++"""
++baseball_game_env.py — End-to-End Multi-Agent Gymnasium 환경
++
++투수(Pitcher)와 타자(Batter)의 대결을 Gymnasium 호환 환경으로 래핑합니다.
++각 에피소드는 1타석(최대 ~12구) 단위로 진행됩니다.
++
++에피소드 흐름:
++    1. 투수가 Action 출력 → PitcherMechanism이 궤적 시뮬레이션
++    2. 궤적을 시간 스텝별로 나누어 타자에게 Observation 제공
++    3. 타자가 스윙 여부/토크 결정
++    4. 충돌 판정 → 결과(Strike/Ball/Foul/Hit/HR) 판정
++    5. Zero-sum Reward 배분
++"""
++
++import gymnasium as gym
++from gymnasium import spaces
++import numpy as np
++from typing import Optional, Tuple, Dict, Any
++
++from envs.pitcher_mechanism import (
++    PitcherMechanism,
++    BallPhysics,
++    PitchConfig,
++    StrikeZone,
++)
++from envs.batter_mechanism import (
++    BatterMechanism,
++    BatModel,
++    SwingConfig,
++)
++
++
++# ──────────────────────────────────────────────────────────────
++#  Reward 상수
++# ──────────────────────────────────────────────────────────────
++
++REWARDS = {
++    # 결과: (pitcher_reward, batter_reward)
++    'called_strike':    (+1.0, -1.0),
++    'swinging_strike':  (+1.5, -1.5),
++    'ball':             (-1.0, +0.5),
++    'foul':             (+0.3, -0.3),
++    'out':              (+1.0, -1.0),
++    'single':           (-2.0, +2.0),
++    'extra_base':       (-3.0, +3.0),
++    'home_run':         (-5.0, +5.0),
++    'strikeout':        (+3.0, -3.0),   # 삼진 보너스
++    'walk':             (-3.0, +3.0),   # 볼넷 보너스
++}
++
++
++# ──────────────────────────────────────────────────────────────
++#  Multi-Agent 환경
++# ──────────────────────────────────────────────────────────────
++
++class BaseballGameEnv(gym.Env):
++    """End-to-End Baseball Multi-Agent Gymnasium 환경.
++
++    두 에이전트(Pitcher, Batter)가 교대로 행동하는 턴 기반 환경입니다.
++    한 '투구'가 환경의 한 스텝에 해당합니다.
++
++    Observation Space:
++        Pitcher: [strikes, balls, prev_result, prev_plate_x, prev_plate_z, batter_stance] → Box(6)
++        Batter:  [ball_pos(3), ball_vel(3), bat_pos(3), bat_vel(3), time_to_plate] → Box(13)
++
++    Action Space:
++        Pitcher: [v_release, θ_x, θ_z, ω_spin, a_axis] → Box(5)
++        Batter:  [t_trigger, θ_yaw, θ_pitch, z_height] → Box(4)
++    """
++
++    metadata = {'render_modes': ['human', 'ansi'], 'render_fps': 30}
++
++    def __init__(
++        self,
++        render_mode: Optional[str] = None,
++        trajectory_substeps: int = 10,
++    ):
++        """
++        Args:
++            render_mode: 렌더링 모드 ('human', 'ansi', None)
++            trajectory_substeps: 타자에게 제공할 궤적 관찰 시점 수
++        """
++        super().__init__()
++        self.render_mode = render_mode
++        self.trajectory_substeps = trajectory_substeps
++
++        # 물리 엔진 초기화
++        self.pitcher_mech = PitcherMechanism()
++        self.batter_mech = BatterMechanism()
++        self.strike_zone = StrikeZone()
++
++        # ── Observation Spaces ──
++        self.pitcher_obs_space = spaces.Box(
++            low=np.array([0, 0, -1, -0.5, 0.0, 0], dtype=np.float32),
++            high=np.array([2, 3, 5, 0.5, 1.5, 1], dtype=np.float32),
++            dtype=np.float32,
++        )
++        self.batter_obs_space = spaces.Box(
++            low=-np.ones(13, dtype=np.float32) * 100.0,
++            high=np.ones(13, dtype=np.float32) * 100.0,
++            dtype=np.float32,
++        )
++
++        # Gymnasium 호환을 위한 결합 space (실제로는 에이전트별 사용)
++        self.observation_space = spaces.Dict({
++            'pitcher': self.pitcher_obs_space,
++            'batter': self.batter_obs_space,
++        })
++
++        # ── Action Spaces ──
++        self.pitcher_action_space = spaces.Box(
++            low=-np.ones(5, dtype=np.float32),
++            high=np.ones(5, dtype=np.float32),
++            dtype=np.float32,
++        )
++        self.batter_action_space = spaces.Box(
++            low=-np.ones(4, dtype=np.float32),
++            high=np.ones(4, dtype=np.float32),
++            dtype=np.float32,
++        )
++
++        self.action_space = spaces.Dict({
++            'pitcher': self.pitcher_action_space,
++            'batter': self.batter_action_space,
++        })
++
++        # ── 게임 상태 ──
++        self._reset_count()
++
++        # ── 에피소드 데이터 수집 (Dashboard 연동) ──
++        self.episode_data = []
++        self.pitch_count = 0
++
++    def _reset_count(self):
++        """카운트를 초기화합니다."""
++        self.strikes = 0
++        self.balls = 0
++        self.prev_result = 0   # 0=없음, 1=strike, 2=ball, 3=foul, 4=hit, 5=HR
++        self.prev_plate_x = 0.0
++        self.prev_plate_z = 0.75  # 존 중앙
++        self.batter_stance = 0    # 0=우타, 1=좌타
++
++    def _get_pitcher_obs(self) -> np.ndarray:
++        """투수 관찰 벡터를 생성합니다."""
++        return np.array([
++            self.strikes,
++            self.balls,
++            self.prev_result,
++            self.prev_plate_x,
++            self.prev_plate_z,
++            self.batter_stance,
++        ], dtype=np.float32)
++
++    def _get_batter_obs(
++        self,
++        ball_pos: np.ndarray,
++        ball_vel: np.ndarray,
++        bat_state: Optional[dict] = None,
++        time_to_plate: float = 0.5,
++    ) -> np.ndarray:
++        """타자 관찰 벡터를 생성합니다."""
++        if bat_state is None:
++            bat_pos = np.zeros(3, dtype=np.float32)
++            bat_vel = np.zeros(3, dtype=np.float32)
++        else:
++            bat_pos = bat_state['sweet_spot_position'].astype(np.float32)
++            bat_vel = bat_state['sweet_spot_velocity'].astype(np.float32)
++
++        return np.concatenate([
++            ball_pos.astype(np.float32),
++            ball_vel.astype(np.float32),
++            bat_pos,
++            bat_vel,
++            [float(time_to_plate)],
++        ]).astype(np.float32)
++
++    def reset(
++        self,
++        seed: Optional[int] = None,
++        options: Optional[dict] = None,
++    ) -> Tuple[Dict[str, np.ndarray], Dict[str, Any]]:
++        """환경을 초기화합니다.
++
++        Returns:
++            (observations, info)
++        """
++        super().reset(seed=seed)
++        self._reset_count()
++        self.episode_data = []
++        self.pitch_count = 0
++
++        # 타자 스탠스 랜덤
++        if self.np_random is not None:
++            self.batter_stance = int(self.np_random.integers(0, 2))
++        else:
++            self.batter_stance = np.random.randint(0, 2)
++
++        obs = {
++            'pitcher': self._get_pitcher_obs(),
++            'batter': self._get_batter_obs(
++                ball_pos=np.array([0.0, 18.44, 1.85]),
++                ball_vel=np.array([0.0, 0.0, 0.0]),
++                time_to_plate=0.5,
++            ),
++        }
++
++        info = {
++            'strikes': self.strikes,
++            'balls': self.balls,
++            'pitch_count': self.pitch_count,
++        }
++
++        return obs, info
++
++    def step(
++        self,
++        action: Dict[str, np.ndarray],
++    ) -> Tuple[Dict[str, np.ndarray], Dict[str, float], bool, bool, Dict[str, Any]]:
++        """한 투구 사이클을 실행합니다.
++
++        Args:
++            action: {'pitcher': (5,), 'batter': (4,)} 액션 딕셔너리
++
++        Returns:
++            (obs, rewards, terminated, truncated, info)
++        """
++        pitcher_action = action['pitcher']
++        batter_action = action['batter']
++
++        # ── 1. 투구 시뮬레이션 ──
++        pitch_result = self.pitcher_mech.pitch(pitcher_action)
++        trajectory = pitch_result['trajectory']
++        plate_x = pitch_result['plate_x']
++        plate_z = pitch_result['plate_z']
++        flight_time = trajectory['flight_time']
++
++        # ── 2. 타자 스윙 판정 ──
++        # 타자의 스윙 시작 시간: 공이 홈플레이트 부근에 도달하기 ~0.15초 전
++        swing_start_time = max(0.0, flight_time - 0.20)
++
++        swing_result = self.batter_mech.swing_and_check(
++            action=batter_action,
++            ball_trajectory_positions=trajectory['positions'],
++            ball_trajectory_velocities=trajectory['velocities'],
++            ball_trajectory_times=trajectory['times'],
++            swing_start_time=swing_start_time,
++        )
++
++        # ── 3. 결과 판정 ──
++        pitch_outcome = self._judge_outcome(
++            swing_result, plate_x, plate_z
++        )
++
++        # ── 4. Reward 계산 ──
++        reward_key = pitch_outcome['reward_key']
++        pitcher_reward, batter_reward = REWARDS[reward_key]
++        rewards = {
++            'pitcher': pitcher_reward,
++            'batter': batter_reward,
++        }
++
++        # ── 5. 카운트 업데이트 ──
++        terminated = False
++        self.pitch_count += 1
++
++        if reward_key in ('called_strike', 'swinging_strike'):
++            self.strikes += 1
++            self.prev_result = 1
++            if self.strikes >= 3:
++                # 삼진 보너스
++                p_bonus, b_bonus = REWARDS['strikeout']
++                rewards['pitcher'] += p_bonus
++                rewards['batter'] += b_bonus
++                terminated = True
++        elif reward_key == 'ball':
++            self.balls += 1
++            self.prev_result = 2
++            if self.balls >= 4:
++                # 볼넷 보너스
++                p_bonus, b_bonus = REWARDS['walk']
++                rewards['pitcher'] += p_bonus
++                rewards['batter'] += b_bonus
++                terminated = True
++        elif reward_key == 'foul':
++            if self.strikes < 2:
++                self.strikes += 1
++            self.prev_result = 3
++        elif reward_key in ('single', 'extra_base', 'home_run', 'out'):
++            self.prev_result = 4 if reward_key != 'home_run' else 5
++            terminated = True
++
++        self.prev_plate_x = plate_x
++        self.prev_plate_z = plate_z
++
++        # 최대 투구 수 제한 (truncation)
++        truncated = self.pitch_count >= 20
++
++        # ── 6. 에피소드 데이터 수집 ──
++        pitch_data = {
++            'pitch_number': self.pitch_count,
++            'plate_x': plate_x,
++            'plate_z': plate_z,
++            'arrival_speed_kmh': pitch_result['arrival_speed_kmh'],
++            'spin_rate': pitch_result['params']['spin_rate_rpm'],
++            'spin_axis': pitch_result['params']['spin_axis_angle'],
++            'movement_x': pitch_result['movement_x'],
++            'movement_z': pitch_result['movement_z'],
++            'outcome': reward_key,
++            'trajectory_positions': trajectory['positions'].tolist(),
++            'strikes': self.strikes,
++            'balls': self.balls,
++        }
++
++        if swing_result['result'] == 'hit' and swing_result['contact_info']:
++            ci = swing_result['contact_info']
++            pitch_data.update({
++                'exit_speed_kmh': ci['exit_speed_kmh'],
++                'launch_angle': ci['launch_angle'],
++                'spray_angle': ci['spray_angle'],
++                'sweet_spot_factor': ci['sweet_spot_factor'],
++            })
++
++        self.episode_data.append(pitch_data)
++
++        # ── 7. 다음 관찰 ──
++        # 타자에게는 공의 초기 상태를 다시 제공 (다음 투구 대기)
++        obs = {
++            'pitcher': self._get_pitcher_obs(),
++            'batter': self._get_batter_obs(
++                ball_pos=trajectory['positions'][0],
++                ball_vel=trajectory['velocities'][0],
++                time_to_plate=flight_time,
++            ),
++        }
++
++        info = {
++            'pitch_outcome': pitch_outcome,
++            'pitch_data': pitch_data,
++            'strikes': self.strikes,
++            'balls': self.balls,
++            'pitch_count': self.pitch_count,
++            'episode_data': self.episode_data,
++        }
++
++        return obs, rewards, terminated, truncated, info
++
++    def _judge_outcome(
++        self,
++        swing_result: dict,
++        plate_x: float,
++        plate_z: float,
++    ) -> dict:
++        """투구/타격 결과를 종합 판정합니다.
++
++        Args:
++            swing_result: BatterMechanism.swing_and_check() 결과
++            plate_x: 홈플레이트 통과 x 좌표
++            plate_z: 홈플레이트 통과 z 좌표
++
++        Returns:
++            dict:
++                'reward_key': REWARDS 테이블 키
++                'description': 결과 설명 문자열
++                'is_strike_zone': 스트라이크존 내 여부
++        """
++        is_in_zone = self.strike_zone.is_strike(plate_x, plate_z)
++
++        if swing_result['result'] == 'no_swing':
++            # 방망이를 꺼내지 않음
++            if is_in_zone:
++                return {
++                    'reward_key': 'called_strike',
++                    'description': '보송 스트라이크 (Called Strike)',
++                    'is_strike_zone': True,
++                }
++            else:
++                return {
++                    'reward_key': 'ball',
++                    'description': '볼 (Ball)',
++                    'is_strike_zone': False,
++                }
++
++        elif swing_result['result'] == 'swing_miss':
++            # 헛스윙
++            return {
++                'reward_key': 'swinging_strike',
++                'description': '헛스윙 (Swinging Strike)',
++                'is_strike_zone': is_in_zone,
++            }
++
++        elif swing_result['result'] == 'hit':
++            # 타격 성공 → 타구 분류
++            contact_info = swing_result['contact_info']
++            hit_type = self.batter_mech.classify_hit(contact_info)
++
++            descriptions = {
++                'foul': '파울 (Foul Ball)',
++                'home_run': '홈런! (Home Run!) 🎆',
++                'extra_base': '장타! (Extra Base Hit)',
++                'single': '안타 (Single)',
++                'out': '아웃 (Out)',
++            }
++
++            return {
++                'reward_key': hit_type,
++                'description': descriptions.get(hit_type, hit_type),
++                'is_strike_zone': is_in_zone,
++                'contact_info': contact_info,
++            }
++
++        return {
++            'reward_key': 'ball',
++            'description': '알 수 없는 결과',
++            'is_strike_zone': is_in_zone,
++        }
++
++    def get_batter_trajectory_observations(
++        self,
++        trajectory: dict,
++    ) -> list:
++        """공 궤적을 시간 분할하여 타자 관찰 시퀀스를 생성합니다.
++
++        LSTM 기반 타자 정책에 입력할 시계열 데이터를 생성합니다.
++
++        Args:
++            trajectory: PitcherMechanism.pitch()['trajectory'] 결과
++
++        Returns:
++            list of (observation, time) 튜플
++        """
++        positions = trajectory['positions']
++        velocities = trajectory['velocities']
++        times = trajectory['times']
++
++        n = len(times)
++        step = max(1, n // self.trajectory_substeps)
++        indices = list(range(0, n, step))[:self.trajectory_substeps]
++
++        observations = []
++        for idx in indices:
++            time_to_plate = times[-1] - times[idx]
++            obs = self._get_batter_obs(
++                ball_pos=positions[idx],
++                ball_vel=velocities[idx],
++                time_to_plate=time_to_plate,
++            )
++            observations.append((obs, times[idx]))
++
++        return observations
++
++    def render(self) -> Optional[str]:
++        """환경 상태를 렌더링합니다."""
++        if self.render_mode == 'ansi':
++            return self._render_ansi()
++        return None
++
++    def _render_ansi(self) -> str:
++        """ASCII 텍스트로 스트라이크존과 카운트를 표시합니다."""
++        sz = self.strike_zone
++        lines = []
++        lines.append(f"  ⚾ Count: {self.balls}B - {self.strikes}S")
++        lines.append(f"  {'─' * 25}")
++
++        # 9분할 스트라이크존 (3×3)
++        zone_width = 7
++        for row in range(2, -1, -1):  # 상 → 하
++            row_str = "  │"
++            for col in range(3):
++                cell = f" {'·':^{zone_width-2}} "
++                # 마지막 투구 위치 표시
++                loc = sz.zone_location(self.prev_plate_x, self.prev_plate_z)
++                if loc == (col, row):
++                    cell = f" {'●':^{zone_width-2}} "
++                row_str += cell + "│"
++            lines.append(row_str)
++            if row > 0:
++                lines.append(f"  │{'─' * zone_width}│{'─' * zone_width}│{'─' * zone_width}│")
++
++        lines.append(f"  {'─' * 25}")
++
++        if self.episode_data:
++            last = self.episode_data[-1]
++            lines.append(f"  Last: {last['outcome']} | "
++                        f"{last['arrival_speed_kmh']:.0f}km/h")
++
++        return "\n".join(lines)
+diff --git a/game.py b/game.py
+new file mode 100644
+index 0000000..3b01552
+--- /dev/null
++++ b/game.py
+@@ -0,0 +1,567 @@
++"""
++game.py — 대화형 Playable 게임 메인 엔진
++
++학습된 모델(체크포인트)을 로딩하여 유저가 투수 또는 타자로 플레이할 수 있는
++터미널 기반 인터랙티브 게임을 제공합니다.
++
++사용법:
++    python game.py                    # AI vs AI 관전 모드
++    python game.py --role pitcher     # 유저가 투수로 플레이
++    python game.py --role batter      # 유저가 타자로 플레이
++    python game.py --checkpoint path  # 체크포인트 로드
++"""
++
++import argparse
++import sys
++import time
++import numpy as np
++from pathlib import Path
++from typing import Optional
++
++import torch
++
++from envs.baseball_game_env import BaseballGameEnv
++from training.networks import PitcherAgent, BatterAgent, get_device
++
++
++# ──────────────────────────────────────────────────────────────
++#  ASCII 렌더링
++# ──────────────────────────────────────────────────────────────
++
++# ANSI 색상 코드
++class Colors:
++    RESET = '\033[0m'
++    BOLD = '\033[1m'
++    RED = '\033[91m'
++    GREEN = '\033[92m'
++    YELLOW = '\033[93m'
++    BLUE = '\033[94m'
++    MAGENTA = '\033[95m'
++    CYAN = '\033[96m'
++    WHITE = '\033[97m'
++    DIM = '\033[2m'
++    BG_RED = '\033[41m'
++    BG_GREEN = '\033[42m'
++    BG_BLUE = '\033[44m'
++
++
++def clear_screen():
++    """터미널 화면 초기화."""
++    print('\033[2J\033[H', end='')
++
++
++def render_strike_zone(
++    plate_x: float,
++    plate_z: float,
++    outcome: str,
++    count_str: str,
++    speed_kmh: float,
++    movement_x: float = 0.0,
++    movement_z: float = 0.0,
++) -> str:
++    """ASCII 스트라이크존을 렌더링합니다.
++
++    11×11 그리드로 스트라이크존과 투구 위치를 표시합니다.
++    """
++    # 존 좌표 (미터 → 그리드 좌표)
++    grid_w, grid_h = 11, 11
++    sz_left, sz_right = 2, 8     # 그리드 상 존 경계
++    sz_bottom, sz_top = 2, 8
++
++    # 투구 위치를 그리드 좌표로 변환
++    x_range = (-0.5, 0.5)   # 미터
++    z_range = (0.0, 1.5)
++    px = int((plate_x - x_range[0]) / (x_range[1] - x_range[0]) * (grid_w - 1))
++    pz = int((plate_z - z_range[0]) / (z_range[1] - z_range[0]) * (grid_h - 1))
++    px = max(0, min(px, grid_w - 1))
++    pz = max(0, min(pz, grid_h - 1))
++
++    # 결과별 색상
++    outcome_colors = {
++        'called_strike': Colors.RED,
++        'swinging_strike': Colors.YELLOW,
++        'ball': Colors.BLUE,
++        'foul': Colors.YELLOW,
++        'single': Colors.GREEN,
++        'extra_base': Colors.CYAN,
++        'home_run': Colors.MAGENTA,
++        'out': Colors.DIM,
++    }
++    ball_color = outcome_colors.get(outcome, Colors.WHITE)
++
++    # 결과별 이모지
++    outcome_labels = {
++        'called_strike': '⚡ Called Strike!',
++        'swinging_strike': '💨 Swinging Strike!',
++        'ball': '🔵 Ball',
++        'foul': '⚠️  Foul Ball',
++        'single': '🏏 Single!',
++        'extra_base': '🔥 Extra Base Hit!',
++        'home_run': '🎆 HOME RUN!!!',
++        'out': '👊 Out',
++        'strikeout': '🔥 STRIKEOUT!!!',
++        'walk': '🚶 Walk (Four Balls)',
++    }
++
++    lines = []
++    lines.append("")
++    lines.append(f"  {Colors.BOLD}⚾ {count_str}{Colors.RESET}")
++    lines.append(f"  {Colors.DIM}{'─' * 28}{Colors.RESET}")
++
++    # 존 렌더링 (하단 → 상단)
++    for row in range(grid_h - 1, -1, -1):
++        line = "  "
++        for col in range(grid_w):
++            is_zone = (sz_left <= col <= sz_right and sz_bottom <= row <= sz_top)
++            is_ball_here = (col == px and row == pz)
++
++            if is_ball_here:
++                line += f"{ball_color}●{Colors.RESET} "
++            elif is_zone:
++                # 존 경계선
++                if row == sz_bottom or row == sz_top:
++                    if col == sz_left or col == sz_right:
++                        line += f"{Colors.DIM}+{Colors.RESET} "
++                    else:
++                        line += f"{Colors.DIM}─{Colors.RESET} "
++                elif col == sz_left or col == sz_right:
++                    line += f"{Colors.DIM}│{Colors.RESET} "
++                else:
++                    # 9분할 격자
++                    inner_col = (col - sz_left - 1)
++                    inner_row = (row - sz_bottom - 1)
++                    if inner_col == 1 or inner_col == 3:
++                        line += f"{Colors.DIM}·{Colors.RESET} "
++                    elif inner_row == 1 or inner_row == 3:
++                        line += f"{Colors.DIM}·{Colors.RESET} "
++                    else:
++                        line += "  "
++            else:
++                line += f"{Colors.DIM}.{Colors.RESET} "
++
++        lines.append(line)
++
++    lines.append(f"  {Colors.DIM}{'─' * 28}{Colors.RESET}")
++
++    # 결과 출력
++    label = outcome_labels.get(outcome, outcome)
++    lines.append(f"  {Colors.BOLD}{label}{Colors.RESET}")
++    lines.append(
++        f"  {Colors.CYAN}Speed: {speed_kmh:.0f} km/h{Colors.RESET} | "
++        f"{Colors.YELLOW}Movement: ({movement_x*100:.1f}, {movement_z*100:.1f}) cm{Colors.RESET}"
++    )
++
++    return "\n".join(lines)
++
++
++def render_hit_result(contact_info: dict) -> str:
++    """타격 결과를 ASCII로 표시합니다."""
++    if not contact_info:
++        return ""
++
++    lines = []
++    ev = contact_info.get('exit_speed_kmh', 0)
++    la = contact_info.get('launch_angle', 0)
++    sa = contact_info.get('spray_angle', 0)
++    ss = contact_info.get('sweet_spot_factor', 0)
++
++    lines.append(f"\n  {Colors.BOLD}🏏 Hit Details{Colors.RESET}")
++    lines.append(f"  {Colors.DIM}{'─' * 28}{Colors.RESET}")
++
++    # Exit Velocity 바
++    ev_bar_len = int(min(ev / 200, 1.0) * 20)
++    ev_color = Colors.GREEN if ev > 150 else (Colors.YELLOW if ev > 130 else Colors.RED)
++    ev_bar = f"{'█' * ev_bar_len}{'░' * (20 - ev_bar_len)}"
++    lines.append(f"  Exit Vel:  {ev_color}{ev:.0f} km/h{Colors.RESET} [{ev_bar}]")
++
++    # Launch Angle
++    la_indicator = "↗" if la > 0 else "↘" if la < 0 else "→"
++    lines.append(f"  Launch:    {Colors.CYAN}{la:+.1f}°{Colors.RESET} {la_indicator}")
++
++    # Spray Angle
++    sa_indicator = "←" if sa > 0 else "→" if sa < 0 else "↑"
++    lines.append(f"  Spray:     {Colors.YELLOW}{sa:+.1f}°{Colors.RESET} {sa_indicator}")
++
++    # Sweet Spot
++    ss_bar_len = int(ss * 20)
++    ss_color = Colors.GREEN if ss > 0.9 else (Colors.YELLOW if ss > 0.7 else Colors.RED)
++    ss_bar = f"{'█' * ss_bar_len}{'░' * (20 - ss_bar_len)}"
++    lines.append(f"  Sweet Spot:{ss_color} {ss:.0%}{Colors.RESET} [{ss_bar}]")
++
++    return "\n".join(lines)
++
++
++# ──────────────────────────────────────────────────────────────
++#  유저 입력 처리
++# ──────────────────────────────────────────────────────────────
++
++def get_pitcher_action_from_user() -> np.ndarray:
++    """유저에게 투구 파라미터를 입력받습니다."""
++    print(f"\n  {Colors.BOLD}⚾ 투구 설정{Colors.RESET}")
++    print(f"  {Colors.DIM}(Enter로 기본값 사용){Colors.RESET}")
++
++    try:
++        v = input(f"  속도 [-1=느림, 0=보통, 1=빠름] (0): ").strip()
++        v = float(v) if v else 0.0
++
++        x = input(f"  좌우 [-1=좌, 0=중앙, 1=우] (0): ").strip()
++        x = float(x) if x else 0.0
++
++        z = input(f"  상하 [-1=낮음, 0=중앙, 1=높음] (0): ").strip()
++        z = float(z) if z else 0.0
++
++        spin = input(f"  스핀 [-1=적음, 0=보통, 1=많음] (0): ").strip()
++        spin = float(spin) if spin else 0.0
++
++        axis = input(f"  스핀축 [-1=커브, 0=직구, 1=슬라이더] (0): ").strip()
++        axis = float(axis) if axis else 0.0
++
++    except (ValueError, EOFError):
++        return np.zeros(5, dtype=np.float32)
++
++    action = np.array([v, x, z, spin, axis], dtype=np.float32)
++    return np.clip(action, -1.0, 1.0)
++
++
++def get_batter_action_from_user(time_hint: float = 0.5) -> np.ndarray:
++    """유저에게 스윙 여부와 파라미터를 입력받습니다."""
++    print(f"\n  {Colors.BOLD}🏏 타격 결정{Colors.RESET}")
++    print(f"  {Colors.DIM}(투구 도착 예상: {time_hint:.2f}초){Colors.RESET}")
++
++    try:
++        swing = input(f"  스윙? [y/n] (n): ").strip().lower()
++
++        if swing in ('y', 'yes', 'ㅛ'):
++            trigger = 0.8
++
++            yaw = input(f"  스윙 방향 [-1=당기기, 0=중앙, 1=밀어치기] (0.3): ").strip()
++            yaw = float(yaw) if yaw else 0.3
++
++            pitch = input(f"  배트 각도 [-1=다운, 0=수평, 1=어퍼컷] (0): ").strip()
++            pitch = float(pitch) if pitch else 0.0
++
++            height = input(f"  높이 [-1=낮게, 0=중간, 1=높게] (0): ").strip()
++            height = float(height) if height else 0.0
++        else:
++            trigger = -0.8
++            yaw, pitch, height = 0.0, 0.0, 0.0
++
++    except (ValueError, EOFError):
++        return np.array([-0.8, 0.0, 0.0, 0.0], dtype=np.float32)
++
++    action = np.array([trigger, yaw, pitch, height], dtype=np.float32)
++    return np.clip(action, -1.0, 1.0)
++
++
++# ──────────────────────────────────────────────────────────────
++#  게임 엔진
++# ──────────────────────────────────────────────────────────────
++
++class BaseballGame:
++    """대화형 야구 게임 엔진.
++
++    학습된 AI 또는 유저가 투수/타자로 플레이합니다.
++    """
++
++    def __init__(
++        self,
++        role: str = 'spectator',
++        checkpoint_path: Optional[str] = None,
++        delay: float = 1.0,
++    ):
++        """
++        Args:
++            role: 'spectator' (관전), 'pitcher' (유저가 투수), 'batter' (유저가 타자)
++            checkpoint_path: 학습된 모델 체크포인트 경로
++            delay: AI 행동 간 딜레이 (초)
++        """
++        self.role = role
++        self.delay = delay
++        self.device = get_device()
++
++        # 환경
++        self.env = BaseballGameEnv()
++
++        # AI 에이전트
++        self.pitcher_agent = PitcherAgent().to(self.device)
++        self.batter_agent = BatterAgent().to(self.device)
++
++        # 체크포인트 로드
++        if checkpoint_path and Path(checkpoint_path).exists():
++            self._load_checkpoint(checkpoint_path)
++            print(f"  {Colors.GREEN}✅ 체크포인트 로드 완료{Colors.RESET}")
++        else:
++            print(f"  {Colors.YELLOW}⚠️  체크포인트 없음 — 랜덤 가중치 사용{Colors.RESET}")
++
++        # 통계
++        self.games_played = 0
++        self.pitcher_total_wins = 0
++        self.batter_total_wins = 0
++
++    def _load_checkpoint(self, path: str):
++        """체크포인트를 로드합니다."""
++        checkpoint = torch.load(path, map_location=self.device, weights_only=False)
++        self.pitcher_agent.load_state_dict(checkpoint['pitcher_state_dict'])
++        self.batter_agent.load_state_dict(checkpoint['batter_state_dict'])
++
++    def _get_ai_pitcher_action(self, obs: np.ndarray) -> np.ndarray:
++        """AI 투수의 액션을 생성합니다."""
++        obs_tensor = torch.FloatTensor(obs).unsqueeze(0).to(self.device)
++        with torch.no_grad():
++            action, _, _, _ = self.pitcher_agent.get_action_and_value(
++                obs_tensor, deterministic=True
++            )
++        return action.cpu().numpy().squeeze()
++
++    def _get_ai_batter_action(self, obs: np.ndarray) -> np.ndarray:
++        """AI 타자의 액션을 생성합니다."""
++        obs_tensor = torch.FloatTensor(obs).unsqueeze(0).to(self.device)
++        with torch.no_grad():
++            action, _, _, _, _ = self.batter_agent.get_action_and_value(
++                obs_tensor, deterministic=True
++            )
++        return action.cpu().numpy().squeeze()
++
++    def play_at_bat(self) -> dict:
++        """1타석(At-Bat)을 실행합니다.
++
++        Returns:
++            타석 결과 딕셔너리
++        """
++        obs, info = self.env.reset()
++        pitcher_obs = obs['pitcher']
++        batter_obs = obs['batter']
++
++        terminated = False
++        truncated = False
++        pitch_num = 0
++        results = []
++
++        clear_screen()
++        self._print_header()
++
++        while not terminated and not truncated:
++            pitch_num += 1
++            strikes = int(pitcher_obs[0])
++            balls = int(pitcher_obs[1])
++            count_str = f"Count: {balls}B - {strikes}S  |  Pitch #{pitch_num}"
++
++            print(f"\n  {Colors.DIM}{'═' * 40}{Colors.RESET}")
++            print(f"  {Colors.BOLD}Pitch #{pitch_num}{Colors.RESET}  |  "
++                  f"{Colors.RED}{'●' * strikes}{'○' * (2 - strikes)}{Colors.RESET} "
++                  f"{Colors.BLUE}{'●' * balls}{'○' * (3 - balls)}{Colors.RESET}")
++
++            # 투수 액션
++            if self.role == 'pitcher':
++                pitcher_action = get_pitcher_action_from_user()
++            else:
++                pitcher_action = self._get_ai_pitcher_action(pitcher_obs)
++                if self.role == 'spectator':
++                    time.sleep(self.delay * 0.5)
++
++            # 타자 액션
++            if self.role == 'batter':
++                batter_action = get_batter_action_from_user(
++                    time_hint=batter_obs[12] if len(batter_obs) > 12 else 0.5
++                )
++            else:
++                batter_action = self._get_ai_batter_action(batter_obs)
++
++            # 환경 스텝
++            action = {'pitcher': pitcher_action, 'batter': batter_action}
++            next_obs, rewards, terminated, truncated, info = self.env.step(action)
++
++            # 결과 표시
++            pitch_data = info.get('pitch_data', {})
++            pitch_outcome = info.get('pitch_outcome', {})
++
++            outcome_key = pitch_outcome.get('reward_key', 'ball')
++            plate_x = pitch_data.get('plate_x', 0.0)
++            plate_z = pitch_data.get('plate_z', 0.75)
++            speed = pitch_data.get('arrival_speed_kmh', 130.0)
++            mv_x = pitch_data.get('movement_x', 0.0)
++            mv_z = pitch_data.get('movement_z', 0.0)
++
++            zone_render = render_strike_zone(
++                plate_x, plate_z, outcome_key, count_str,
++                speed, mv_x, mv_z,
++            )
++            print(zone_render)
++
++            # 타격 결과 표시
++            contact_info = pitch_outcome.get('contact_info')
++            if contact_info:
++                print(render_hit_result(contact_info))
++
++            results.append(outcome_key)
++
++            # 다음 관찰
++            pitcher_obs = next_obs['pitcher']
++            batter_obs = next_obs['batter']
++
++            if self.role == 'spectator':
++                time.sleep(self.delay)
++
++        # 타석 종료
++        final_strikes = int(pitcher_obs[0])
++        final_balls = int(pitcher_obs[1])
++
++        if final_strikes >= 3:
++            at_bat_result = 'strikeout'
++            winner = 'pitcher'
++            print(f"\n  {Colors.RED}{Colors.BOLD}🔥 STRIKEOUT!!! ── "
++                  f"삼진 아웃!{Colors.RESET}")
++        elif final_balls >= 4:
++            at_bat_result = 'walk'
++            winner = 'batter'
++            print(f"\n  {Colors.BLUE}{Colors.BOLD}🚶 WALK ── "
++                  f"볼넷 출루!{Colors.RESET}")
++        elif 'home_run' in results:
++            at_bat_result = 'home_run'
++            winner = 'batter'
++            print(f"\n  {Colors.MAGENTA}{Colors.BOLD}🎆 HOME RUN!!! ── "
++                  f"홈런!{Colors.RESET}")
++        elif any(r in ('single', 'extra_base') for r in results):
++            at_bat_result = 'hit'
++            winner = 'batter'
++            print(f"\n  {Colors.GREEN}{Colors.BOLD}🏏 HIT! ── "
++                  f"안타!{Colors.RESET}")
++        else:
++            at_bat_result = 'out'
++            winner = 'pitcher'
++            print(f"\n  {Colors.DIM}{Colors.BOLD}👊 OUT ── "
++                  f"아웃!{Colors.RESET}")
++
++        if winner == 'pitcher':
++            self.pitcher_total_wins += 1
++        else:
++            self.batter_total_wins += 1
++        self.games_played += 1
++
++        return {
++            'result': at_bat_result,
++            'winner': winner,
++            'pitches': pitch_num,
++            'outcomes': results,
++        }
++
++    def _print_header(self):
++        """게임 헤더를 출력합니다."""
++        print(f"""
++  {Colors.BOLD}╔══════════════════════════════════════════╗
++  ║     ⚾  BASEBALL RL GAME ENGINE  ⚾     ║
++  ╚══════════════════════════════════════════╝{Colors.RESET}
++
++  {Colors.DIM}Role: {self.role.upper()}{Colors.RESET}
++  {Colors.DIM}Games: {self.games_played} | P-Wins: {self.pitcher_total_wins} | B-Wins: {self.batter_total_wins}{Colors.RESET}
++""")
++
++    def run(self, n_at_bats: int = 9):
++        """N 타석 게임을 실행합니다.
++
++        Args:
++            n_at_bats: 실행할 타석 수 (기본 9)
++        """
++        print(f"\n  {Colors.BOLD}⚾ {n_at_bats}타석 게임을 시작합니다!{Colors.RESET}")
++        print(f"  {Colors.DIM}Role: {self.role}{Colors.RESET}\n")
++
++        game_results = []
++
++        for i in range(n_at_bats):
++            print(f"\n  {Colors.BOLD}{'═' * 40}{Colors.RESET}")
++            print(f"  {Colors.BOLD}  📋 타석 {i+1}/{n_at_bats}{Colors.RESET}")
++            print(f"  {Colors.BOLD}{'═' * 40}{Colors.RESET}")
++
++            result = self.play_at_bat()
++            game_results.append(result)
++
++            if i < n_at_bats - 1:
++                try:
++                    input(f"\n  {Colors.DIM}Press Enter to continue...{Colors.RESET}")
++                except EOFError:
++                    break
++
++        # 최종 결과
++        self._print_game_summary(game_results)
++
++    def _print_game_summary(self, results: list):
++        """게임 종료 후 종합 결과를 표시합니다."""
++        clear_screen()
++
++        total = len(results)
++        hits = sum(1 for r in results if r['winner'] == 'batter')
++        outs = total - hits
++        hrs = sum(1 for r in results if r['result'] == 'home_run')
++        ks = sum(1 for r in results if r['result'] == 'strikeout')
++        walks = sum(1 for r in results if r['result'] == 'walk')
++        avg_pitches = np.mean([r['pitches'] for r in results])
++
++        print(f"""
++  {Colors.BOLD}╔══════════════════════════════════════════╗
++  ║          ⚾  GAME SUMMARY  ⚾           ║
++  ╠══════════════════════════════════════════╣{Colors.RESET}
++  ║  At-Bats:    {total:3d}                         ║
++  ║  {Colors.GREEN}Hits:        {hits:3d}{Colors.RESET}   (AVG: .{int(hits/max(total,1)*1000):03d})       ║
++  ║  {Colors.RED}Outs:        {outs:3d}{Colors.RESET}                         ║
++  ║  {Colors.MAGENTA}Home Runs:   {hrs:3d}{Colors.RESET}                         ║
++  ║  {Colors.YELLOW}Strikeouts:  {ks:3d}{Colors.RESET}                         ║
++  ║  {Colors.BLUE}Walks:       {walks:3d}{Colors.RESET}                         ║
++  ║  Avg Pitches: {avg_pitches:.1f}                       ║
++  {Colors.BOLD}╠══════════════════════════════════════════╣
++  ║  Pitcher Wins: {self.pitcher_total_wins:3d}  |  Batter Wins: {self.batter_total_wins:3d}  ║
++  ╚══════════════════════════════════════════╝{Colors.RESET}
++""")
++
++
++# ──────────────────────────────────────────────────────────────
++#  메인 실행
++# ──────────────────────────────────────────────────────────────
++
++def main():
++    parser = argparse.ArgumentParser(
++        description='⚾ Baseball RL Interactive Game',
++        formatter_class=argparse.RawDescriptionHelpFormatter,
++        epilog="""
++Examples:
++  python game.py                         # AI vs AI 관전
++  python game.py --role pitcher          # 유저가 투수
++  python game.py --role batter           # 유저가 타자
++  python game.py --checkpoint ckpt.pt    # 체크포인트 로드
++  python game.py --at-bats 3             # 3타석 게임
++        """
++    )
++    parser.add_argument(
++        '--role', type=str, default='spectator',
++        choices=['spectator', 'pitcher', 'batter'],
++        help='유저 역할 (spectator/pitcher/batter)',
++    )
++    parser.add_argument(
++        '--checkpoint', type=str, default=None,
++        help='학습된 모델 체크포인트 경로',
++    )
++    parser.add_argument(
++        '--at-bats', type=int, default=9,
++        help='실행할 타석 수 (기본 9)',
++    )
++    parser.add_argument(
++        '--delay', type=float, default=1.0,
++        help='AI 행동 간 딜레이 (초, 관전 모드)',
++    )
++
++    args = parser.parse_args()
++
++    game = BaseballGame(
++        role=args.role,
++        checkpoint_path=args.checkpoint,
++        delay=args.delay,
++    )
++
++    try:
++        game.run(n_at_bats=args.at_bats)
++    except KeyboardInterrupt:
++        print(f"\n\n  {Colors.DIM}게임이 중단되었습니다.{Colors.RESET}")
++        game._print_game_summary([])
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/simulator/dashboard.py b/simulator/dashboard.py
+new file mode 100644
+index 0000000..292cac8
+--- /dev/null
++++ b/simulator/dashboard.py
+@@ -0,0 +1,751 @@
++"""
++dashboard.py — 실시간 학습 모니터링 대시보드 (Simulator Studio)
++
++Dash + Plotly 기반 4-패널 대시보드:
++    1. 3D Trajectory Viewer: 공 궤적, 마그누스 힘 벡터, 스윙 궤면
++    2. Exit Dynamics Dashboard: Exit Velocity, Launch Angle, Spray Angle
++    3. Strike Zone Heatmap: 투구 분포 + 타격 결과 오버레이
++    4. Learning Progress Monitor: 승률, Reward, 버퍼 상태
++
++JSON 파일 기반 학습 ↔ 대시보드 데이터 교환.
++"""
++
++import json
++import os
++import numpy as np
++from datetime import datetime
++from pathlib import Path
++
++import dash
++from dash import dcc, html, callback_context
++from dash.dependencies import Input, Output, State
++import plotly.graph_objects as go
++import plotly.express as px
++from plotly.subplots import make_subplots
++
++
++# ──────────────────────────────────────────────────────────────
++#  데이터 경로 설정
++# ──────────────────────────────────────────────────────────────
++
++DATA_DIR = Path(__file__).parent.parent / "data"
++METRICS_FILE = DATA_DIR / "training_metrics.json"
++PITCH_LOG_FILE = DATA_DIR / "pitch_log.json"
++
++# 스트라이크존 좌표 (미터)
++SZ_X_MIN, SZ_X_MAX = -0.2159, 0.2159
++SZ_Z_MIN, SZ_Z_MAX = 0.45, 1.05
++
++
++# ──────────────────────────────────────────────────────────────
++#  데이터 로더
++# ──────────────────────────────────────────────────────────────
++
++def load_json(filepath: Path) -> list:
++    """JSON 파일에서 데이터를 로드합니다."""
++    if not filepath.exists():
++        return []
++    try:
++        with open(filepath, 'r') as f:
++            data = json.load(f)
++        return data if isinstance(data, list) else [data]
++    except (json.JSONDecodeError, IOError):
++        return []
++
++
++def save_pitch_data(pitch_data: dict):
++    """투구 데이터를 JSON 로그에 추가합니다.
++
++    학습 루프에서 호출하여 대시보드와 데이터를 공유합니다.
++    """
++    DATA_DIR.mkdir(parents=True, exist_ok=True)
++    existing = load_json(PITCH_LOG_FILE)
++    existing.append(pitch_data)
++
++    # 최근 5000개만 유지
++    if len(existing) > 5000:
++        existing = existing[-5000:]
++
++    with open(PITCH_LOG_FILE, 'w') as f:
++        json.dump(existing, f, default=str)
++
++
++def save_training_metrics(metrics: dict):
++    """학습 메트릭을 JSON 파일에 추가합니다.
++
++    학습 루프에서 호출하여 대시보드와 데이터를 공유합니다.
++    """
++    DATA_DIR.mkdir(parents=True, exist_ok=True)
++    existing = load_json(METRICS_FILE)
++    metrics['timestamp'] = datetime.now().isoformat()
++    existing.append(metrics)
++
++    with open(METRICS_FILE, 'w') as f:
++        json.dump(existing, f, default=str)
++
++
++# ──────────────────────────────────────────────────────────────
++#  차트 생성 함수
++# ──────────────────────────────────────────────────────────────
++
++def create_trajectory_3d(pitch_log: list) -> go.Figure:
++    """3D 공 궤적 뷰어를 생성합니다.
++
++    최근 N개의 투구 궤적을 3D 공간에 오버레이합니다.
++    """
++    fig = go.Figure()
++
++    # 스트라이크존 3D 박스
++    sz_x = [SZ_X_MIN, SZ_X_MAX, SZ_X_MAX, SZ_X_MIN, SZ_X_MIN]
++    sz_z = [SZ_Z_MIN, SZ_Z_MIN, SZ_Z_MAX, SZ_Z_MAX, SZ_Z_MIN]
++    sz_y = [0, 0, 0, 0, 0]
++
++    fig.add_trace(go.Scatter3d(
++        x=sz_x, y=sz_y, z=sz_z,
++        mode='lines',
++        line=dict(color='rgba(255, 100, 100, 0.8)', width=4),
++        name='Strike Zone',
++        showlegend=True,
++    ))
++
++    # 최근 투구 궤적 (최대 10개)
++    recent_pitches = pitch_log[-10:] if len(pitch_log) > 10 else pitch_log
++
++    color_map = {
++        'called_strike': '#FF4444',
++        'swinging_strike': '#FF8800',
++        'ball': '#4488FF',
++        'foul': '#FFAA00',
++        'single': '#44FF44',
++        'extra_base': '#44FFAA',
++        'home_run': '#FF44FF',
++        'out': '#888888',
++    }
++
++    for i, pitch in enumerate(recent_pitches):
++        traj = pitch.get('trajectory_positions', [])
++        if not traj or len(traj) < 2:
++            continue
++
++        traj = np.array(traj)
++        outcome = pitch.get('outcome', 'ball')
++        color = color_map.get(outcome, '#AAAAAA')
++        speed = pitch.get('arrival_speed_kmh', 0)
++
++        fig.add_trace(go.Scatter3d(
++            x=traj[:, 0], y=traj[:, 1], z=traj[:, 2],
++            mode='lines',
++            line=dict(color=color, width=3),
++            name=f"#{i+1} {outcome} ({speed:.0f}km/h)",
++            opacity=0.6 + 0.4 * (i / max(len(recent_pitches) - 1, 1)),
++        ))
++
++        # 종착점 마커
++        fig.add_trace(go.Scatter3d(
++            x=[traj[-1, 0]], y=[traj[-1, 1]], z=[traj[-1, 2]],
++            mode='markers',
++            marker=dict(size=5, color=color, symbol='circle'),
++            showlegend=False,
++        ))
++
++    fig.update_layout(
++        title=dict(
++            text='⚾ 3D Pitch Trajectory Viewer',
++            font=dict(size=16, color='#E0E0E0'),
++        ),
++        scene=dict(
++            xaxis=dict(title='X (m)', range=[-0.8, 0.8],
++                       backgroundcolor='rgba(20,20,40,0.9)',
++                       gridcolor='rgba(100,100,150,0.3)'),
++            yaxis=dict(title='Y (m)', range=[-1, 20],
++                       backgroundcolor='rgba(20,20,40,0.9)',
++                       gridcolor='rgba(100,100,150,0.3)'),
++            zaxis=dict(title='Z (m)', range=[-0.5, 3],
++                       backgroundcolor='rgba(20,20,40,0.9)',
++                       gridcolor='rgba(100,100,150,0.3)'),
++            bgcolor='rgba(15,15,30,0.95)',
++            camera=dict(eye=dict(x=1.5, y=-1.5, z=0.8)),
++        ),
++        paper_bgcolor='#0D1117',
++        plot_bgcolor='#0D1117',
++        font=dict(color='#C9D1D9'),
++        legend=dict(
++            bgcolor='rgba(30,30,50,0.8)',
++            font=dict(size=10, color='#C9D1D9'),
++        ),
++        margin=dict(l=0, r=0, t=40, b=0),
++        height=500,
++    )
++
++    return fig
++
++
++def create_exit_dynamics(pitch_log: list) -> go.Figure:
++    """Exit Dynamics 대시보드를 생성합니다.
++
++    Exit Velocity vs Launch Angle 스캐터 + 분포 히스토그램.
++    """
++    fig = make_subplots(
++        rows=2, cols=2,
++        subplot_titles=(
++            'Exit Velocity vs Launch Angle',
++            'Exit Velocity Distribution',
++            'Spray Chart',
++            'Launch Angle Distribution',
++        ),
++        specs=[
++            [{'type': 'scatter'}, {'type': 'histogram'}],
++            [{'type': 'scatter'}, {'type': 'histogram'}],
++        ],
++        vertical_spacing=0.12,
++        horizontal_spacing=0.08,
++    )
++
++    # 타격 데이터만 필터링
++    hits = [p for p in pitch_log if 'exit_speed_kmh' in p]
++
++    if hits:
++        exit_speeds = [h['exit_speed_kmh'] for h in hits]
++        launch_angles = [h['launch_angle'] for h in hits]
++        spray_angles = [h.get('spray_angle', 0) for h in hits]
++        outcomes = [h.get('outcome', 'out') for h in hits]
++
++        color_map = {
++            'home_run': '#FF44FF',
++            'extra_base': '#44FFAA',
++            'single': '#44FF44',
++            'out': '#888888',
++            'foul': '#FFAA00',
++        }
++        colors = [color_map.get(o, '#AAAAAA') for o in outcomes]
++
++        # 1. Exit Velocity vs Launch Angle
++        fig.add_trace(go.Scatter(
++            x=launch_angles, y=exit_speeds,
++            mode='markers',
++            marker=dict(color=colors, size=6, opacity=0.7),
++            text=[f"{o}: {v:.0f}km/h @ {la:.1f}°"
++                  for o, v, la in zip(outcomes, exit_speeds, launch_angles)],
++            hoverinfo='text',
++            showlegend=False,
++        ), row=1, col=1)
++
++        # HR 존 표시
++        fig.add_shape(
++            type='rect', x0=20, x1=40, y0=155, y1=200,
++            line=dict(color='rgba(255,68,255,0.4)', dash='dash'),
++            fillcolor='rgba(255,68,255,0.1)',
++            row=1, col=1,
++        )
++
++        # 2. Exit Velocity 히스토그램
++        fig.add_trace(go.Histogram(
++            x=exit_speeds,
++            nbinsx=20,
++            marker_color='#58A6FF',
++            opacity=0.7,
++            showlegend=False,
++        ), row=1, col=2)
++
++        # 3. Spray Chart (극좌표 대신 XY scatter)
++        # spray_angle을 기반으로 x, y 계산
++        spray_x = [v * np.sin(np.radians(a)) for v, a in zip(exit_speeds, spray_angles)]
++        spray_y = [v * np.cos(np.radians(a)) for v, a in zip(exit_speeds, spray_angles)]
++
++        fig.add_trace(go.Scatter(
++            x=spray_x, y=spray_y,
++            mode='markers',
++            marker=dict(color=colors, size=5, opacity=0.6),
++            showlegend=False,
++        ), row=2, col=1)
++
++        # 파울 라인
++        for angle in [-45, 45]:
++            rad = np.radians(angle)
++            fig.add_trace(go.Scatter(
++                x=[0, 200 * np.sin(rad)], y=[0, 200 * np.cos(rad)],
++                mode='lines',
++                line=dict(color='rgba(255,255,100,0.3)', dash='dash'),
++                showlegend=False,
++            ), row=2, col=1)
++
++        # 4. Launch Angle 히스토그램
++        fig.add_trace(go.Histogram(
++            x=launch_angles,
++            nbinsx=20,
++            marker_color='#3FB950',
++            opacity=0.7,
++            showlegend=False,
++        ), row=2, col=2)
++
++    fig.update_layout(
++        title=dict(
++            text='🏏 Exit Dynamics Dashboard',
++            font=dict(size=16, color='#E0E0E0'),
++        ),
++        paper_bgcolor='#0D1117',
++        plot_bgcolor='#161B22',
++        font=dict(color='#C9D1D9', size=10),
++        margin=dict(l=40, r=20, t=60, b=30),
++        height=500,
++    )
++
++    # 축 스타일링
++    for i in range(1, 3):
++        for j in range(1, 3):
++            fig.update_xaxes(
++                gridcolor='rgba(100,100,150,0.2)',
++                zerolinecolor='rgba(100,100,150,0.3)',
++                row=i, col=j,
++            )
++            fig.update_yaxes(
++                gridcolor='rgba(100,100,150,0.2)',
++                zerolinecolor='rgba(100,100,150,0.3)',
++                row=i, col=j,
++            )
++
++    return fig
++
++
++def create_strike_zone_heatmap(pitch_log: list) -> go.Figure:
++    """스트라이크존 히트맵을 생성합니다.
++
++    투구 위치 분포 + 결과별 색상 오버레이.
++    """
++    fig = make_subplots(
++        rows=1, cols=2,
++        subplot_titles=('Pitch Location Heatmap', 'Batting Result Map'),
++        horizontal_spacing=0.08,
++    )
++
++    if pitch_log:
++        plate_xs = [p['plate_x'] for p in pitch_log]
++        plate_zs = [p['plate_z'] for p in pitch_log]
++        outcomes = [p.get('outcome', 'ball') for p in pitch_log]
++
++        # 1. 투구 위치 히트맵 (2D histogram)
++        fig.add_trace(go.Histogram2d(
++            x=plate_xs, y=plate_zs,
++            nbinsx=20, nbinsy=20,
++            colorscale=[
++                [0, 'rgba(13,17,23,0)'],
++                [0.25, 'rgba(30,50,120,0.5)'],
++                [0.5, 'rgba(88,166,255,0.7)'],
++                [0.75, 'rgba(255,165,0,0.8)'],
++                [1.0, 'rgba(255,50,50,1.0)'],
++            ],
++            showscale=True,
++            colorbar=dict(title='Count', x=0.45),
++        ), row=1, col=1)
++
++        # 스트라이크존 박스
++        for col_idx in [1, 2]:
++            fig.add_shape(
++                type='rect',
++                x0=SZ_X_MIN, x1=SZ_X_MAX,
++                y0=SZ_Z_MIN, y1=SZ_Z_MAX,
++                line=dict(color='rgba(255,100,100,0.8)', width=2),
++                row=1, col=col_idx,
++            )
++
++        # 2. 결과별 스캐터
++        color_map = {
++            'called_strike': '#FF4444',
++            'swinging_strike': '#FF8800',
++            'ball': '#4488FF',
++            'foul': '#FFAA00',
++            'single': '#44FF44',
++            'extra_base': '#44FFAA',
++            'home_run': '#FF44FF',
++            'out': '#888888',
++        }
++
++        for outcome_type, color in color_map.items():
++            xs = [x for x, o in zip(plate_xs, outcomes) if o == outcome_type]
++            zs = [z for z, o in zip(plate_zs, outcomes) if o == outcome_type]
++            if xs:
++                fig.add_trace(go.Scatter(
++                    x=xs, y=zs,
++                    mode='markers',
++                    marker=dict(color=color, size=5, opacity=0.6),
++                    name=outcome_type,
++                ), row=1, col=2)
++
++    fig.update_layout(
++        title=dict(
++            text='🎯 Strike Zone Analyzer',
++            font=dict(size=16, color='#E0E0E0'),
++        ),
++        paper_bgcolor='#0D1117',
++        plot_bgcolor='#161B22',
++        font=dict(color='#C9D1D9', size=10),
++        margin=dict(l=40, r=20, t=60, b=30),
++        height=500,
++        legend=dict(
++            bgcolor='rgba(30,30,50,0.8)',
++            font=dict(size=9),
++        ),
++    )
++
++    # 축 라벨 및 범위
++    for col_idx in [1, 2]:
++        fig.update_xaxes(
++            title_text='X (m)', range=[-0.5, 0.5],
++            gridcolor='rgba(100,100,150,0.2)', row=1, col=col_idx,
++        )
++        fig.update_yaxes(
++            title_text='Z (m)', range=[0.0, 1.5],
++            gridcolor='rgba(100,100,150,0.2)', row=1, col=col_idx,
++        )
++
++    return fig
++
++
++def create_learning_progress(metrics: list) -> go.Figure:
++    """학습 진행 모니터를 생성합니다.
++
++    Self-Play 승률, Reward, Buffer 상태를 추적합니다.
++    """
++    fig = make_subplots(
++        rows=2, cols=2,
++        subplot_titles=(
++            'Win Rate (Pitcher vs Batter)',
++            'Average Reward',
++            'Replay Buffer Status',
++            'Special Events',
++        ),
++        vertical_spacing=0.12,
++        horizontal_spacing=0.08,
++    )
++
++    if metrics:
++        episodes = list(range(1, len(metrics) + 1))
++
++        # 1. 승률 그래프
++        pitcher_wr = [m.get('pitcher_win_rate', 0.5) for m in metrics]
++        batter_wr = [m.get('batter_win_rate', 0.5) for m in metrics]
++
++        fig.add_trace(go.Scatter(
++            x=episodes, y=pitcher_wr,
++            mode='lines',
++            name='Pitcher WR',
++            line=dict(color='#FF6B6B', width=2),
++        ), row=1, col=1)
++
++        fig.add_trace(go.Scatter(
++            x=episodes, y=batter_wr,
++            mode='lines',
++            name='Batter WR',
++            line=dict(color='#4ECDC4', width=2),
++        ), row=1, col=1)
++
++        # 50% 라인
++        fig.add_hline(y=0.5, line_dash='dash',
++                      line_color='rgba(255,255,255,0.3)', row=1, col=1)
++
++        # 2. 평균 Reward
++        p_rewards = [m.get('pitcher_avg_reward', 0) for m in metrics]
++        b_rewards = [m.get('batter_avg_reward', 0) for m in metrics]
++
++        fig.add_trace(go.Scatter(
++            x=episodes, y=p_rewards,
++            mode='lines',
++            name='Pitcher Reward',
++            line=dict(color='#FF6B6B', width=2),
++        ), row=1, col=2)
++
++        fig.add_trace(go.Scatter(
++            x=episodes, y=b_rewards,
++            mode='lines',
++            name='Batter Reward',
++            line=dict(color='#4ECDC4', width=2),
++        ), row=1, col=2)
++
++        # 3. 버퍼 상태
++        buffer_fill = [m.get('buffer_fill_ratio', 0) for m in metrics]
++
++        fig.add_trace(go.Scatter(
++            x=episodes, y=buffer_fill,
++            mode='lines+markers',
++            name='Buffer Fill',
++            line=dict(color='#58A6FF', width=2),
++            marker=dict(size=3),
++            fill='tozeroy',
++            fillcolor='rgba(88,166,255,0.1)',
++        ), row=2, col=1)
++
++        # 4. 특수 이벤트 (홈런/삼진 비율)
++        hr_rates = [m.get('home_run_rate', 0) for m in metrics]
++        k_rates = [m.get('strikeout_rate', 0) for m in metrics]
++
++        fig.add_trace(go.Scatter(
++            x=episodes, y=hr_rates,
++            mode='lines',
++            name='HR Rate',
++            line=dict(color='#FF44FF', width=2),
++        ), row=2, col=2)
++
++        fig.add_trace(go.Scatter(
++            x=episodes, y=k_rates,
++            mode='lines',
++            name='K Rate',
++            line=dict(color='#FFAA00', width=2),
++        ), row=2, col=2)
++
++    fig.update_layout(
++        title=dict(
++            text='📈 Learning Progress Monitor',
++            font=dict(size=16, color='#E0E0E0'),
++        ),
++        paper_bgcolor='#0D1117',
++        plot_bgcolor='#161B22',
++        font=dict(color='#C9D1D9', size=10),
++        margin=dict(l=40, r=20, t=60, b=30),
++        height=500,
++        legend=dict(
++            bgcolor='rgba(30,30,50,0.8)',
++            font=dict(size=9),
++            orientation='h',
++            yanchor='bottom',
++            y=-0.15,
++        ),
++    )
++
++    for i in range(1, 3):
++        for j in range(1, 3):
++            fig.update_xaxes(
++                gridcolor='rgba(100,100,150,0.2)', row=i, col=j,
++            )
++            fig.update_yaxes(
++                gridcolor='rgba(100,100,150,0.2)', row=i, col=j,
++            )
++
++    return fig
++
++
++# ──────────────────────────────────────────────────────────────
++#  Dash 앱 생성
++# ──────────────────────────────────────────────────────────────
++
++def create_app() -> dash.Dash:
++    """Dash 앱을 생성하고 레이아웃/콜백을 설정합니다."""
++
++    app = dash.Dash(
++        __name__,
++        title='⚾ Baseball RL Simulator Studio',
++        update_title='Updating...',
++    )
++
++    # ── 레이아웃 ──
++    app.layout = html.Div(
++        style={
++            'backgroundColor': '#0D1117',
++            'minHeight': '100vh',
++            'fontFamily': "'Inter', 'Segoe UI', sans-serif",
++            'padding': '20px',
++        },
++        children=[
++            # 헤더
++            html.Div(
++                style={
++                    'textAlign': 'center',
++                    'marginBottom': '20px',
++                    'padding': '20px',
++                    'background': 'linear-gradient(135deg, #1a1a3e 0%, #0d1117 100%)',
++                    'borderRadius': '12px',
++                    'border': '1px solid rgba(88,166,255,0.2)',
++                    'boxShadow': '0 4px 20px rgba(0,0,0,0.3)',
++                },
++                children=[
++                    html.H1(
++                        '⚾ Baseball RL Simulator Studio',
++                        style={
++                            'color': '#E0E0E0',
++                            'margin': '0',
++                            'fontSize': '28px',
++                            'fontWeight': '700',
++                            'letterSpacing': '1px',
++                        },
++                    ),
++                    html.P(
++                        'End-to-End Reinforcement Learning Training Monitor',
++                        style={
++                            'color': '#8B949E',
++                            'margin': '8px 0 0 0',
++                            'fontSize': '14px',
++                        },
++                    ),
++                    # 상태 배지
++                    html.Div(
++                        style={'marginTop': '12px', 'display': 'flex',
++                               'justifyContent': 'center', 'gap': '16px'},
++                        children=[
++                            html.Span(id='badge-pitches',
++                                      style=_badge_style('#58A6FF')),
++                            html.Span(id='badge-hits',
++                                      style=_badge_style('#3FB950')),
++                            html.Span(id='badge-hrs',
++                                      style=_badge_style('#FF44FF')),
++                        ],
++                    ),
++                ],
++            ),
++
++            # 4패널 그리드
++            html.Div(
++                style={
++                    'display': 'grid',
++                    'gridTemplateColumns': '1fr 1fr',
++                    'gap': '16px',
++                },
++                children=[
++                    _panel('3d-trajectory', '⚾ 3D Trajectory Viewer'),
++                    _panel('exit-dynamics', '🏏 Exit Dynamics'),
++                    _panel('strike-zone', '🎯 Strike Zone Heatmap'),
++                    _panel('learning-progress', '📈 Learning Progress'),
++                ],
++            ),
++
++            # 자동 갱신 인터벌 (1초)
++            dcc.Interval(
++                id='auto-refresh',
++                interval=1000,  # ms
++                n_intervals=0,
++            ),
++
++            # 데이터 저장소
++            dcc.Store(id='pitch-data-store'),
++            dcc.Store(id='metrics-store'),
++        ],
++    )
++
++    # ── 콜백: 데이터 로드 ──
++    @app.callback(
++        [
++            Output('pitch-data-store', 'data'),
++            Output('metrics-store', 'data'),
++            Output('badge-pitches', 'children'),
++            Output('badge-hits', 'children'),
++            Output('badge-hrs', 'children'),
++        ],
++        [Input('auto-refresh', 'n_intervals')],
++    )
++    def load_data(n):
++        pitch_log = load_json(PITCH_LOG_FILE)
++        metrics = load_json(METRICS_FILE)
++
++        n_pitches = len(pitch_log)
++        n_hits = sum(1 for p in pitch_log if p.get('outcome') in
++                     ('single', 'extra_base', 'home_run'))
++        n_hrs = sum(1 for p in pitch_log if p.get('outcome') == 'home_run')
++
++        return (
++            pitch_log,
++            metrics,
++            f"🎯 {n_pitches} Pitches",
++            f"🏏 {n_hits} Hits",
++            f"💥 {n_hrs} HRs",
++        )
++
++    # ── 콜백: 차트 업데이트 ──
++    @app.callback(
++        Output('3d-trajectory', 'figure'),
++        [Input('pitch-data-store', 'data')],
++    )
++    def update_trajectory(pitch_log):
++        if not pitch_log:
++            return create_trajectory_3d([])
++        return create_trajectory_3d(pitch_log)
++
++    @app.callback(
++        Output('exit-dynamics', 'figure'),
++        [Input('pitch-data-store', 'data')],
++    )
++    def update_exit_dynamics(pitch_log):
++        if not pitch_log:
++            return create_exit_dynamics([])
++        return create_exit_dynamics(pitch_log)
++
++    @app.callback(
++        Output('strike-zone', 'figure'),
++        [Input('pitch-data-store', 'data')],
++    )
++    def update_strike_zone(pitch_log):
++        if not pitch_log:
++            return create_strike_zone_heatmap([])
++        return create_strike_zone_heatmap(pitch_log)
++
++    @app.callback(
++        Output('learning-progress', 'figure'),
++        [Input('metrics-store', 'data')],
++    )
++    def update_learning(metrics):
++        if not metrics:
++            return create_learning_progress([])
++        return create_learning_progress(metrics)
++
++    return app
++
++
++# ──────────────────────────────────────────────────────────────
++#  UI 헬퍼
++# ──────────────────────────────────────────────────────────────
++
++def _badge_style(color: str) -> dict:
++    """상태 배지 CSS."""
++    return {
++        'backgroundColor': f'rgba({_hex_to_rgb(color)}, 0.15)',
++        'color': color,
++        'padding': '4px 12px',
++        'borderRadius': '20px',
++        'fontSize': '12px',
++        'fontWeight': '600',
++        'border': f'1px solid rgba({_hex_to_rgb(color)}, 0.3)',
++    }
++
++
++def _hex_to_rgb(hex_color: str) -> str:
++    """#RRGGBB → 'R,G,B' 변환."""
++    h = hex_color.lstrip('#')
++    return ','.join(str(int(h[i:i+2], 16)) for i in (0, 2, 4))
++
++
++def _panel(graph_id: str, title: str) -> html.Div:
++    """대시보드 패널 컴포넌트."""
++    return html.Div(
++        style={
++            'backgroundColor': '#161B22',
++            'borderRadius': '12px',
++            'border': '1px solid rgba(88,166,255,0.1)',
++            'padding': '12px',
++            'boxShadow': '0 2px 10px rgba(0,0,0,0.2)',
++        },
++        children=[
++            dcc.Graph(
++                id=graph_id,
++                style={'height': '100%'},
++                config={
++                    'displayModeBar': True,
++                    'displaylogo': False,
++                    'modeBarButtonsToRemove': ['lasso2d', 'select2d'],
++                },
++            ),
++        ],
++    )
++
++
++# ──────────────────────────────────────────────────────────────
++#  메인 실행
++# ──────────────────────────────────────────────────────────────
++
++def main():
++    """대시보드 서버를 시작합니다."""
++    DATA_DIR.mkdir(parents=True, exist_ok=True)
++    app = create_app()
++    print("⚾ Baseball RL Simulator Studio 시작...")
++    print("   브라우저에서 http://127.0.0.1:8050 을 열어주세요")
++    app.run(debug=True, host='0.0.0.0', port=8050)
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/training/networks.py b/training/networks.py
+new file mode 100644
+index 0000000..3898e6f
+--- /dev/null
++++ b/training/networks.py
+@@ -0,0 +1,428 @@
++"""
++networks.py — PyTorch Actor-Critic 신경망
++
++투수(MLP)와 타자(LSTM) 정책 네트워크 및 공유 Value 네트워크를 정의합니다.
++
++Architecture:
++    PitcherPolicy: MLP(6 → 256 → 256 → 128 → 5) + Tanh output
++    BatterPolicy:  LSTM(13 → 128h → 128 → 4) + Tanh output
++    ValueNetwork:  MLP(obs_dim → 256 → 256 → 1)
++"""
++
++import torch
++import torch.nn as nn
++import torch.nn.functional as F
++from torch.distributions import Normal
++import numpy as np
++from typing import Tuple, Optional
++
++
++# ──────────────────────────────────────────────────────────────
++#  공통 유틸리티
++# ──────────────────────────────────────────────────────────────
++
++def get_device() -> torch.device:
++    """사용 가능한 최적 디바이스를 반환합니다."""
++    if torch.cuda.is_available():
++        return torch.device("cuda")
++    elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
++        return torch.device("mps")
++    return torch.device("cpu")
++
++
++def layer_init(layer: nn.Linear, std: float = np.sqrt(2), bias_const: float = 0.0):
++    """PPO 스타일 직교 초기화."""
++    nn.init.orthogonal_(layer.weight, std)
++    nn.init.constant_(layer.bias, bias_const)
++    return layer
++
++
++# ──────────────────────────────────────────────────────────────
++#  투수 정책 네트워크 (MLP)
++# ──────────────────────────────────────────────────────────────
++
++class PitcherPolicy(nn.Module):
++    """투수 정책 네트워크.
++
++    MLP 구조: 카운트와 이전 투구 이력으로 결정하므로 순차 구조 불필요.
++    SiLU 활성화 + LayerNorm 적용.
++
++    Input:  obs_dim (6) = [strikes, balls, prev_result, prev_plate_x, prev_plate_z, stance]
++    Output: action_dim (5) = [v_release, θ_x, θ_z, ω_spin, a_axis]
++    """
++
++    def __init__(self, obs_dim: int = 6, action_dim: int = 5, hidden_dim: int = 256):
++        super().__init__()
++
++        self.actor_backbone = nn.Sequential(
++            layer_init(nn.Linear(obs_dim, hidden_dim)),
++            nn.LayerNorm(hidden_dim),
++            nn.SiLU(),
++            layer_init(nn.Linear(hidden_dim, hidden_dim)),
++            nn.LayerNorm(hidden_dim),
++            nn.SiLU(),
++            layer_init(nn.Linear(hidden_dim, hidden_dim // 2)),
++            nn.LayerNorm(hidden_dim // 2),
++            nn.SiLU(),
++        )
++
++        # 평균과 로그 분산을 분리 출력
++        self.mean_head = layer_init(nn.Linear(hidden_dim // 2, action_dim), std=0.01)
++        self.log_std = nn.Parameter(torch.zeros(action_dim))
++
++    def forward(self, obs: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
++        """순전파: 관찰 → (평균, 로그 표준편차)
++
++        Args:
++            obs: (batch, obs_dim) 관찰 텐서
++
++        Returns:
++            (mean, log_std): 액션 분포의 평균과 로그 표준편차
++        """
++        features = self.actor_backbone(obs)
++        mean = torch.tanh(self.mean_head(features))  # [-1, 1] 범위
++        log_std = self.log_std.expand_as(mean)
++        return mean, log_std
++
++    def get_action(
++        self,
++        obs: torch.Tensor,
++        deterministic: bool = False,
++    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
++        """액션 샘플링 및 로그 확률 계산.
++
++        Args:
++            obs: (batch, obs_dim) 관찰 텐서
++            deterministic: True이면 평균값 반환 (평가 시)
++
++        Returns:
++            (action, log_prob, entropy)
++        """
++        mean, log_std = self.forward(obs)
++        std = torch.exp(log_std.clamp(-5, 2))
++        dist = Normal(mean, std)
++
++        if deterministic:
++            action = mean
++        else:
++            action = dist.rsample()  # Reparameterization trick
++
++        action = torch.clamp(action, -1.0, 1.0)
++
++        log_prob = dist.log_prob(action).sum(dim=-1)
++        entropy = dist.entropy().sum(dim=-1)
++
++        return action, log_prob, entropy
++
++    def evaluate_actions(
++        self,
++        obs: torch.Tensor,
++        actions: torch.Tensor,
++    ) -> Tuple[torch.Tensor, torch.Tensor]:
++        """주어진 액션의 로그 확률과 엔트로피를 평가합니다.
++
++        PPO 업데이트 시 사용됩니다.
++
++        Args:
++            obs: (batch, obs_dim) 관찰 텐서
++            actions: (batch, action_dim) 액션 텐서
++
++        Returns:
++            (log_prob, entropy)
++        """
++        mean, log_std = self.forward(obs)
++        std = torch.exp(log_std.clamp(-5, 2))
++        dist = Normal(mean, std)
++
++        log_prob = dist.log_prob(actions).sum(dim=-1)
++        entropy = dist.entropy().sum(dim=-1)
++
++        return log_prob, entropy
++
++
++# ──────────────────────────────────────────────────────────────
++#  타자 정책 네트워크 (LSTM)
++# ──────────────────────────────────────────────────────────────
++
++class BatterPolicy(nn.Module):
++    """타자 정책 네트워크.
++
++    LSTM 구조: 시시각각 변하는 공 궤적의 시계열 패턴을 포착합니다.
++    공이 날아오는 동안 여러 프레임의 관찰을 순차적으로 처리합니다.
++
++    Input:  obs_dim (13) = [ball_pos(3), ball_vel(3), bat_pos(3), bat_vel(3), time_to_plate]
++    Output: action_dim (4) = [t_trigger, θ_yaw, θ_pitch, z_height]
++    """
++
++    def __init__(
++        self,
++        obs_dim: int = 13,
++        action_dim: int = 4,
++        hidden_dim: int = 128,
++        num_layers: int = 2,
++    ):
++        super().__init__()
++
++        # 입력 임베딩
++        self.input_embed = nn.Sequential(
++            layer_init(nn.Linear(obs_dim, hidden_dim)),
++            nn.LayerNorm(hidden_dim),
++            nn.SiLU(),
++        )
++
++        # LSTM 코어
++        self.lstm = nn.LSTM(
++            input_size=hidden_dim,
++            hidden_size=hidden_dim,
++            num_layers=num_layers,
++            batch_first=True,
++            dropout=0.1 if num_layers > 1 else 0.0,
++        )
++
++        # 출력 헤드
++        self.output_net = nn.Sequential(
++            layer_init(nn.Linear(hidden_dim, hidden_dim)),
++            nn.LayerNorm(hidden_dim),
++            nn.SiLU(),
++        )
++
++        self.mean_head = layer_init(nn.Linear(hidden_dim, action_dim), std=0.01)
++        self.log_std = nn.Parameter(torch.zeros(action_dim))
++
++        self.hidden_dim = hidden_dim
++        self.num_layers = num_layers
++
++    def init_hidden(self, batch_size: int = 1, device: Optional[torch.device] = None):
++        """LSTM 은닉 상태를 초기화합니다."""
++        if device is None:
++            device = next(self.parameters()).device
++        h = torch.zeros(self.num_layers, batch_size, self.hidden_dim, device=device)
++        c = torch.zeros(self.num_layers, batch_size, self.hidden_dim, device=device)
++        return (h, c)
++
++    def forward(
++        self,
++        obs_seq: torch.Tensor,
++        hidden: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
++    ) -> Tuple[torch.Tensor, torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]:
++        """순전파: 관찰 시퀀스 → (평균, 로그 표준편차, 은닉 상태)
++
++        Args:
++            obs_seq: (batch, seq_len, obs_dim) 관찰 시퀀스
++                     또는 (batch, obs_dim) 단일 프레임
++            hidden: LSTM 은닉 상태 (h, c) 또는 None
++
++        Returns:
++            (mean, log_std, hidden)
++        """
++        if obs_seq.dim() == 2:
++            # 단일 프레임 → 시퀀스 차원 추가
++            obs_seq = obs_seq.unsqueeze(1)
++
++        batch_size = obs_seq.size(0)
++
++        # 입력 임베딩
++        embedded = self.input_embed(obs_seq)  # (batch, seq, hidden)
++
++        # LSTM
++        if hidden is None:
++            hidden = self.init_hidden(batch_size, obs_seq.device)
++
++        lstm_out, hidden = self.lstm(embedded, hidden)
++
++        # 마지막 시퀀스의 출력 사용
++        last_out = lstm_out[:, -1, :]  # (batch, hidden)
++
++        # 출력 네트워크
++        features = self.output_net(last_out)
++        mean = torch.tanh(self.mean_head(features))
++        log_std = self.log_std.expand_as(mean)
++
++        return mean, log_std, hidden
++
++    def get_action(
++        self,
++        obs_seq: torch.Tensor,
++        hidden: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
++        deterministic: bool = False,
++    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, Tuple]:
++        """액션 샘플링.
++
++        Args:
++            obs_seq: 관찰 시퀀스
++            hidden: LSTM 은닉 상태
++            deterministic: True이면 평균값 반환
++
++        Returns:
++            (action, log_prob, entropy, hidden)
++        """
++        mean, log_std, hidden = self.forward(obs_seq, hidden)
++        std = torch.exp(log_std.clamp(-5, 2))
++        dist = Normal(mean, std)
++
++        if deterministic:
++            action = mean
++        else:
++            action = dist.rsample()
++
++        action = torch.clamp(action, -1.0, 1.0)
++
++        log_prob = dist.log_prob(action).sum(dim=-1)
++        entropy = dist.entropy().sum(dim=-1)
++
++        return action, log_prob, entropy, hidden
++
++    def evaluate_actions(
++        self,
++        obs_seq: torch.Tensor,
++        actions: torch.Tensor,
++        hidden: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
++    ) -> Tuple[torch.Tensor, torch.Tensor]:
++        """주어진 액션 평가.
++
++        Args:
++            obs_seq: 관찰 시퀀스
++            actions: 액션 텐서
++            hidden: LSTM 은닉 상태
++
++        Returns:
++            (log_prob, entropy)
++        """
++        mean, log_std, _ = self.forward(obs_seq, hidden)
++        std = torch.exp(log_std.clamp(-5, 2))
++        dist = Normal(mean, std)
++
++        log_prob = dist.log_prob(actions).sum(dim=-1)
++        entropy = dist.entropy().sum(dim=-1)
++
++        return log_prob, entropy
++
++
++# ──────────────────────────────────────────────────────────────
++#  Value 네트워크 (Critic)
++# ──────────────────────────────────────────────────────────────
++
++class ValueNetwork(nn.Module):
++    """상태 가치 함수 네트워크 (Critic).
++
++    투수와 타자 각각의 가치 추정에 사용됩니다.
++    MLP(obs_dim → 256 → 256 → 1)
++
++    Args:
++        obs_dim: 관찰 벡터 차원
++    """
++
++    def __init__(self, obs_dim: int, hidden_dim: int = 256):
++        super().__init__()
++
++        self.network = nn.Sequential(
++            layer_init(nn.Linear(obs_dim, hidden_dim)),
++            nn.LayerNorm(hidden_dim),
++            nn.SiLU(),
++            layer_init(nn.Linear(hidden_dim, hidden_dim)),
++            nn.LayerNorm(hidden_dim),
++            nn.SiLU(),
++            layer_init(nn.Linear(hidden_dim, 1), std=1.0),
++        )
++
++    def forward(self, obs: torch.Tensor) -> torch.Tensor:
++        """상태 가치 추정.
++
++        Args:
++            obs: (batch, obs_dim) 관찰 텐서
++
++        Returns:
++            (batch, 1) 가치 추정값
++        """
++        return self.network(obs)
++
++
++# ──────────────────────────────────────────────────────────────
++#  통합 에이전트 래퍼
++# ──────────────────────────────────────────────────────────────
++
++class PitcherAgent(nn.Module):
++    """투수 에이전트: Policy + Value 네트워크를 통합합니다."""
++
++    def __init__(self, obs_dim: int = 6, action_dim: int = 5):
++        super().__init__()
++        self.policy = PitcherPolicy(obs_dim, action_dim)
++        self.value = ValueNetwork(obs_dim)
++
++    def get_action_and_value(
++        self,
++        obs: torch.Tensor,
++        deterministic: bool = False,
++    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
++        """액션 샘플링 + 가치 추정.
++
++        Returns:
++            (action, log_prob, entropy, value)
++        """
++        action, log_prob, entropy = self.policy.get_action(obs, deterministic)
++        value = self.value(obs)
++        return action, log_prob, entropy, value.squeeze(-1)
++
++    def evaluate(
++        self,
++        obs: torch.Tensor,
++        actions: torch.Tensor,
++    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
++        """저장된 경험의 액션을 재평가.
++
++        Returns:
++            (log_prob, entropy, value)
++        """
++        log_prob, entropy = self.policy.evaluate_actions(obs, actions)
++        value = self.value(obs)
++        return log_prob, entropy, value.squeeze(-1)
++
++
++class BatterAgent(nn.Module):
++    """타자 에이전트: Policy(LSTM) + Value 네트워크를 통합합니다."""
++
++    def __init__(self, obs_dim: int = 13, action_dim: int = 4):
++        super().__init__()
++        self.policy = BatterPolicy(obs_dim, action_dim)
++        self.value = ValueNetwork(obs_dim)
++
++    def get_action_and_value(
++        self,
++        obs: torch.Tensor,
++        hidden: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
++        deterministic: bool = False,
++    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, Tuple]:
++        """액션 샘플링 + 가치 추정.
++
++        Returns:
++            (action, log_prob, entropy, value, hidden)
++        """
++        action, log_prob, entropy, hidden = self.policy.get_action(
++            obs, hidden, deterministic
++        )
++        # Value는 마지막 관찰의 단일 프레임으로 추정
++        if obs.dim() == 3:
++            value_input = obs[:, -1, :]
++        else:
++            value_input = obs
++        value = self.value(value_input)
++        return action, log_prob, entropy, value.squeeze(-1), hidden
++
++    def evaluate(
++        self,
++        obs: torch.Tensor,
++        actions: torch.Tensor,
++        hidden: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
++    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
++        """저장된 경험의 액션을 재평가.
++
++        Returns:
++            (log_prob, entropy, value)
++        """
++        log_prob, entropy = self.policy.evaluate_actions(obs, actions, hidden)
++        if obs.dim() == 3:
++            value_input = obs[:, -1, :]
++        else:
++            value_input = obs
++        value = self.value(value_input)
++        return log_prob, entropy, value.squeeze(-1)
+diff --git a/training/replay_buffer.py b/training/replay_buffer.py
+new file mode 100644
+index 0000000..9aa1364
+--- /dev/null
++++ b/training/replay_buffer.py
+@@ -0,0 +1,311 @@
++"""
++replay_buffer.py — Prioritized Experience Replay (PER) 버퍼
++
++SumTree 자료구조 기반 O(log n) 우선순위 샘플링.
++희귀 이벤트(홈런, Sweet Spot 정타)에 priority 부스트를 적용합니다.
++
++설정:
++    α = 0.6 (우선순위 지수)
++    β = 0.4 → 1.0 (중요도 샘플링 가중치 어닐링)
++    capacity = 100,000
++"""
++
++import numpy as np
++from typing import Tuple, Optional, Dict, Any
++from dataclasses import dataclass, field
++
++
++# ──────────────────────────────────────────────────────────────
++#  SumTree
++# ──────────────────────────────────────────────────────────────
++
++class SumTree:
++    """SumTree 자료구조.
++
++    리프 노드에 priority를 저장하고, 부모 노드에 자식 합을 유지합니다.
++    O(log n) 삽입/샘플링을 지원합니다.
++    """
++
++    def __init__(self, capacity: int):
++        self.capacity = capacity
++        self.tree = np.zeros(2 * capacity - 1, dtype=np.float64)
++        self.data_pointer = 0
++        self.n_entries = 0
++
++    def total(self) -> float:
++        """전체 priority 합."""
++        return float(self.tree[0])
++
++    def add(self, priority: float, data_index: int):
++        """새 데이터의 priority를 추가합니다.
++
++        Args:
++            priority: 우선순위 값
++            data_index: 데이터 배열 인덱스 (외부 관리)
++        """
++        tree_index = self.data_pointer + self.capacity - 1
++        self.update(tree_index, priority)
++        self.data_pointer = (self.data_pointer + 1) % self.capacity
++        self.n_entries = min(self.n_entries + 1, self.capacity)
++
++    def update(self, tree_index: int, priority: float):
++        """특정 인덱스의 priority를 업데이트합니다."""
++        change = priority - self.tree[tree_index]
++        self.tree[tree_index] = priority
++
++        # 부모 노드 업데이트 (루트까지)
++        while tree_index != 0:
++            tree_index = (tree_index - 1) // 2
++            self.tree[tree_index] += change
++
++    def get(self, s: float) -> Tuple[int, float, int]:
++        """누적 확률 s에 해당하는 리프 노드를 찾습니다.
++
++        Args:
++            s: [0, total) 범위의 누적 확률값
++
++        Returns:
++            (tree_index, priority, data_index)
++        """
++        parent_index = 0
++
++        while True:
++            left = 2 * parent_index + 1
++            right = left + 1
++
++            if left >= len(self.tree):
++                break
++
++            if s <= self.tree[left] or right >= len(self.tree):
++                parent_index = left
++            else:
++                s -= self.tree[left]
++                parent_index = right
++
++        data_index = parent_index - self.capacity + 1
++        return parent_index, self.tree[parent_index], data_index
++
++
++# ──────────────────────────────────────────────────────────────
++#  Transition 데이터 구조
++# ──────────────────────────────────────────────────────────────
++
++@dataclass
++class Transition:
++    """하나의 경험 전이(Transition)를 저장합니다."""
++
++    pitcher_obs: np.ndarray          # 투수 관찰 (6,)
++    pitcher_action: np.ndarray       # 투수 액션 (5,)
++    batter_obs: np.ndarray           # 타자 관찰 (13,) 또는 (seq, 13)
++    batter_action: np.ndarray        # 타자 액션 (4,)
++    pitcher_reward: float            # 투수 보상
++    batter_reward: float             # 타자 보상
++    next_pitcher_obs: np.ndarray     # 다음 투수 관찰
++    next_batter_obs: np.ndarray      # 다음 타자 관찰
++    done: bool                       # 에피소드 종료 여부
++    info: Dict[str, Any] = field(default_factory=dict)  # 추가 정보
++
++
++# ──────────────────────────────────────────────────────────────
++#  PER 버퍼
++# ──────────────────────────────────────────────────────────────
++
++class PrioritizedReplayBuffer:
++    """Prioritized Experience Replay 버퍼.
++
++    TD-Error 기반 우선순위 샘플링으로 학습 효율을 높입니다.
++    홈런/Sweet Spot 정타에 priority 부스트를 적용합니다.
++
++    Args:
++        capacity: 최대 저장 용량
++        alpha: 우선순위 지수 (0=균등, 1=완전 우선순위)
++        beta_start: IS 가중치 초기값
++        beta_end: IS 가중치 최종값
++        beta_frames: 어닐링 완료 프레임 수
++        special_boost: 희귀 이벤트 priority 부스트 배수
++    """
++
++    def __init__(
++        self,
++        capacity: int = 100_000,
++        alpha: float = 0.6,
++        beta_start: float = 0.4,
++        beta_end: float = 1.0,
++        beta_frames: int = 100_000,
++        special_boost: float = 2.0,
++    ):
++        self.capacity = capacity
++        self.alpha = alpha
++        self.beta_start = beta_start
++        self.beta_end = beta_end
++        self.beta_frames = beta_frames
++        self.special_boost = special_boost
++
++        self.tree = SumTree(capacity)
++        self.data = [None] * capacity
++        self.write_pointer = 0
++        self.size = 0
++        self.frame = 0
++
++        self.max_priority = 1.0
++        self.min_priority = 1e-6
++
++        # 통계
++        self.n_home_runs = 0
++        self.n_sweet_spots = 0
++        self.total_added = 0
++
++    @property
++    def beta(self) -> float:
++        """현재 IS 가중치 β (어닐링)."""
++        frac = min(self.frame / max(self.beta_frames, 1), 1.0)
++        return self.beta_start + frac * (self.beta_end - self.beta_start)
++
++    @property
++    def fill_ratio(self) -> float:
++        """버퍼 채움 비율."""
++        return self.size / self.capacity
++
++    def add(self, transition: Transition, td_error: Optional[float] = None):
++        """경험을 버퍼에 추가합니다.
++
++        Args:
++            transition: Transition 객체
++            td_error: TD-Error (None이면 max_priority 사용)
++        """
++        # Priority 계산
++        if td_error is not None:
++            priority = (abs(td_error) + self.min_priority) ** self.alpha
++        else:
++            priority = self.max_priority
++
++        # 희귀 이벤트 부스트
++        outcome = transition.info.get('outcome', '')
++        if outcome == 'home_run':
++            priority *= self.special_boost
++            self.n_home_runs += 1
++        elif transition.info.get('sweet_spot_factor', 0) > 0.9:
++            priority *= self.special_boost * 0.8
++            self.n_sweet_spots += 1
++
++        # 저장
++        self.data[self.write_pointer] = transition
++        self.tree.add(priority, self.write_pointer)
++
++        self.write_pointer = (self.write_pointer + 1) % self.capacity
++        self.size = min(self.size + 1, self.capacity)
++        self.total_added += 1
++        self.frame += 1
++
++        self.max_priority = max(self.max_priority, priority)
++
++    def sample(self, batch_size: int) -> Tuple[list, np.ndarray, np.ndarray]:
++        """우선순위 기반 배치 샘플링.
++
++        Args:
++            batch_size: 샘플 크기
++
++        Returns:
++            (transitions, indices, is_weights)
++            transitions: Transition 리스트
++            indices: SumTree 인덱스 (priority 업데이트용)
++            is_weights: 중요도 샘플링 가중치
++        """
++        batch_size = min(batch_size, self.size)
++        transitions = []
++        indices = np.zeros(batch_size, dtype=np.int64)
++        priorities = np.zeros(batch_size, dtype=np.float64)
++
++        # 구간 분할 (stratified sampling)
++        segment = self.tree.total() / batch_size
++
++        for i in range(batch_size):
++            low = segment * i
++            high = segment * (i + 1)
++            s = np.random.uniform(low, high)
++
++            tree_idx, priority, data_idx = self.tree.get(s)
++
++            # 유효성 검사
++            data_idx = data_idx % self.capacity
++            if self.data[data_idx] is None:
++                # 빈 슬롯이면 랜덤 유효 데이터 선택
++                valid_indices = [j for j in range(self.size) if self.data[j] is not None]
++                if valid_indices:
++                    data_idx = np.random.choice(valid_indices)
++                    tree_idx = data_idx + self.capacity - 1
++                    priority = self.tree.tree[tree_idx]
++
++            indices[i] = tree_idx
++            priorities[i] = max(priority, self.min_priority)
++            transitions.append(self.data[data_idx])
++
++        # IS 가중치 계산
++        sampling_probs = priorities / (self.tree.total() + 1e-10)
++        is_weights = (self.size * sampling_probs) ** (-self.beta)
++        is_weights = is_weights / (is_weights.max() + 1e-10)  # 정규화
++
++        return transitions, indices, is_weights.astype(np.float32)
++
++    def update_priorities(self, indices: np.ndarray, td_errors: np.ndarray):
++        """샘플된 경험의 priority를 TD-Error 기반으로 업데이트합니다.
++
++        Args:
++            indices: SumTree 인덱스
++            td_errors: 새로운 TD-Error 값
++        """
++        for idx, td_error in zip(indices, td_errors):
++            priority = (abs(td_error) + self.min_priority) ** self.alpha
++            self.tree.update(int(idx), priority)
++            self.max_priority = max(self.max_priority, priority)
++
++    def get_stats(self) -> dict:
++        """버퍼 통계를 반환합니다."""
++        return {
++            'size': self.size,
++            'capacity': self.capacity,
++            'fill_ratio': self.fill_ratio,
++            'total_added': self.total_added,
++            'n_home_runs': self.n_home_runs,
++            'n_sweet_spots': self.n_sweet_spots,
++            'home_run_ratio': self.n_home_runs / max(self.total_added, 1),
++            'sweet_spot_ratio': self.n_sweet_spots / max(self.total_added, 1),
++            'max_priority': self.max_priority,
++            'beta': self.beta,
++        }
++
++
++# ──────────────────────────────────────────────────────────────
++#  배치 변환 유틸리티
++# ──────────────────────────────────────────────────────────────
++
++def transitions_to_batch(transitions: list) -> dict:
++    """Transition 리스트를 학습용 배치 딕셔너리로 변환합니다.
++
++    Args:
++        transitions: Transition 객체 리스트
++
++    Returns:
++        dict of numpy arrays:
++            'pitcher_obs': (batch, 6)
++            'pitcher_actions': (batch, 5)
++            'batter_obs': (batch, 13)
++            'batter_actions': (batch, 4)
++            'pitcher_rewards': (batch,)
++            'batter_rewards': (batch,)
++            'next_pitcher_obs': (batch, 6)
++            'next_batter_obs': (batch, 13)
++            'dones': (batch,)
++    """
++    batch = {
++        'pitcher_obs': np.array([t.pitcher_obs for t in transitions]),
++        'pitcher_actions': np.array([t.pitcher_action for t in transitions]),
++        'batter_obs': np.array([t.batter_obs for t in transitions]),
++        'batter_actions': np.array([t.batter_action for t in transitions]),
++        'pitcher_rewards': np.array([t.pitcher_reward for t in transitions]),
++        'batter_rewards': np.array([t.batter_reward for t in transitions]),
++        'next_pitcher_obs': np.array([t.next_pitcher_obs for t in transitions]),
++        'next_batter_obs': np.array([t.next_batter_obs for t in transitions]),
++        'dones': np.array([float(t.done) for t in transitions]),
++    }
++    return batch
+diff --git a/training/trainer.py b/training/trainer.py
+new file mode 100644
+index 0000000..083056c
+--- /dev/null
++++ b/training/trainer.py
+@@ -0,0 +1,748 @@
++"""
++trainer.py — Self-Play PPO 학습 엔진
++
++투수/타자 에이전트를 Self-Play 방식으로 교대 학습합니다.
++League Training 기반 적대적 학습 + Curriculum 난이도 조절.
++
++학습 흐름:
++    1. Warm-up: Scripted Bot 상대로 기초 학습
++    2. Self-Play: 현재 정책 vs 과거 체크포인트
++    3. League: 최강 체크포인트 풀에서 랜덤 상대 선택
++"""
++
++import os
++import json
++import copy
++import time
++import numpy as np
++from pathlib import Path
++from collections import deque
++from typing import Optional, Dict, List, Tuple
++
++import torch
++import torch.nn as nn
++import torch.optim as optim
++
++from training.networks import PitcherAgent, BatterAgent, get_device
++from training.replay_buffer import (
++    PrioritizedReplayBuffer,
++    Transition,
++    transitions_to_batch,
++)
++from envs.baseball_game_env import BaseballGameEnv
++from simulator.dashboard import save_pitch_data, save_training_metrics
++
++
++# ──────────────────────────────────────────────────────────────
++#  학습 설정
++# ──────────────────────────────────────────────────────────────
++
++class TrainingConfig:
++    """학습 하이퍼파라미터."""
++
++    # PPO
++    lr: float = 3e-4
++    gamma: float = 0.99
++    gae_lambda: float = 0.95
++    clip_eps: float = 0.2
++    entropy_coef: float = 0.01
++    value_coef: float = 0.5
++    max_grad_norm: float = 0.5
++
++    # 배치
++    batch_size: int = 64
++    n_epochs: int = 4           # 미니배치 에폭
++    n_steps_per_update: int = 128  # 업데이트 당 스텝 수
++
++    # Self-Play
++    opponent_pool_size: int = 10
++    snapshot_interval: int = 50    # 체크포인트 스냅샷 간격 (에피소드)
++    opponent_sample_latest_prob: float = 0.7  # 최신 체크포인트 선택 확률
++
++    # Curriculum
++    warmup_episodes: int = 100
++    curriculum_phases: int = 3
++
++    # Logging
++    log_interval: int = 10
++    save_interval: int = 100
++    checkpoint_dir: str = "checkpoints"
++    data_dir: str = "data"
++
++
++# ──────────────────────────────────────────────────────────────
++#  Scripted Bot (Warm-up 상대)
++# ──────────────────────────────────────────────────────────────
++
++class ScriptedPitcherBot:
++    """규칙 기반 투수 봇 (Warm-up 학습용).
++
++    직구 위주로 스트라이크존 중앙에 던집니다.
++    """
++
++    def __init__(self, difficulty: float = 0.5):
++        """
++        Args:
++            difficulty: 난이도 (0=쉬움, 1=어려움)
++        """
++        self.difficulty = difficulty
++
++    def get_action(self, obs: np.ndarray) -> np.ndarray:
++        """규칙 기반 투구 액션을 생성합니다.
++
++        Args:
++            obs: 투수 관찰 벡터
++
++        Returns:
++            (5,) 액션 벡터
++        """
++        noise_scale = 0.3 * (1.0 - self.difficulty)
++
++        # 기본: 중앙 직구
++        v_release = 0.3 + 0.3 * self.difficulty  # 속도
++        target_x = np.random.normal(0.0, noise_scale)  # 좌우
++        target_z = np.random.normal(0.0, noise_scale)  # 상하
++        spin_rate = 0.2  # 중간 스핀
++        spin_axis = np.random.uniform(-0.3, 0.3)  # 약간의 변화
++
++        action = np.array([v_release, target_x, target_z, spin_rate, spin_axis],
++                         dtype=np.float32)
++        return np.clip(action, -1.0, 1.0)
++
++
++class ScriptedBatterBot:
++    """규칙 기반 타자 봇 (Warm-up 학습용).
++
++    스트라이크존에 오는 공에 대해 단순 스윙합니다.
++    """
++
++    def __init__(self, difficulty: float = 0.5):
++        self.difficulty = difficulty
++
++    def get_action(self, obs: np.ndarray) -> np.ndarray:
++        """규칙 기반 스윙 액션을 생성합니다.
++
++        Args:
++            obs: 타자 관찰 벡터 (13,)
++
++        Returns:
++            (4,) 액션 벡터
++        """
++        ball_pos = obs[:3]
++        ball_vel = obs[3:6]
++        time_to_plate = obs[12] if len(obs) > 12 else 0.5
++
++        noise_scale = 0.3 * (1.0 - self.difficulty)
++
++        # 간단한 판정: 공이 스트라이크존 근처로 향하면 스윙
++        predicted_x = ball_pos[0] + ball_vel[0] * time_to_plate
++        predicted_z = ball_pos[2] + ball_vel[2] * time_to_plate
++
++        in_zone = (-0.3 <= predicted_x <= 0.3 and 0.3 <= predicted_z <= 1.2)
++
++        if in_zone:
++            trigger = 0.5 + np.random.normal(0, noise_scale)
++            yaw = np.random.normal(0.3, noise_scale)    # 투수 방향으로 스윙
++            pitch = np.random.normal(0.0, noise_scale)
++            height = predicted_z / 1.3 * 2 - 1  # 높이 매핑
++        else:
++            trigger = -0.5  # 스윙 안 함
++            yaw = 0.0
++            pitch = 0.0
++            height = 0.0
++
++        action = np.array([trigger, yaw, pitch, height], dtype=np.float32)
++        return np.clip(action, -1.0, 1.0)
++
++
++# ──────────────────────────────────────────────────────────────
++#  PPO 업데이트 로직
++# ──────────────────────────────────────────────────────────────
++
++class PPOUpdater:
++    """PPO 알고리즘 업데이트를 수행합니다."""
++
++    def __init__(self, config: TrainingConfig, device: torch.device):
++        self.config = config
++        self.device = device
++
++    def compute_gae(
++        self,
++        rewards: np.ndarray,
++        values: np.ndarray,
++        next_value: float,
++        dones: np.ndarray,
++    ) -> Tuple[np.ndarray, np.ndarray]:
++        """Generalized Advantage Estimation (GAE)를 계산합니다.
++
++        Args:
++            rewards: (T,) 보상 배열
++            values: (T,) 가치 추정 배열
++            next_value: 마지막 다음 상태의 가치
++            dones: (T,) 종료 플래그
++
++        Returns:
++            (advantages, returns)
++        """
++        T = len(rewards)
++        advantages = np.zeros(T, dtype=np.float32)
++        gae = 0.0
++
++        for t in reversed(range(T)):
++            if t == T - 1:
++                next_val = next_value
++            else:
++                next_val = values[t + 1]
++
++            delta = rewards[t] + self.config.gamma * next_val * (1 - dones[t]) - values[t]
++            gae = delta + self.config.gamma * self.config.gae_lambda * (1 - dones[t]) * gae
++            advantages[t] = gae
++
++        returns = advantages + values
++        return advantages, returns
++
++    def ppo_update(
++        self,
++        agent: nn.Module,
++        optimizer: optim.Optimizer,
++        obs: torch.Tensor,
++        actions: torch.Tensor,
++        old_log_probs: torch.Tensor,
++        advantages: torch.Tensor,
++        returns: torch.Tensor,
++        is_batter: bool = False,
++    ) -> dict:
++        """PPO Clipped Objective 업데이트를 수행합니다.
++
++        Args:
++            agent: PitcherAgent 또는 BatterAgent
++            optimizer: Adam 옵티마이저
++            obs: 관찰 텐서
++            actions: 액션 텐서
++            old_log_probs: 이전 로그 확률
++            advantages: GAE 어드밴티지
++            returns: 타겟 리턴
++            is_batter: 타자 에이전트 여부
++
++        Returns:
++            학습 메트릭 딕셔너리
++        """
++        cfg = self.config
++        total_policy_loss = 0
++        total_value_loss = 0
++        total_entropy = 0
++        n_updates = 0
++
++        # 어드밴티지 정규화
++        advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
++
++        dataset_size = obs.size(0)
++        indices = np.arange(dataset_size)
++
++        for epoch in range(cfg.n_epochs):
++            np.random.shuffle(indices)
++
++            for start in range(0, dataset_size, cfg.batch_size):
++                end = min(start + cfg.batch_size, dataset_size)
++                batch_idx = indices[start:end]
++
++                b_obs = obs[batch_idx]
++                b_actions = actions[batch_idx]
++                b_old_log_probs = old_log_probs[batch_idx]
++                b_advantages = advantages[batch_idx]
++                b_returns = returns[batch_idx]
++
++                # 현재 정책으로 재평가
++                new_log_probs, entropy, values = agent.evaluate(b_obs, b_actions)
++
++                # PPO Clipped 목적함수
++                ratio = torch.exp(new_log_probs - b_old_log_probs)
++                surr1 = ratio * b_advantages
++                surr2 = torch.clamp(ratio, 1 - cfg.clip_eps, 1 + cfg.clip_eps) * b_advantages
++                policy_loss = -torch.min(surr1, surr2).mean()
++
++                # Value 손실
++                value_loss = nn.functional.mse_loss(values, b_returns)
++
++                # Entropy 보너스
++                entropy_loss = -entropy.mean()
++
++                # 총 손실
++                loss = (
++                    policy_loss
++                    + cfg.value_coef * value_loss
++                    + cfg.entropy_coef * entropy_loss
++                )
++
++                optimizer.zero_grad()
++                loss.backward()
++                nn.utils.clip_grad_norm_(agent.parameters(), cfg.max_grad_norm)
++                optimizer.step()
++
++                total_policy_loss += policy_loss.item()
++                total_value_loss += value_loss.item()
++                total_entropy += (-entropy_loss).item()
++                n_updates += 1
++
++        return {
++            'policy_loss': total_policy_loss / max(n_updates, 1),
++            'value_loss': total_value_loss / max(n_updates, 1),
++            'entropy': total_entropy / max(n_updates, 1),
++        }
++
++
++# ──────────────────────────────────────────────────────────────
++#  Self-Play 학습 엔진
++# ──────────────────────────────────────────────────────────────
++
++class SelfPlayTrainer:
++    """Self-Play League Training 엔진.
++
++    투수/타자 에이전트를 교대로 학습시키며,
++    과거 체크포인트 풀에서 상대를 선택합니다.
++    """
++
++    def __init__(
++        self,
++        config: Optional[TrainingConfig] = None,
++        max_episodes: int = 10000,
++    ):
++        self.config = config or TrainingConfig()
++        self.max_episodes = max_episodes
++        self.device = get_device()
++
++        # 에이전트 초기화
++        self.pitcher_agent = PitcherAgent().to(self.device)
++        self.batter_agent = BatterAgent().to(self.device)
++
++        # 옵티마이저
++        self.pitcher_optimizer = optim.Adam(
++            self.pitcher_agent.parameters(), lr=self.config.lr
++        )
++        self.batter_optimizer = optim.Adam(
++            self.batter_agent.parameters(), lr=self.config.lr
++        )
++
++        # PPO 업데이터
++        self.updater = PPOUpdater(self.config, self.device)
++
++        # 상대 풀 (과거 체크포인트)
++        self.pitcher_pool: List[dict] = []
++        self.batter_pool: List[dict] = []
++
++        # Scripted 봇 (Warm-up)
++        self.scripted_pitcher = ScriptedPitcherBot(difficulty=0.3)
++        self.scripted_batter = ScriptedBatterBot(difficulty=0.3)
++
++        # 리플레이 버퍼
++        self.replay_buffer = PrioritizedReplayBuffer()
++
++        # 환경
++        self.env = BaseballGameEnv()
++
++        # 통계
++        self.episode_stats = deque(maxlen=100)
++        self.pitcher_wins = 0
++        self.batter_wins = 0
++
++        # 체크포인트 디렉토리
++        self.checkpoint_dir = Path(self.config.checkpoint_dir)
++        self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
++        self.data_dir = Path(self.config.data_dir)
++        self.data_dir.mkdir(parents=True, exist_ok=True)
++
++    def _get_opponent_action(
++        self,
++        agent_type: str,
++        obs: np.ndarray,
++        episode: int,
++    ) -> np.ndarray:
++        """상대 에이전트의 액션을 생성합니다.
++
++        Warm-up 단계에서는 Scripted Bot, 이후에는 과거 체크포인트를 사용합니다.
++
++        Args:
++            agent_type: 'pitcher' 또는 'batter'
++            obs: 관찰 벡터
++            episode: 현재 에피소드 번호
++
++        Returns:
++            액션 벡터
++        """
++        # Warm-up: Scripted Bot 사용
++        if episode < self.config.warmup_episodes:
++            if agent_type == 'pitcher':
++                return self.scripted_pitcher.get_action(obs)
++            else:
++                return self.scripted_batter.get_action(obs)
++
++        # Self-Play: 과거 체크포인트에서 샘플
++        pool = self.pitcher_pool if agent_type == 'pitcher' else self.batter_pool
++
++        if not pool:
++            # 풀이 비면 현재 정책 사용
++            if agent_type == 'pitcher':
++                return self.scripted_pitcher.get_action(obs)
++            else:
++                return self.scripted_batter.get_action(obs)
++
++        # 최신 체크포인트 우선 선택
++        if np.random.random() < self.config.opponent_sample_latest_prob:
++            checkpoint = pool[-1]
++        else:
++            checkpoint = pool[np.random.randint(len(pool))]
++
++        # 체크포인트에서 액션 생성
++        obs_tensor = torch.FloatTensor(obs).unsqueeze(0).to(self.device)
++
++        if agent_type == 'pitcher':
++            temp_agent = PitcherAgent().to(self.device)
++            temp_agent.load_state_dict(checkpoint)
++            with torch.no_grad():
++                action, _, _, _ = temp_agent.get_action_and_value(
++                    obs_tensor, deterministic=True
++                )
++        else:
++            temp_agent = BatterAgent().to(self.device)
++            temp_agent.load_state_dict(checkpoint)
++            with torch.no_grad():
++                action, _, _, _, _ = temp_agent.get_action_and_value(
++                    obs_tensor, deterministic=True
++                )
++
++        return action.cpu().numpy().squeeze()
++
++    def _snapshot_agent(self, agent_type: str):
++        """현재 에이전트를 체크포인트 풀에 추가합니다."""
++        if agent_type == 'pitcher':
++            state_dict = copy.deepcopy(self.pitcher_agent.state_dict())
++            self.pitcher_pool.append(state_dict)
++            if len(self.pitcher_pool) > self.config.opponent_pool_size:
++                self.pitcher_pool.pop(0)
++        else:
++            state_dict = copy.deepcopy(self.batter_agent.state_dict())
++            self.batter_pool.append(state_dict)
++            if len(self.batter_pool) > self.config.opponent_pool_size:
++                self.batter_pool.pop(0)
++
++    def _collect_episode(self, episode: int) -> dict:
++        """한 에피소드를 실행하고 경험을 수집합니다.
++
++        Args:
++            episode: 에피소드 번호
++
++        Returns:
++            에피소드 통계 딕셔너리
++        """
++        obs, info = self.env.reset()
++        pitcher_obs = obs['pitcher']
++        batter_obs = obs['batter']
++
++        # 수집 버퍼
++        pitcher_buffer = {
++            'obs': [], 'actions': [], 'log_probs': [], 'rewards': [],
++            'values': [], 'dones': [],
++        }
++        batter_buffer = {
++            'obs': [], 'actions': [], 'log_probs': [], 'rewards': [],
++            'values': [], 'dones': [],
++        }
++
++        episode_reward_pitcher = 0.0
++        episode_reward_batter = 0.0
++        terminated = False
++        truncated = False
++        n_pitches = 0
++        outcomes = []
++
++        while not terminated and not truncated:
++            # ── 투수 액션 ──
++            p_obs_tensor = torch.FloatTensor(pitcher_obs).unsqueeze(0).to(self.device)
++            with torch.no_grad():
++                p_action, p_log_prob, _, p_value = \
++                    self.pitcher_agent.get_action_and_value(p_obs_tensor)
++
++            p_action_np = p_action.cpu().numpy().squeeze()
++            p_log_prob_val = p_log_prob.cpu().item()
++            p_value_val = p_value.cpu().item()
++
++            # ── 타자 액션 ──
++            b_obs_tensor = torch.FloatTensor(batter_obs).unsqueeze(0).to(self.device)
++            with torch.no_grad():
++                b_action, b_log_prob, _, b_value, _ = \
++                    self.batter_agent.get_action_and_value(b_obs_tensor)
++
++            b_action_np = b_action.cpu().numpy().squeeze()
++            b_log_prob_val = b_log_prob.cpu().item()
++            b_value_val = b_value.cpu().item()
++
++            # ── 환경 스텝 ──
++            combined_action = {
++                'pitcher': p_action_np,
++                'batter': b_action_np,
++            }
++
++            next_obs, rewards, terminated, truncated, info = self.env.step(combined_action)
++
++            # 버퍼에 저장
++            pitcher_buffer['obs'].append(pitcher_obs)
++            pitcher_buffer['actions'].append(p_action_np)
++            pitcher_buffer['log_probs'].append(p_log_prob_val)
++            pitcher_buffer['rewards'].append(rewards['pitcher'])
++            pitcher_buffer['values'].append(p_value_val)
++            pitcher_buffer['dones'].append(float(terminated or truncated))
++
++            batter_buffer['obs'].append(batter_obs)
++            batter_buffer['actions'].append(b_action_np)
++            batter_buffer['log_probs'].append(b_log_prob_val)
++            batter_buffer['rewards'].append(rewards['batter'])
++            batter_buffer['values'].append(b_value_val)
++            batter_buffer['dones'].append(float(terminated or truncated))
++
++            # 리플레이 버퍼에 저장
++            transition = Transition(
++                pitcher_obs=pitcher_obs,
++                pitcher_action=p_action_np,
++                batter_obs=batter_obs,
++                batter_action=b_action_np,
++                pitcher_reward=rewards['pitcher'],
++                batter_reward=rewards['batter'],
++                next_pitcher_obs=next_obs['pitcher'],
++                next_batter_obs=next_obs['batter'],
++                done=terminated or truncated,
++                info=info.get('pitch_data', {}),
++            )
++            self.replay_buffer.add(transition)
++
++            # 대시보드 데이터 전송
++            if 'pitch_data' in info:
++                save_pitch_data(info['pitch_data'])
++
++            episode_reward_pitcher += rewards['pitcher']
++            episode_reward_batter += rewards['batter']
++            n_pitches += 1
++
++            outcome = info.get('pitch_outcome', {}).get('reward_key', '')
++            outcomes.append(outcome)
++
++            # 다음 관찰
++            pitcher_obs = next_obs['pitcher']
++            batter_obs = next_obs['batter']
++
++        # 승패 판정
++        if episode_reward_pitcher > episode_reward_batter:
++            self.pitcher_wins += 1
++            winner = 'pitcher'
++        else:
++            self.batter_wins += 1
++            winner = 'batter'
++
++        # 통계
++        stats = {
++            'episode': episode,
++            'pitcher_reward': episode_reward_pitcher,
++            'batter_reward': episode_reward_batter,
++            'n_pitches': n_pitches,
++            'winner': winner,
++            'outcomes': outcomes,
++            'has_home_run': 'home_run' in outcomes,
++            'has_strikeout': outcomes.count('swinging_strike') + \
++                             outcomes.count('called_strike') >= 3,
++        }
++        self.episode_stats.append(stats)
++
++        return {
++            'stats': stats,
++            'pitcher_buffer': pitcher_buffer,
++            'batter_buffer': batter_buffer,
++        }
++
++    def _update_agent(
++        self,
++        agent_type: str,
++        buffer: dict,
++    ) -> dict:
++        """수집된 경험으로 에이전트를 업데이트합니다.
++
++        Args:
++            agent_type: 'pitcher' 또는 'batter'
++            buffer: 경험 버퍼
++
++        Returns:
++            학습 메트릭
++        """
++        if not buffer['obs']:
++            return {}
++
++        agent = self.pitcher_agent if agent_type == 'pitcher' else self.batter_agent
++        optimizer = self.pitcher_optimizer if agent_type == 'pitcher' else self.batter_optimizer
++
++        obs = torch.FloatTensor(np.array(buffer['obs'])).to(self.device)
++        actions = torch.FloatTensor(np.array(buffer['actions'])).to(self.device)
++        old_log_probs = torch.FloatTensor(np.array(buffer['log_probs'])).to(self.device)
++        rewards = np.array(buffer['rewards'])
++        values = np.array(buffer['values'])
++        dones = np.array(buffer['dones'])
++
++        # GAE 계산
++        with torch.no_grad():
++            if agent_type == 'pitcher':
++                _, _, _, next_value = agent.get_action_and_value(obs[-1:])
++            else:
++                _, _, _, next_value, _ = agent.get_action_and_value(obs[-1:])
++            next_value = next_value.cpu().item()
++
++        advantages, returns = self.updater.compute_gae(
++            rewards, values, next_value, dones
++        )
++
++        advantages = torch.FloatTensor(advantages).to(self.device)
++        returns = torch.FloatTensor(returns).to(self.device)
++
++        # PPO 업데이트
++        metrics = self.updater.ppo_update(
++            agent, optimizer, obs, actions, old_log_probs,
++            advantages, returns, is_batter=(agent_type == 'batter'),
++        )
++
++        return metrics
++
++    def train(self):
++        """메인 학습 루프를 실행합니다."""
++        print("⚾ Baseball RL Self-Play Training 시작!")
++        print(f"   Device: {self.device}")
++        print(f"   Max Episodes: {self.max_episodes}")
++        print(f"   Warmup: {self.config.warmup_episodes} episodes")
++        print(f"   Checkpoint Dir: {self.checkpoint_dir}")
++        print("-" * 60)
++
++        start_time = time.time()
++
++        for episode in range(1, self.max_episodes + 1):
++            # ── 에피소드 수집 ──
++            result = self._collect_episode(episode)
++            stats = result['stats']
++
++            # ── 에이전트 업데이트 ──
++            p_metrics = self._update_agent('pitcher', result['pitcher_buffer'])
++            b_metrics = self._update_agent('batter', result['batter_buffer'])
++
++            # ── 체크포인트 스냅샷 ──
++            if episode % self.config.snapshot_interval == 0:
++                self._snapshot_agent('pitcher')
++                self._snapshot_agent('batter')
++
++            # ── 로깅 ──
++            if episode % self.config.log_interval == 0:
++                self._log_progress(episode, stats, p_metrics, b_metrics, start_time)
++
++            # ── 모델 저장 ──
++            if episode % self.config.save_interval == 0:
++                self._save_checkpoint(episode)
++
++        print("\n" + "=" * 60)
++        print("⚾ 학습 완료!")
++        self._save_checkpoint(self.max_episodes)
++
++    def _log_progress(
++        self,
++        episode: int,
++        stats: dict,
++        p_metrics: dict,
++        b_metrics: dict,
++        start_time: float,
++    ):
++        """학습 진행 상황을 로깅합니다."""
++        elapsed = time.time() - start_time
++        total_games = self.pitcher_wins + self.batter_wins
++        p_wr = self.pitcher_wins / max(total_games, 1)
++        b_wr = self.batter_wins / max(total_games, 1)
++
++        # 최근 100 에피소드 통계
++        recent = list(self.episode_stats)
++        avg_p_reward = np.mean([s['pitcher_reward'] for s in recent])
++        avg_b_reward = np.mean([s['batter_reward'] for s in recent])
++        hr_rate = np.mean([s['has_home_run'] for s in recent])
++        k_rate = np.mean([s['has_strikeout'] for s in recent])
++
++        print(
++            f"[EP {episode:5d}] "
++            f"WR: P={p_wr:.2f}/B={b_wr:.2f} | "
++            f"Reward: P={avg_p_reward:+.2f}/B={avg_b_reward:+.2f} | "
++            f"HR={hr_rate:.1%} K={k_rate:.1%} | "
++            f"Buffer={self.replay_buffer.fill_ratio:.1%} | "
++            f"{elapsed:.0f}s"
++        )
++
++        # 대시보드 메트릭 전송
++        metrics = {
++            'episode': episode,
++            'pitcher_win_rate': p_wr,
++            'batter_win_rate': b_wr,
++            'pitcher_avg_reward': float(avg_p_reward),
++            'batter_avg_reward': float(avg_b_reward),
++            'home_run_rate': float(hr_rate),
++            'strikeout_rate': float(k_rate),
++            'buffer_fill_ratio': self.replay_buffer.fill_ratio,
++            'pitcher_policy_loss': p_metrics.get('policy_loss', 0),
++            'batter_policy_loss': b_metrics.get('policy_loss', 0),
++            'pitcher_entropy': p_metrics.get('entropy', 0),
++            'batter_entropy': b_metrics.get('entropy', 0),
++        }
++        save_training_metrics(metrics)
++
++    def _save_checkpoint(self, episode: int):
++        """모델 체크포인트를 저장합니다."""
++        path = self.checkpoint_dir / f"checkpoint_ep{episode}.pt"
++        torch.save({
++            'episode': episode,
++            'pitcher_state_dict': self.pitcher_agent.state_dict(),
++            'batter_state_dict': self.batter_agent.state_dict(),
++            'pitcher_optimizer': self.pitcher_optimizer.state_dict(),
++            'batter_optimizer': self.batter_optimizer.state_dict(),
++            'pitcher_wins': self.pitcher_wins,
++            'batter_wins': self.batter_wins,
++        }, path)
++        print(f"   💾 Checkpoint saved: {path}")
++
++    def load_checkpoint(self, path: str):
++        """체크포인트에서 모델을 로드합니다."""
++        checkpoint = torch.load(path, map_location=self.device)
++        self.pitcher_agent.load_state_dict(checkpoint['pitcher_state_dict'])
++        self.batter_agent.load_state_dict(checkpoint['batter_state_dict'])
++        self.pitcher_optimizer.load_state_dict(checkpoint['pitcher_optimizer'])
++        self.batter_optimizer.load_state_dict(checkpoint['batter_optimizer'])
++        self.pitcher_wins = checkpoint.get('pitcher_wins', 0)
++        self.batter_wins = checkpoint.get('batter_wins', 0)
++        print(f"   ✅ Checkpoint loaded: {path}")
++
++
++# ──────────────────────────────────────────────────────────────
++#  메인 실행
++# ──────────────────────────────────────────────────────────────
++
++def main():
++    """학습을 시작합니다."""
++    import argparse
++
++    parser = argparse.ArgumentParser(description='Baseball RL Self-Play Trainer')
++    parser.add_argument('--episodes', type=int, default=1000, help='학습 에피소드 수')
++    parser.add_argument('--lr', type=float, default=3e-4, help='학습률')
++    parser.add_argument('--warmup', type=int, default=100, help='Warm-up 에피소드 수')
++    parser.add_argument('--resume', type=str, default=None, help='체크포인트 경로')
++    args = parser.parse_args()
++
++    config = TrainingConfig()
++    config.lr = args.lr
++    config.warmup_episodes = args.warmup
++
++    trainer = SelfPlayTrainer(config=config, max_episodes=args.episodes)
++
++    if args.resume:
++        trainer.load_checkpoint(args.resume)
++
++    trainer.train()
++
++
++if __name__ == '__main__':
++    main()

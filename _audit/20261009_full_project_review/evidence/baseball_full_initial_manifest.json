@@ -1,0 +1,1967 @@
+[
+  {
+    "path": ".DS_Store",
+    "bytes": 16388,
+    "sha256": "6b4836cc6fb83a6b04b2254fc0e188569fd99af41ac6766dfd98ce259f1db3c2"
+  },
+  {
+    "path": ".agents/AGENTS.md",
+    "bytes": 1868,
+    "sha256": "284c6dc440f50ffe827ae55970097cd498f245ad38f99134050cd70588f46812"
+  },
+  {
+    "path": ".gitignore",
+    "bytes": 435,
+    "sha256": "a41ebc6aad8a19d19806603fde0fd0e581607a6f30062de7025edeebb42beb50"
+  },
+  {
+    "path": ".nojekyll",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "MUJOCO_LOG.TXT",
+    "bytes": 1658451,
+    "sha256": "b0cd04394ab679130b9a8b156625d06f5485150e7654972fd13dfde4a67c9ea3"
+  },
+  {
+    "path": "README.md",
+    "bytes": 4096,
+    "sha256": "78d408abd1ee3c7f33971f2c494df20c5d104a1ea472475173a44077b4b6c9ba"
+  },
+  {
+    "path": "archive/.DS_Store",
+    "bytes": 10244,
+    "sha256": "3653d2404b8504b716900739174857ce94d1495cf55f049dbcdc23207c668cbb"
+  },
+  {
+    "path": "archive/EXECUTION_GUIDE.md",
+    "bytes": 3824,
+    "sha256": "69387cc292de78fbe4bb2e2cf4970d3fd6236f7e661c0e8b5418c1b84b056b55"
+  },
+  {
+    "path": "archive/assets/stadium_3d.xml",
+    "bytes": 17935,
+    "sha256": "a46ed2bddaa70aa101a7cc2d42f0487771073db52b634484a3333b9a12b96914"
+  },
+  {
+    "path": "archive/auto_builder/__init__.py",
+    "bytes": 160,
+    "sha256": "797c2f19356e67469a6e9f03da884d93b9913cf4944dc89d88aaccc5df2912df"
+  },
+  {
+    "path": "archive/auto_builder/auto_game_builder.py",
+    "bytes": 4737,
+    "sha256": "eff375cb4c09c4e53e7364d2c28331077f4dee1f13106c63f8f74f2fe432c1be"
+  },
+  {
+    "path": "archive/auto_builder/diagnostician.py",
+    "bytes": 3034,
+    "sha256": "2fd9546543b487b1608ec8976a4ded2fdebc49799129c834404920a4651370d5"
+  },
+  {
+    "path": "archive/auto_builder/phase_0_sanity_check.py",
+    "bytes": 3416,
+    "sha256": "b5ffea76c701456651687236319b879eec5b5d0bfc221dc4778e5931b1dbae09"
+  },
+  {
+    "path": "archive/auto_builder/stage_gate.py",
+    "bytes": 8439,
+    "sha256": "9a820e691868df4686fef597a149e82202550f71458bea236323d9cca35e2f5c"
+  },
+  {
+    "path": "archive/dashboard/app.js",
+    "bytes": 5473,
+    "sha256": "a58036db7401eae03e2ad8e5f0676c530335f91762294391e878e9a1c9554e57"
+  },
+  {
+    "path": "archive/dashboard/index.html",
+    "bytes": 2502,
+    "sha256": "eb49823def79fab0495a8a1e26a61e053ef460661b1c28f5dc153664ab7204e1"
+  },
+  {
+    "path": "archive/dashboard/style.css",
+    "bytes": 3993,
+    "sha256": "99fb46ffedcb82a6e3016600ff6690b0019a2e6fe31eff952948e3715ea66031"
+  },
+  {
+    "path": "archive/envs/__init__.py",
+    "bytes": 81,
+    "sha256": "f421d2afe15865e9c9d063315e0c1428fbd0757c7cefda75cbdd5ffad7f869a9"
+  },
+  {
+    "path": "archive/envs/baseball_game_env.py",
+    "bytes": 17086,
+    "sha256": "0b045350353c2ef18bafc8cbc45dcf851a73cae7906af3938b3a9d65282f527d"
+  },
+  {
+    "path": "archive/envs/game_engine.py",
+    "bytes": 5130,
+    "sha256": "d9485f665ab2509d38c87d87253a5456585d86876dee2b513e6a34f9d1ef78a4"
+  },
+  {
+    "path": "archive/envs/multi_agent_env.py",
+    "bytes": 16969,
+    "sha256": "c7b127e27315523b4d9d63154d525052cbf986c61e0565220abb6a73fb9ff234"
+  },
+  {
+    "path": "archive/envs/unified_baseball_env.py",
+    "bytes": 18873,
+    "sha256": "8839132e581e273d9acb34b23bf38bf363cdd40a0ee320445fc515c1c9c91e6a"
+  },
+  {
+    "path": "archive/expert/demo_collector.py",
+    "bytes": 3697,
+    "sha256": "0103843142fa6a5d595fe03f77910e48ea0d9b108eaba8a00570210f2382b40d"
+  },
+  {
+    "path": "archive/expert/trajectory_solver.py",
+    "bytes": 3709,
+    "sha256": "92bd94de02b919d315d386ae23b811deee9df0df7ed0711125a0aadb18634af8"
+  },
+  {
+    "path": "archive/game.py",
+    "bytes": 21899,
+    "sha256": "cc618886f2978f52ced61fdc9cac94d388ed7842cfc7aeab7bea8db8a3200662"
+  },
+  {
+    "path": "archive/humanoid/assets/stadium_3d_atlas.xml",
+    "bytes": 28704,
+    "sha256": "295ab8664f14203965b9ef3fbca7a2d645d2881dacd9b7c0973ec43791da90e5"
+  },
+  {
+    "path": "archive/humanoid/assets/stadium_3d_humanoid.xml",
+    "bytes": 18806,
+    "sha256": "3fcc20c4f4df8ee917e390460f457ed804b7fd2cdfae828b6f2c366c70ad9c04"
+  },
+  {
+    "path": "archive/humanoid/envs/atlas_baseball_env.py",
+    "bytes": 8942,
+    "sha256": "e2fc1ecef7d4dff3e818626445f059d8305d1339af3a75a846d8f57cdcdbcfa3"
+  },
+  {
+    "path": "archive/humanoid/envs/game_engine.py",
+    "bytes": 5383,
+    "sha256": "adb53cec803cf1c66f50b7eb8c5ce849019c6d0f76bccbdb741e41ee98b86c03"
+  },
+  {
+    "path": "archive/humanoid/envs/humanoid_baseball_env.py",
+    "bytes": 14722,
+    "sha256": "6333f1a512df42ccbb6fec645d1df0864acf98cca555b3ceea54ef2b5f3d50c5"
+  },
+  {
+    "path": "archive/humanoid/training/atlas_networks.py",
+    "bytes": 5332,
+    "sha256": "0bd28982ab67585bb2f14e0ac4a3c60b55ebc11bd08a0ec53669eb7517c7ed4b"
+  },
+  {
+    "path": "archive/humanoid/training/atlas_trainer.py",
+    "bytes": 7841,
+    "sha256": "02f612570455acce74ceae7a625a528f0bb57cdf7cb832b5599462b12686b01a"
+  },
+  {
+    "path": "archive/humanoid/training/humanoid_networks.py",
+    "bytes": 7523,
+    "sha256": "0e3ed6f0ceaa68a9ab51d74b4a9cd3c0fe9258c8eb6396babc12e6c76a826b0a"
+  },
+  {
+    "path": "archive/humanoid/training/humanoid_trainer.py",
+    "bytes": 10197,
+    "sha256": "d7c1080f4d934246e925aa2bd85050b4f1be52509f7d4c495fac2b1ff3a6a260"
+  },
+  {
+    "path": "archive/interactive_pose.py",
+    "bytes": 1282,
+    "sha256": "597a274f31793850784182ae61ab7a79f26fa2a13b9c274f1d3b2f6b9408ecc0"
+  },
+  {
+    "path": "archive/legacy_envs/batter_mechanism.py",
+    "bytes": 23890,
+    "sha256": "af8044ed1fdbd417747f6d60f76eb2303c018bcdd663e88cfae3a762e9d64529"
+  },
+  {
+    "path": "archive/legacy_envs/mujoco_baseball_env.py",
+    "bytes": 9103,
+    "sha256": "54f365bdac3311eee1d5a996cad0fa1093c0136c38fabce2f2e6886192f1cef0"
+  },
+  {
+    "path": "archive/legacy_envs/pitcher_mechanism.py",
+    "bytes": 22694,
+    "sha256": "cba6a6ffa6bf7575d5a2a3929a61b3d09ea479a944edfec12a389aa6f43f242d"
+  },
+  {
+    "path": "archive/legacy_scripts/auto_pipeline.py",
+    "bytes": 2422,
+    "sha256": "662b088c60315d6dc83f3c5f780274eb1c83db63ed82d5e23f1d113d91054f1e"
+  },
+  {
+    "path": "archive/legacy_scripts/build_atlas_stadium.py",
+    "bytes": 3775,
+    "sha256": "47d0e5642c81df3a8f50ab1bf1b0f0e4062dd5bd7eeeaca6e994406146682f54"
+  },
+  {
+    "path": "archive/legacy_scripts/build_humanoid_stadium.py",
+    "bytes": 4008,
+    "sha256": "ce549aabc6a7a10a13faf5080c8d9ca00e645272c2c57fdfb83e8054f0d9bab5"
+  },
+  {
+    "path": "archive/legacy_scripts/convert_videos.py",
+    "bytes": 1501,
+    "sha256": "a35ee34ae64175374e4e3958e3670bff405bfadce839f3b697489ba53b2e5ad7"
+  },
+  {
+    "path": "archive/legacy_scripts/simulator/__init__.py",
+    "bytes": 56,
+    "sha256": "69e1abd04de586957d461450e86054bd5846af63f102b13861262654c5178f0a"
+  },
+  {
+    "path": "archive/legacy_scripts/simulator/dashboard.py",
+    "bytes": 25534,
+    "sha256": "687f80eac5d9676fc526d50fe4bb82d954929622d52a63c8081200e8b4882d4a"
+  },
+  {
+    "path": "archive/legacy_scripts/simulator/game_engine.py",
+    "bytes": 5854,
+    "sha256": "2038bbcc52425b8a1402788bd8ae4c64b79dc2b560ad6be64e22acbe73621325"
+  },
+  {
+    "path": "archive/legacy_scripts/simulator/live_viewer.py",
+    "bytes": 4972,
+    "sha256": "854440a30874f81bd8ded2281a44afc75d0df02b351e7098f4e73bc1b215d0ea"
+  },
+  {
+    "path": "archive/legacy_scripts/simulator/video_recorder.py",
+    "bytes": 4219,
+    "sha256": "e9cd2953525a3930d55db2683fe9e975dd0d70d73e10dd93720b2e97da43b1dc"
+  },
+  {
+    "path": "archive/legacy_training/bc_trainer.py",
+    "bytes": 3803,
+    "sha256": "3ecabc2ed1fabefd5430eb20ae661a1f07eb9269b79e949f97f9c3dae20e03ac"
+  },
+  {
+    "path": "archive/legacy_training/mujoco_ppo_trainer.py",
+    "bytes": 7529,
+    "sha256": "32e97e41923a94c2059a63bd290e0d72fa68aa81cf8573eae3e49d520e9dc204"
+  },
+  {
+    "path": "archive/render_angles.py",
+    "bytes": 1151,
+    "sha256": "2b019ff5e5dbad71b21c13ae33ea587e898b2b88b76422022897b6494c6de66d"
+  },
+  {
+    "path": "archive/robots/__init__.py",
+    "bytes": 144,
+    "sha256": "edc8f4616fe5509d905128af4db243173fedbae2ea4cb9732bb130450d5a819a"
+  },
+  {
+    "path": "archive/robots/batter_robot.py",
+    "bytes": 8382,
+    "sha256": "b863844a8d038e3e8b8def13648a99bd406a1ef125aeebf89506296c92a29a74"
+  },
+  {
+    "path": "archive/robots/pitcher_robot.py",
+    "bytes": 10176,
+    "sha256": "f9dd34e53402e4ca07fe3a0169113a9eb21db49314dca8f705420b12fd783437"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_104233/ep_1785375999.mp4",
+    "bytes": 1033919,
+    "sha256": "38d526bc9699dc70c3535f56808be6b27ef8cf688d70e9c2c4b3811acebe2b3d"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_104233/events.out.tfevents.1785375753.Jinmanui-MacBookPro.local.29630.0",
+    "bytes": 11582,
+    "sha256": "e65c407dbe3593a6a45b9bf6bc3cd058be7e95d385d2c9309f6a83a36e09f875"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_105020/events.out.tfevents.1785376220.Jinmanui-MacBookPro.local.29967.0",
+    "bytes": 5014,
+    "sha256": "53fc652a92a9d8cc46f27af4bdb99b0f3624f3878853d8cac8e0b0c72aa42ce5"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_105332/events.out.tfevents.1785376412.Jinmanui-MacBookPro.local.30127.0",
+    "bytes": 1730,
+    "sha256": "1aa828ec624cebd3d78c34d354028db9ce2285fc47b9bbf62c25bac40fbcf83e"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_105517/events.out.tfevents.1785376517.Jinmanui-MacBookPro.local.30192.0",
+    "bytes": 3372,
+    "sha256": "dd572d0bfccb08477b252dbadfa60ce3b06d264a2cff45cfd1ca1575f28a760b"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_110309/ep_1785377324.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_110309/ep_1785377666.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_110309/ep_1785378016.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_110309/ep_1785378317.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_110309/ep_1785378588.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_110309/ep_1785378859.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/runs/tee_ball_drills_20260730_110309/events.out.tfevents.1785376989.Jinmanui-MacBookPro.local.30472.0",
+    "bytes": 44786,
+    "sha256": "39888e87867d99a1e6468bd4a5474269642738cc89490839bf096e901b741114"
+  },
+  {
+    "path": "archive/simulate_swing.py",
+    "bytes": 2009,
+    "sha256": "f21c8d772e0fb6708d099af9ee1b8348fe8d97632544862a5ad114d63a0c5bef"
+  },
+  {
+    "path": "archive/test_arm.py",
+    "bytes": 2602,
+    "sha256": "db64c9ad02acb295d544e7711ff8f6aef434c2b559cc14203c49ce933f1d9cd4"
+  },
+  {
+    "path": "archive/test_arm.xml",
+    "bytes": 2139,
+    "sha256": "ebc00c6b9ea6b15d39dbecf35a3b92c6d91385aec5c89baf94bb7a302d59db76"
+  },
+  {
+    "path": "archive/test_posture.py",
+    "bytes": 670,
+    "sha256": "8d07fac3f0bebbe466f515a8f3f2bc61d4a05fdcdc4ebe3007b8561bfbbdfed6"
+  },
+  {
+    "path": "archive/test_sim.py",
+    "bytes": 648,
+    "sha256": "dd3971847e66ec8727420f40edd5258f371b32a87e3ddd7e5722f88ac320185e"
+  },
+  {
+    "path": "archive/training/__init__.py",
+    "bytes": 254,
+    "sha256": "338c9c3fbb914a870b920ece3da1054c5512a416881fee7d5bc16ac82fe30ff2"
+  },
+  {
+    "path": "archive/training/curriculum_manager.py",
+    "bytes": 5233,
+    "sha256": "af0b8d346486af066ac28f71fac04147482de7a47690681cd0b5c2a413765005"
+  },
+  {
+    "path": "archive/training/curriculum_trainer.py",
+    "bytes": 11043,
+    "sha256": "7a0234d78d45e3a73b016d7890c9ceab6f354ee61efc8d252efed2ccfdac24e4"
+  },
+  {
+    "path": "archive/training/episode_recorder.py",
+    "bytes": 7032,
+    "sha256": "b97a0efec05bd40c6b0e2f88ad7ab25e82e1c21df0405e7ef02d3ba1e70717b1"
+  },
+  {
+    "path": "archive/training/health_monitor.py",
+    "bytes": 6397,
+    "sha256": "5b975955d75465b080edf71af13535ffe457fa360ae9a5b91c748e7a5ae5c6d4"
+  },
+  {
+    "path": "archive/training/logger.py",
+    "bytes": 2481,
+    "sha256": "f40b8cd2312fdbd1fa1cd3c0d5aa9a03fed719e7a156553222d73b1ec2db292e"
+  },
+  {
+    "path": "archive/training/multi_agent_dreamer.py",
+    "bytes": 21088,
+    "sha256": "c44afb4b0bdef7a1bb9349defdba1ca6eb35943b444ff8210fbe5a58e86290b2"
+  },
+  {
+    "path": "archive/training/multi_agent_world_model.py",
+    "bytes": 12139,
+    "sha256": "62835f8f4bb2ec23fd2ebf172468fc2afc6538f38c61350838cb6aa521f2fc85"
+  },
+  {
+    "path": "archive/training/multimodal_networks.py",
+    "bytes": 7599,
+    "sha256": "8f853f29cbad22340c1fc1ff40a736a9d6d70c377ce7bb73547f9340073dfff8"
+  },
+  {
+    "path": "archive/training/networks.py",
+    "bytes": 15139,
+    "sha256": "81ffac836c401738a00b32333e0a1923fc9ea2fd7b684b1a24633865c071c5c4"
+  },
+  {
+    "path": "archive/training/replay_buffer.py",
+    "bytes": 12040,
+    "sha256": "43c37fd026e815c92abfb7445c187172b6f4f41d4c5d173bfc9d739fc0bbedc5"
+  },
+  {
+    "path": "archive/training/reward_audit.py",
+    "bytes": 3935,
+    "sha256": "5fc9fa3806adbd88f89d3048120baceec7f89ed0fecfcc16f7809cb6ec51307e"
+  },
+  {
+    "path": "archive/training/trainer.py",
+    "bytes": 27345,
+    "sha256": "baca9f1f52c708b3ea67b577413a1719ef44e00feb560eb2b73cd549daf5c783"
+  },
+  {
+    "path": "archive/training/visualize_latent.py",
+    "bytes": 3685,
+    "sha256": "7cba43aa0ea886260b50aede7af4b823ad96fe69c24917964e55a043ad85a681"
+  },
+  {
+    "path": "archive/training/world_model.py",
+    "bytes": 18828,
+    "sha256": "efc332b4c19ec60f11ec321635714735384ff2727ae649ee742b231d1b6bba31"
+  },
+  {
+    "path": "archive/training/world_model_trainer.py",
+    "bytes": 27523,
+    "sha256": "1f42fd199a852a26c5a37fc94fe3b702c6a6c959e6a7bdb202e7115ba1421bd7"
+  },
+  {
+    "path": "archive/videos/ep_1785375999.mp4",
+    "bytes": 1033919,
+    "sha256": "38d526bc9699dc70c3535f56808be6b27ef8cf688d70e9c2c4b3811acebe2b3d"
+  },
+  {
+    "path": "archive/videos/ep_1785377324.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/videos/ep_1785377666.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/videos/ep_1785378016.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/videos/ep_1785378317.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/videos/ep_1785378588.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/videos/ep_1785378859.mp4",
+    "bytes": 1036515,
+    "sha256": "3dff5e022f1dc96adce68e224b60bb09348c29967e2f9d1c4edc986e158a6ba0"
+  },
+  {
+    "path": "archive/videos/video_manifest.json",
+    "bytes": 37,
+    "sha256": "0c894174b59dc078b2c78a2b9abf8238f6db2628428973995971e47b5b84ab44"
+  },
+  {
+    "path": "archive/visualize_trained.py",
+    "bytes": 2739,
+    "sha256": "5d94a64159ec4da6aa1742974e469038aeebcd07538d09df0b57b9101a32596e"
+  },
+  {
+    "path": "checkpoints/.DS_Store",
+    "bytes": 10244,
+    "sha256": "ea04b0fa2fae7dc7545800a87f40739fb3f3e21587f2ea1efa2b8dbdac7fa5e1"
+  },
+  {
+    "path": "checkpoints/breaking_ball_best/best_model.zip",
+    "bytes": 146952,
+    "sha256": "fc9d55083bc32b7a798882ded0d1388a36442ab18c5ab049861efc7113b756ab"
+  },
+  {
+    "path": "checkpoints/breaking_ball_final_model.zip",
+    "bytes": 146968,
+    "sha256": "eb60e73ee4d6255faa46832c4a81e37ef38f637c4ec6f8ebb17a2e7476d10885"
+  },
+  {
+    "path": "checkpoints/breaking_ball_vec_normalize.pkl",
+    "bytes": 1606,
+    "sha256": "2195a31e1444ee6bd33c7c86a2975ef474e2caa3c9465d2ff29f028b09daab4a"
+  },
+  {
+    "path": "checkpoints/catcher/best_model.zip",
+    "bytes": 192190,
+    "sha256": "436f5f13422d18e3a33d4c81ba210b0e8d5c2dc6ed010f7e539d22434be7bf4e"
+  },
+  {
+    "path": "checkpoints/catcher/vec_normalize.pkl",
+    "bytes": 4365,
+    "sha256": "dac11c8ca7b251fcde172605bd8a653496d90477ec4ba29c11573fcf5339e843"
+  },
+  {
+    "path": "checkpoints/checkpoint_ep5.pt",
+    "bytes": 6369377,
+    "sha256": "adc69d35485daff90ba893fa2abb4f0e61f1871f7bcf108adca10d83e8d7a95e"
+  },
+  {
+    "path": "checkpoints/fielder/best_model.zip",
+    "bytes": 187374,
+    "sha256": "aea34aa8dccf91d48d4f408540463c443c9e7a1793b8520daac806c2a018ffb5"
+  },
+  {
+    "path": "checkpoints/fielder/vec_normalize.pkl",
+    "bytes": 2326,
+    "sha256": "d24d8cd7d09ceed4ee0cbfb10c4baf8efed15424441680c683a232e98654c713"
+  },
+  {
+    "path": "checkpoints/match_batter_best/best_model.zip",
+    "bytes": 146965,
+    "sha256": "66a00464a6c6446179b990b0bb35e2390f28e20c142924e0cb881c1d7af44ff4"
+  },
+  {
+    "path": "checkpoints/match_batter_vec_normalize.pkl",
+    "bytes": 1606,
+    "sha256": "80cde4f7c38811fe1ec4cea151834b160690292cc4165d84849dcf644e9e2f61"
+  },
+  {
+    "path": "checkpoints/mega_batter/best_model.zip",
+    "bytes": 215515,
+    "sha256": "abbed97e482917833bb7c3d12463a27f098608d1c63ce793cd290f7c86bbd9c3"
+  },
+  {
+    "path": "checkpoints/mega_batter/logs/evaluations.npz",
+    "bytes": 1298,
+    "sha256": "b45f245e321505c5c6a70b17434ad41c30188ed3c1f8bec4ac703daa29786e9d"
+  },
+  {
+    "path": "checkpoints/mega_batter/tb_logs/PPO_1/events.out.tfevents.1788274863.man-ui-MacBookPro.local.80228.1",
+    "bytes": 38646,
+    "sha256": "26e519bc15870bfd5ce75b87945b2d05cc0f6985e9b3007446c8177292d93db6"
+  },
+  {
+    "path": "checkpoints/mega_batter/vec_normalize.pkl",
+    "bytes": 2655,
+    "sha256": "033f92d92bb776e5566cdd538469a06fda3aaefebbd060686328101cce267b95"
+  },
+  {
+    "path": "checkpoints/mega_pitcher/best_model.zip",
+    "bytes": 163731,
+    "sha256": "e61fde1ef3cb8ebaa03b8afeefb80fc657c80ab1fb56e8efe57ba6550fdee552"
+  },
+  {
+    "path": "checkpoints/mega_pitcher/logs/evaluations.npz",
+    "bytes": 1578,
+    "sha256": "9f44a1f8e21b7c93fa16e9f2b9bfd848ebcc7d898658dc15cf4c6f21f2c4f537"
+  },
+  {
+    "path": "checkpoints/mega_pitcher/tb_logs/PPO_1/events.out.tfevents.1788274612.man-ui-MacBookPro.local.80228.0",
+    "bytes": 84188,
+    "sha256": "322161b39a88cbe10a8e5993ff7d637ec2b2ba17eb443786bdb81b1003a9f1fe"
+  },
+  {
+    "path": "checkpoints/mega_pitcher/vec_normalize.pkl",
+    "bytes": 3025,
+    "sha256": "45b87013bb71e7d92132406ca26566cf23a4352c0a6959f5acb1923eb4c821ba"
+  },
+  {
+    "path": "checkpoints/mlb_batter_best/best_model.zip",
+    "bytes": 151719,
+    "sha256": "324d7ab0b77de02a4ee1f38ffb43a7233c2983879adca9b586c4dda658a5f339"
+  },
+  {
+    "path": "checkpoints/mlb_batter_vec_normalize.pkl",
+    "bytes": 1696,
+    "sha256": "e60886e8b1a2c07f1a71048f74a154ad094a0ca04cce40c126b452411e1d365e"
+  },
+  {
+    "path": "checkpoints/mlb_pitcher_best/best_model.zip",
+    "bytes": 158867,
+    "sha256": "ea517ce920d2c6d5820e8543a329eb9bc77ee6caed1c86adacbb6ec6e1e75f35"
+  },
+  {
+    "path": "checkpoints/mlb_pitcher_vec_normalize.pkl",
+    "bytes": 1826,
+    "sha256": "ce37543650d37d1e4084592a3e52402d32e732be47a884cc97cd9be87070acd2"
+  },
+  {
+    "path": "checkpoints/mocap_batter_best/best_model.zip",
+    "bytes": 151715,
+    "sha256": "85c7c2d5289cdab26063144ac26a0f2bb07b9683af57051d1245d0e5a76f5681"
+  },
+  {
+    "path": "checkpoints/mocap_batter_vec_normalize.pkl",
+    "bytes": 1764,
+    "sha256": "90ac88a2b5ef9d49205d9dc71ec8ec4cadb03bed09dc71f48c51310aeff51663"
+  },
+  {
+    "path": "checkpoints/mocap_pitcher_best/best_model.zip",
+    "bytes": 159003,
+    "sha256": "40c39450b8dbd1de9b0310ec29dd0e81679fecd32a5277baae51a5a5358082ee"
+  },
+  {
+    "path": "checkpoints/mocap_pitcher_vec_normalize.pkl",
+    "bytes": 1894,
+    "sha256": "6d23e07f85082abb594ecc7d8f84326f425ea575c7a00216747a4435145c78bd"
+  },
+  {
+    "path": "checkpoints/pitcher_best/best_model.zip",
+    "bytes": 154113,
+    "sha256": "28a877ca50b21d7c0a125ffbdffb5f4b8d30d703e6f7612d8f4782b051070cc1"
+  },
+  {
+    "path": "checkpoints/pitcher_final_model.zip",
+    "bytes": 158870,
+    "sha256": "488c698f5ce55a45e409f7fc5660260ca41c7419ea61056915edcfdc1a13d34e"
+  },
+  {
+    "path": "checkpoints/pitcher_vec_normalize.pkl",
+    "bytes": 1736,
+    "sha256": "536c2d12aa3d97e147e1e7b8313035a44c1676befe57747cb9fb660b7aab38bf"
+  },
+  {
+    "path": "checkpoints/pitching_50kmh_best/best_model.zip",
+    "bytes": 144586,
+    "sha256": "7fb78d76804753c843922a71cac887dea8b3851fd100a1128ad70589274974a7"
+  },
+  {
+    "path": "checkpoints/pitching_50kmh_final_model.zip",
+    "bytes": 144588,
+    "sha256": "7d96066601b23af7551581cf528af4204bd4f35389954efe37da9bab6e11d218"
+  },
+  {
+    "path": "checkpoints/pitching_50kmh_vec_normalize.pkl",
+    "bytes": 1566,
+    "sha256": "4e71a36479d9ef6bcfbee5e715216f996582ac91c5b3e7e6d2974ce3400a7c7e"
+  },
+  {
+    "path": "checkpoints/pitching_80kmh_best/best_model.zip",
+    "bytes": 144586,
+    "sha256": "5accf0e52bb5d922669bb2712211769bb8705a36a8aa8e4f03b2864b4796b753"
+  },
+  {
+    "path": "checkpoints/pitching_80kmh_deep_best/best_model.zip",
+    "bytes": 144589,
+    "sha256": "97275c20645c2faf8ab940780db5b64ff1f15fb2c9fffe4a14efb93b8f4ea080"
+  },
+  {
+    "path": "checkpoints/pitching_80kmh_deep_final.zip",
+    "bytes": 144591,
+    "sha256": "b236f0040cafc9286a983fd703ee8dc32765c01b065539058edd942db2017d3e"
+  },
+  {
+    "path": "checkpoints/pitching_80kmh_deep_norm.pkl",
+    "bytes": 1566,
+    "sha256": "195e2f44f12dbd2512864b118d7aed308b359c097191110b2565ab99545a6058"
+  },
+  {
+    "path": "checkpoints/pitching_80kmh_final_model.zip",
+    "bytes": 144590,
+    "sha256": "de6cc71367eda40214c435d7a2d55bced5e049ddd7ffaa78b9600e3b12fa34de"
+  },
+  {
+    "path": "checkpoints/pitching_80kmh_vec_normalize.pkl",
+    "bytes": 1566,
+    "sha256": "17cd37997e5427de37bf2ccf6cea3711e5835ea7f681b0705e0b4d6a99e269d1"
+  },
+  {
+    "path": "checkpoints/runner/best_model.zip",
+    "bytes": 146673,
+    "sha256": "a20f6c6f7e86c2080d31a725f06ac57afbea10c4cbcd9027207e1eba7fec933e"
+  },
+  {
+    "path": "checkpoints/runner/vec_normalize.pkl",
+    "bytes": 2295,
+    "sha256": "b7dc0d3feeed944b6846ba335003fc9f8ddf34ffea5c30c5d11fc514e2843941"
+  },
+  {
+    "path": "checkpoints/soft_toss_best_model/best_model.zip",
+    "bytes": 144570,
+    "sha256": "ac08207143048c39250da4eb137e78cc7877049e99de91bd9b21816bffd6a4cf"
+  },
+  {
+    "path": "checkpoints/soft_toss_final_model.zip",
+    "bytes": 144572,
+    "sha256": "ee16b914ad9c9385840e3325e53a606aa5464aac57524c2d69d62c820100a6cb"
+  },
+  {
+    "path": "checkpoints/soft_toss_vec_normalize.pkl",
+    "bytes": 1566,
+    "sha256": "c8c09bfc40e16555b5fb9162fa1187224a549f8bb1ad685478f112e813f861a0"
+  },
+  {
+    "path": "checkpoints/teeball_best_model/best_model.zip",
+    "bytes": 139605,
+    "sha256": "2661499a7cdeb0b951141f56e804591ce6576a6d87810fac9d1a764ae7f49f29"
+  },
+  {
+    "path": "checkpoints/teeball_final_model.zip",
+    "bytes": 139607,
+    "sha256": "7f10a38b0d2800b43b6259673d706505f3b0361e4917a352bee3a83ccb91db2f"
+  },
+  {
+    "path": "cognitive_ai/.DS_Store",
+    "bytes": 6148,
+    "sha256": "e2a0147dbef9b912e473d18ebaccb018588d12905d275de06cc9252104733245"
+  },
+  {
+    "path": "cognitive_ai/envs/adversarial_match_env.py",
+    "bytes": 3149,
+    "sha256": "a97e1e14d4881de7896e57be4cf504315757dd87563bbaa9e03cdccb7b9400e2"
+  },
+  {
+    "path": "cognitive_ai/envs/baseball_game_state.py",
+    "bytes": 2312,
+    "sha256": "878bfc289a518a6041ea93cecc10bebacb47d5b33aa674494b20712c20e33f49"
+  },
+  {
+    "path": "cognitive_ai/envs/baseball_match_env.py",
+    "bytes": 19752,
+    "sha256": "4ef6cf357806a284e6940fa2fef64c8b643bab287fcb0c0fe75202ed458ff275"
+  },
+  {
+    "path": "cognitive_ai/envs/baseball_rules.py",
+    "bytes": 1877,
+    "sha256": "153121bdec350562f28f889e9ca0e405467d38996f96453754764b371903eb16"
+  },
+  {
+    "path": "cognitive_ai/envs/breaking_ball_env.py",
+    "bytes": 11562,
+    "sha256": "b9f69eb3d23905c4cbd11588efa30cd86c8ede7a689af0d636e8d76a2e41ee7b"
+  },
+  {
+    "path": "cognitive_ai/envs/catcher_env.py",
+    "bytes": 4138,
+    "sha256": "5667e7ec30bbbe9c1dc85ab26b33fe43a580ceb4e6039227f660549ea08000b1"
+  },
+  {
+    "path": "cognitive_ai/envs/cognitive_baseball_env.py",
+    "bytes": 7411,
+    "sha256": "4df442f4c5fb1faa735894b1f1d85275470c9729739f1e1eabed3df72329be7c"
+  },
+  {
+    "path": "cognitive_ai/envs/fielder_env.py",
+    "bytes": 5933,
+    "sha256": "5b4a05e4123371192964ac0666b3417b5c8258d4182690f3a7dacaa7959d8535"
+  },
+  {
+    "path": "cognitive_ai/envs/pitcher_env.py",
+    "bytes": 12139,
+    "sha256": "1d5253ba7806cc404bc995a146ed62c193751d354239cd2e2311f44d62e77ccb"
+  },
+  {
+    "path": "cognitive_ai/envs/pitching_machine_env.py",
+    "bytes": 10234,
+    "sha256": "0c4f95738ed23598060cadb9d46f82b81710aa5005974ddbcb533afbbf89169c"
+  },
+  {
+    "path": "cognitive_ai/envs/runner_env.py",
+    "bytes": 2748,
+    "sha256": "3976159d16ab178df44836bac8d12460aa138059bc98a63a1dc87dca872495b1"
+  },
+  {
+    "path": "cognitive_ai/envs/soft_toss_env.py",
+    "bytes": 9010,
+    "sha256": "60156a964455ca199b64c80ba0fe894e7e9720a7924c4f626b663683e8cfd2f3"
+  },
+  {
+    "path": "cognitive_ai/envs/teeball_env.py",
+    "bytes": 7633,
+    "sha256": "7a99741fdb43df9435102a22b8e8f23812ae8bd419ba2b9869e64e169a470c2f"
+  },
+  {
+    "path": "cognitive_ai/evaluation/eval_breaking_ball.py",
+    "bytes": 4188,
+    "sha256": "38eae59c31e59cbce878a9fa2cb2180447987e7b7cf7c6a7b8be0fe564e13422"
+  },
+  {
+    "path": "cognitive_ai/evaluation/eval_normalized.py",
+    "bytes": 4237,
+    "sha256": "a410627c5f295f38383c694ba7ce2fcab3f3bb2e1cac678ca8745c09ea934db3"
+  },
+  {
+    "path": "cognitive_ai/evaluation/eval_pitcher.py",
+    "bytes": 4089,
+    "sha256": "b833f6d81f33381ef126d96f07d8218a0742c164828b66347918deef328d4d9a"
+  },
+  {
+    "path": "cognitive_ai/evaluation/eval_pitching_machine.py",
+    "bytes": 4238,
+    "sha256": "4c2e761847ad1691d5bcea16ca28e96d48c1bfe7c6237bb0bf8f4436dd654552"
+  },
+  {
+    "path": "cognitive_ai/evaluation/eval_soft_toss.py",
+    "bytes": 3548,
+    "sha256": "7ec4468db48465b3366db866779ff8ed79d7472ebd8a7a65432d55570cfb9cae"
+  },
+  {
+    "path": "cognitive_ai/evaluation/evaluate_base_stealing.py",
+    "bytes": 3142,
+    "sha256": "c08984cd6048668145ac9125d5b2bd22e40be03e11de7b4bd878d896609c72f7"
+  },
+  {
+    "path": "cognitive_ai/evaluation/evaluate_fielder.py",
+    "bytes": 2771,
+    "sha256": "1778586c2ce07b487451ef25b0bb2c8917cea2f220017db69e53767d20d899ea"
+  },
+  {
+    "path": "cognitive_ai/evaluation/evaluate_mocap_match.py",
+    "bytes": 4409,
+    "sha256": "671f2a208d271a5b31494f28570c5ca808067c86e7ea55998306b266fd0a3f4e"
+  },
+  {
+    "path": "cognitive_ai/evaluation/simulate_9_innings.py",
+    "bytes": 1370,
+    "sha256": "8b58c45e5b55667061151a4b88113963c32b8222941d9ae572b6e796aae6ed94"
+  },
+  {
+    "path": "cognitive_ai/evaluation/simulate_full_match.py",
+    "bytes": 4241,
+    "sha256": "18ab2e4e227b5716a9ce5b192466001abd806b2b4c916a945b56d70342548f9f"
+  },
+  {
+    "path": "cognitive_ai/evaluation/simulate_mlb_match.py",
+    "bytes": 6777,
+    "sha256": "88fad1935bfdeec164b1d3e235bcafcd02b4c8c4f2b9173661a68445afcefddd"
+  },
+  {
+    "path": "cognitive_ai/evaluation/video_evaluator.py",
+    "bytes": 5336,
+    "sha256": "12ff8023269c1a057be6d792d1f9e625111b5349a1e5a037a37463ced288ac0a"
+  },
+  {
+    "path": "cognitive_ai/scripts/check_ball_phys.py",
+    "bytes": 830,
+    "sha256": "78b240e94d83c88bf573ebac8ec0df31e182ff68159b4ca8374cc1c3c6abbd26"
+  },
+  {
+    "path": "cognitive_ai/scripts/check_contact_pos.py",
+    "bytes": 936,
+    "sha256": "c82f577ee4d2c4d9bc03056014a71efe0f781a49c806b22f6db1c7d7b1e680bb"
+  },
+  {
+    "path": "cognitive_ai/scripts/debug_miss.py",
+    "bytes": 1172,
+    "sha256": "6a49d7bc73ba4ec921af60a94931c8d51f3048406a143c4d08010fd90ec6823b"
+  },
+  {
+    "path": "cognitive_ai/scripts/merge_h1.py",
+    "bytes": 4703,
+    "sha256": "2821b1729d396815486992469198016234a5d3bbac2e1436afb5c3dcf5083477"
+  },
+  {
+    "path": "cognitive_ai/scripts/sweep_bat.py",
+    "bytes": 1536,
+    "sha256": "3ac378e266e22fa706c859addac25f61347096e79243d60e6ee6310b9e215f10"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_accurate.py",
+    "bytes": 1474,
+    "sha256": "6976e1db62e75fc846ef703c154cecef15155fd6805007acaa9cba456a005cab"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_aimed.py",
+    "bytes": 1597,
+    "sha256": "d4619d4b2c9b6a6313f9a1e6e512a77f5f351f259c70027d19db27a7d5b4d148"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_cameras.py",
+    "bytes": 605,
+    "sha256": "a87503ba6e2cffa7526f7bd829665da2f9d293a02cb1a1b08e0f951b6fcf2fb6"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_cognitive_env.py",
+    "bytes": 896,
+    "sha256": "80fde76a8ba2a23d5bed161cab91eed8bb349b6a855d6d75eac90c1580da9fa0"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_direct.py",
+    "bytes": 1985,
+    "sha256": "6cf2956b8aef62aa7c35df8e5ab46f087f615f3f3f01c414ea10f87b315a1965"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_grid.py",
+    "bytes": 1737,
+    "sha256": "2edd577dbbed3f244ab8495c5acb8053b0f206734c145ab5a9f3e5212f790ac1"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_h1_swing.py",
+    "bytes": 2155,
+    "sha256": "74be66a4fc9047a92535b614490d2419174bc91918b76686c2478dde989debb2"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_humanoid.py",
+    "bytes": 1074,
+    "sha256": "e959968d967c06152303647eea8414b25739f4550ac1009f764e346d8f90a691"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_lower_trig.py",
+    "bytes": 1241,
+    "sha256": "033b6de02a340312768b8cafff0cf947c0691410b09c3e03059e8efb2e3b8265"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_scaling.py",
+    "bytes": 1762,
+    "sha256": "b363bd53d8253749ca0623e0a256b496775d98d44e4f2aec15af9bda03af6b74"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_teeball.py",
+    "bytes": 1457,
+    "sha256": "2907fccb0982d3e3f70ef8448ccf6daa310607ba2cc1bdbe5576d3038815075b"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_timing_higher.py",
+    "bytes": 1341,
+    "sha256": "8ce7c61053feed0d9bada7cbea2ee88499f06f8f701261d870955dfaace04abc"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_timing_precise.py",
+    "bytes": 1351,
+    "sha256": "610d38df954d589565ad91860bc31f7a4944a912068af751c28e8a6a191189bf"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_trained_teeball.py",
+    "bytes": 1744,
+    "sha256": "6cdb2aee027878d6d58c5817788bc31d7d42005148ded364d93067393de7b7f5"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_trajectory.py",
+    "bytes": 951,
+    "sha256": "48bb7df23c255464d8fd25438952c4b867931b3262b4b56f6488659c03486636"
+  },
+  {
+    "path": "cognitive_ai/scripts/test_trigger.py",
+    "bytes": 1338,
+    "sha256": "80e06f688873ce5f71b01e33643065aab4f6640cee954b6b3e4151e54a82a875"
+  },
+  {
+    "path": "cognitive_ai/training/train_80kmh_deep.py",
+    "bytes": 1512,
+    "sha256": "215bce4175c35cb5e28b1d8c8c4dfde8f3be6281cb965a2500cbc45f70be1de9"
+  },
+  {
+    "path": "cognitive_ai/training/train_breaking_ball.py",
+    "bytes": 1564,
+    "sha256": "bb1af2c30ce65a8ce73c56e4e47e773100959c9559a9407a9b5d079cf23974e7"
+  },
+  {
+    "path": "cognitive_ai/training/train_catcher.py",
+    "bytes": 927,
+    "sha256": "0c06a7057c454e196e7362235eada6f49ee6ea227ee3e15b7e3e44d1249e8f26"
+  },
+  {
+    "path": "cognitive_ai/training/train_cognitive.py",
+    "bytes": 2817,
+    "sha256": "46a57aed27c3e6b84f26da372e783e4220396748147b01b51a85105c9c798ad0"
+  },
+  {
+    "path": "cognitive_ai/training/train_curriculum_pitching.py",
+    "bytes": 3284,
+    "sha256": "d68da7821fa393a213e52a72a8f2264c7532b5a095d5c6991443fc0b9ac32df7"
+  },
+  {
+    "path": "cognitive_ai/training/train_fielder.py",
+    "bytes": 1038,
+    "sha256": "a6222c1355a674121bf9ae567351d0552e52e5ed66be7841656459ca2d154a75"
+  },
+  {
+    "path": "cognitive_ai/training/train_match_batter.py",
+    "bytes": 3325,
+    "sha256": "c507fe79d41f46f78cf79f2449ada96c3b2c369bf7f448592adcfd45e17b03ea"
+  },
+  {
+    "path": "cognitive_ai/training/train_mega_architecture.py",
+    "bytes": 4544,
+    "sha256": "74998e864cb921fff6781a4a79ca15c75c333821e2bfb2e617f3d133e82e1469"
+  },
+  {
+    "path": "cognitive_ai/training/train_mlb_batter.py",
+    "bytes": 3811,
+    "sha256": "35d2762db01ccab1f454c814beea13e1e6eacb950e56a0403910a9e58dd47444"
+  },
+  {
+    "path": "cognitive_ai/training/train_mlb_pitcher.py",
+    "bytes": 1529,
+    "sha256": "27a2ab55be695e0faedd8f33f66c49e9051e98cf524e99ffa5738c1f4e1b96e8"
+  },
+  {
+    "path": "cognitive_ai/training/train_mocap_batter.py",
+    "bytes": 1885,
+    "sha256": "f47541a80e17cce77693293aa861696c43c09e33755977cddcb9eb5b10f188e0"
+  },
+  {
+    "path": "cognitive_ai/training/train_mocap_pitcher.py",
+    "bytes": 1809,
+    "sha256": "bb2531fb4121d4623375a02c2187a424654cbdcb7e7815e5562e027f499c7656"
+  },
+  {
+    "path": "cognitive_ai/training/train_normalized.py",
+    "bytes": 1449,
+    "sha256": "a6894c724091114c7cecfdc2099ae92d84ff5bb17719909414bdf360b9383480"
+  },
+  {
+    "path": "cognitive_ai/training/train_pitcher.py",
+    "bytes": 1516,
+    "sha256": "21ed5c0370984224f5b714f8f191485e690dd15cd9071ae9504630248c18206c"
+  },
+  {
+    "path": "cognitive_ai/training/train_runner.py",
+    "bytes": 919,
+    "sha256": "51fe424fb261ad0919a2b48fadca3d1e9b1a5a45a0ff0ebfbcb02069c0dc6e83"
+  },
+  {
+    "path": "cognitive_ai/training/train_soft_toss.py",
+    "bytes": 1560,
+    "sha256": "fe10c7065ce5684b236102af04fc215f8ceeb908ac2c113986d93278ec5221e3"
+  },
+  {
+    "path": "cognitive_ai/training/train_teeball.py",
+    "bytes": 1702,
+    "sha256": "aae1e81d666790e7ee1ed9ce5c6873859792c54bed62127c41b1f6e72cbf6eda"
+  },
+  {
+    "path": "data/.DS_Store",
+    "bytes": 12292,
+    "sha256": "8f77a6f1703b54541e0a40e529f23e1f0023e438337136ac259a4611efd6c9a4"
+  },
+  {
+    "path": "data/batter_cam.png",
+    "bytes": 70995,
+    "sha256": "4b90b26054f3ae9c2bc8da97267c7265c951a96f4b531ac87c20298e3b2716be"
+  },
+  {
+    "path": "data/eval_videos/mocap_match.mp4",
+    "bytes": 428584,
+    "sha256": "42ef7a75ba2c2df5640d8e5abaac1531787401c3417e64965f7e879f6734cda0"
+  },
+  {
+    "path": "data/eval_videos/phase_1_1_soft_toss_initial.mp4",
+    "bytes": 696851,
+    "sha256": "60a33bbcd8e34a8a1e99f9ef73ec9cf63d56c846de354e67336697cd7acd1079"
+  },
+  {
+    "path": "data/eval_videos/phase_1_2_soft_toss_normalized.mp4",
+    "bytes": 1420821,
+    "sha256": "a03e609def366bf39d5443940b7377f9c5e80cbd744ad9bb0a1313f9501fd437"
+  },
+  {
+    "path": "data/eval_videos/phase_1_3_soft_toss_advanced.mp4",
+    "bytes": 335798,
+    "sha256": "87a5855c2a34fc5e96bfa56d7b5b2920bcb8922209e38513eabf301530db8413"
+  },
+  {
+    "path": "data/eval_videos/phase_1_4_breaking_ball.mp4",
+    "bytes": 1218806,
+    "sha256": "0bdb0faaf05d9844699ba82ca543ed553667b4eeaac644af654036f2befb4a2f"
+  },
+  {
+    "path": "data/eval_videos/phase_2_1_pitching_50kmh.mp4",
+    "bytes": 828456,
+    "sha256": "cbb8d543adab326723c249966170cf6f686fa9b466428cfe8587566694f0399f"
+  },
+  {
+    "path": "data/eval_videos/phase_2_2_pitching_80kmh.mp4",
+    "bytes": 830152,
+    "sha256": "5d58441cc8ab86337e362865b3955232d31240cacbbb81e63375a0699e413438"
+  },
+  {
+    "path": "data/eval_videos/phase_2_3_pitcher_final.mp4",
+    "bytes": 727908,
+    "sha256": "b863311d677c2bc33d99acee12b50013a84524f039fc6a86f9168b09c9a45c9e"
+  },
+  {
+    "path": "data/eval_videos/phase_3_1_match_duel.mp4",
+    "bytes": 818808,
+    "sha256": "e3e6895b0716dacc95d2a41ebba248561f8cc28c5fc191bc1183616be05eca10"
+  },
+  {
+    "path": "data/eval_videos/phase_4_1_mlb_match.mp4",
+    "bytes": 650742,
+    "sha256": "5f066b65aaaa830b4d9cf89c532dc47e4f5006d0e614452ffd3ef116871bbc0f"
+  },
+  {
+    "path": "data/eval_videos/phase_5_1_stadium_match.mp4",
+    "bytes": 650742,
+    "sha256": "5f066b65aaaa830b4d9cf89c532dc47e4f5006d0e614452ffd3ef116871bbc0f"
+  },
+  {
+    "path": "data/eval_videos/phase_6_2_mocap_match.mp4",
+    "bytes": 154068,
+    "sha256": "3188452d35bb01066f29eb9c22ead50e9093364f151e06ff1463681ecf57e6b5"
+  },
+  {
+    "path": "data/eval_videos/phase_7_1_wheeled_fielder.mp4",
+    "bytes": 1055335,
+    "sha256": "948eb73dbe88a219150dc6c95ca08438c2de255f4900af04d6344f9304003da7"
+  },
+  {
+    "path": "data/eval_videos/phase_8_1_broadcast_match.mp4",
+    "bytes": 1563718,
+    "sha256": "b83a890aa2e8ddcb95f65e174bfcaafa5beaa9520e44e0ca2fe7185964650bf1"
+  },
+  {
+    "path": "data/eval_videos/phase_8_3_base_stealing.mp4",
+    "bytes": 4094458,
+    "sha256": "14663e0fd15bb0b762721c9bf9b4914748315a228bc96f4b945bc60062d93cd4"
+  },
+  {
+    "path": "data/front_cam.png",
+    "bytes": 63709,
+    "sha256": "d735cfc66189105acb621cd86e6cdb6a6023d912af0cf3cd3a92518da1e337d4"
+  },
+  {
+    "path": "data/pitch_log.json",
+    "bytes": 754508,
+    "sha256": "504c9835277659358d3cb6250786e81c0ad0570bbbc1ebfd97b7250c2d278c05"
+  },
+  {
+    "path": "data/pitcher_cam.png",
+    "bytes": 56116,
+    "sha256": "6a97f532417d02a2c0eb08ba7dcc51339502f12ce6b92b20c067766b2c41dec6"
+  },
+  {
+    "path": "data/side_cam.png",
+    "bytes": 92908,
+    "sha256": "92b900a07308a4ecffacb8c630d879d48744c1c43f67af96634853519b1fc412"
+  },
+  {
+    "path": "data/textures/dirt.jpg",
+    "bytes": 1534961,
+    "sha256": "6da6cd00b2114f0150773f1b9c07be65f70e9268e4160f9c004ccd61aed1db96"
+  },
+  {
+    "path": "data/textures/dirt.png",
+    "bytes": 2442341,
+    "sha256": "4107a518c087c41380de06cd7b1f8b0e4c19bbbf9df3de9c92119006b27c7362"
+  },
+  {
+    "path": "data/textures/grass.jpg",
+    "bytes": 1610677,
+    "sha256": "68ab02c5a615687545dad9415386d4bffc0dd68fb065344c2bc364db46bfab7c"
+  },
+  {
+    "path": "data/textures/grass.png",
+    "bytes": 2685216,
+    "sha256": "b7b8dbdd5af97bbe900e8dcae2d58ed5c0016f7121adfa23a4c46242888df450"
+  },
+  {
+    "path": "docs/.nojekyll",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/EXPERIMENT_LOG.md",
+    "bytes": 4255,
+    "sha256": "5b49f8648bf27a6f8c0541cf28c933784f4f50c18aa44c271cfee0053c44fee2"
+  },
+  {
+    "path": "docs/PAPER.md",
+    "bytes": 21764,
+    "sha256": "163a4dbe22048a06f3cd5b581fec45724d4b419626975d63cdb91952477c4927"
+  },
+  {
+    "path": "docs/REPORT.pdf",
+    "bytes": 20948102,
+    "sha256": "00fa3485992625136e511c74bd256936a57f9c82185e5b03f475fc0ec65aa3db"
+  },
+  {
+    "path": "docs/VIDEO_CATALOG.md",
+    "bytes": 2597,
+    "sha256": "9d8d9477ab06e4d5ea51eda3f89c2a4e0d7ad45518195700cff28187646c5bb8"
+  },
+  {
+    "path": "docs/assets/.DS_Store",
+    "bytes": 6148,
+    "sha256": "605a0421933dc0bd6e05e8f4431130f539c60ccd21841b0f6f197fe9b59e7253"
+  },
+  {
+    "path": "docs/assets/cameras/batter_cam.png",
+    "bytes": 70995,
+    "sha256": "4b90b26054f3ae9c2bc8da97267c7265c951a96f4b531ac87c20298e3b2716be"
+  },
+  {
+    "path": "docs/assets/cameras/front_cam.png",
+    "bytes": 63709,
+    "sha256": "d735cfc66189105acb621cd86e6cdb6a6023d912af0cf3cd3a92518da1e337d4"
+  },
+  {
+    "path": "docs/assets/cameras/pitcher_cam.png",
+    "bytes": 56116,
+    "sha256": "6a97f532417d02a2c0eb08ba7dcc51339502f12ce6b92b20c067766b2c41dec6"
+  },
+  {
+    "path": "docs/assets/cameras/side_cam.png",
+    "bytes": 92908,
+    "sha256": "92b900a07308a4ecffacb8c630d879d48744c1c43f67af96634853519b1fc412"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_1_soft_toss_initial_f1.jpg",
+    "bytes": 40044,
+    "sha256": "5cb110516e9c99c192dd8ebe21c192e7ac0db4c5baa3cd2e39cfeb2e6ce6095f"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_1_soft_toss_initial_f2.jpg",
+    "bytes": 5449,
+    "sha256": "290b09acf0efb165bbdb212d5ec80181e28d3ff9eecef0321930e87237d7acf6"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_1_soft_toss_initial_f3.jpg",
+    "bytes": 40020,
+    "sha256": "b6a52926e113c73d5b3d31480864b0b17719eaac0e87e5db7f24a03205e76e7e"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_2_soft_toss_normalized_f1.jpg",
+    "bytes": 39859,
+    "sha256": "1794318e575ee67847ec0a3353cebf5f176e039ff787408a21b04e2f8a64e587"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_2_soft_toss_normalized_f2.jpg",
+    "bytes": 5427,
+    "sha256": "315cb76daa3caa030ef0de4aecbaafa8dd20c114901d940682cceb1a9fa42db7"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_2_soft_toss_normalized_f3.jpg",
+    "bytes": 40088,
+    "sha256": "0063f073ed6bcde0740170a6c90f6acddf5c524fa39efae1fb30dc0715ff6d22"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_3_soft_toss_advanced_f1.jpg",
+    "bytes": 5470,
+    "sha256": "1170daabeaf1877acc79285a1a76f7e4e2f95b7fc8434191decf549e1cdc8a0b"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_3_soft_toss_advanced_f2.jpg",
+    "bytes": 38927,
+    "sha256": "48db057d71a76db7538a8e7e235bd2028eb3b5d9e1a740b16392de5d9ab70fea"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_3_soft_toss_advanced_f3.jpg",
+    "bytes": 5453,
+    "sha256": "bea25d6bdf7a1583fcccce008696fc62a6d94caed241b1472fef72cb45d9691c"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_4_breaking_ball_f1.jpg",
+    "bytes": 40388,
+    "sha256": "b704327a803851c48401117bf50456b4899874cff07bb7f2dfb36f77008f66be"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_4_breaking_ball_f2.jpg",
+    "bytes": 40526,
+    "sha256": "34377e1b7b721d6feca24d7168251d6bf2793f82c460dcdd34341266eb2e306f"
+  },
+  {
+    "path": "docs/assets/frames/phase_1_4_breaking_ball_f3.jpg",
+    "bytes": 40989,
+    "sha256": "60a6aa9cb447ce6054e679451945d508a03fc8f62550aa834b038867b8690a75"
+  },
+  {
+    "path": "docs/assets/frames/phase_2_1_pitching_50kmh_f1.jpg",
+    "bytes": 41546,
+    "sha256": "a92af267e1c9fa45fb7efb3baf3593469f0a4de0c1aae5ad37e0e15c03e08708"
+  },
+  {
+    "path": "docs/assets/frames/phase_2_1_pitching_50kmh_f2.jpg",
+    "bytes": 40627,
+    "sha256": "334f1ee2d82efd9fbe5af2267abd9e3b47b05053488c8fdcc94c6478b5c1865c"
+  },
+  {
+    "path": "docs/assets/frames/phase_2_1_pitching_50kmh_f3.jpg",
+    "bytes": 41974,
+    "sha256": "5c27788e1f8221aabf931764438b81e62855bca9ea6a9f71d7ca2770d12c482f"
+  },
+  {
+    "path": "docs/assets/frames/phase_2_2_pitching_80kmh_f1.jpg",
+    "bytes": 41727,
+    "sha256": "e00589dcf7a262b45c3037187c0f4042698e81ea946cfc2fdce62a70046b3ba9"
+  },
+  {
+    "path": "docs/assets/frames/phase_2_2_pitching_80kmh_f2.jpg",
+    "bytes": 5427,
+    "sha256": "315cb76daa3caa030ef0de4aecbaafa8dd20c114901d940682cceb1a9fa42db7"
+  },
+  {
+    "path": "docs/assets/frames/phase_2_2_pitching_80kmh_f3.jpg",
+    "bytes": 41725,
+    "sha256": "ee9077a6998c1e35de5352027de5b6349024858a7d498958377d81345f5db704"
+  },
+  {
+    "path": "docs/assets/frames/phase_2_3_pitcher_final_f1.jpg",
+    "bytes": 23003,
+    "sha256": "5f427baf28048e84554bc421e89d9aa889ddbee46a4bd681e63687e64c3fcc21"
+  },
+  {
+    "path": "docs/assets/frames/phase_2_3_pitcher_final_f2.jpg",
+    "bytes": 23090,
+    "sha256": "ca65c609bf0b693a842ab073a3223b7f1b7e2de8fd1b4814b5825930174b0e86"
+  },
+  {
+    "path": "docs/assets/frames/phase_2_3_pitcher_final_f3.jpg",
+    "bytes": 40516,
+    "sha256": "a25c2e2ad84ee4a727f88a268611f0a4a54699b7c15e5af5ff44a566e10747df"
+  },
+  {
+    "path": "docs/assets/frames/phase_3_1_match_duel_f1.jpg",
+    "bytes": 46616,
+    "sha256": "8ef676fc501465a1d39266b34a0908f2967a22b91cec55498ec2f7fec32fea98"
+  },
+  {
+    "path": "docs/assets/frames/phase_3_1_match_duel_f2.jpg",
+    "bytes": 45369,
+    "sha256": "af81fbd75e28f39f158292624cbfab4c6303670e0f280c362bc0892ffbe2ebc9"
+  },
+  {
+    "path": "docs/assets/frames/phase_3_1_match_duel_f3.jpg",
+    "bytes": 45427,
+    "sha256": "e00ed0aa2423287c3d202fd8daea2fb6d8c443bea927c2bf4fc8eafff6a4d7ce"
+  },
+  {
+    "path": "docs/assets/frames/phase_4_1_mlb_match_f1.jpg",
+    "bytes": 5427,
+    "sha256": "315cb76daa3caa030ef0de4aecbaafa8dd20c114901d940682cceb1a9fa42db7"
+  },
+  {
+    "path": "docs/assets/frames/phase_4_1_mlb_match_f2.jpg",
+    "bytes": 45641,
+    "sha256": "5ac84a083520aa7e5fe9c8e4ebd5f5c9a1280b167418580359d5717635982e34"
+  },
+  {
+    "path": "docs/assets/frames/phase_4_1_mlb_match_f3.jpg",
+    "bytes": 45569,
+    "sha256": "a0c8141fdb6e4bcfb6bf414d58e8f139cb068205a710f033d129128c788aa2e7"
+  },
+  {
+    "path": "docs/assets/frames/phase_5_1_stadium_match_f1.jpg",
+    "bytes": 5427,
+    "sha256": "315cb76daa3caa030ef0de4aecbaafa8dd20c114901d940682cceb1a9fa42db7"
+  },
+  {
+    "path": "docs/assets/frames/phase_5_1_stadium_match_f2.jpg",
+    "bytes": 39801,
+    "sha256": "2be452abcac5abacdbe5934647cdb57b24e4d3aab8968a3b9843f4e9aac5dc76"
+  },
+  {
+    "path": "docs/assets/frames/phase_5_1_stadium_match_f3.jpg",
+    "bytes": 38567,
+    "sha256": "897b9c9fd0019beb40bbe5c8e36595dadbf117736f45726b9946563d35d6369b"
+  },
+  {
+    "path": "docs/assets/frames/phase_6_1_mocap_preview_f1.jpg",
+    "bytes": 32340,
+    "sha256": "dd2b0103f45ff62d4d99d888c30982d765309eea3c9a90e99a2a0ddf90fbd94e"
+  },
+  {
+    "path": "docs/assets/frames/phase_6_1_mocap_preview_f2.jpg",
+    "bytes": 31408,
+    "sha256": "86ecc3d925b0ebacc143e7e459b55910c1e74826735314fb38ca8eb0062ad2d1"
+  },
+  {
+    "path": "docs/assets/frames/phase_6_1_mocap_preview_f3.jpg",
+    "bytes": 32485,
+    "sha256": "4d4be6cd623681776fd3cfb9c4112fbd699217cda6030802c0b33059a68b18b2"
+  },
+  {
+    "path": "docs/assets/frames/phase_6_2_mocap_match_f1.jpg",
+    "bytes": 34505,
+    "sha256": "e115dcdea5d5e226be813da44b0f5a9c9899a36338982084f13d5b2edfeef1a4"
+  },
+  {
+    "path": "docs/assets/frames/phase_6_2_mocap_match_f2.jpg",
+    "bytes": 32332,
+    "sha256": "2f50edb4c902bc8ab1a418d629fb79ebd99e7e1b1e6fc1fcf459e83654ff3cc9"
+  },
+  {
+    "path": "docs/assets/frames/phase_6_2_mocap_match_f3.jpg",
+    "bytes": 32506,
+    "sha256": "c308af92e0f0a08e0cbc186182fd7d2b1190ae9d6f3b47e56379ae1bd47d2743"
+  },
+  {
+    "path": "docs/assets/frames/phase_7_1_wheeled_fielder_f1.jpg",
+    "bytes": 14289,
+    "sha256": "fff099a2b76c081762ac0f73a232925c64af5813dae9de72dacc4a818bcdea78"
+  },
+  {
+    "path": "docs/assets/frames/phase_7_1_wheeled_fielder_f2.jpg",
+    "bytes": 14218,
+    "sha256": "8f29b8e73a912b3397b3b73c1cc54767ff1df8a92dc64612d72bfc3e9c390a8f"
+  },
+  {
+    "path": "docs/assets/frames/phase_7_1_wheeled_fielder_f3.jpg",
+    "bytes": 14200,
+    "sha256": "2746bd0f38e03f33d02f3fd07569793e1d1d9f9a907bea3802637460d32153e7"
+  },
+  {
+    "path": "docs/assets/frames/phase_8_1_broadcast_match_f1.jpg",
+    "bytes": 43366,
+    "sha256": "8c7c102ea9a22c33f8b90c09a43f83056a801273107891af3ce107e012caf21a"
+  },
+  {
+    "path": "docs/assets/frames/phase_8_1_broadcast_match_f2.jpg",
+    "bytes": 43384,
+    "sha256": "a5485126643a81115948ca5090083107aa3af9dada352170d651c3508ff4c4f1"
+  },
+  {
+    "path": "docs/assets/frames/phase_8_1_broadcast_match_f3.jpg",
+    "bytes": 43636,
+    "sha256": "4b388decd34596df513f7179a8ea13a74e3defc74917c5be104de723eb08a611"
+  },
+  {
+    "path": "docs/assets/frames/phase_8_3_base_stealing_f1.jpg",
+    "bytes": 39620,
+    "sha256": "78ad1280966963b63f255328706bfe6b1542acc7e999b3b749889119bcf864a2"
+  },
+  {
+    "path": "docs/assets/frames/phase_8_3_base_stealing_f2.jpg",
+    "bytes": 37344,
+    "sha256": "76d46c535524a641fc6ea420bb40996b89efa0a3e13c6e4b044270232dfeecd4"
+  },
+  {
+    "path": "docs/assets/frames/phase_8_3_base_stealing_f3.jpg",
+    "bytes": 38656,
+    "sha256": "be54d39bfb98d3dd443a4a2cb41f7646e149a7165ff4f35dee864a0b0d7d23d9"
+  },
+  {
+    "path": "docs/assets/textures/dirt.png",
+    "bytes": 2442341,
+    "sha256": "4107a518c087c41380de06cd7b1f8b0e4c19bbbf9df3de9c92119006b27c7362"
+  },
+  {
+    "path": "docs/assets/textures/grass.png",
+    "bytes": 2685216,
+    "sha256": "b7b8dbdd5af97bbe900e8dcae2d58ed5c0016f7121adfa23a4c46242888df450"
+  },
+  {
+    "path": "docs/index.html",
+    "bytes": 153700,
+    "sha256": "b1f29658ac9d74d3a8bc8d156cac0feeabf0302d8616499d8e6d54a2b7f929be"
+  },
+  {
+    "path": "final_videos/phase_1_1_soft_toss_initial.mp4",
+    "bytes": 668345,
+    "sha256": "58702f04053f0754c407a7715f8bdcc028af5ed953042565ca7d78fa3dbf2412"
+  },
+  {
+    "path": "final_videos/phase_1_2_soft_toss_normalized.mp4",
+    "bytes": 698759,
+    "sha256": "7503d08a842a17cf0e2664910451849fc1092c59880c94a486054b59b45f423d"
+  },
+  {
+    "path": "final_videos/phase_1_3_soft_toss_advanced.mp4",
+    "bytes": 335798,
+    "sha256": "87a5855c2a34fc5e96bfa56d7b5b2920bcb8922209e38513eabf301530db8413"
+  },
+  {
+    "path": "final_videos/phase_1_4_breaking_ball.mp4",
+    "bytes": 1218806,
+    "sha256": "0bdb0faaf05d9844699ba82ca543ed553667b4eeaac644af654036f2befb4a2f"
+  },
+  {
+    "path": "final_videos/phase_2_1_pitching_50kmh.mp4",
+    "bytes": 828456,
+    "sha256": "cbb8d543adab326723c249966170cf6f686fa9b466428cfe8587566694f0399f"
+  },
+  {
+    "path": "final_videos/phase_2_2_pitching_80kmh.mp4",
+    "bytes": 830152,
+    "sha256": "5d58441cc8ab86337e362865b3955232d31240cacbbb81e63375a0699e413438"
+  },
+  {
+    "path": "final_videos/phase_2_3_pitcher_final.mp4",
+    "bytes": 727908,
+    "sha256": "b863311d677c2bc33d99acee12b50013a84524f039fc6a86f9168b09c9a45c9e"
+  },
+  {
+    "path": "final_videos/phase_3_1_match_duel.mp4",
+    "bytes": 818808,
+    "sha256": "e3e6895b0716dacc95d2a41ebba248561f8cc28c5fc191bc1183616be05eca10"
+  },
+  {
+    "path": "final_videos/phase_4_1_mlb_match.mp4",
+    "bytes": 633243,
+    "sha256": "77f1cdde0ac7b95d88cd649fb8e222bd6638b3eeccea0f24a641982801ba3502"
+  },
+  {
+    "path": "final_videos/phase_5_1_stadium_match.mp4",
+    "bytes": 650742,
+    "sha256": "5f066b65aaaa830b4d9cf89c532dc47e4f5006d0e614452ffd3ef116871bbc0f"
+  },
+  {
+    "path": "final_videos/phase_6_1_mocap_preview.mp4",
+    "bytes": 66098,
+    "sha256": "ad3f985c30f397ccb00fe41f53f90b3c2efbd567db3fcfdf62c2f3dfc21e438e"
+  },
+  {
+    "path": "final_videos/phase_6_2_mocap_match.mp4",
+    "bytes": 428584,
+    "sha256": "42ef7a75ba2c2df5640d8e5abaac1531787401c3417e64965f7e879f6734cda0"
+  },
+  {
+    "path": "final_videos/phase_7_1_wheeled_fielder.mp4",
+    "bytes": 1055335,
+    "sha256": "948eb73dbe88a219150dc6c95ca08438c2de255f4900af04d6344f9304003da7"
+  },
+  {
+    "path": "final_videos/phase_8_1_broadcast_match.mp4",
+    "bytes": 1618776,
+    "sha256": "d9b5f1e93a15bdbce98b7c904720ba84427a4026db801c49e3e9ffa761f93401"
+  },
+  {
+    "path": "final_videos/phase_8_3_base_stealing.mp4",
+    "bytes": 4094458,
+    "sha256": "14663e0fd15bb0b762721c9bf9b4914748315a228bc96f4b945bc60062d93cd4"
+  },
+  {
+    "path": "requirements.txt",
+    "bytes": 133,
+    "sha256": "99dc27677fad0c00835919898a8a9ed4c6c345df9d63f560fcdb47f74e92a7f2"
+  },
+  {
+    "path": "run_dashboard.sh",
+    "bytes": 464,
+    "sha256": "8a582c6ac1d3a091ee4294de9bd574a484bd8b2b2634ce3c20e2962cc47745dc"
+  },
+  {
+    "path": "run_demo.sh",
+    "bytes": 683,
+    "sha256": "2afafc90df88ec128861a1ef86ea670d7144e2a7ecfafd4a3d741f70f22355e4"
+  },
+  {
+    "path": "runs/.DS_Store",
+    "bytes": 6148,
+    "sha256": "d27c03e164197364a796cf4ea8e9be4379d8c19c4ce1c4f3d5bc63477496a97d"
+  },
+  {
+    "path": "runs/sim_9_inning.log",
+    "bytes": 83251,
+    "sha256": "d06cd6daf240ed0f3927278e584f08e6565cc010ee3bc9c91e67b952c1e096ab"
+  },
+  {
+    "path": "runs/soft_toss_eval/evaluations.npz",
+    "bytes": 10610,
+    "sha256": "f6c58bd5e340c735a2083a4f31d5ed4994a207ba3192d79f9392be0922986ea5"
+  },
+  {
+    "path": "runs/soft_toss_tensorboard/PPO_1/events.out.tfevents.1788184767.man-ui-MacBookPro.local.66497.0",
+    "bytes": 46297,
+    "sha256": "ff5bae4409ba3bdece7a45cd13217441d9e4aa186d5fe4112c8b701a723b1290"
+  },
+  {
+    "path": "runs/soft_toss_tensorboard/PPO_2/events.out.tfevents.1788184970.man-ui-MacBookPro.local.66571.0",
+    "bytes": 46297,
+    "sha256": "4df8a85cd9bfc22437559f827259f5de391a4d2e3270197613839f6b42873d3e"
+  },
+  {
+    "path": "runs/soft_toss_tensorboard/PPO_3/events.out.tfevents.1788185710.man-ui-MacBookPro.local.66771.0",
+    "bytes": 46297,
+    "sha256": "85c65aeb708ec06c480c83a5eeb0100cbd82684de3320a937cd8352b02b21f8f"
+  },
+  {
+    "path": "runs/soft_toss_tensorboard/PPO_4/events.out.tfevents.1788185800.man-ui-MacBookPro.local.66810.0",
+    "bytes": 62207,
+    "sha256": "3ad418bed18b8d1d7cd0fa7b19319f1c0139abc656992ca431884b9dc4c70629"
+  },
+  {
+    "path": "runs/soft_toss_tensorboard/PPO_5/events.out.tfevents.1788186543.man-ui-MacBookPro.local.67043.0",
+    "bytes": 46297,
+    "sha256": "7e72a0a639ae6488c42a9de8446250294dd32e1806748babbfe85714328c20e2"
+  },
+  {
+    "path": "runs/teeball_eval/evaluations.npz",
+    "bytes": 2970,
+    "sha256": "77eca5a0327c5bc222339435275d99ef21febfaa2832acab1cc2326d6032b096"
+  },
+  {
+    "path": "runs/teeball_tensorboard/PPO_1/events.out.tfevents.1788182355.man-ui-MacBookPro.local.65853.0",
+    "bytes": 38342,
+    "sha256": "2b1dc16c7c185e0f8e65eb241cc341a1e562bfe8af8b746a2952ddf8cf403e5d"
+  },
+  {
+    "path": "runs/teeball_tensorboard/PPO_2/events.out.tfevents.1788184119.man-ui-MacBookPro.local.66220.0",
+    "bytes": 38342,
+    "sha256": "324761e2363f58afffa472a39584c9bf08a6675a5fbd858013f717b21adb8316"
+  },
+  {
+    "path": "scripts/.DS_Store",
+    "bytes": 6148,
+    "sha256": "2e67b59aaedaece90b9be7d2adc90ddf8911b6494c1a9fe459267d4811a1b0f9"
+  },
+  {
+    "path": "scripts/patches/add_ball_to_catcher.py",
+    "bytes": 415,
+    "sha256": "6d7fab8af1ab6084f045b7f72ad83d485c948170b22d11c6d50a61e267e1e583"
+  },
+  {
+    "path": "scripts/patches/add_stadium.py",
+    "bytes": 538,
+    "sha256": "2f82f8e2d045b5e4eb331e01f0711485c9679121439a3171a6186a3279416a14"
+  },
+  {
+    "path": "scripts/patches/check_dof.py",
+    "bytes": 213,
+    "sha256": "a63ffc6bd60f439c0c58845756da79d1d64c25f85c76dfbf845719fbb1cb2f7f"
+  },
+  {
+    "path": "scripts/patches/check_obs.py",
+    "bytes": 455,
+    "sha256": "e4cc740c20f658e9106e7b20760dd303f91aa7d28e98c85465b91cf2d9e2c5f3"
+  },
+  {
+    "path": "scripts/patches/convert_videos_h264.py",
+    "bytes": 1152,
+    "sha256": "0f57c91f6021ab84bac399c4b1f90165faf9d33823421b25d3c969717bae392a"
+  },
+  {
+    "path": "scripts/patches/debug_action.py",
+    "bytes": 144,
+    "sha256": "b72afeeeb51b9670c89e0169c157dab1c0530925772a5d27c9b5e93fd0a45cb9"
+  },
+  {
+    "path": "scripts/patches/debug_match.py",
+    "bytes": 1173,
+    "sha256": "c6dbf4fd838332a3c133414eec24088d7928906e4a8ff111e4063570bf3e17ce"
+  },
+  {
+    "path": "scripts/patches/fix_actuators.py",
+    "bytes": 802,
+    "sha256": "e942613199a343d45053867380e47769a2a80c86ba7b6385e9987a8d153c22cf"
+  },
+  {
+    "path": "scripts/patches/fix_ball.py",
+    "bytes": 324,
+    "sha256": "707d3eee5ab464afaeaf4a178964170dcd98e4e68d2986b7a56edfeaaf8228f7"
+  },
+  {
+    "path": "scripts/patches/fix_body.py",
+    "bytes": 358,
+    "sha256": "6215bc50daec238cc0d464512f9694fabd437a527796bf0e1859b4ce985f2dbf"
+  },
+  {
+    "path": "scripts/patches/fix_camera.py",
+    "bytes": 1368,
+    "sha256": "ca27673c7eb3d9e93980ea2e8ffbaae1c7c5808dcd086e70c7ea8d9e94b04afa"
+  },
+  {
+    "path": "scripts/patches/fix_ground.py",
+    "bytes": 1052,
+    "sha256": "eafeada8df606a7ac82bccfb8b154190fef174bd48a44a9c68ec84faefba4dd8"
+  },
+  {
+    "path": "scripts/patches/fix_include.py",
+    "bytes": 394,
+    "sha256": "4ba0d529a53127f6f625df674d67a6884a87c2dbafac973aa8ba10f03e489f2e"
+  },
+  {
+    "path": "scripts/patches/fix_mat.py",
+    "bytes": 342,
+    "sha256": "4c29f7615a59f7c001774e54acfa696e6af1fb91dd0d0944ccf6b141ae043248"
+  },
+  {
+    "path": "scripts/patches/fix_mocap_bug.py",
+    "bytes": 185,
+    "sha256": "7b1b7770327c366d0db08a1b641f8e375f5186338df25545084b0e69d2320feb"
+  },
+  {
+    "path": "scripts/patches/fix_qvel.py",
+    "bytes": 2280,
+    "sha256": "9ec9566687bf1a7d6cf740ad88a3dc16c3f602dfa140a26446613658970ef691"
+  },
+  {
+    "path": "scripts/patches/inject_mocap_batter.py",
+    "bytes": 6216,
+    "sha256": "e958a944ae0597a10f1363390d7b83caedf36f83538a515595bab3b36050b992"
+  },
+  {
+    "path": "scripts/patches/inject_mocap_pitcher.py",
+    "bytes": 2703,
+    "sha256": "4305d5b40bb22207d50cbf43b546ad54eadb074b1dfb1666eb825cd6898795cf"
+  },
+  {
+    "path": "scripts/patches/make_catcher_runner_xml.py",
+    "bytes": 1460,
+    "sha256": "00ff0f3840dd2e1e95824dfcecbc2bdce522b042dd48eeb2e94a9bcbc3d2affb"
+  },
+  {
+    "path": "scripts/patches/make_fielder_xml.py",
+    "bytes": 2746,
+    "sha256": "45f930f4cfcef001a0b5db6f4d8cfc2c0bd0c5f204a3ab22dc7c89c7966993fc"
+  },
+  {
+    "path": "scripts/patches/mocap_preview.py",
+    "bytes": 3846,
+    "sha256": "80f7018f496b9ecd0b94eeac8c45b78389db948104eb16972f1f0f184953b9f2"
+  },
+  {
+    "path": "scripts/patches/patch2.py",
+    "bytes": 254,
+    "sha256": "19a5f3e154e8d179b87cd6bcf8f6d1797b2d9a3e55f3f59f2a03ef7f189567b8"
+  },
+  {
+    "path": "scripts/patches/patch_actuators.py",
+    "bytes": 805,
+    "sha256": "514260271e70e91ee5954064a83437db88f276fee5b9463df7c399dfd8151465"
+  },
+  {
+    "path": "scripts/patches/patch_env_joints.py",
+    "bytes": 2006,
+    "sha256": "ee433f7ef402b85360a950b6140600f561f1e8c90dab603d76501ff2a346dd8c"
+  },
+  {
+    "path": "scripts/patches/patch_eval.py",
+    "bytes": 1012,
+    "sha256": "5dfd6de59ff99e80c4e52d3107625aa243284dacee00d235c6f4bad61e647cc8"
+  },
+  {
+    "path": "scripts/patches/patch_info.py",
+    "bytes": 429,
+    "sha256": "74ff3f959ad01f5b1daa5f697cbbd9dc3b9d88b4c6991886f50e5fbf9dbefc56"
+  },
+  {
+    "path": "scripts/patches/patch_left_arm.py",
+    "bytes": 630,
+    "sha256": "9823e9e1e55a89b50bfae0f8fec48eba3b973f6da2c2dabde07396b3977581c9"
+  },
+  {
+    "path": "scripts/patches/patch_physics.py",
+    "bytes": 248,
+    "sha256": "8a2e011d5006753f6d108cfe22620caf8b3e318657d56e4e7f27e0e3444b3c39"
+  },
+  {
+    "path": "scripts/patches/patch_physics_full.py",
+    "bytes": 2326,
+    "sha256": "36849b3942f830dd49685d707ce52823f7ea51cfda762b66a95e760210d7cbb6"
+  },
+  {
+    "path": "scripts/patches/patch_pitcher_control.py",
+    "bytes": 275,
+    "sha256": "3fdd7a5289cb69efe3ad1d33ba38464f99479d6fc8b6f8f82afe8766ef053100"
+  },
+  {
+    "path": "scripts/patches/patch_pitcher_env.py",
+    "bytes": 894,
+    "sha256": "a50d6d3e120bd8d1a3f8ca51fc8cb4a18b1e9f4e9999821ead13e1b82071fbcd"
+  },
+  {
+    "path": "scripts/patches/patch_strike_zone.py",
+    "bytes": 1898,
+    "sha256": "e6fbd41a5a475fc361b9d36a06977f3fee1017e6b348cb16b7d7482782110659"
+  },
+  {
+    "path": "scripts/patches/print_act.py",
+    "bytes": 846,
+    "sha256": "dcf7535ffd50ced88c44646cf9513896fa040c0980eea5067ef0c20fb795e974"
+  },
+  {
+    "path": "scripts/patches/remove_ball.py",
+    "bytes": 277,
+    "sha256": "7f2db932c71f39081f9c5da9a5f7a9ee40e8f1e61042a125900fb8e4ff2108c6"
+  },
+  {
+    "path": "scripts/patches/rename_videos.py",
+    "bytes": 1485,
+    "sha256": "85042985c291a9b464cac096bce8fa4c060c5ba7ab7fcca55be53e16de9cbc3c"
+  },
+  {
+    "path": "scripts/patches/update_catalog.py",
+    "bytes": 968,
+    "sha256": "63a46d40dc9b559af2122a984836387298edfe474fee6ec3d72349629a67acc6"
+  },
+  {
+    "path": "scripts/patches/update_eval_videos.py",
+    "bytes": 1064,
+    "sha256": "bf771d24cd147644bc71e7acaac1a80247f2b7aab41ef06e37c9a99d49149288"
+  },
+  {
+    "path": "scripts/patches/update_mds.py",
+    "bytes": 711,
+    "sha256": "a86127953cc7ed2b512236b5ca66aac28c083e6dfedab874953dedeb24bfc769"
+  },
+  {
+    "path": "scripts/patches/update_mds_8_1.py",
+    "bytes": 1451,
+    "sha256": "75e7082b21c48a1caddbf7fc28333d071cb93628e2d6fdcb665cdc597cdb17c3"
+  },
+  {
+    "path": "scripts/patches/update_mds_8_2.py",
+    "bytes": 1125,
+    "sha256": "0a2507fbd642e293118824bb036f705ab605b9c637c72d36cf3aa4fdb4fdedd9"
+  },
+  {
+    "path": "scripts/patches/update_mds_fielder.py",
+    "bytes": 1684,
+    "sha256": "e26e06fc740d04aaa1d115f087b31c95576f8ee4d30095f8b5ec50ed7fd36469"
+  },
+  {
+    "path": "scripts/patches/update_mds_phase9.py",
+    "bytes": 556,
+    "sha256": "6b2b6cfda632cabc091ab33246ba780fcbd3ae288ef11d8be5139204861c656a"
+  },
+  {
+    "path": "scripts/patches/update_phase9.py",
+    "bytes": 2507,
+    "sha256": "0a5b0db94f2f5334583b19e7a60a42f8f151f70777de93e82c83bf6ac46b0017"
+  },
+  {
+    "path": "scripts/patches/update_walkthrough.py",
+    "bytes": 1122,
+    "sha256": "a833a931948e718bbf6c6748e0d5338a490c2ddcc66b5ce27e6fa33d9dc0d735"
+  },
+  {
+    "path": "scripts/test_pitcher_action.py",
+    "bytes": 922,
+    "sha256": "c492b9c75a4f42b5fe90e05ddac8f3a9ba46ddd4ee8376fe112538015fe8625a"
+  },
+  {
+    "path": "shared_assets/.DS_Store",
+    "bytes": 8196,
+    "sha256": "c581555520221ea586747467c3c88056ed1df80a1dd4566a998547e56eceebd8"
+  },
+  {
+    "path": "shared_assets/h1_baseball.xml",
+    "bytes": 15995,
+    "sha256": "dbe97cb1638ff3384e53c82a1bb8c820060b6884cc05a53bc8091cfdbfc37008"
+  },
+  {
+    "path": "shared_assets/h1_baseball_match.xml",
+    "bytes": 15116,
+    "sha256": "7267f7ed66d77c93b1e2825c3953ced1693520cb9db9a2bd723165015b3fcfba"
+  },
+  {
+    "path": "shared_assets/h1_catcher.xml",
+    "bytes": 11185,
+    "sha256": "ae5b31f8305de9a9d601dfe8efa5b950c9e416537fc0d09df88852220bf948d4"
+  },
+  {
+    "path": "shared_assets/h1_fielder.xml",
+    "bytes": 11156,
+    "sha256": "5b36fb95634e4c5958ab529c93892642714a4ede23d48e0cd54197f40b385ba2"
+  },
+  {
+    "path": "shared_assets/h1_pitcher.xml",
+    "bytes": 15730,
+    "sha256": "1b49eabe291c344fa69031c3cfd2d08457766e469307b2a68a2c97f6d0f22c54"
+  },
+  {
+    "path": "shared_assets/h1_runner.xml",
+    "bytes": 11178,
+    "sha256": "20a7070c1f4317974e7312efb0076d7b40f3ed54c4b9e7d9e10d50c4a5e209dd"
+  },
+  {
+    "path": "shared_assets/humanoid_stadium.xml",
+    "bytes": 9800,
+    "sha256": "e8c8131eeb58464a8116ae313bcb91b53651fbc14bd3697a429685de3ea42969"
+  },
+  {
+    "path": "shared_assets/stadium_3d.xml",
+    "bytes": 17935,
+    "sha256": "a46ed2bddaa70aa101a7cc2d42f0487771073db52b634484a3333b9a12b96914"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/left_ankle_link.stl",
+    "bytes": 216684,
+    "sha256": "f623223b59d0f8cd86a799f409f4e8680da3e48d9b60e9f4bf9dad5c5dc8ac25"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/left_elbow_link.stl",
+    "bytes": 258684,
+    "sha256": "5ccf9bc83a751c1965b692e75534e57ee3c8a0916cbcff2ccccd8fe2b9d818d7"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/left_hip_pitch_link.stl",
+    "bytes": 452384,
+    "sha256": "aa790c31ffc100cd182f2bf4480e7bfda675edc58ed8f361b6553a4975c9de3b"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/left_hip_roll_link.stl",
+    "bytes": 769284,
+    "sha256": "8ed880cf1171e048cfe50489fe2546c32790ac0c24a2b3b4c560495401013552"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/left_hip_yaw_link.stl",
+    "bytes": 885884,
+    "sha256": "103a854e684b84e1baba7d073822079069c64d0fa7b1592f29d38bd29f545bfb"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/left_knee_link.stl",
+    "bytes": 660384,
+    "sha256": "efda8a6c54406c788102c0d6e59ea95e24114607bc2da9a2bf7f287ef7e48109"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/left_shoulder_pitch_link.stl",
+    "bytes": 787484,
+    "sha256": "42e1db49464ca0f44f933114ee426e7f6d6310d20cf104bfa38b5ed4794cfab7"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/left_shoulder_roll_link.stl",
+    "bytes": 903384,
+    "sha256": "8d3bcf767d72a9a5d7dae539eae79dc4132f0159b8803a6f6f2f9ad4b7e94d19"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/left_shoulder_yaw_link.stl",
+    "bytes": 644184,
+    "sha256": "e22a5b53f8f307e6c5d6c17f9ceae4852c6468547a951cb39dfdec9ee414b515"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/logo_link.stl",
+    "bytes": 145484,
+    "sha256": "ef9635c847ca7cd61aeaed86ad599935b648fb6f8688867c0448917b1811511b"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/pelvis.stl",
+    "bytes": 672884,
+    "sha256": "dc2cbbeb07d3b63bce9fedeb8cf5252609dca1e89380734d22d5b3c8ded2f15c"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/right_ankle_link.stl",
+    "bytes": 216284,
+    "sha256": "a72e7b10d3961b5c5bb7b0ca09f20cbc203619f5ded33ca030517c06298d2fd9"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/right_elbow_link.stl",
+    "bytes": 258584,
+    "sha256": "bc1b2aa33cffda279b3e6a40b5b932b86de9cce6c41f0c0d860b442e81edcdc2"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/right_hip_pitch_link.stl",
+    "bytes": 452384,
+    "sha256": "3c0300dd96432f218857886007e9d4e8be038cd8b85e04e84a59df4de7f90476"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/right_hip_roll_link.stl",
+    "bytes": 768484,
+    "sha256": "3e95b01b0a215e1d134545d4073cf7a72ab38ca33e35c606c03f1706d63588c6"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/right_hip_yaw_link.stl",
+    "bytes": 884484,
+    "sha256": "10badbb0ac78e22fc220f421b1c919cfcf59406b412d78313e4b8b06cbc51e47"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/right_knee_link.stl",
+    "bytes": 662184,
+    "sha256": "6183abbaef2afc775c220853e403b8479022a99954dbeef829b39d71916ddeda"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/right_shoulder_pitch_link.stl",
+    "bytes": 788484,
+    "sha256": "850ffa7321993bfadcdb8bab1d422239f6a20abe27daa5ef99622f55d4da3217"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/right_shoulder_roll_link.stl",
+    "bytes": 908284,
+    "sha256": "b9e793e351e09027d27427c06df2c1cb6b37c0205d0f68686b0d73916c6821de"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/right_shoulder_yaw_link.stl",
+    "bytes": 646884,
+    "sha256": "0c9e4bec895f24c07fb2c4d132fc5e3cc7146155547267e9c270789af6567781"
+  },
+  {
+    "path": "shared_assets/unitree_h1_assets/torso_link.stl",
+    "bytes": 2339384,
+    "sha256": "3ab785cbfbd851b0e9c59a46871aabc4718f3f8e726e21a2d14360d217ec7ba8"
+  }
+]

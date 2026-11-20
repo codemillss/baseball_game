@@ -1,0 +1,874 @@
+{
+  "python": "3.11.5 (main, Sep 11 2023, 08:31:25) [Clang 14.0.6 ]",
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "execution_bound": "4 game-state cases, 1 umpire case, finite local checkpoint ZIP inventory",
+  "rule_cases": [
+    {
+      "case": "ordinary_foul",
+      "before_strikes_balls": [
+        0,
+        0
+      ],
+      "expected": [
+        1,
+        0
+      ],
+      "actual": [
+        1,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "case": "ordinary_foul",
+      "before_strikes_balls": [
+        1,
+        2
+      ],
+      "expected": [
+        2,
+        2
+      ],
+      "actual": [
+        1,
+        0
+      ],
+      "passed": false
+    },
+    {
+      "case": "ordinary_foul",
+      "before_strikes_balls": [
+        2,
+        3
+      ],
+      "expected": [
+        2,
+        3
+      ],
+      "actual": [
+        1,
+        0
+      ],
+      "passed": false
+    },
+    {
+      "case": "54_outs_by_strikeouts",
+      "expected_inning": 10,
+      "actual_inning": 10,
+      "actual_is_top": true,
+      "passed": true
+    },
+    {
+      "case": "sampled_segment_crosses_zone",
+      "samples": [
+        [
+          0.0,
+          0.3,
+          0.8
+        ],
+        [
+          0.0,
+          -0.3,
+          0.8
+        ]
+      ],
+      "expected_if_continuous_segment_used": "STRIKE",
+      "actual": "BALL",
+      "note": "Synthetic 0.6 m gap, not a claim that a measured project pitch followed it."
+    }
+  ],
+  "checkpoints": [
+    {
+      "path": "checkpoints/breaking_ball_best/best_model.zip",
+      "sha256": "fc9d55083bc32b7a798882ded0d1388a36442ab18c5ab049861efc7113b756ab",
+      "num_timesteps": 90000,
+      "total_timesteps": 100000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            9
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            3
+          ],
+          "low": "[-1. -1. -1.]",
+          "high": "[1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/breaking_ball_final_model.zip",
+      "sha256": "eb60e73ee4d6255faa46832c4a81e37ef38f637c4ec6f8ebb17a2e7476d10885",
+      "num_timesteps": 100352,
+      "total_timesteps": 100000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            9
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            3
+          ],
+          "low": "[-1. -1. -1.]",
+          "high": "[1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/catcher/best_model.zip",
+      "sha256": "436f5f13422d18e3a33d4c81ba210b0e8d5c2dc6ed010f7e539d22434be7bf4e",
+      "num_timesteps": 106496,
+      "total_timesteps": 100000,
+      "n_envs": 16,
+      "seed": null,
+      "n_steps": 512,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            30
+          ],
+          "low": "[-inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf\n -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf\n -inf -inf]",
+          "high": "[inf inf inf inf inf inf inf inf inf inf inf inf inf inf inf inf inf inf\n inf inf inf inf inf inf inf inf inf inf inf inf]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            12
+          ],
+          "low": "[-1. -1. -1. -1. -1. -1. -1. -1. -1. -1. -1. -1.]",
+          "high": "[1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/fielder/best_model.zip",
+      "sha256": "aea34aa8dccf91d48d4f408540463c443c9e7a1793b8520daac806c2a018ffb5",
+      "num_timesteps": 301056,
+      "total_timesteps": 300000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 2048,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            30
+          ],
+          "low": "[-inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf\n -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf -inf\n -inf -inf]",
+          "high": "[inf inf inf inf inf inf inf inf inf inf inf inf inf inf inf inf inf inf\n inf inf inf inf inf inf inf inf inf inf inf inf]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            12
+          ],
+          "low": "[-1. -1. -1. -1. -1. -1. -1. -1. -1. -1. -1. -1.]",
+          "high": "[1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/match_batter_best/best_model.zip",
+      "sha256": "66a00464a6c6446179b990b0bb35e2390f28e20c142924e0cb881c1d7af44ff4",
+      "num_timesteps": 60416,
+      "total_timesteps": 60000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            9
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            3
+          ],
+          "low": "[-1. -1. -1.]",
+          "high": "[1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/mega_batter/best_model.zip",
+      "sha256": "abbed97e482917833bb7c3d12463a27f098608d1c63ce793cd290f7c86bbd9c3",
+      "num_timesteps": 1920000,
+      "total_timesteps": 2000000,
+      "n_envs": 16,
+      "seed": null,
+      "n_steps": 2048,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            48
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            3
+          ],
+          "low": "[-1. -1. -1.]",
+          "high": "[1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/mega_pitcher/best_model.zip",
+      "sha256": "e61fde1ef3cb8ebaa03b8afeefb80fc657c80ab1fb56e8efe57ba6550fdee552",
+      "num_timesteps": 1600000,
+      "total_timesteps": 2000000,
+      "n_envs": 16,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            16
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            4
+          ],
+          "low": "[-1. -1. -1. -1.]",
+          "high": "[1. 1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/mlb_batter_best/best_model.zip",
+      "sha256": "324d7ab0b77de02a4ee1f38ffb43a7233c2983879adca9b586c4dda658a5f339",
+      "num_timesteps": 150528,
+      "total_timesteps": 150000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            12
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            3
+          ],
+          "low": "[-1. -1. -1.]",
+          "high": "[1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/mlb_pitcher_best/best_model.zip",
+      "sha256": "ea517ce920d2c6d5820e8543a329eb9bc77ee6caed1c86adacbb6ec6e1e75f35",
+      "num_timesteps": 188000,
+      "total_timesteps": 200000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            16
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            4
+          ],
+          "low": "[-1. -1. -1. -1.]",
+          "high": "[1. 1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/mocap_batter_best/best_model.zip",
+      "sha256": "85c7c2d5289cdab26063144ac26a0f2bb07b9683af57051d1245d0e5a76f5681",
+      "num_timesteps": 36000,
+      "total_timesteps": 60000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            12
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            3
+          ],
+          "low": "[-1. -1. -1.]",
+          "high": "[1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/mocap_pitcher_best/best_model.zip",
+      "sha256": "40c39450b8dbd1de9b0310ec29dd0e81679fecd32a5277baae51a5a5358082ee",
+      "num_timesteps": 56000,
+      "total_timesteps": 60000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            16
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            4
+          ],
+          "low": "[-1. -1. -1. -1.]",
+          "high": "[1. 1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/pitcher_best/best_model.zip",
+      "sha256": "28a877ca50b21d7c0a125ffbdffb5f4b8d30d703e6f7612d8f4782b051070cc1",
+      "num_timesteps": 66000,
+      "total_timesteps": 80000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            13
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            4
+          ],
+          "low": "[-1. -1. -1. -1.]",
+          "high": "[1. 1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/pitcher_final_model.zip",
+      "sha256": "488c698f5ce55a45e409f7fc5660260ca41c7419ea61056915edcfdc1a13d34e",
+      "num_timesteps": 200704,
+      "total_timesteps": 200000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            16
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100. -100.\n -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100. 100.\n 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            4
+          ],
+          "low": "[-1. -1. -1. -1.]",
+          "high": "[1. 1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/pitching_50kmh_best/best_model.zip",
+      "sha256": "7fb78d76804753c843922a71cac887dea8b3851fd100a1128ad70589274974a7",
+      "num_timesteps": 50000,
+      "total_timesteps": 60000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            8
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            2
+          ],
+          "low": "[-1. -1.]",
+          "high": "[1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/pitching_50kmh_final_model.zip",
+      "sha256": "7d96066601b23af7551581cf528af4204bd4f35389954efe37da9bab6e11d218",
+      "num_timesteps": 60416,
+      "total_timesteps": 60000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            8
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            2
+          ],
+          "low": "[-1. -1.]",
+          "high": "[1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/pitching_80kmh_best/best_model.zip",
+      "sha256": "5accf0e52bb5d922669bb2712211769bb8705a36a8aa8e4f03b2864b4796b753",
+      "num_timesteps": 84000,
+      "total_timesteps": 100000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            8
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            2
+          ],
+          "low": "[-1. -1.]",
+          "high": "[1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/pitching_80kmh_deep_best/best_model.zip",
+      "sha256": "97275c20645c2faf8ab940780db5b64ff1f15fb2c9fffe4a14efb93b8f4ea080",
+      "num_timesteps": 130000,
+      "total_timesteps": 150000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 2048,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            8
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            2
+          ],
+          "low": "[-1. -1.]",
+          "high": "[1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/pitching_80kmh_deep_final.zip",
+      "sha256": "b236f0040cafc9286a983fd703ee8dc32765c01b065539058edd942db2017d3e",
+      "num_timesteps": 151552,
+      "total_timesteps": 150000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 2048,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            8
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            2
+          ],
+          "low": "[-1. -1.]",
+          "high": "[1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/pitching_80kmh_final_model.zip",
+      "sha256": "de6cc71367eda40214c435d7a2d55bced5e049ddd7ffaa78b9600e3b12fa34de",
+      "num_timesteps": 100352,
+      "total_timesteps": 100000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            8
+          ],
+          "low": "[-100. -100. -100. -100. -100. -100. -100. -100.]",
+          "high": "[100. 100. 100. 100. 100. 100. 100. 100.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            2
+          ],
+          "low": "[-1. -1.]",
+          "high": "[1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/runner/best_model.zip",
+      "sha256": "a20f6c6f7e86c2080d31a725f06ac57afbea10c4cbcd9027207e1eba7fec933e",
+      "num_timesteps": 106496,
+      "total_timesteps": 100000,
+      "n_envs": 16,
+      "seed": null,
+      "n_steps": 512,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            8
+          ],
+          "low": "[-inf -inf -inf -inf -inf -inf -inf -inf]",
+          "high": "[inf inf inf inf inf inf inf inf]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            3
+          ],
+          "low": "[-1. -1. -1.]",
+          "high": "[1. 1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/soft_toss_best_model/best_model.zip",
+      "sha256": "ac08207143048c39250da4eb137e78cc7877049e99de91bd9b21816bffd6a4cf",
+      "num_timesteps": 70000,
+      "total_timesteps": 80000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            8
+          ],
+          "low": "[-50. -50. -50. -50. -50. -50. -50. -50.]",
+          "high": "[50. 50. 50. 50. 50. 50. 50. 50.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            2
+          ],
+          "low": "[-1. -1.]",
+          "high": "[1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/soft_toss_final_model.zip",
+      "sha256": "ee16b914ad9c9385840e3325e53a606aa5464aac57524c2d69d62c820100a6cb",
+      "num_timesteps": 80896,
+      "total_timesteps": 80000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 1024,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            8
+          ],
+          "low": "[-50. -50. -50. -50. -50. -50. -50. -50.]",
+          "high": "[50. 50. 50. 50. 50. 50. 50. 50.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            2
+          ],
+          "low": "[-1. -1.]",
+          "high": "[1. 1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/teeball_best_model/best_model.zip",
+      "sha256": "2661499a7cdeb0b951141f56e804591ce6576a6d87810fac9d1a764ae7f49f29",
+      "num_timesteps": 50000,
+      "total_timesteps": 50000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 512,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            3
+          ],
+          "low": "[-10. -10. -10.]",
+          "high": "[10. 10. 10.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            1
+          ],
+          "low": "[-1.]",
+          "high": "[1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    },
+    {
+      "path": "checkpoints/teeball_final_model.zip",
+      "sha256": "7f10a38b0d2800b43b6259673d706505f3b0361e4917a352bee3a83ccb91db2f",
+      "num_timesteps": 50176,
+      "total_timesteps": 50000,
+      "n_envs": 1,
+      "seed": null,
+      "n_steps": 512,
+      "policy_kwargs": {},
+      "spaces": {
+        "observation_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            3
+          ],
+          "low": "[-10. -10. -10.]",
+          "high": "[10. 10. 10.]"
+        },
+        "action_space": {
+          ":type:": "<class 'gymnasium.spaces.box.Box'>",
+          "_shape": [
+            1
+          ],
+          "low": "[-1.]",
+          "high": "[1.]"
+        },
+        "policy_class": {
+          ":type:": "<class 'abc.ABCMeta'>",
+          "__module__": "stable_baselines3.common.policies"
+        }
+      },
+      "sb3_version": "2.9.0"
+    }
+  ]
+}

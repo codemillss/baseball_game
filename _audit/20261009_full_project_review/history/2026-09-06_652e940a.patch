@@ -1,0 +1,188 @@
+commit 652e940abb72cccf7c6ef4cc3fb28dc06ecab219
+Author:     codemills <ggzgcode10000@gmail.com>
+AuthorDate: Sun Sep 6 03:40:52 2026 +0900
+Commit:     codemills <ggzgcode10000@gmail.com>
+CommitDate: Sun Sep 6 03:40:52 2026 +0900
+
+    chore: Organize root directory, archive patch scripts, and add REPORT.pdf
+
+diff --git a/add_ball_to_catcher.py b/scripts/patches/add_ball_to_catcher.py
+similarity index 100%
+rename from add_ball_to_catcher.py
+rename to scripts/patches/add_ball_to_catcher.py
+diff --git a/add_stadium.py b/scripts/patches/add_stadium.py
+similarity index 100%
+rename from add_stadium.py
+rename to scripts/patches/add_stadium.py
+diff --git a/check_dof.py b/scripts/patches/check_dof.py
+similarity index 100%
+rename from check_dof.py
+rename to scripts/patches/check_dof.py
+diff --git a/check_obs.py b/scripts/patches/check_obs.py
+similarity index 100%
+rename from check_obs.py
+rename to scripts/patches/check_obs.py
+diff --git a/convert_videos_h264.py b/scripts/patches/convert_videos_h264.py
+similarity index 100%
+rename from convert_videos_h264.py
+rename to scripts/patches/convert_videos_h264.py
+diff --git a/debug_action.py b/scripts/patches/debug_action.py
+similarity index 100%
+rename from debug_action.py
+rename to scripts/patches/debug_action.py
+diff --git a/debug_match.py b/scripts/patches/debug_match.py
+similarity index 100%
+rename from debug_match.py
+rename to scripts/patches/debug_match.py
+diff --git a/fix_actuators.py b/scripts/patches/fix_actuators.py
+similarity index 100%
+rename from fix_actuators.py
+rename to scripts/patches/fix_actuators.py
+diff --git a/fix_ball.py b/scripts/patches/fix_ball.py
+similarity index 100%
+rename from fix_ball.py
+rename to scripts/patches/fix_ball.py
+diff --git a/fix_body.py b/scripts/patches/fix_body.py
+similarity index 100%
+rename from fix_body.py
+rename to scripts/patches/fix_body.py
+diff --git a/fix_camera.py b/scripts/patches/fix_camera.py
+similarity index 100%
+rename from fix_camera.py
+rename to scripts/patches/fix_camera.py
+diff --git a/fix_ground.py b/scripts/patches/fix_ground.py
+similarity index 100%
+rename from fix_ground.py
+rename to scripts/patches/fix_ground.py
+diff --git a/fix_include.py b/scripts/patches/fix_include.py
+similarity index 100%
+rename from fix_include.py
+rename to scripts/patches/fix_include.py
+diff --git a/fix_mat.py b/scripts/patches/fix_mat.py
+similarity index 100%
+rename from fix_mat.py
+rename to scripts/patches/fix_mat.py
+diff --git a/fix_mocap_bug.py b/scripts/patches/fix_mocap_bug.py
+similarity index 100%
+rename from fix_mocap_bug.py
+rename to scripts/patches/fix_mocap_bug.py
+diff --git a/fix_qvel.py b/scripts/patches/fix_qvel.py
+similarity index 100%
+rename from fix_qvel.py
+rename to scripts/patches/fix_qvel.py
+diff --git a/inject_mocap_batter.py b/scripts/patches/inject_mocap_batter.py
+similarity index 100%
+rename from inject_mocap_batter.py
+rename to scripts/patches/inject_mocap_batter.py
+diff --git a/inject_mocap_pitcher.py b/scripts/patches/inject_mocap_pitcher.py
+similarity index 100%
+rename from inject_mocap_pitcher.py
+rename to scripts/patches/inject_mocap_pitcher.py
+diff --git a/make_catcher_runner_xml.py b/scripts/patches/make_catcher_runner_xml.py
+similarity index 100%
+rename from make_catcher_runner_xml.py
+rename to scripts/patches/make_catcher_runner_xml.py
+diff --git a/make_fielder_xml.py b/scripts/patches/make_fielder_xml.py
+similarity index 100%
+rename from make_fielder_xml.py
+rename to scripts/patches/make_fielder_xml.py
+diff --git a/mocap_preview.py b/scripts/patches/mocap_preview.py
+similarity index 100%
+rename from mocap_preview.py
+rename to scripts/patches/mocap_preview.py
+diff --git a/patch2.py b/scripts/patches/patch2.py
+similarity index 100%
+rename from patch2.py
+rename to scripts/patches/patch2.py
+diff --git a/patch_actuators.py b/scripts/patches/patch_actuators.py
+similarity index 100%
+rename from patch_actuators.py
+rename to scripts/patches/patch_actuators.py
+diff --git a/patch_env_joints.py b/scripts/patches/patch_env_joints.py
+similarity index 100%
+rename from patch_env_joints.py
+rename to scripts/patches/patch_env_joints.py
+diff --git a/patch_eval.py b/scripts/patches/patch_eval.py
+similarity index 100%
+rename from patch_eval.py
+rename to scripts/patches/patch_eval.py
+diff --git a/patch_info.py b/scripts/patches/patch_info.py
+similarity index 100%
+rename from patch_info.py
+rename to scripts/patches/patch_info.py
+diff --git a/patch_left_arm.py b/scripts/patches/patch_left_arm.py
+similarity index 100%
+rename from patch_left_arm.py
+rename to scripts/patches/patch_left_arm.py
+diff --git a/patch_physics.py b/scripts/patches/patch_physics.py
+similarity index 100%
+rename from patch_physics.py
+rename to scripts/patches/patch_physics.py
+diff --git a/patch_physics_full.py b/scripts/patches/patch_physics_full.py
+similarity index 100%
+rename from patch_physics_full.py
+rename to scripts/patches/patch_physics_full.py
+diff --git a/patch_pitcher_control.py b/scripts/patches/patch_pitcher_control.py
+similarity index 100%
+rename from patch_pitcher_control.py
+rename to scripts/patches/patch_pitcher_control.py
+diff --git a/patch_pitcher_env.py b/scripts/patches/patch_pitcher_env.py
+similarity index 100%
+rename from patch_pitcher_env.py
+rename to scripts/patches/patch_pitcher_env.py
+diff --git a/patch_strike_zone.py b/scripts/patches/patch_strike_zone.py
+similarity index 100%
+rename from patch_strike_zone.py
+rename to scripts/patches/patch_strike_zone.py
+diff --git a/print_act.py b/scripts/patches/print_act.py
+similarity index 100%
+rename from print_act.py
+rename to scripts/patches/print_act.py
+diff --git a/remove_ball.py b/scripts/patches/remove_ball.py
+similarity index 100%
+rename from remove_ball.py
+rename to scripts/patches/remove_ball.py
+diff --git a/rename_videos.py b/scripts/patches/rename_videos.py
+similarity index 100%
+rename from rename_videos.py
+rename to scripts/patches/rename_videos.py
+diff --git a/update_catalog.py b/scripts/patches/update_catalog.py
+similarity index 100%
+rename from update_catalog.py
+rename to scripts/patches/update_catalog.py
+diff --git a/update_eval_videos.py b/scripts/patches/update_eval_videos.py
+similarity index 100%
+rename from update_eval_videos.py
+rename to scripts/patches/update_eval_videos.py
+diff --git a/update_mds.py b/scripts/patches/update_mds.py
+similarity index 100%
+rename from update_mds.py
+rename to scripts/patches/update_mds.py
+diff --git a/update_mds_8_1.py b/scripts/patches/update_mds_8_1.py
+similarity index 100%
+rename from update_mds_8_1.py
+rename to scripts/patches/update_mds_8_1.py
+diff --git a/update_mds_8_2.py b/scripts/patches/update_mds_8_2.py
+similarity index 100%
+rename from update_mds_8_2.py
+rename to scripts/patches/update_mds_8_2.py
+diff --git a/update_mds_fielder.py b/scripts/patches/update_mds_fielder.py
+similarity index 100%
+rename from update_mds_fielder.py
+rename to scripts/patches/update_mds_fielder.py
+diff --git a/update_mds_phase9.py b/scripts/patches/update_mds_phase9.py
+similarity index 100%
+rename from update_mds_phase9.py
+rename to scripts/patches/update_mds_phase9.py
+diff --git a/update_phase9.py b/scripts/patches/update_phase9.py
+similarity index 100%
+rename from update_phase9.py
+rename to scripts/patches/update_phase9.py
+diff --git a/update_walkthrough.py b/scripts/patches/update_walkthrough.py
+similarity index 100%
+rename from update_walkthrough.py
+rename to scripts/patches/update_walkthrough.py
+diff --git a/test_pitcher_action.py b/scripts/test_pitcher_action.py
+similarity index 100%
+rename from test_pitcher_action.py
+rename to scripts/test_pitcher_action.py

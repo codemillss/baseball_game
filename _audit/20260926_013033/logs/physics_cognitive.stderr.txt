@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20260926_013033/scripts/physics_probe.py", line 244, in <module>
+    if args.task=="cognitive": cognitive_probe()
+                               ^^^^^^^^^^^^^^^^^
+  File "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/_audit/20260926_013033/scripts/physics_probe.py", line 215, in cognitive_probe
+    env=CognitiveBaseballEnv(xml_path=str(REPO/"shared_assets/h1_baseball.xml"),render_mode=None)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/cognitive_ai/envs/cognitive_baseball_env.py", line 16, in __init__
+    self.renderer = mujoco.Renderer(self.model, height=64, width=64)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/.venv/lib/python3.11/site-packages/mujoco/rendering/classic/renderer.py", line 89, in __init__
+    self._gl_context = gl_context.GLContext(width, height)  # type: ignore
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/.venv/lib/python3.11/site-packages/mujoco/cgl/__init__.py", line 47, in __init__
+    cgl.CGLChoosePixelFormat(
+  File "/Users/jin10000/Desktop/취업준비/원서_제출/02_핵심프로젝트_마스터풀/mini-project/baseball/.venv/lib/python3.11/site-packages/mujoco/cgl/cgl.py", line 132, in checked_func
+    raise CGLError(_CGLErrorString(err).decode())
+mujoco.cgl.cgl.CGLError: invalid CoreGraphics connection

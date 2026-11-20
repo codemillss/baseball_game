@@ -1,0 +1,458 @@
+commit fafee96c8335847ae4d83cfd3469b2a8dc2e7156
+Author:     codemills <ggzgcode10000@gmail.com>
+AuthorDate: Tue Sep 1 23:33:29 2026 +0900
+Commit:     codemills <ggzgcode10000@gmail.com>
+CommitDate: Tue Sep 1 23:33:29 2026 +0900
+
+    feat(Phase 8.1): Automated Umpire Rules, Strike Zone sensors, and Broadcast Director AI
+
+diff --git a/cognitive_ai/envs/baseball_rules.py b/cognitive_ai/envs/baseball_rules.py
+new file mode 100644
+index 0000000..8bdca27
+--- /dev/null
++++ b/cognitive_ai/envs/baseball_rules.py
+@@ -0,0 +1,59 @@
++import numpy as np
++
++class BaseballUmpire:
++    def __init__(self):
++        # Strike Zone limits based on h1_baseball_match.xml
++        self.sz_x_min = -0.215
++        self.sz_x_max = 0.215
++        self.sz_y_min = -0.215
++        self.sz_y_max = 0.215
++        self.sz_z_min = 0.5
++        self.sz_z_max = 1.1
++
++    def is_in_strike_zone(self, ball_pos):
++        """ Check if a single point is inside the strike zone box """
++        x, y, z = ball_pos
++        return (self.sz_x_min <= x <= self.sz_x_max and 
++                self.sz_y_min <= y <= self.sz_y_max and 
++                self.sz_z_min <= z <= self.sz_z_max)
++
++    def check_pitch_outcome(self, ball_trajectory):
++        """
++        Given a list of ball positions (x, y, z) over time,
++        determine if it passed through the strike zone.
++        """
++        for pos in ball_trajectory:
++            if self.is_in_strike_zone(pos):
++                return "STRIKE"
++        return "BALL"
++
++    def check_hit_outcome(self, land_pos):
++        """
++        Given the (x, y, z) position where the ball landed,
++        determine FOUL, FAIR, or HOME RUN.
++        Assuming foul lines are at y = |x|.
++        """
++        x, y, z = land_pos
++        
++        # If it lands behind home plate
++        if y < 0:
++            return "FOUL"
++            
++        # Distance from home
++        dist = np.sqrt(x**2 + y**2)
++        
++        # Check Foul lines (y = |x|)
++        # The angle from home plate. center field is x=0, y>0 (angle 90).
++        # 1st base is x>0, y=x (angle 45).
++        # 3rd base is x<0, y=-x (angle 135).
++        # FAIR territory is between 45 and 135 degrees.
++        # This is exactly y >= |x|.
++        
++        is_fair = y >= abs(x)
++        
++        if is_fair:
++            if dist > 120.0: # 120 meters for a home run
++                return "HOME RUN"
++            return "FAIR"
++        else:
++            return "FOUL"
+diff --git a/cognitive_ai/evaluation/simulate_full_match.py b/cognitive_ai/evaluation/simulate_full_match.py
+index 579af7f..c0ef938 100644
+--- a/cognitive_ai/evaluation/simulate_full_match.py
++++ b/cognitive_ai/evaluation/simulate_full_match.py
+@@ -1,145 +1,105 @@
+-import os
+ import sys
++import os
++sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
++
+ import numpy as np
+-import mujoco
+ import cv2
+-from pathlib import Path
++import mujoco
+ from stable_baselines3 import PPO
+ from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
++from cognitive_ai.training.train_mlb_batter import BatterMatchTrainingEnv
++from cognitive_ai.envs.baseball_rules import BaseballUmpire
+ 
+-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+-from cognitive_ai.envs.baseball_match_env import BaseballMatchEnv
+-from cognitive_ai.envs.pitcher_env import PitcherEnv
+-from cognitive_ai.envs.breaking_ball_env import BreakingBallEnv
++def main():
++    print("Initializing Match Environment with Umpire and Broadcast Director...")
++    pitcher_model_path = "checkpoints/mocap_pitcher_best/best_model"
++    pitcher_norm_path = "checkpoints/mocap_pitcher_vec_normalize.pkl"
++    batter_model_path = "checkpoints/mocap_batter_best/best_model"
++    batter_norm_path = "checkpoints/mocap_batter_vec_normalize.pkl"
+ 
+-def simulate_pitcher_vs_batter_match(
+-    pitcher_model_path="checkpoints/pitcher_best/best_model",
+-    pitcher_norm_path="checkpoints/pitcher_vec_normalize.pkl",
+-    batter_model_path="checkpoints/breaking_ball_best/best_model",
+-    batter_norm_path="checkpoints/breaking_ball_vec_normalize.pkl",
+-    num_at_bats=15,
+-    output_filename="baseball_match_duel.mp4"
+-):
+-    print(f"\n=======================================================")
+-    print(f"🏟️  HUMANOID BASEBALL CHAMPIONSHIP: PITCHER VS BATTER")
+-    print(f"=======================================================")
+-    print(f"• Pitcher Model: {pitcher_model_path}")
+-    print(f"• Batter Model : {batter_model_path}")
+-    print(f"• Total At-Bats: {num_at_bats}\n")
+-    
+-    # Setup Environments for Normalizer Loaders
+-    def make_p_env(): return PitcherEnv()
+-    def make_b_env(): return BreakingBallEnv()
+-    
+-    p_vec = DummyVecEnv([make_p_env])
+-    p_norm = VecNormalize.load(pitcher_norm_path, p_vec)
+-    p_norm.training = False
+-    p_norm.norm_reward = False
++    def make_b_env(): return BatterMatchTrainingEnv(
++        pitcher_model_path=pitcher_model_path,
++        pitcher_norm_path=pitcher_norm_path,
++        is_eval_mode=True
++    )
+     
+     b_vec = DummyVecEnv([make_b_env])
+-    b_norm = VecNormalize.load(batter_norm_path, b_vec)
+-    b_norm.training = False
+-    b_norm.norm_reward = False
+-    
+-    pitcher_model = PPO.load(pitcher_model_path, env=p_vec)
+-    batter_model = PPO.load(batter_model_path, env=b_vec)
+-    
+-    match_env = BaseballMatchEnv()
+-    renderer = mujoco.Renderer(match_env.model, height=480, width=640)
+-    
+-    video_dir = Path("data/eval_videos")
+-    video_dir.mkdir(parents=True, exist_ok=True)
+-    video_path = video_dir / output_filename
+-    
++    b_vec = VecNormalize.load(batter_norm_path, b_vec)
++    b_vec.training = False
++    b_vec.norm_reward = False
++
++    print("Loading AI Models...")
++    b_model = PPO.load(batter_model_path)
++
++    env = b_vec.envs[0].match_env
++    umpire = BaseballUmpire()
++
++    renderer = mujoco.Renderer(env.data.model, 480, 640)
++    os.makedirs("data/eval_videos", exist_ok=True)
++    video_path = "data/eval_videos/phase_8_1_broadcast_match.mp4"
+     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+-    writer = cv2.VideoWriter(str(video_path), fourcc, 30, (640, 480))
+-    
+-    stats = {"HITS": 0, "HOMERUNS": 0, "STRIKEOUTS": 0, "WALKS": 0, "OUTS": 0}
+-    
+-    for ab in range(num_at_bats):
+-        obs = match_env.reset()
++    out = cv2.VideoWriter(video_path, fourcc, 60.0, (640, 480))
++
++    attempts = 3
++    print("=======================================================")
++    print("🎬 AI BROADCAST DIRECTOR: LIVE MATCH")
++    print("=======================================================")
++
++    for i in range(attempts):
++        b_norm_obs = b_vec.reset()
++        
+         done = False
+-        step = 0
++        ball_trajectory = []
++        hit_detected = False
++        outcome = "PENDING"
+         
+-        while not done and step < 70:
+-            # Normalize observations
+-            p_obs_norm = p_norm.normalize_obs(obs["pitcher"])
+-            b_obs_norm = b_norm.normalize_obs(obs["batter"])
+-            
+-            # Predict actions from both AI models
+-            p_act, _ = pitcher_model.predict(p_obs_norm, deterministic=True)
+-            b_act, _ = batter_model.predict(b_obs_norm, deterministic=True)
+-            
+-            # Step the full live match environment
+-            obs, done, info = match_env.step(p_act, b_act)
+-            step += 1
++        while not done:
++            b_action, _ = b_model.predict(b_norm_obs, deterministic=True)
++            # Force swing to see hitting rules occasionally? 
++            # Or let it swing naturally.
++            b_norm_obs, reward, dones, infos = b_vec.step(b_action)
++            done = dones[0]
++            info = infos[0]
+             
+-            # Dynamic camera switching: Broadcast angle for pitch flight, Batter view on swing
+-            cam_name = "broadcast_cam" if step < 28 or not match_env.has_contacted else "batter_focus_cam"
+-            renderer.update_scene(match_env.data, camera=cam_name)
+-            rgb_frame = renderer.render()
+-            bgr_frame = cv2.cvtColor(rgb_frame, cv2.COLOR_RGB2BGR)
++            ball_pos = env.data.xpos[env.ball_body_id].copy()
++            ball_trajectory.append(ball_pos)
+             
+-            # Broadcast HUD Scoreboard
+-            p_speed = match_env.pitch_speed_kmh
+-            exit_vel = match_env.exit_velocity_kmh
++            if getattr(env, 'has_hit', False) or env.batted_distance > 0:
++                hit_detected = True
++                
++            # Dynamic Camera
++            if not hit_detected:
++                active_cam = "catcher_cam"
++            else:
++                active_cam = "broadcast_cam"
++                
++            renderer.update_scene(env.data, camera=active_cam)
++            frame = renderer.render()
+             
+-            # Draw header banner
+-            cv2.rectangle(bgr_frame, (0, 0), (640, 45), (20, 20, 20), -1)
+-            cv2.putText(bgr_frame, f"AT-BAT {ab+1:2d}/{num_at_bats} | PITCH: {p_speed:.1f} km/h", (15, 30),
+-                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+-            cv2.putText(bgr_frame, f"H: {stats['HITS']} | HR: {stats['HOMERUNS']} | K: {stats['STRIKEOUTS']}", (420, 30),
+-                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 220, 255), 2)
++            cv2.putText(frame, f"AT-BAT {i+1} | CAM: {active_cam}", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+             
+-            if match_env.has_contacted:
+-                cv2.putText(bgr_frame, f"💥 CONTACT! Exit Vel: {exit_vel:.1f} km/h", (140, 100),
+-                            cv2.FONT_HERSHEY_DUPLEX, 0.8, (0, 255, 0), 2)
+-            elif match_env.b_swing_active:
+-                cv2.putText(bgr_frame, f"SWING!", (260, 100),
+-                            cv2.FONT_HERSHEY_DUPLEX, 0.8, (0, 200, 255), 2)
+-                            
+             if done:
+-                # Show Outcome Splash
+-                cv2.rectangle(bgr_frame, (100, 200), (540, 280), (0, 0, 0), -1)
+-                cv2.putText(bgr_frame, f"{info['outcome']}", (120, 250),
+-                            cv2.FONT_HERSHEY_DUPLEX, 0.85, (255, 255, 255), 2)
+-                            
+-            writer.write(bgr_frame)
++                if hit_detected:
++                    outcome = umpire.check_hit_outcome(ball_pos)
++                else:
++                    outcome = umpire.check_pitch_outcome(ball_trajectory)
++                    if info.get("swing", False) or getattr(env, 'has_swung', False):
++                        outcome = "STRIKE (Swinging)"
++                
++                color = (0, 255, 0) if "FAIR" in outcome or "HOME RUN" in outcome else (0, 0, 255)
++                cv2.putText(frame, f"UMPIRE: {outcome}", (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 1.2, color, 3)
++                
++            out.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
+             
+-        # Update match scoreboard
+-        outcome = info["outcome"]
+-        if "HOME RUN" in outcome:
+-            stats["HOMERUNS"] += 1
+-            stats["HITS"] += 1
+-        elif "BASE HIT" in outcome:
+-            stats["HITS"] += 1
+-        elif "STRIKE OUT" in outcome or "CALLED STRIKE" in outcome:
+-            stats["STRIKEOUTS"] += 1
+-        elif "BALL" in outcome:
+-            stats["WALKS"] += 1
+-        else:
+-            stats["OUTS"] += 1
+-            
+-        print(f"  At-Bat {ab+1:2d}: {outcome:26s} | Pitch: {info['pitch_speed_kmh']:.1f} km/h | ExitVel: {info['exit_velocity_kmh']:.1f} km/h | Dist: {info['batted_distance']:.1f}m")
+-        
+-        black = np.zeros((480, 640, 3), dtype=np.uint8)
+-        for _ in range(8):
+-            writer.write(black)
+-            
+-    writer.release()
+-    p_vec.close()
+-    b_vec.close()
+-    
+-    batting_avg = (stats['HITS'] / (num_at_bats - stats['WALKS'])) if (num_at_bats - stats['WALKS']) > 0 else 0.0
+-    print(f"\n=======================================================")
+-    print(f"📊 FINAL MATCH BOX SCORE & STATISTICS")
+-    print(f"=======================================================")
+-    print(f"• Total At-Bats   : {num_at_bats}")
+-    print(f"• Hits (안타)     : {stats['HITS']} (Home Runs: {stats['HOMERUNS']})")
+-    print(f"• Strikeouts (삼진): {stats['STRIKEOUTS']}")
+-    print(f"• Batting Average : {batting_avg:.3f} (타율 .{(int(batting_avg*1000)):03d})")
+-    print(f"🎥 Video Broadcast saved to: {video_path}")
+-    return stats, str(video_path)
++            if done:
++                for _ in range(60):
++                    out.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
++                    
++        print(f"At-Bat {i+1}: {outcome}")
++
++    out.release()
++    print("=======================================================")
++    print(f"🎥 Video saved to: {video_path}")
+ 
+ if __name__ == "__main__":
+-    simulate_pitcher_vs_batter_match()
++    main()
+diff --git a/patch_strike_zone.py b/patch_strike_zone.py
+new file mode 100644
+index 0000000..1a9847e
+--- /dev/null
++++ b/patch_strike_zone.py
+@@ -0,0 +1,36 @@
++import xml.etree.ElementTree as ET
++
++tree = ET.parse("shared_assets/h1_baseball_match.xml")
++root = tree.getroot()
++worldbody = root.find("worldbody")
++
++# Add Strike Zone as a transparent site/geom for detection
++# site is great for sensors, but geom is good for visual if rgba has low alpha
++sz = ET.Element("site", name="strike_zone", type="box", size="0.215 0.215 0.3", pos="-0.3 0 0.8", rgba="0 1 0 0.2")
++# Wait, home plate is at -0.3, 0? No, let's check where the batter is.
++# Batter pelvis is at x=-0.7, y=-0.45.
++# Usually home plate is at 0,0. Let's see where the home plate is in the stadium!
++# Actually, baseball rules: Home plate is at 0,0,0. Pitcher is at 0, 18.4, 0 (y=18.4m).
++# In our XML, pitcher is at y=10. Batter is at x=-0.7, y=-0.45 (right-handed batter box).
++# So home plate is effectively around x=0, y=0!
++sz.set("pos", "0 0 0.8")
++worldbody.append(sz)
++
++# Add Foul Lines (1st base line, 3rd base line)
++# From home plate (0,0) to 1st base (x=27.4, y=27.4) and 3rd base (x=-27.4, y=27.4)
++# We can just draw them using cylinders.
++# 1st base line: 45 degrees to the right. 3rd base line: 45 degrees to the left.
++line1 = ET.Element("geom", name="foul_line_1b", type="cylinder", size="0.05 40", pos="28.28 28.28 0.01", xyaxes="0.707 -0.707 0 0 0 1", rgba="1 1 1 1")
++line3 = ET.Element("geom", name="foul_line_3b", type="cylinder", size="0.05 40", pos="-28.28 28.28 0.01", xyaxes="0.707 0.707 0 0 0 1", rgba="1 1 1 1")
++# Wait, cylinders point along Z-axis by default.
++# To make them lie on the ground pointing at 45 degrees:
++# xyaxes specifies X and Y axes.
++# We want Z-axis to be along (1, 1, 0).
++# Let X-axis be (-1, 1, 0) and Y-axis be (0, 0, 1).
++# Then Z = X x Y = (-1, 1, 0) x (0, 0, 1) = (1, 1, 0).
++line1.set("xyaxes", "-0.707 0.707 0 0 0 1")
++line3.set("xyaxes", "0.707 0.707 0 0 0 1")
++worldbody.append(line1)
++worldbody.append(line3)
++
++tree.write("shared_assets/h1_baseball_match.xml")
+diff --git a/shared_assets/h1_baseball_match.xml b/shared_assets/h1_baseball_match.xml
+index c26edef..0f79d77 100644
+--- a/shared_assets/h1_baseball_match.xml
++++ b/shared_assets/h1_baseball_match.xml
+@@ -77,49 +77,49 @@
+   <worldbody>
+     <light directional="true" diffuse="0.9 0.9 0.8" specular="0.3 0.3 0.3" pos="0 -10 20" dir="0 1 -1.5" />
+     
+-    <!-- Grass Outfield & Ground -->
++    
+     <geom name="grass_field" type="plane" size="60 60 0.1" pos="0 40 0" material="grass_mat" />
+     
+-    <!-- Dirt Infield (Arc) -->
++    
+     <geom name="dirt_infield" type="cylinder" size="18 0.005" pos="0 14.0 0.005" material="dirt_mat" />
+     <geom name="dirt_infield_base" type="box" size="12.7 12.7 0.005" pos="0 12.7 0.005" quat="0.707 0 0 0.707" material="dirt_mat" />
+     
+-    <!-- Bases (Diamond 27.43m / 90ft) -->
+-    <!-- Home Plate is at (0,0) -->
+-    <!-- 1st Base: x = 19.4m, y = 19.4m -->
++    
++    
++    
+     <geom name="first_base" type="box" size="0.2 0.2 0.025" pos="19.4 19.4 0.025" quat="0.9238 0 0 0.3826" material="base_mat" />
+-    <!-- 2nd Base: x = 0, y = 38.8m -->
++    
+     <geom name="second_base" type="box" size="0.2 0.2 0.025" pos="0 38.8 0.025" quat="0.707 0 0 0.707" material="base_mat" />
+-    <!-- 3rd Base: x = -19.4m, y = 19.4m -->
++    
+     <geom name="third_base" type="box" size="0.2 0.2 0.025" pos="-19.4 19.4 0.025" quat="0.9238 0 0 -0.3826" material="base_mat" />
+     
+-    <!-- Home Plate & Mound -->
++    
+     <geom name="home_plate" type="box" size="0.22 0.22 0.006" pos="0 0 0.006" quat="0.707 0 0 0.707" material="home_plate_mat" />
+-    <!-- Mound is at y=10, slightly elevated -->
++    
+     <geom name="pitcher_mound" type="cylinder" size="1.5 0.08" pos="0 10.0 0.0" material="dirt_mat" />
+     <geom name="pitcher_plate" type="box" size="0.3 0.08 0.005" pos="0 10.0 0.085" material="home_plate_mat" />
+ 
+-    <!-- Foul Lines -->
++    
+     <geom name="rf_foul_line" type="box" size="0.05 40 0.008" pos="28.28 28.28 0.008" quat="0.9238 0 0 0.3826" material="foul_line_mat" />
+     <geom name="lf_foul_line" type="box" size="0.05 40 0.008" pos="-28.28 28.28 0.008" quat="0.9238 0 0 -0.3826" material="foul_line_mat" />
+ 
+-    <!-- Outfield Walls -->
+-    <!-- Left Field Wall -->
++    
++    
+     <geom name="lf_wall" type="box" size="25 0.5 2.5" pos="-25 60 2.5" quat="0.980 0 0 -0.195" material="wall_mat" />
+-    <!-- Center Field Wall -->
++    
+     <geom name="cf_wall" type="box" size="20 0.5 2.5" pos="0 65 2.5" material="wall_mat" />
+-    <!-- Right Field Wall -->
++    
+     <geom name="rf_wall" type="box" size="25 0.5 2.5" pos="25 60 2.5" quat="0.980 0 0 0.195" material="wall_mat" />
+ 
+     <site name="strike_zone_target" type="box" size="0.20 0.02 0.27" pos="0 0.0 0.815" material="target_zone_mat" />
+ 
+-    <!-- Cameras -->
++    
+     <camera name="broadcast_cam" pos="-5.0 5.0 3.0" xyaxes="0.89 -0.45 0 0.22 0.44 0.87" fovy="55" />
+     <camera name="batter_focus_cam" pos="-2.2 -1.8 1.4" xyaxes="0.74 -0.67 0 0.15 0.16 0.97" fovy="48" />
+     <camera name="pitcher_focus_cam" pos="1.5 12.5 2.0" xyaxes="-0.8 -0.6 0 0.3 -0.4 0.9" fovy="48" />
+     <camera name="catcher_cam" pos="0 -2.5 1.5" xyaxes="1 0 0 0 0.2 0.98" fovy="52" />
+ 
+-    <!-- 1. PITCHER ROBOT (At Mound: y = 10.0m) -->
++    
+     <body name="pitcher_pelvis" pos="0 10.0 0.82" quat="0.7071068 0 0 -0.7071068" childclass="h1">
+       <inertial pos="-0.0002 4e-05 -0.04522" quat="0.498303 0.499454 -0.500496 0.501741" mass="5.39" diaginertia="0.049 0.044 0.008" />
+       <geom class="visual" mesh="pelvis" material="pitcher_mat" />
+@@ -192,7 +192,7 @@
+       </body>
+     </body>
+ 
+-    <!-- 2. BATTER ROBOT (At Batter Box: x = -0.70m, y = -0.45m) -->
++    
+     <body name="batter_pelvis" pos="-0.70 -0.45 0.82" childclass="h1">
+       <inertial pos="-0.0002 4e-05 -0.04522" quat="0.498303 0.499454 -0.500496 0.501741" mass="5.39" diaginertia="0.049 0.044 0.008" />
+       <geom class="visual" mesh="pelvis" material="batter_mat" />
+@@ -257,7 +257,7 @@
+               <body name="b_right_elbow_link" pos="0.0185 0 -0.198">
+                 <joint name="b_right_elbow" axis="0 1 0" range="-1.25 2.61" />
+                 <geom class="visual" mesh="right_elbow_link" material="batter_mat" />
+-                <!-- Bat attached to Batter's right hand -->
++                
+                 <body name="bat" pos="0.3 0 0" quat="0.707 0 0.707 0">
+                   <geom name="bat_barrel" type="cylinder" size="0.035 0.45" pos="0 0 0.45" material="bat_mat" mass="0.9" />
+                 </body>
+@@ -268,15 +268,15 @@
+       </body>
+     </body>
+ 
+-    <!-- 3. BASEBALL (Starts at Pitcher Hand with Weld Constraint) -->
++    
+     <body name="baseball" pos="0 10.0 1.2">
+       <freejoint name="ball_joint" />
+       <geom name="ball_geom" type="sphere" size="0.037" mass="0.145" material="ball_mat" />
+       <site name="ball_site" pos="0 0 0" size="0.01" />
+     </body>
+-  </worldbody>
++  <site name="strike_zone" type="box" size="0.215 0.215 0.3" pos="0 0 0.8" rgba="0 1 0 0.2" /><geom name="foul_line_1b" type="cylinder" size="0.05 40" pos="28.28 28.28 0.01" xyaxes="-0.707 0.707 0 0 0 1" rgba="1 1 1 1" /><geom name="foul_line_3b" type="cylinder" size="0.05 40" pos="-28.28 28.28 0.01" xyaxes="0.707 0.707 0 0 0 1" rgba="1 1 1 1" /></worldbody>
+ 
+   <equality>
+     <weld name="pitcher_ball_weld" site1="pitcher_hand_site" site2="ball_site" />
+   </equality>
+-</mujoco>
++</mujoco>
+\ No newline at end of file

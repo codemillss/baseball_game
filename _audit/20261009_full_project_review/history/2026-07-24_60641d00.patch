@@ -1,0 +1,1428 @@
+commit 60641d00db0ed6413e30b2d1c5e96b7314f12b01
+Author:     JinmanJeon <ggzgcode10000@gmail.com>
+AuthorDate: Fri Jul 24 19:06:24 2026 +0900
+Commit:     JinmanJeon <ggzgcode10000@gmail.com>
+CommitDate: Fri Jul 24 19:06:24 2026 +0900
+
+    Opus
+
+diff --git a/.gitignore b/.gitignore
+deleted file mode 100644
+index ab546d8..0000000
+--- a/.gitignore
++++ /dev/null
+@@ -1,19 +0,0 @@
+-# Python & Virtual Environments
+-.venv/
+-venv/
+-ENV/
+-env/
+-__pycache__/
+-*.pyc
+-
+-# Jupyter Notebook Checkpoints
+-.ipynb_checkpoints/
+-
+-# macOS / OS generated
+-.DS_Store
+-.AppleDouble
+-.LSOverride
+-
+-# VS Code / IDE settings
+-.vscode/
+-.idea/
+diff --git a/README.md b/README.md
+deleted file mode 100644
+index f35a3da..0000000
+--- a/README.md
++++ /dev/null
+@@ -1,94 +0,0 @@
+-# 🧠 PyTorch 딥러닝 마스터 워크북 & AI 활용 학습 저장소
+-
+-[![PyTorch](https://img.shields.io/badge/PyTorch-2.13-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
+-[![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+-[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=for-the-badge&logo=jupyter&logoColor=white)](https://jupyter.org/)
+-
+-딥러닝의 **기초 문법부터 차원 관리, 자동 미분(Autograd), 학습 전략 및 End-to-End 실전 분류기 구축**까지 단계별 문제 해결을 통해 딥러닝 메커니즘을 마스터하는 실습 저장소입니다.
+-
+-생성형 AI(Antigravity, ChatGPT, Claude 등)를 **1:1 대화형 페어 프로그래머(Pair Programmer)**로 활용하며, 스스로 문제를 해결하고 풀이 과정을 기록하는 구조로 설계되었습니다.
+-
+----
+-
+-## 📂 저장소 구조 (Repository Structure)
+-
+-본 저장소는 **원본 문제 템플릿**과 **본인이 직접 풀이한 결과**를 명확히 분리하여 관리합니다.
+-
+-```text
+-.
+-├── README.md                           # 프로젝트 설명 및 AI 학습 가이드 문서
+-├── DeepLearning_Workbook.ipynb         # [문제 템플릿] 풀어야 할 워크북 (Problem Template)
+-├── solutions/                          # [풀이 저장소] 본인이 직접 푼 파일 관리 폴더
+-│   └── DeepLearning_Workbook_Solved.ipynb # 내가 직접 푼 노트북 (My Solution)
+-├── requirements.txt                    # 의존성 패키지 목록
+-└── .gitignore                          # 가상환경 및 임시파일 관리
+-```
+-
+-- **`DeepLearning_Workbook.ipynb`**: `### TODO: 코드 작성 ###` 빈칸과 자동 검증(`Assertion Test`) 코드가 포함된 원본 문제 파일입니다.
+-- **`solutions/DeepLearning_Workbook_Solved.ipynb`**: 문제들을 직접 풀고 검증을 통과한 나만의 학습 기록 및 정답 노트북입니다.
+-
+----
+-
+-## 📘 모듈별 상세 커리큘럼 (Curriculum)
+-
+-| 모듈 | 주제 | 핵심 개념 및 실습 문제 |
+-|:---:|---|---|
+-| **Module 1** | **PyTorch 기초 문법 & 텐서 연산** | 텐서 속성(`shape`, `dtype`, `device`), 원소별 연산 vs 행렬 곱(`@`, `torch.matmul`), Boolean Masking을 활용한 ReLU 동작 구현 |
+-| **Module 2** | **차원 관리 Masterclass** | `view()` vs `reshape()`, 메모리 연속성(`contiguous`), `unsqueeze()`, `squeeze()`, `permute()` (`NHWC` ↔ `NCHW`), 브로드캐스팅, `cat()` vs `stack()` |
+-| **Module 3** | **Autograd & 신경망 모듈** | `requires_grad=True`, `backward()`, 기울기 추적 수식 계산, `nn.Module` 상속 커스텀 다층 인공신경망(`SimpleMLP`) 설계 |
+-| **Module 4** | **학습 전략 및 실전 기법** | `CrossEntropyLoss` 입출력 규격 맞추기, `BatchNorm`, `Dropout`, `model.train()` vs `model.eval()`, `torch.no_grad()` 검증 루프 구현 |
+-| **Module 5** | **종합 실전 프로젝트** | 2D 데이터셋 ➔ 차원 정형화 ➔ 커스텀 `Classifier` ➔ Adam Optimizer & CrossEntropyLoss ➔ **5 Epoch 학습/검증 완전 자동화** |
+-
+----
+-
+-## 🤖 생성형 AI (AI Pair Programmer) 활용 학습 전략
+-
+-본 워크북은 단순히 답안을 복사하는 것이 아니라, **생성형 AI를 지능형 학습 조교로 활용하여 개념을 완벽히 이해하는 것**을 목표로 합니다.
+-
+-### 💡 추천 질문/프롬프트 패턴
+-
+-#### 1. 개념 이해가 막힐 때
+-> 💬 *"PyTorch에서 `view()`와 `reshape()`의 차이가 뭐야? 메모리 연속성(`is_contiguous()`) 개념과 함께 예시 코드로 설명해줘."*
+-
+-#### 2. 차원(Shape) 조작이 헷갈릴 때
+-> 💬 *"이미지 텐서 모양이 `(32, 224, 224, 3)`인데 Conv2d 레이어에 넣으려면 `(32, 3, 224, 224)`로 바꿔야 해. 왜 `reshape` 대신 `permute`를 써야 하는지 차이점을 알려줘."*
+-
+-#### 3. Assertion Error (채점 에러) 디버깅 시
+-> 💬 *"내가 작성한 코드가 `AssertionError: expected shape (32, 64) but got (32, 128)` 에러가 나는데, 어떤 부분에서 행렬 차원 계산이 잘못된 걸까?"*
+-
+----
+-
+-## 🛠️ 빠른 시작 가이드 (Quick Start)
+-
+-### 1. 저장소 클론 (Clone Repository)
+-```bash
+-git clone https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME.git
+-cd YOUR_REPO_NAME
+-```
+-
+-### 2. 가상환경 생성 및 패키지 설치
+-```bash
+-# 파이썬 가상환경 생성
+-python3 -m venv .venv
+-
+-# 가상환경 활성화 (macOS/Linux)
+-source .venv/bin/activate
+-
+-# Windows 가상환경 활성화
+-# .venv\Scripts\activate
+-
+-# 필요한 딥러닝 패키지 한번에 설치
+-pip install -r requirements.txt
+-```
+-
+-### 3. 주피터 노트북 실행 및 풀어보기
+-- **VS Code 사용 시**: VS Code에서 `DeepLearning_Workbook.ipynb` 열기 ➔ 우측 상단 `Select Kernel` ➔ `.venv` 선택 후 풀이 시작!
+-- **웹 브라우저 사용 시**:
+-  ```bash
+-  jupyter notebook
+-  ```
+-
+----
+-
+-## 🏷️ License
+-본 프로젝트는 [MIT License](LICENSE)를 따릅니다. 딥러닝을 공부하는 모든 수강생 및 개발자들의 학습 용도로 자유롭게 활용할 수 있습니다.
+diff --git a/envs/__init__.py b/envs/__init__.py
+new file mode 100644
+index 0000000..05f6226
+--- /dev/null
++++ b/envs/__init__.py
+@@ -0,0 +1 @@
++"""Baseball RL Environment Package - E2E Physics Engines & Gymnasium Wrapper."""
+diff --git a/envs/batter_mechanism.py b/envs/batter_mechanism.py
+new file mode 100644
+index 0000000..8683522
+--- /dev/null
++++ b/envs/batter_mechanism.py
+@@ -0,0 +1,656 @@
++"""
++batter_mechanism.py — End-to-End 타자 물리 엔진
++
++배트 스윙 역학(관절 토크 → FK), Sweet Spot 충돌 판정,
++Exit Velocity / Launch Angle 계산을 수행합니다.
++
++핵심 물리:
++    Exit Velocity: v_exit = q × (e × v_ball + (1+e) × v_bat)
++    Sweet Spot:    배트 끝에서 ~17cm 지점, COR 보정
++    Launch Angle:  배트 경사각 + 공 입사각 기반
++"""
++
++import numpy as np
++from dataclasses import dataclass, field
++from typing import Optional, Tuple
++
++
++# ──────────────────────────────────────────────────────────────
++#  배트 물리 모델
++# ──────────────────────────────────────────────────────────────
++
++@dataclass
++class BatModel:
++    """배트의 물리 상수를 관리하는 데이터 클래스.
++
++    MLB 표준 목재 배트 기준값을 사용합니다.
++    """
++
++    mass: float = 0.94               # 배트 질량 (kg), ~33oz
++    length: float = 0.84             # 배트 길이 (m), ~33인치
++    barrel_radius: float = 0.033     # 배럴 반지름 (m), ~2.6인치
++    handle_radius: float = 0.012     # 손잡이 반지름 (m)
++
++    # 관성 모멘트 (회전축: 손잡이 끝단)
++    moment_of_inertia: float = 0.22  # kg·m²
++
++    # Sweet Spot 위치 (손잡이 끝단 기준)
++    sweet_spot_distance: float = 0.67  # 배트 끝에서 ~17cm = 손잡이에서 ~67cm
++
++    # 반발 계수 (Coefficient of Restitution)
++    cor_sweet_spot: float = 0.50     # Sweet Spot에서의 COR
++    cor_tip: float = 0.35           # 배트 끝단
++    cor_handle: float = 0.30        # 손잡이 쪽
++
++    # 타자 위치 (홈플레이트 옆)
++    batter_position: np.ndarray = field(
++        default_factory=lambda: np.array([0.2, 0.3, 0.0])
++        # x=0.2m (홈플레이트 우측), y=0.3m (약간 뒤), z=0.0m
++    )
++
++
++@dataclass
++class SwingConfig:
++    """스윙 설정 범위를 정의하는 데이터 클래스.
++
++    신경망 액션의 [-1, 1] 범위를 실제 스윙 파라미터로 매핑합니다.
++    """
++
++    # 스윙 트리거 임계값 (타이밍)
++    # action[0] > 0 이면 스윙 결정
++    swing_threshold: float = 0.0
++
++    # Yaw 토크 범위 (수평 회전, N·m)
++    yaw_torque_min: float = -80.0
++    yaw_torque_max: float = 80.0
++
++    # Pitch 토크 범위 (수직 경사, N·m)
++    pitch_torque_min: float = -40.0
++    pitch_torque_max: float = 40.0
++
++    # 높이 타겟 범위 (m)
++    height_target_min: float = 0.3
++    height_target_max: float = 1.3
++
++    # 스윙 시간 범위 (릴리스부터 스윙까지)
++    swing_duration: float = 0.15     # 스윙 동작 소요 시간 (초)
++
++    # 배트 각속도 범위
++    max_angular_velocity: float = 35.0  # rad/s (~2000 deg/s)
++
++
++# ──────────────────────────────────────────────────────────────
++#  스윙 운동학 (Forward Kinematics)
++# ──────────────────────────────────────────────────────────────
++
++class SwingKinematics:
++    """배트 스윙의 운동학을 계산합니다.
++
++    Yaw(수평)/Pitch(수직) 2자유도 회전 모델을 사용하여
++    배트 끝단의 3D 위치와 속도를 계산합니다.
++    """
++
++    def __init__(
++        self,
++        bat: Optional[BatModel] = None,
++        config: Optional[SwingConfig] = None,
++    ):
++        self.bat = bat or BatModel()
++        self.config = config or SwingConfig()
++
++    def compute_bat_state(
++        self,
++        yaw_angle: float,
++        pitch_angle: float,
++        yaw_angular_vel: float,
++        pitch_angular_vel: float,
++        batter_pos: Optional[np.ndarray] = None,
++    ) -> dict:
++        """현재 관절 각도/각속도로 배트의 3D 상태를 계산합니다.
++
++        2자유도 FK: 어깨(yaw) → 손목(pitch) → 배트 끝단
++
++        Args:
++            yaw_angle: 수평 회전 각도 (rad), 0=투수 방향
++            pitch_angle: 수직 경사 각도 (rad), 0=수평
++            yaw_angular_vel: Yaw 각속도 (rad/s)
++            pitch_angular_vel: Pitch 각속도 (rad/s)
++            batter_pos: 타자 기준 위치 (None이면 기본값)
++
++        Returns:
++            dict:
++                'tip_position': 배트 끝단 3D 위치
++                'sweet_spot_position': Sweet Spot 3D 위치
++                'tip_velocity': 배트 끝단 3D 속도
++                'sweet_spot_velocity': Sweet Spot 3D 속도
++                'bat_direction': 배트 방향 단위벡터
++                'bat_normal': 배트 면 법선벡터
++        """
++        pos = batter_pos if batter_pos is not None else self.bat.batter_position.copy()
++        L = self.bat.length
++        L_ss = self.bat.sweet_spot_distance
++
++        # 배트 방향 벡터 (yaw, pitch 회전 적용)
++        bat_dir = np.array([
++            -np.cos(pitch_angle) * np.sin(yaw_angle),  # x: 좌우
++            -np.cos(pitch_angle) * np.cos(yaw_angle),  # y: 전후 (투수 방향)
++            np.sin(pitch_angle),                        # z: 상하
++        ])
++
++        # 배트 끝단 위치
++        tip_pos = pos + L * bat_dir
++        sweet_spot_pos = pos + L_ss * bat_dir
++
++        # 배트 끝단 속도 (각속도 × 팔 길이)
++        # v = ω × r (벡터 외적)
++        omega_vec = np.array([
++            pitch_angular_vel * np.cos(yaw_angle),
++            -pitch_angular_vel * np.sin(yaw_angle),
++            yaw_angular_vel,
++        ])
++
++        r_tip = tip_pos - pos
++        r_ss = sweet_spot_pos - pos
++
++        tip_vel = np.cross(omega_vec, r_tip)
++        sweet_spot_vel = np.cross(omega_vec, r_ss)
++
++        # 배트 면 법선벡터 (배트 방향에 수직, z축 방향 성분)
++        bat_normal = np.cross(bat_dir, np.array([0.0, 0.0, 1.0]))
++        norm = np.linalg.norm(bat_normal)
++        if norm > 1e-10:
++            bat_normal = bat_normal / norm
++        else:
++            bat_normal = np.array([1.0, 0.0, 0.0])
++
++        return {
++            'tip_position': tip_pos,
++            'sweet_spot_position': sweet_spot_pos,
++            'tip_velocity': tip_vel,
++            'sweet_spot_velocity': sweet_spot_vel,
++            'bat_direction': bat_dir,
++            'bat_normal': bat_normal,
++        }
++
++    def simulate_swing(
++        self,
++        yaw_torque: float,
++        pitch_torque: float,
++        height_target: float,
++        dt: float = 0.001,
++        duration: Optional[float] = None,
++    ) -> dict:
++        """토크 입력으로 전체 스윙 동작을 시뮬레이션합니다.
++
++        Args:
++            yaw_torque: 수평 토크 (N·m)
++            pitch_torque: 수직 토크 (N·m)
++            height_target: 목표 높이 (m)
++            dt: 시뮬레이션 시간 간격 (초)
++            duration: 스윙 지속 시간 (초)
++
++        Returns:
++            dict:
++                'states': 시간별 배트 상태 리스트
++                'times': 시간 배열
++                'max_bat_speed': 최대 배트 속도 (m/s)
++        """
++        if duration is None:
++            duration = self.config.swing_duration
++
++        # 초기 상태 (코킹 위치: 투수 반대편에서 시작)
++        yaw_angle = np.pi * 0.4      # 약간 뒤로 당긴 상태
++        pitch_angle = 0.0             # 수평
++        yaw_omega = 0.0
++        pitch_omega = 0.0
++
++        # 높이 보정: pitch_angle 초기값을 height_target에 맞게 조정
++        bat_center_z = self.bat.batter_position[2] + \
++            self.bat.sweet_spot_distance * np.sin(pitch_angle)
++        height_error = height_target - bat_center_z
++        pitch_angle = np.arcsin(np.clip(
++            height_error / (self.bat.sweet_spot_distance + 1e-10), -0.9, 0.9
++        ))
++
++        states = []
++        times = []
++        max_bat_speed = 0.0
++
++        n_steps = int(duration / dt)
++        t = 0.0
++
++        for _ in range(n_steps):
++            # 각가속도 = 토크 / 관성모멘트
++            yaw_alpha = yaw_torque / self.bat.moment_of_inertia
++            pitch_alpha = pitch_torque / self.bat.moment_of_inertia
++
++            # 오일러 적분
++            yaw_omega += yaw_alpha * dt
++            pitch_omega += pitch_alpha * dt
++
++            # 각속도 제한
++            max_w = self.config.max_angular_velocity
++            yaw_omega = np.clip(yaw_omega, -max_w, max_w)
++            pitch_omega = np.clip(pitch_omega, -max_w * 0.5, max_w * 0.5)
++
++            yaw_angle += yaw_omega * dt
++            pitch_angle += pitch_omega * dt
++            pitch_angle = np.clip(pitch_angle, -np.pi / 4, np.pi / 4)
++
++            state = self.compute_bat_state(
++                yaw_angle, pitch_angle, yaw_omega, pitch_omega
++            )
++            state['yaw_angle'] = yaw_angle
++            state['pitch_angle'] = pitch_angle
++            state['yaw_omega'] = yaw_omega
++            state['pitch_omega'] = pitch_omega
++            state['time'] = t
++
++            bat_speed = np.linalg.norm(state['sweet_spot_velocity'])
++            max_bat_speed = max(max_bat_speed, bat_speed)
++
++            states.append(state)
++            times.append(t)
++            t += dt
++
++        return {
++            'states': states,
++            'times': np.array(times),
++            'max_bat_speed': max_bat_speed,
++        }
++
++
++# ──────────────────────────────────────────────────────────────
++#  충돌 엔진
++# ──────────────────────────────────────────────────────────────
++
++class CollisionEngine:
++    """배트-공 충돌 판정 및 타구 물리를 계산합니다.
++
++    충돌 모델:
++        v_exit = q × (e × v_ball + (1+e) × v_bat_contact)
++        q: Sweet Spot 보정 계수 (0.6 ~ 1.0)
++        e: 반발 계수 COR (0.30 ~ 0.50)
++    """
++
++    def __init__(self, bat: Optional[BatModel] = None):
++        self.bat = bat or BatModel()
++
++    def check_collision(
++        self,
++        ball_pos: np.ndarray,
++        bat_tip: np.ndarray,
++        bat_base: np.ndarray,
++        collision_radius: float = 0.06,
++    ) -> Tuple[bool, float, np.ndarray]:
++        """배트-공 충돌 여부를 판정합니다.
++
++        배트를 선분(base → tip)으로 모델링하고, 공 중심과의 최소 거리를 계산합니다.
++
++        Args:
++            ball_pos: 공의 3D 위치
++            bat_tip: 배트 끝단 3D 위치
++            bat_base: 배트 손잡이 끝단 3D 위치 (타자 위치)
++            collision_radius: 충돌 판정 반경 (m), 배트 반경 + 공 반경
++
++        Returns:
++            (is_hit, contact_distance, contact_point)
++            is_hit: 충돌 여부
++            contact_distance: 손잡이 기준 접촉 거리 (m)
++            contact_point: 충돌 지점 3D 위치
++        """
++        bat_vec = bat_tip - bat_base
++        bat_len = np.linalg.norm(bat_vec)
++        if bat_len < 1e-10:
++            return False, 0.0, bat_base.copy()
++
++        bat_dir = bat_vec / bat_len
++
++        # 공 중심에서 배트 선분까지의 최소 거리점 계산
++        ball_to_base = ball_pos - bat_base
++        t = np.dot(ball_to_base, bat_dir) / bat_len
++        t = np.clip(t, 0.0, 1.0)  # 선분 범위 내로 제한
++
++        closest_point = bat_base + t * bat_vec
++        distance = np.linalg.norm(ball_pos - closest_point)
++        contact_distance = t * bat_len
++
++        is_hit = distance < collision_radius
++
++        return is_hit, contact_distance, closest_point
++
++    def sweet_spot_factor(self, contact_distance: float) -> float:
++        """접촉 지점의 Sweet Spot 보정 계수를 계산합니다.
++
++        Sweet Spot(~67cm) 지점에서 1.0, 거리가 멀어질수록 감소.
++        가우시안 분포 모델 사용.
++
++        Args:
++            contact_distance: 손잡이 기준 접촉 거리 (m)
++
++        Returns:
++            Sweet Spot 보정 계수 (0.5 ~ 1.0)
++        """
++        ss = self.bat.sweet_spot_distance
++        sigma = 0.08  # 가우시안 폭 (m)
++
++        deviation = abs(contact_distance - ss)
++        factor = np.exp(-(deviation ** 2) / (2 * sigma ** 2))
++
++        # 최소 0.5로 제한 (완전 빗맞은 타격에도 일부 에너지 전달)
++        return float(max(factor, 0.5))
++
++    def compute_cor(self, contact_distance: float) -> float:
++        """접촉 지점의 반발 계수(COR)를 계산합니다.
++
++        Sweet Spot에서 최대, 끝단/손잡이에서 감소.
++
++        Args:
++            contact_distance: 손잡이 기준 접촉 거리 (m)
++
++        Returns:
++            COR 값
++        """
++        ss = self.bat.sweet_spot_distance
++        q = self.sweet_spot_factor(contact_distance)
++
++        # COR = 기본값 × Sweet Spot 보정
++        cor = self.bat.cor_handle + \
++            (self.bat.cor_sweet_spot - self.bat.cor_handle) * q
++
++        return float(cor)
++
++    def compute_exit_velocity(
++        self,
++        ball_velocity: np.ndarray,
++        bat_velocity: np.ndarray,
++        bat_normal: np.ndarray,
++        contact_distance: float,
++    ) -> Tuple[np.ndarray, float]:
++        """타구의 Exit Velocity 벡터를 계산합니다.
++
++        충돌 모델: v_exit = q × (e × v_ball_n + (1+e) × v_bat_n) + v_ball_t
++        (법선 성분만 반발, 접선 성분 보존)
++
++        Args:
++            ball_velocity: 공의 속도 벡터 (m/s)
++            bat_velocity: 배트 접촉점 속도 벡터 (m/s)
++            bat_normal: 배트 면 법선벡터 (정규화)
++            contact_distance: 손잡이 기준 접촉 거리 (m)
++
++        Returns:
++            (exit_velocity_vector, exit_speed)
++        """
++        e = self.compute_cor(contact_distance)
++        q = self.sweet_spot_factor(contact_distance)
++
++        # 법선 방향 상대 속도
++        v_rel = ball_velocity - bat_velocity
++        v_n = np.dot(v_rel, bat_normal) * bat_normal
++        v_t = v_rel - v_n
++
++        # 반발 후 법선 속도
++        v_n_exit = -e * v_n
++
++        # 타구 속도 = 배트 속도 + 반발된 상대 속도
++        exit_vel = bat_velocity + v_n_exit + v_t
++
++        # Sweet Spot 보정 적용
++        exit_vel = exit_vel * q + exit_vel * (1.0 - q) * 0.7
++
++        exit_speed = float(np.linalg.norm(exit_vel))
++
++        return exit_vel, exit_speed
++
++    def compute_launch_angle(
++        self,
++        exit_velocity: np.ndarray,
++    ) -> float:
++        """타구의 Launch Angle을 계산합니다.
++
++        수평면(xy 평면)과 타구 속도 벡터 사이의 각도.
++        양수: 뜬 공, 음수: 땅볼
++
++        Args:
++            exit_velocity: 타구 속도 벡터 (m/s)
++
++        Returns:
++            Launch Angle (degrees)
++        """
++        horizontal_speed = np.sqrt(exit_velocity[0] ** 2 + exit_velocity[1] ** 2)
++        if horizontal_speed < 1e-6:
++            return 0.0
++        return float(np.degrees(np.arctan2(exit_velocity[2], horizontal_speed)))
++
++    def compute_spray_angle(
++        self,
++        exit_velocity: np.ndarray,
++    ) -> float:
++        """타구의 Spray Angle을 계산합니다.
++
++        중앙(투수 방향)을 0°로, 좌측(+), 우측(-)
++
++        Args:
++            exit_velocity: 타구 속도 벡터 (m/s)
++
++        Returns:
++            Spray Angle (degrees)
++        """
++        if abs(exit_velocity[1]) < 1e-6:
++            return 0.0
++        return float(np.degrees(np.arctan2(exit_velocity[0], -exit_velocity[1])))
++
++
++# ──────────────────────────────────────────────────────────────
++#  타자 메커니즘 (E2E Action → 스윙 → 충돌)
++# ──────────────────────────────────────────────────────────────
++
++class BatterMechanism:
++    """End-to-End 타자 물리 메커니즘.
++
++    신경망의 연속 액션 벡터를 스윙 토크로 변환하고,
++    공 궤적과의 충돌을 판정합니다.
++
++    Action Vector:
++        [0] t_trigger:    스윙 결정 (> 0이면 스윙)
++        [1] yaw_torque:   수평 토크 (normalized)
++        [2] pitch_torque:  수직 토크 (normalized)
++        [3] z_height:     목표 높이 (normalized)
++    """
++
++    def __init__(
++        self,
++        bat: Optional[BatModel] = None,
++        config: Optional[SwingConfig] = None,
++    ):
++        self.bat = bat or BatModel()
++        self.config = config or SwingConfig()
++        self.kinematics = SwingKinematics(self.bat, self.config)
++        self.collision = CollisionEngine(self.bat)
++
++    def _normalize_to_range(
++        self, value: float, low: float, high: float
++    ) -> float:
++        """[-1, 1] 범위를 [low, high] 범위로 매핑합니다."""
++        return low + (value + 1.0) * 0.5 * (high - low)
++
++    def decode_action(self, action: np.ndarray) -> dict:
++        """신경망 액션 벡터를 스윙 파라미터로 변환합니다.
++
++        Args:
++            action: 4차원 연속 액션 벡터, 각 성분 ∈ [-1, 1]
++
++        Returns:
++            dict:
++                'should_swing': 스윙 여부
++                'yaw_torque': 수평 토크 (N·m)
++                'pitch_torque': 수직 토크 (N·m)
++                'height_target': 목표 높이 (m)
++        """
++        cfg = self.config
++        action = np.clip(action, -1.0, 1.0)
++
++        return {
++            'should_swing': action[0] > cfg.swing_threshold,
++            'yaw_torque': self._normalize_to_range(
++                action[1], cfg.yaw_torque_min, cfg.yaw_torque_max
++            ),
++            'pitch_torque': self._normalize_to_range(
++                action[2], cfg.pitch_torque_min, cfg.pitch_torque_max
++            ),
++            'height_target': self._normalize_to_range(
++                action[3], cfg.height_target_min, cfg.height_target_max
++            ),
++        }
++
++    def swing_and_check(
++        self,
++        action: np.ndarray,
++        ball_trajectory_positions: np.ndarray,
++        ball_trajectory_velocities: np.ndarray,
++        ball_trajectory_times: np.ndarray,
++        swing_start_time: float,
++    ) -> dict:
++        """스윙을 실행하고 공 궤적과의 충돌을 판정합니다.
++
++        Args:
++            action: 4차원 연속 액션 벡터
++            ball_trajectory_positions: 공 궤적 위치 (N, 3)
++            ball_trajectory_velocities: 공 궤적 속도 (N, 3)
++            ball_trajectory_times: 공 궤적 시간 (N,)
++            swing_start_time: 스윙 시작 시간 (공 릴리스 기준)
++
++        Returns:
++            dict:
++                'result': 'swing_miss' | 'hit' | 'no_swing'
++                'swing_params': 스윙 파라미터 (decode_action 결과)
++                'contact_info': 충돌 정보 (hit인 경우)
++                    - 'exit_velocity': (3,) m/s
++                    - 'exit_speed': float m/s
++                    - 'exit_speed_kmh': float km/h
++                    - 'launch_angle': float deg
++                    - 'spray_angle': float deg
++                    - 'contact_distance': float m
++                    - 'sweet_spot_factor': float
++                    - 'contact_time': float s
++                    - 'contact_position': (3,) m
++        """
++        params = self.decode_action(action)
++
++        if not params['should_swing']:
++            return {
++                'result': 'no_swing',
++                'swing_params': params,
++                'contact_info': None,
++            }
++
++        # 스윙 시뮬레이션
++        swing_result = self.kinematics.simulate_swing(
++            yaw_torque=params['yaw_torque'],
++            pitch_torque=params['pitch_torque'],
++            height_target=params['height_target'],
++        )
++
++        # 스윙 동작의 각 시간 프레임에서 공과의 충돌 체크
++        swing_states = swing_result['states']
++        dt = self.kinematics.config.swing_duration / len(swing_states)
++
++        for i, swing_state in enumerate(swing_states):
++            swing_time = swing_start_time + i * dt
++
++            # 공 궤적에서 해당 시간의 공 위치/속도 보간
++            if swing_time < ball_trajectory_times[0] or \
++               swing_time > ball_trajectory_times[-1]:
++                continue
++
++            # 선형 보간으로 공 위치 찾기
++            idx = np.searchsorted(ball_trajectory_times, swing_time) - 1
++            idx = np.clip(idx, 0, len(ball_trajectory_times) - 2)
++
++            t_frac = (swing_time - ball_trajectory_times[idx]) / \
++                     (ball_trajectory_times[idx + 1] - ball_trajectory_times[idx] + 1e-10)
++
++            ball_pos = (1 - t_frac) * ball_trajectory_positions[idx] + \
++                       t_frac * ball_trajectory_positions[idx + 1]
++            ball_vel = (1 - t_frac) * ball_trajectory_velocities[idx] + \
++                       t_frac * ball_trajectory_velocities[idx + 1]
++
++            # 충돌 판정
++            bat_tip = swing_state['tip_position']
++            bat_base = self.bat.batter_position.copy()
++
++            is_hit, contact_dist, contact_point = self.collision.check_collision(
++                ball_pos, bat_tip, bat_base
++            )
++
++            if is_hit:
++                # 타구 물리 계산
++                exit_vel, exit_speed = self.collision.compute_exit_velocity(
++                    ball_vel,
++                    swing_state['sweet_spot_velocity'],
++                    swing_state['bat_normal'],
++                    contact_dist,
++                )
++                launch_angle = self.collision.compute_launch_angle(exit_vel)
++                spray_angle = self.collision.compute_spray_angle(exit_vel)
++                ss_factor = self.collision.sweet_spot_factor(contact_dist)
++
++                return {
++                    'result': 'hit',
++                    'swing_params': params,
++                    'contact_info': {
++                        'exit_velocity': exit_vel,
++                        'exit_speed': exit_speed,
++                        'exit_speed_kmh': exit_speed * 3.6,
++                        'launch_angle': launch_angle,
++                        'spray_angle': spray_angle,
++                        'contact_distance': contact_dist,
++                        'sweet_spot_factor': ss_factor,
++                        'contact_time': swing_time,
++                        'contact_position': contact_point,
++                    },
++                }
++
++        # 스윙했으나 헛스윙
++        return {
++            'result': 'swing_miss',
++            'swing_params': params,
++            'contact_info': None,
++        }
++
++    def classify_hit(self, contact_info: dict) -> str:
++        """타구 결과를 분류합니다.
++
++        Exit Velocity와 Launch Angle을 기반으로 타구 유형을 결정합니다.
++
++        Args:
++            contact_info: swing_and_check에서 반환된 충돌 정보
++
++        Returns:
++            'home_run' | 'extra_base' | 'single' | 'foul' | 'out'
++        """
++        if contact_info is None:
++            return 'out'
++
++        exit_speed = contact_info['exit_speed_kmh']
++        launch_angle = contact_info['launch_angle']
++        spray_angle = abs(contact_info['spray_angle'])
++
++        # 파울 판정 (spray angle > 45°)
++        if spray_angle > 45.0:
++            return 'foul'
++
++        # 홈런 (Exit Velocity > 155 km/h & Launch Angle 25~35°)
++        if exit_speed > 155.0 and 20.0 <= launch_angle <= 40.0:
++            return 'home_run'
++
++        # 장타 (Exit Velocity > 140 km/h & Launch Angle 10~30°)
++        if exit_speed > 140.0 and 10.0 <= launch_angle <= 35.0:
++            return 'extra_base'
++
++        # 안타 (Exit Velocity > 120 km/h & Launch Angle 5~25°)
++        if exit_speed > 120.0 and 5.0 <= launch_angle <= 30.0:
++            return 'single'
++
++        # 땅볼 / 플라이아웃
++        return 'out'
+diff --git a/envs/pitcher_mechanism.py b/envs/pitcher_mechanism.py
+new file mode 100644
+index 0000000..46f3ea8
+--- /dev/null
++++ b/envs/pitcher_mechanism.py
+@@ -0,0 +1,606 @@
++"""
++pitcher_mechanism.py — End-to-End 투수 물리 엔진
++
++공의 비행 역학(Magnus Effect, Drag, Gravity)을 수치적분(RK4)으로 시뮬레이션합니다.
++신경망의 연속 액션 벡터를 물리 초기조건으로 변환하여 궤적을 계산합니다.
++
++핵심 물리 방정식:
++    F_gravity = (0, 0, -m*g)
++    F_drag    = -½ ρ A C_d |v| v
++    F_magnus  = ½ ρ A C_L (r/|v|) (ω × v)
++"""
++
++import numpy as np
++from dataclasses import dataclass, field
++from typing import Optional
++
++
++# ──────────────────────────────────────────────────────────────
++#  물리 상수 및 야구공 파라미터
++# ──────────────────────────────────────────────────────────────
++
++@dataclass
++class BallPhysics:
++    """야구공의 물리 상수를 관리하는 데이터 클래스.
++
++    MLB 공인구 기준값을 기본으로 사용합니다.
++    """
++
++    mass: float = 0.145          # 공 질량 (kg), MLB 규격: 141.7~148.8g
++    radius: float = 0.0366       # 공 반지름 (m), 둘레 약 23cm
++    air_density: float = 1.225   # 공기 밀도 (kg/m³), 해수면 표준 대기
++    gravity: float = 9.81        # 중력 가속도 (m/s²)
++
++    # 유도되는 물리량 (post_init에서 계산)
++    cross_section_area: float = field(init=False)
++    circumference: float = field(init=False)
++
++    def __post_init__(self):
++        self.cross_section_area = np.pi * self.radius ** 2
++        self.circumference = 2.0 * np.pi * self.radius
++
++
++@dataclass
++class PitchConfig:
++    """투구 설정 범위를 정의하는 데이터 클래스.
++
++    신경망 액션의 [-1, 1] 범위를 실제 물리값으로 매핑할 때 사용됩니다.
++    """
++
++    # 릴리스 속도 (m/s): MLB 범위 약 30~47 m/s (108~169 km/h)
++    v_release_min: float = 28.0
++    v_release_max: float = 47.0
++
++    # 목표 위치 오프셋 (m): 스트라이크존 기준 좌우/상하
++    target_x_min: float = -0.35   # 좌측 한계
++    target_x_max: float = 0.35    # 우측 한계
++    target_z_min: float = 0.45    # 하단 (무릎 높이)
++    target_z_max: float = 1.05    # 상단 (가슴 높이)
++
++    # 스핀 (RPM): MLB 범위 약 1000~3200 RPM
++    spin_rate_min: float = 800.0
++    spin_rate_max: float = 3200.0
++
++    # 스핀 축 각도 (rad): 0 ~ 2π (시계방향 기준)
++    spin_axis_min: float = 0.0
++    spin_axis_max: float = 2.0 * np.pi
++
++    # 릴리스 위치 (투수 마운드 → 홈플레이트 방향)
++    release_position: np.ndarray = field(
++        default_factory=lambda: np.array([0.0, 18.44, 1.85])
++        # x=0 (중앙), y=18.44m (마운드 거리), z=1.85m (릴리스 높이)
++    )
++
++    # 홈플레이트 위치
++    plate_position: np.ndarray = field(
++        default_factory=lambda: np.array([0.0, 0.0, 0.0])
++    )
++
++
++# ──────────────────────────────────────────────────────────────
++#  공기역학 계수 모델
++# ──────────────────────────────────────────────────────────────
++
++class AerodynamicsModel:
++    """공기역학 계수(Cd, Cl)를 계산하는 모델.
++
++    Reynolds 수와 스핀 파라미터에 기반하여 가변 계수를 제공합니다.
++    """
++
++    def __init__(self, ball: BallPhysics):
++        self.ball = ball
++
++    def drag_coefficient(self, v_mag: float) -> float:
++        """Reynolds 수 기반 항력 계수 C_d를 계산합니다.
++
++        MLB 야구공의 실험적 데이터에 기반한 모델:
++        - 저속(< 25 m/s): C_d ≈ 0.50 (층류 경계층)
++        - 중속(25~35 m/s): C_d ≈ 0.35~0.45 (전이 영역)
++        - 고속(> 35 m/s): C_d ≈ 0.30~0.35 (난류 경계층, 드래그 크라이시스)
++
++        Args:
++            v_mag: 공의 속력 (m/s)
++
++        Returns:
++            항력 계수 C_d
++        """
++        if v_mag < 1e-6:
++            return 0.47
++
++        # 실험적 피팅 (Alan Nathan의 연구 기반)
++        # 속도가 증가하면 drag crisis로 인해 Cd가 감소
++        v_ref = 35.0  # 참조 속도
++        cd_low = 0.50
++        cd_high = 0.30
++        transition_width = 8.0
++
++        # Sigmoid 전이 모델
++        x = (v_mag - v_ref) / transition_width
++        sigmoid = 1.0 / (1.0 + np.exp(-x))
++        cd = cd_low + (cd_high - cd_low) * sigmoid
++
++        return float(cd)
++
++    def lift_coefficient(self, v_mag: float, spin_rate_rpm: float) -> float:
++        """스핀 파라미터 기반 양력(마그누스) 계수 C_L을 계산합니다.
++
++        스핀 파라미터 S = rω/v 에 비례하며, 실험적 상한이 존재합니다.
++
++        Args:
++            v_mag: 공의 속력 (m/s)
++            spin_rate_rpm: 스핀 속도 (RPM)
++
++        Returns:
++            양력 계수 C_L
++        """
++        if v_mag < 1e-6:
++            return 0.0
++
++        omega = spin_rate_rpm * 2.0 * np.pi / 60.0  # RPM → rad/s
++        spin_param = self.ball.radius * omega / v_mag
++
++        # 실험적 피팅: C_L = min(a * S, C_L_max)
++        # Adair(2002) 모델 기반
++        cl = min(1.5 * spin_param, 0.40)
++
++        return float(cl)
++
++
++# ──────────────────────────────────────────────────────────────
++#  궤적 시뮬레이션 엔진
++# ──────────────────────────────────────────────────────────────
++
++class TrajectorySimulator:
++    """RK4 수치적분 기반 공 궤적 시뮬레이터.
++
++    중력, 항력, 마그누스 힘을 동시에 적용하여 3D 궤적을 계산합니다.
++    """
++
++    def __init__(self, ball: Optional[BallPhysics] = None, dt: float = 0.001):
++        """
++        Args:
++            ball: 야구공 물리 파라미터 (None이면 기본값 사용)
++            dt: 시뮬레이션 시간 간격 (초). 고속 충돌을 위해 1ms 권장.
++        """
++        self.ball = ball or BallPhysics()
++        self.aero = AerodynamicsModel(self.ball)
++        self.dt = dt
++
++    def compute_forces(
++        self,
++        position: np.ndarray,
++        velocity: np.ndarray,
++        spin_vector: np.ndarray,
++        spin_rate_rpm: float,
++    ) -> np.ndarray:
++        """현재 상태에서 공에 작용하는 총 힘 벡터를 계산합니다.
++
++        Args:
++            position: 공의 3D 위치 [x, y, z] (m)
++            velocity: 공의 3D 속도 [vx, vy, vz] (m/s)
++            spin_vector: 정규화된 스핀 축 벡터 [sx, sy, sz]
++            spin_rate_rpm: 스핀 속도 (RPM)
++
++        Returns:
++            총 힘 벡터 [Fx, Fy, Fz] (N)
++        """
++        v_mag = np.linalg.norm(velocity)
++        m = self.ball.mass
++        rho = self.ball.air_density
++        A = self.ball.cross_section_area
++        r = self.ball.radius
++
++        # 1. 중력
++        f_gravity = np.array([0.0, 0.0, -m * self.ball.gravity])
++
++        if v_mag < 1e-6:
++            return f_gravity
++
++        # 2. 항력 (속도 반대 방향)
++        cd = self.aero.drag_coefficient(v_mag)
++        f_drag = -0.5 * rho * A * cd * v_mag * velocity
++
++        # 3. 마그누스 힘 (ω × v 방향)
++        cl = self.aero.lift_coefficient(v_mag, spin_rate_rpm)
++        omega_vec = spin_vector * (spin_rate_rpm * 2.0 * np.pi / 60.0)
++        magnus_dir = np.cross(omega_vec, velocity)
++        magnus_mag = 0.5 * rho * A * cl * v_mag
++        f_magnus = magnus_mag * magnus_dir / (np.linalg.norm(magnus_dir) + 1e-10) \
++            if np.linalg.norm(magnus_dir) > 1e-10 else np.zeros(3)
++
++        return f_gravity + f_drag + f_magnus
++
++    def _derivatives(
++        self,
++        state: np.ndarray,
++        spin_vector: np.ndarray,
++        spin_rate_rpm: float,
++    ) -> np.ndarray:
++        """상태 벡터의 시간 미분을 계산합니다 (ODE 우변).
++
++        Args:
++            state: [x, y, z, vx, vy, vz]
++            spin_vector: 정규화된 스핀 축 벡터
++            spin_rate_rpm: 스핀 속도 (RPM)
++
++        Returns:
++            [vx, vy, vz, ax, ay, az]
++        """
++        pos = state[:3]
++        vel = state[3:]
++        forces = self.compute_forces(pos, vel, spin_vector, spin_rate_rpm)
++        accel = forces / self.ball.mass
++        return np.concatenate([vel, accel])
++
++    def simulate(
++        self,
++        initial_position: np.ndarray,
++        initial_velocity: np.ndarray,
++        spin_vector: np.ndarray,
++        spin_rate_rpm: float,
++        max_time: float = 1.0,
++        y_stop: float = 0.0,
++    ) -> dict:
++        """RK4 수치적분으로 공의 궤적을 시뮬레이션합니다.
++
++        Args:
++            initial_position: 릴리스 위치 [x, y, z] (m)
++            initial_velocity: 릴리스 속도 [vx, vy, vz] (m/s)
++            spin_vector: 정규화된 스핀 축 벡터 [sx, sy, sz]
++            spin_rate_rpm: 스핀 속도 (RPM)
++            max_time: 최대 시뮬레이션 시간 (초)
++            y_stop: y좌표가 이 값 이하이면 시뮬레이션 종료 (홈플레이트 도달)
++
++        Returns:
++            dict with keys:
++                'positions': (N, 3) 위치 배열
++                'velocities': (N, 3) 속도 배열
++                'times': (N,) 시간 배열
++                'forces_history': (N, 3) 각 시점 총 힘
++                'final_position': (3,) 최종 위치
++                'final_velocity': (3,) 최종 속도
++                'flight_time': float 비행 시간
++                'plate_crossing': (3,) y=0 통과 위치 (보간)
++        """
++        state = np.concatenate([initial_position, initial_velocity])
++        dt = self.dt
++
++        positions = [initial_position.copy()]
++        velocities = [initial_velocity.copy()]
++        forces_history = [self.compute_forces(
++            initial_position, initial_velocity, spin_vector, spin_rate_rpm
++        )]
++        times = [0.0]
++
++        t = 0.0
++        n_steps = int(max_time / dt)
++
++        for _ in range(n_steps):
++            # RK4 적분
++            k1 = self._derivatives(state, spin_vector, spin_rate_rpm)
++            k2 = self._derivatives(state + 0.5 * dt * k1, spin_vector, spin_rate_rpm)
++            k3 = self._derivatives(state + 0.5 * dt * k2, spin_vector, spin_rate_rpm)
++            k4 = self._derivatives(state + dt * k3, spin_vector, spin_rate_rpm)
++
++            state = state + (dt / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4)
++            t += dt
++
++            pos = state[:3].copy()
++            vel = state[3:].copy()
++
++            positions.append(pos)
++            velocities.append(vel)
++            forces_history.append(
++                self.compute_forces(pos, vel, spin_vector, spin_rate_rpm)
++            )
++            times.append(t)
++
++            # 홈플레이트 도달 판정 (y ≤ y_stop)
++            if pos[1] <= y_stop:
++                break
++
++            # 지면 충돌 방지 (z < -1.0)
++            if pos[2] < -1.0:
++                break
++
++        positions = np.array(positions)
++        velocities = np.array(velocities)
++        forces_history = np.array(forces_history)
++        times = np.array(times)
++
++        # y=0 통과 지점 선형 보간
++        plate_crossing = positions[-1][:3].copy()
++        if len(positions) >= 2 and positions[-2][1] > y_stop >= positions[-1][1]:
++            y1, y2 = positions[-2][1], positions[-1][1]
++            alpha = (y_stop - y1) / (y2 - y1 + 1e-10)
++            plate_crossing = positions[-2] + alpha * (positions[-1] - positions[-2])
++
++        return {
++            'positions': positions,
++            'velocities': velocities,
++            'times': times,
++            'forces_history': forces_history,
++            'final_position': positions[-1].copy(),
++            'final_velocity': velocities[-1].copy(),
++            'flight_time': times[-1],
++            'plate_crossing': plate_crossing,
++        }
++
++
++# ──────────────────────────────────────────────────────────────
++#  투수 메커니즘 (E2E Action → 물리 시뮬레이션)
++# ──────────────────────────────────────────────────────────────
++
++class PitcherMechanism:
++    """End-to-End 투수 물리 메커니즘.
++
++    신경망의 연속 액션 벡터 [-1, 1]^5를 실제 물리 파라미터로 변환하고,
++    궤적 시뮬레이션을 수행합니다.
++
++    Action Vector:
++        [0] v_release:   릴리스 속도 (normalized)
++        [1] theta_x:     목표 x 오프셋 (normalized)
++        [2] theta_z:     목표 z 오프셋 (normalized)
++        [3] spin_rate:   스핀 속도 (normalized)
++        [4] spin_axis:   스핀 축 각도 (normalized)
++    """
++
++    def __init__(
++        self,
++        ball: Optional[BallPhysics] = None,
++        config: Optional[PitchConfig] = None,
++        dt: float = 0.001,
++    ):
++        self.ball = ball or BallPhysics()
++        self.config = config or PitchConfig()
++        self.simulator = TrajectorySimulator(self.ball, dt)
++
++    def _normalize_to_range(
++        self, value: float, low: float, high: float
++    ) -> float:
++        """[-1, 1] 범위를 [low, high] 범위로 매핑합니다."""
++        return low + (value + 1.0) * 0.5 * (high - low)
++
++    def decode_action(self, action: np.ndarray) -> dict:
++        """신경망 액션 벡터를 물리 파라미터로 변환합니다.
++
++        Args:
++            action: 5차원 연속 액션 벡터, 각 성분 ∈ [-1, 1]
++
++        Returns:
++            dict with physical parameters:
++                'v_release': 릴리스 속도 (m/s)
++                'target_x': 목표 x 오프셋 (m)
++                'target_z': 목표 z 오프셋 (m)
++                'spin_rate_rpm': 스핀 속도 (RPM)
++                'spin_axis_angle': 스핀 축 각도 (rad)
++                'spin_vector': 3D 스핀 축 벡터 (정규화)
++                'initial_velocity': 3D 초기 속도 벡터 (m/s)
++        """
++        cfg = self.config
++        action = np.clip(action, -1.0, 1.0)
++
++        v_release = self._normalize_to_range(
++            action[0], cfg.v_release_min, cfg.v_release_max
++        )
++        target_x = self._normalize_to_range(
++            action[1], cfg.target_x_min, cfg.target_x_max
++        )
++        target_z = self._normalize_to_range(
++            action[2], cfg.target_z_min, cfg.target_z_max
++        )
++        spin_rate_rpm = self._normalize_to_range(
++            action[3], cfg.spin_rate_min, cfg.spin_rate_max
++        )
++        spin_axis_angle = self._normalize_to_range(
++            action[4], cfg.spin_axis_min, cfg.spin_axis_max
++        )
++
++        # 스핀 축 벡터 계산 (구면좌표계에서 단위 벡터)
++        # spin_axis_angle은 y-z 평면에서의 회전각
++        spin_vector = np.array([
++            np.sin(spin_axis_angle),    # x 성분 (좌우 스핀)
++            0.0,                        # y 성분 (전후 — 투구 방향이므로 0)
++            np.cos(spin_axis_angle),    # z 성분 (상하 스핀)
++        ])
++        spin_vector = spin_vector / (np.linalg.norm(spin_vector) + 1e-10)
++
++        # 초기 속도 벡터 계산
++        # 릴리스 → 타겟 방향으로 속도 벡터 생성
++        release_pos = cfg.release_position.copy()
++        target_pos = np.array([target_x, 0.0, target_z])  # 홈플레이트 기준
++
++        direction = target_pos - release_pos
++        direction = direction / (np.linalg.norm(direction) + 1e-10)
++        initial_velocity = direction * v_release
++
++        return {
++            'v_release': v_release,
++            'target_x': target_x,
++            'target_z': target_z,
++            'spin_rate_rpm': spin_rate_rpm,
++            'spin_axis_angle': spin_axis_angle,
++            'spin_vector': spin_vector,
++            'initial_velocity': initial_velocity,
++            'release_position': release_pos,
++        }
++
++    def pitch(self, action: np.ndarray) -> dict:
++        """E2E 투구를 실행합니다: 액션 → 물리 파라미터 → 궤적 시뮬레이션.
++
++        Args:
++            action: 5차원 연속 액션 벡터, 각 성분 ∈ [-1, 1]
++
++        Returns:
++            dict with:
++                'params': 물리 파라미터 (decode_action의 결과)
++                'trajectory': 궤적 시뮬레이션 결과 (simulate의 결과)
++                'plate_x': 홈플레이트 통과 x 좌표 (m)
++                'plate_z': 홈플레이트 통과 z 좌표 (m)
++                'arrival_speed': 도착 속도 (m/s)
++                'arrival_speed_kmh': 도착 속도 (km/h)
++                'movement_x': 수평 무브먼트 (m) — 직구 대비 변화량
++                'movement_z': 수직 무브먼트 (m) — 직구 대비 변화량
++        """
++        params = self.decode_action(action)
++
++        trajectory = self.simulator.simulate(
++            initial_position=params['release_position'],
++            initial_velocity=params['initial_velocity'],
++            spin_vector=params['spin_vector'],
++            spin_rate_rpm=params['spin_rate_rpm'],
++            max_time=1.0,
++            y_stop=0.0,
++        )
++
++        plate = trajectory['plate_crossing']
++        final_vel = trajectory['final_velocity']
++
++        # 무브먼트 계산 (스핀 없는 직구 대비)
++        no_spin_traj = self.simulator.simulate(
++            initial_position=params['release_position'],
++            initial_velocity=params['initial_velocity'],
++            spin_vector=np.array([0.0, 0.0, 0.0]),
++            spin_rate_rpm=0.0,
++            max_time=1.0,
++            y_stop=0.0,
++        )
++        no_spin_plate = no_spin_traj['plate_crossing']
++
++        return {
++            'params': params,
++            'trajectory': trajectory,
++            'plate_x': float(plate[0]),
++            'plate_z': float(plate[2]),
++            'arrival_speed': float(np.linalg.norm(final_vel)),
++            'arrival_speed_kmh': float(np.linalg.norm(final_vel) * 3.6),
++            'movement_x': float(plate[0] - no_spin_plate[0]),
++            'movement_z': float(plate[2] - no_spin_plate[2]),
++        }
++
++    def simulate_pitch(
++        self,
++        v_release: float,
++        target_x: float,
++        target_z: float,
++        spin_rate_rpm: float,
++        spin_vector: np.ndarray,
++    ) -> np.ndarray:
++        """직접 물리 파라미터를 지정하여 궤적을 시뮬레이션합니다.
++
++        검증/테스트 용도로 사용됩니다.
++
++        Args:
++            v_release: 릴리스 속도 (m/s)
++            target_x: 목표 x 위치 (m)
++            target_z: 목표 z 위치 (m)
++            spin_rate_rpm: 스핀 속도 (RPM)
++            spin_vector: 3D 스핀 축 벡터
++
++        Returns:
++            (N, 3) 위치 배열
++        """
++        release_pos = self.config.release_position.copy()
++        target_pos = np.array([target_x, 0.0, target_z])
++
++        direction = target_pos - release_pos
++        direction = direction / (np.linalg.norm(direction) + 1e-10)
++        initial_velocity = direction * v_release
++
++        spin_vector = spin_vector / (np.linalg.norm(spin_vector) + 1e-10)
++
++        result = self.simulator.simulate(
++            initial_position=release_pos,
++            initial_velocity=initial_velocity,
++            spin_vector=spin_vector,
++            spin_rate_rpm=spin_rate_rpm,
++            max_time=1.0,
++            y_stop=0.0,
++        )
++        return result['positions']
++
++
++# ──────────────────────────────────────────────────────────────
++#  스트라이크존 판정
++# ──────────────────────────────────────────────────────────────
++
++class StrikeZone:
++    """스트라이크존 판정 엔진.
++
++    MLB 규정 기반:
++    - 좌우: 홈플레이트 폭 (17인치 = 0.4318m), ±반지름 보정
++    - 상하: 타자 무릎~가슴 (약 0.45m~1.05m)
++    """
++
++    def __init__(
++        self,
++        x_min: float = -0.2159,
++        x_max: float = 0.2159,
++        z_min: float = 0.45,
++        z_max: float = 1.05,
++        ball_radius: float = 0.0366,
++    ):
++        # 공의 반지름 보정 (공의 가장자리가 존에 걸치면 스트라이크)
++        self.x_min = x_min - ball_radius
++        self.x_max = x_max + ball_radius
++        self.z_min = z_min - ball_radius
++        self.z_max = z_max + ball_radius
++
++        # 보정 전 원본 (시각화용)
++        self.raw_x_min = x_min
++        self.raw_x_max = x_max
++        self.raw_z_min = z_min
++        self.raw_z_max = z_max
++
++    def is_strike(self, plate_x: float, plate_z: float) -> bool:
++        """홈플레이트 통과 위치가 스트라이크존 내인지 판정합니다.
++
++        Args:
++            plate_x: 홈플레이트 통과 x 좌표 (m)
++            plate_z: 홈플레이트 통과 z 좌표 (m)
++
++        Returns:
++            True if strike
++        """
++        return (
++            self.x_min <= plate_x <= self.x_max
++            and self.z_min <= plate_z <= self.z_max
++        )
++
++    def distance_to_zone(self, plate_x: float, plate_z: float) -> float:
++        """스트라이크존까지의 거리를 계산합니다 (존 밖일 때).
++
++        존 내부에 있으면 0.0을 반환합니다.
++
++        Args:
++            plate_x: 홈플레이트 통과 x 좌표 (m)
++            plate_z: 홈플레이트 통과 z 좌표 (m)
++
++        Returns:
++            존까지의 유클리드 거리 (m)
++        """
++        dx = max(self.x_min - plate_x, 0.0, plate_x - self.x_max)
++        dz = max(self.z_min - plate_z, 0.0, plate_z - self.z_max)
++        return np.sqrt(dx ** 2 + dz ** 2)
++
++    def zone_location(self, plate_x: float, plate_z: float) -> tuple:
++        """9분할 존(3×3) 기준으로 어느 위치에 해당하는지 반환합니다.
++
++        Args:
++            plate_x: 홈플레이트 통과 x 좌표 (m)
++            plate_z: 홈플레이트 통과 z 좌표 (m)
++
++        Returns:
++            (col, row) 튜플, 0-indexed. col: 0=좌, 1=중, 2=우, row: 0=하, 1=중, 2=상
++            스트라이크존 밖이면 (-1, -1)
++        """
++        if not self.is_strike(plate_x, plate_z):
++            return (-1, -1)
++
++        x_range = self.x_max - self.x_min
++        z_range = self.z_max - self.z_min
++
++        col = min(int((plate_x - self.x_min) / (x_range / 3.0)), 2)
++        row = min(int((plate_z - self.z_min) / (z_range / 3.0)), 2)
++
++        return (col, row)
+diff --git a/simulator/__init__.py b/simulator/__init__.py
+new file mode 100644
+index 0000000..76baa3b
+--- /dev/null
++++ b/simulator/__init__.py
+@@ -0,0 +1 @@
++"""Simulator Package - Real-time Training Dashboard."""
+diff --git a/training/__init__.py b/training/__init__.py
+new file mode 100644
+index 0000000..4f643a3
+--- /dev/null
++++ b/training/__init__.py
+@@ -0,0 +1 @@
++"""Training Package - Networks, Trainer, and Replay Buffer."""

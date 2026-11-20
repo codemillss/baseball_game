@@ -1,0 +1,52 @@
+commit a64134dcb59053dcfbf65c85870f5098c1ff1a31
+Author:     codemills <ggzgcode10000@gmail.com>
+AuthorDate: Sun Sep 6 03:41:42 2026 +0900
+Commit:     codemills <ggzgcode10000@gmail.com>
+CommitDate: Sun Sep 6 03:41:42 2026 +0900
+
+    feat: Include trained model checkpoints and normalization weights for out-of-the-box demo reproducibility
+
+diff --git a/.gitignore b/.gitignore
+index 5bc1d5c..8383174 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -12,30 +12,26 @@ venv/
+ .venv/
+ env/
+ 
+-# Training Data & Checkpoints
+-checkpoints/
++# Large Training Logs & Heavy Outputs
++checkpoints/**/tb_logs/
++checkpoints/**/logs/
+ data/
++runs/
++MUJOCO_LOG.TXT
+ *.pt
+ *.pth
+ 
+-# IDE
++# IDE & OS
+ .vscode/
+ .idea/
+ *.swp
+ *.swo
+ *~
+-
+-# OS
+ .DS_Store
+ Thumbs.db
+-
+-# Jupyter
+ .ipynb_checkpoints/
+ 
+-# Logs & Media artifacts
+-logs/
+-MUJOCO_LOG.TXT
++# Temporary / Intermediate Artifacts
+ humanoid_tmp.xml
+-videos/*.mp4
+-videos/*.gif
+-
++archive/mujoco_menagerie
++archive/humanoid/assets/atlas_repo

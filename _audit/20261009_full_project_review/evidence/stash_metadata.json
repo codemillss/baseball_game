@@ -1,0 +1,17 @@
+[
+  {
+    "metadata": "98f2dfcbccd103610f605ecdf19fa505c91a5652\t2026-08-31T21:26:27+09:00\tb2be6bf043760c39c9ad6aff4da86640fa8978c9 c8cc4215178a7b164e2d20fc75f568f9f20c6298 f04e72e56358576cd5bca1d46c4e686a8ba33916\tWIP on main: b2be6bf feat: implement reinforcement learning environment, game logic, and training pipeline for baseball simulation",
+    "files": 14,
+    "code_files": 11
+  },
+  {
+    "metadata": "c8cc4215178a7b164e2d20fc75f568f9f20c6298\t2026-08-31T21:26:27+09:00\tb2be6bf043760c39c9ad6aff4da86640fa8978c9\tindex on main: b2be6bf feat: implement reinforcement learning environment, game logic, and training pipeline for baseball simulation",
+    "files": 14,
+    "code_files": 11
+  },
+  {
+    "metadata": "f04e72e56358576cd5bca1d46c4e686a8ba33916\t2026-08-31T21:26:27+09:00\t\tuntracked files on main: b2be6bf feat: implement reinforcement learning environment, game logic, and training pipeline for baseball simulation",
+    "files": 1,
+    "code_files": 0
+  }
+]

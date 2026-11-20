@@ -1,0 +1,30 @@
+f63dc977f29d53103b0853ac29fbaeddfb95b60e	2026-09-06T04:26:03+09:00	2026-09-06T04:26:03+09:00	refactor: Rename docs/report_assets to docs/assets to standardize documentation layout
+ee09bb074cd2525821fb1a0bf8ae43bd060ad060	2026-09-06T04:21:31+09:00	2026-09-06T04:21:31+09:00	fix: Remove orphan submodule references to allow GitHub Actions checkout
+bb1d93dabeb517472014287b1006557e6ddb1912	2026-09-06T04:19:53+09:00	2026-09-06T04:19:53+09:00	chore: Add .nojekyll to prevent Jekyll build interference on GitHub Pages
+25db149e65689cbb36b6adbb8ee6dc858ef636e1	2026-09-06T04:18:42+09:00	2026-09-06T04:18:42+09:00	docs: Update README with docs/ navigation table and GitHub Pages link
+48db86d2035a4c3d9cded34c099bda816675f589	2026-09-06T04:18:38+09:00	2026-09-06T04:18:38+09:00	refactor: Reorganize technical reports and papers into docs/ directory for GitHub Pages compatibility
+530b6ea1c8557b0c6b4b67c6f3d31940ef2d7b6c	2026-09-06T04:08:22+09:00	2026-09-06T04:08:22+09:00	docs: Refine retrospective tone to professional confidence and articulate initial Sim-to-Real vision and compute barriers
+92043abbaf29706c28063892fe13fd7cc6d2e3bd	2026-09-06T04:02:04+09:00	2026-09-06T04:02:04+09:00	docs: Add Section 11 Engineering Retrospective, SKALA deployment realization, and benchmarking reflections
+a64134dcb59053dcfbf65c85870f5098c1ff1a31	2026-09-06T03:41:42+09:00	2026-09-06T03:41:42+09:00	feat: Include trained model checkpoints and normalization weights for out-of-the-box demo reproducibility
+652e940abb72cccf7c6ef4cc3fb28dc06ecab219	2026-09-06T03:40:52+09:00	2026-09-06T03:40:52+09:00	chore: Organize root directory, archive patch scripts, and add REPORT.pdf
+ec0d5f95378787be2afb3ec62b4accb975fb3d8d	2026-09-06T03:36:12+09:00	2026-09-06T03:36:12+09:00	feat: Add Section 10.3 & 10.4 with 3-Perspective Expert Peer Review and Two-Track Roadmap
+27ac333bbf6e6959167027d7b5f000ebe5d08cb6	2026-09-06T03:15:43+09:00	2026-09-06T03:15:43+09:00	fix(report): Restore 12 missing video keyframes, embed stadium textures, remove polyfill.io, and polish print CSS
+547f58a48cace486ce1abba9b7105279058f3228	2026-09-06T03:10:32+09:00	2026-09-06T03:10:32+09:00	docs: Add publication-grade 15-page comprehensive technical report in HTML with 45 embedded video frames and physics formulations
+37cba3bb414a0bd5e0943871036f066d29a1c0f8	2026-09-06T02:55:10+09:00	2026-09-06T02:55:10+09:00	docs: Add formal academic research paper (Intro-Why-What-How-SoWhat)
+fe09ffc31ad46f1ccdab2d88cb343d4408026f8a	2026-09-03T00:17:44+09:00	2026-09-03T00:17:44+09:00	feat: Add run_demo.sh entry point script
+93aa1e7b764ba38d09a7c69cdf936f05a30eaada	2026-09-03T00:17:38+09:00	2026-09-03T00:17:38+09:00	docs: Add polished README.md for project packaging
+58b2a5888cfaa4590d4a8501727242efa6d28668	2026-09-01T23:57:09+09:00	2026-09-01T23:57:09+09:00	refactor: Architectural overhaul - Mega Scale Training, Frame Stacking, LR Annealing, Self-Play Env
+d1cfbb5013fe129787d65229bbd7a22b3ce7e833	2026-09-01T23:51:08+09:00	2026-09-01T23:51:08+09:00	feat(Phase 9): Full 9-Inning Game State Machine (Scoreboard, Innings, Outs)
+df8a0aab6f9950ee70024206b9df98c9950585ae	2026-09-01T23:49:00+09:00	2026-09-01T23:49:00+09:00	feat(Phase 8.3): Added Catcher and Runner robots for base stealing simulation
+a7227be3bc58d49ce2ca963284b52cc494387fdb	2026-09-01T23:42:50+09:00	2026-09-01T23:42:50+09:00	feat(Phase 8.2): Advanced Physics - Magnus Effect for pitch types and Trampoline effect for bat collisions
+fafee96c8335847ae4d83cfd3469b2a8dc2e7156	2026-09-01T23:33:29+09:00	2026-09-01T23:33:29+09:00	feat(Phase 8.1): Automated Umpire Rules, Strike Zone sensors, and Broadcast Director AI
+62f112bd43860b055ed4a3ed32f3436e495f9d92	2026-09-01T23:24:37+09:00	2026-09-01T23:24:37+09:00	feat: Completed Phase 1 to 7 (MoCap, Match, Fielder, Cameras)
+98f2dfcbccd103610f605ecdf19fa505c91a5652	2026-08-31T21:26:27+09:00	2026-08-31T21:26:27+09:00	WIP on main: b2be6bf feat: implement reinforcement learning environment, game logic, and training pipeline for baseball simulation
+c8cc4215178a7b164e2d20fc75f568f9f20c6298	2026-08-31T21:26:27+09:00	2026-08-31T21:26:27+09:00	index on main: b2be6bf feat: implement reinforcement learning environment, game logic, and training pipeline for baseball simulation
+f04e72e56358576cd5bca1d46c4e686a8ba33916	2026-08-31T21:26:27+09:00	2026-08-31T21:26:27+09:00	untracked files on main: b2be6bf feat: implement reinforcement learning environment, game logic, and training pipeline for baseball simulation
+7f926eddbe825afaf432214dabeecee4ab1673aa	2026-07-31T11:46:13+09:00	2026-07-31T11:46:13+09:00	tenp commit
+01b635700b936fc2268c5f887b4dc8e4f38fe7c0	2026-07-27T08:32:00+09:00	2026-07-27T08:32:00+09:00	docs: add EXECUTION_GUIDE.md
+b2be6bf043760c39c9ad6aff4da86640fa8978c9	2026-07-24T19:39:51+09:00	2026-07-24T19:39:51+09:00	feat: implement reinforcement learning environment, game logic, and training pipeline for baseball simulation
+2ef3ca90e7e4a4b2c82440d19f7f24344ee9ebdc	2026-07-24T19:15:50+09:00	2026-07-24T19:15:50+09:00	feat: End-to-End Baseball RL Framework & Simulator
+60641d00db0ed6413e30b2d1c5e96b7314f12b01	2026-07-24T19:06:24+09:00	2026-07-24T19:06:24+09:00	Opus
+bf8241620249cbc62d63aae770edaa5cc64c49f3	2026-07-22T18:50:09+09:00	2026-07-22T18:50:09+09:00	feat: Initialize PyTorch Deep Learning Workbook & AI Study Repo

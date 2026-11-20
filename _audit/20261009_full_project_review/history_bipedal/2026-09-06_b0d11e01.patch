@@ -1,0 +1,29 @@
+commit b0d11e0178415e48d86e466eaee34775f863082c
+Author:     codemills <ggzgcode10000@gmail.com>
+AuthorDate: Sun Sep 6 04:42:16 2026 +0900
+Commit:     codemills <ggzgcode10000@gmail.com>
+CommitDate: Sun Sep 6 04:42:16 2026 +0900
+
+    docs: Add initial README.md with core research question and roadmap
+
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..ce1e627
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,15 @@
++# 🤖 Bipedal Baseball AI: Whole-Body Kinetic Strike & Locomotion
++
++Unitree H1 휴머노이드 로봇 기반의 **이족 보행 전신 타격(Whole-Body Bipedal Batting) 및 질주(Locomotion Transition)** 차세대 심층 강화학습 프로젝트.
++
++## 📌 Core Research Question
++> *"휴머노이드 로봇이 두 발로 그라운드를 딛고 서서(Bipedal Stance), 140km/h 타격 회전 토크를 지면 반력(GRF)과 ZMP 밸런스로 버텨내며 원하는 방향으로 공을 쪼개고, 타격 직후 1루로 전력 질주하는 전신 제어(Whole-Body Control)를 어떻게 달성할 것인가?"*
++
++## 📚 Ongoing Research Journal
++* 프로젝트의 모든 기획 회의, 기술 의사결정, 가설 및 트러블슈팅은 [**`RESEARCH_LOG.md`**](RESEARCH_LOG.md)에 실시간으로 누적 기록됩니다.
++
++## 🏛 4-Stage Progressive Curriculum
++1. **Phase 1: Directional Hitting & Precision Contact** (밀어치기/당겨치기, 발사각 제어)
++2. **Phase 2: Sim-to-Real Physical Hardening** (H1 실물 모터 토크 클리핑, 통신 지연, 도메인 랜덤화)
++3. **Phase 3: Whole-Body Kinetic Chain Swing** (H1 19-DoF 전신 복원, 체중 이동 및 ZMP 지면 반력 균형)
++4. **Phase 4: Hit-and-Run Locomotion Transition** (타격 후 배트 릴리스 및 1루 전력 질주 보행 위상 전이)

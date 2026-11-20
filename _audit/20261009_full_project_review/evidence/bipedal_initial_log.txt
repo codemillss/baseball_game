@@ -1,0 +1,17 @@
+ec3f85484ffb2d612fc890f2b515eba705748d9e	2026-09-09T01:24:09+09:00	2026-09-09T01:24:09+09:00	feat(Phase 12): Final Human-like Batter Biomechanics & Catcher Stability
+3dc3ab8d9de9594895576276f56a080a54260909	2026-09-09T01:09:06+09:00	2026-09-09T01:09:06+09:00	feat(Phase 12): Human-like Batter Biomechanics & Rock-Solid Catcher Squat Balance
+8c3e6e2ebc8033326a3118ab6bd11ae2c34c22aa	2026-09-07T22:43:41+09:00	2026-09-07T22:43:41+09:00	feat(Phase 12): Human-like Batter Biomechanics & Rock-Solid Catcher Squat Balance
+f29fc65edcd1ede3af5b713cca1c12916c674e76	2026-09-07T21:54:19+09:00	2026-09-07T21:54:19+09:00	feat(Phase 11): Complete Deep-Knee Athletic Batter Stance & Strike-Zone-Aligned Whole-Body Duel
+80bc120bf5e565e4e8a60957b794157cc4ef98d7	2026-09-07T21:18:11+09:00	2026-09-07T21:18:11+09:00	feat(Battery): Implement deep catcher squat, pitch framing, and standardized strike zone constraints
+8d0a745af45bb12f85074b78c8a01f18329fb470	2026-09-07T06:40:54+09:00	2026-09-07T06:40:54+09:00	feat(Phase 7): Implement and verify Full Infield Bipedal Defense and 1st Base Out/Safe Play
+6e35b96c648213a32055260e68bb670abc64c46c	2026-09-07T06:20:32+09:00	2026-09-07T06:20:32+09:00	feat(Phase 7): Implement and verify Full Infield Bipedal Defense and 1st Base Out/Safe Play
+ad484464b32560a688a4ae8a8553954d8ad4bcd6	2026-09-07T05:52:37+09:00	2026-09-07T05:52:37+09:00	feat(Phase 6): Implement and benchmark continuous multi-step bipedal base running to 1st base
+9c5bcad6ccd4b28d50db27041b7478ed6e08d148	2026-09-07T02:38:45+09:00	2026-09-07T02:38:45+09:00	feat(Phase 5): Calibrate lateral pitch sweet-spot alignment and achieve 6.09cm sweet spot MAE
+cd23803b33cda2582bc440e98302589028992449	2026-09-07T02:25:53+09:00	2026-09-07T02:25:53+09:00	feat(Phase 5): Calibrate front impact plane, lead time perception, and pelvis recoil compensation
+453be6cdb814d0e6b674bfd1e2f41da3538fee69	2026-09-07T01:56:33+09:00	2026-09-07T01:56:33+09:00	feat(Phase 5): Calibrate pitch perception lead time, magnus plunge swing plane, and 50-episode benchmark
+c8388fc0ce6d05a6cea3bcb8e581afe13373b6c4	2026-09-07T01:30:52+09:00	2026-09-07T01:30:52+09:00	feat(Phase 5): Complete Full-Stadium Whole-Body Pitcher-Batter Duel
+ee5a4a0469304cc28abe8ae72503407991655b2a	2026-09-06T05:49:44+09:00	2026-09-06T05:49:44+09:00	feat(Phase 3-4): Complete Whole-Body Bipedal Swing and Hit-and-Run Locomotion Transition
+dd5baf5821a40023faa08d9405a8eee220338a32	2026-09-06T05:24:07+09:00	2026-09-06T05:24:07+09:00	feat(Phase 1-2): Integrate Pitcher AI, Sim-to-Real Hardware Hardening, and Closed-Loop Duel Match
+7c82e9d8826b7090f29e35559e9e177b9d87557d	2026-09-06T05:04:18+09:00	2026-09-06T05:04:18+09:00	feat(Phase 1): Implement and verify Goal-Conditioned Directional Batting Environment with 96% fair-hit rate
+b0d11e0178415e48d86e466eaee34775f863082c	2026-09-06T04:42:16+09:00	2026-09-06T04:42:16+09:00	docs: Add initial README.md with core research question and roadmap
+8346fcf0810a91f6750b2f1d234aefcdbdf8a730	2026-09-06T04:42:10+09:00	2026-09-06T04:42:10+09:00	initial: Inaugurate Bipedal Baseball AI research project and journal

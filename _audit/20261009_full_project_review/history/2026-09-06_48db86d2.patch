@@ -1,0 +1,20 @@
+commit 48db86d2035a4c3d9cded34c099bda816675f589
+Author:     codemills <ggzgcode10000@gmail.com>
+AuthorDate: Sun Sep 6 04:18:38 2026 +0900
+Commit:     codemills <ggzgcode10000@gmail.com>
+CommitDate: Sun Sep 6 04:18:38 2026 +0900
+
+    refactor: Reorganize technical reports and papers into docs/ directory for GitHub Pages compatibility
+
+diff --git a/EXPERIMENT_LOG.md b/docs/EXPERIMENT_LOG.md
+similarity index 100%
+rename from EXPERIMENT_LOG.md
+rename to docs/EXPERIMENT_LOG.md
+diff --git a/PAPER.md b/docs/PAPER.md
+similarity index 100%
+rename from PAPER.md
+rename to docs/PAPER.md
+diff --git a/VIDEO_CATALOG.md b/docs/VIDEO_CATALOG.md
+similarity index 100%
+rename from VIDEO_CATALOG.md
+rename to docs/VIDEO_CATALOG.md

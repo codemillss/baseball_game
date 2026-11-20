@@ -1,0 +1,670 @@
+{
+  "baseline": [
+    {
+      "task": "soft",
+      "mode": "no_trigger",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -42.327172349302785,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "soft",
+      "mode": "random",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -313.7328472183538,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "soft",
+      "mode": "rule",
+      "n": 10,
+      "success": 3,
+      "mean_reward": 87.54858696227403,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "soft",
+      "mode": "ppo",
+      "n": 10,
+      "success": 6,
+      "mean_reward": 173.88428891707213,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine50",
+      "mode": "no_trigger",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -73.91875570313377,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine50",
+      "mode": "random",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -155.544027923483,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine50",
+      "mode": "rule",
+      "n": 10,
+      "success": 3,
+      "mean_reward": 66.09357759391057,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine50",
+      "mode": "ppo",
+      "n": 10,
+      "success": 5,
+      "mean_reward": 105.49510330580797,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine80",
+      "mode": "no_trigger",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -75.1784300490996,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine80",
+      "mode": "random",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -341.13696271360317,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine80",
+      "mode": "rule",
+      "n": 10,
+      "success": 3,
+      "mean_reward": 63.740072365377465,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine80",
+      "mode": "ppo",
+      "n": 10,
+      "success": 3,
+      "mean_reward": 52.32223624382548,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "breaking",
+      "mode": "no_trigger",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -65.7088110371549,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "breaking",
+      "mode": "random",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -215.78095512080412,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "breaking",
+      "mode": "rule",
+      "n": 10,
+      "success": 2,
+      "mean_reward": 37.00359049653801,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "breaking",
+      "mode": "ppo",
+      "n": 10,
+      "success": 1,
+      "mean_reward": -5.609832881634583,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "pitcher",
+      "mode": "fixed_midpoint",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -294.67454677884115,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "pitcher",
+      "mode": "random",
+      "n": 10,
+      "success": 1,
+      "mean_reward": -449.45915746978625,
+      "all_finite": true,
+      "terminated": 9,
+      "truncated": 2
+    },
+    {
+      "task": "pitcher",
+      "mode": "fixed_fast",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -420.35993448733853,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "pitcher",
+      "mode": "ppo",
+      "n": 10,
+      "success": 10,
+      "mean_reward": 1543.6813708113746,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine80_correct_norm",
+      "mode": "no_trigger",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -75.1784300490996,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine80_correct_norm",
+      "mode": "random",
+      "n": 10,
+      "success": 0,
+      "mean_reward": -341.13696271360317,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine80_correct_norm",
+      "mode": "rule",
+      "n": 10,
+      "success": 3,
+      "mean_reward": 63.740072365377465,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    },
+    {
+      "task": "machine80_correct_norm",
+      "mode": "ppo",
+      "n": 10,
+      "success": 2,
+      "mean_reward": 25.48542806232794,
+      "all_finite": true,
+      "terminated": 10,
+      "truncated": 0
+    }
+  ],
+  "initial_case_pairing": [
+    {
+      "task": "soft",
+      "seed": 100,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "soft",
+      "seed": 101,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "soft",
+      "seed": 102,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "soft",
+      "seed": 103,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "soft",
+      "seed": 104,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "soft",
+      "seed": 105,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "soft",
+      "seed": 106,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "soft",
+      "seed": 107,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "soft",
+      "seed": 108,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "soft",
+      "seed": 109,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine50",
+      "seed": 100,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine50",
+      "seed": 101,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine50",
+      "seed": 102,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine50",
+      "seed": 103,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine50",
+      "seed": 104,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine50",
+      "seed": 105,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine50",
+      "seed": 106,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine50",
+      "seed": 107,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine50",
+      "seed": 108,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine50",
+      "seed": 109,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80",
+      "seed": 100,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80",
+      "seed": 101,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80",
+      "seed": 102,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80",
+      "seed": 103,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80",
+      "seed": 104,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80",
+      "seed": 105,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80",
+      "seed": 106,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80",
+      "seed": 107,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80",
+      "seed": 108,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80",
+      "seed": 109,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "breaking",
+      "seed": 100,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "breaking",
+      "seed": 101,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "breaking",
+      "seed": 102,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "breaking",
+      "seed": 103,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "breaking",
+      "seed": 104,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "breaking",
+      "seed": 105,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "breaking",
+      "seed": 106,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "breaking",
+      "seed": 107,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "breaking",
+      "seed": 108,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "breaking",
+      "seed": 109,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "pitcher",
+      "seed": 100,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "pitcher",
+      "seed": 101,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "pitcher",
+      "seed": 102,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "pitcher",
+      "seed": 103,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "pitcher",
+      "seed": 104,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "pitcher",
+      "seed": 105,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "pitcher",
+      "seed": 106,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "pitcher",
+      "seed": 107,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "pitcher",
+      "seed": 108,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "pitcher",
+      "seed": 109,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "match",
+      "seed": 100,
+      "n_modes": 3,
+      "identical": true
+    },
+    {
+      "task": "match",
+      "seed": 101,
+      "n_modes": 3,
+      "identical": true
+    },
+    {
+      "task": "match",
+      "seed": 102,
+      "n_modes": 3,
+      "identical": true
+    },
+    {
+      "task": "match",
+      "seed": 103,
+      "n_modes": 3,
+      "identical": true
+    },
+    {
+      "task": "match",
+      "seed": 104,
+      "n_modes": 3,
+      "identical": true
+    },
+    {
+      "task": "match",
+      "seed": 105,
+      "n_modes": 3,
+      "identical": true
+    },
+    {
+      "task": "match",
+      "seed": 106,
+      "n_modes": 3,
+      "identical": true
+    },
+    {
+      "task": "match",
+      "seed": 107,
+      "n_modes": 3,
+      "identical": true
+    },
+    {
+      "task": "match",
+      "seed": 108,
+      "n_modes": 3,
+      "identical": true
+    },
+    {
+      "task": "match",
+      "seed": 109,
+      "n_modes": 3,
+      "identical": true
+    },
+    {
+      "task": "machine80_correct_norm",
+      "seed": 100,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80_correct_norm",
+      "seed": 101,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80_correct_norm",
+      "seed": 102,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80_correct_norm",
+      "seed": 103,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80_correct_norm",
+      "seed": 104,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80_correct_norm",
+      "seed": 105,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80_correct_norm",
+      "seed": 106,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80_correct_norm",
+      "seed": 107,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80_correct_norm",
+      "seed": 108,
+      "n_modes": 4,
+      "identical": true
+    },
+    {
+      "task": "machine80_correct_norm",
+      "seed": 109,
+      "n_modes": 4,
+      "identical": true
+    }
+  ],
+  "notes": [
+    "machine80 first pass paired deep checkpoint with regular norm by audit error; excluded from final comparison. Use machine80_correct_norm.",
+    "Counts describe small diagnostic cases, not population success estimates."
+  ]
+}
