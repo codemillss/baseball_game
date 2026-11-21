@@ -1,3 +1,5 @@
+[프로젝트 계보와 버전 차이](docs/PROJECT_LINEAGE.md)
+
 # ⚾ AI Robotic Baseball Simulator
 
 A cutting-edge 3D baseball simulation framework powered by **MuJoCo Physics**, **Reinforcement Learning (Stable-Baselines3)**, and **Multi-Agent Architecture**.
